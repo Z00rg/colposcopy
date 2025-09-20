@@ -1,9 +1,33 @@
-export function UiFooter() {
+import clsx from "clsx";
+import { UiFooterButton } from "./ui-footer-button";
+
+type UiFooterActiveStatus = "atlas" | "main" | "test";
+export type UiFooterProps = {
+  activeStatus: UiFooterActiveStatus;
+  className?: string;
+};
+
+export function UiFooter({activeStatus, className}: UiFooterProps) {
   return (
-    <footer className="">
-      <div className="text-sm text-slate-500">
-        asdasd
-      </div>
+    <footer className={clsx(className, "flex justify-center items-center px-5 py-1.5 w-[285px] bg-[#F3F3F3] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px] gap-10")}>
+      <UiFooterButton variant="book" active={activeStatus === "atlas"}/>
+      <UiFooterButton variant="man" active={activeStatus === "main"}/>
+      <UiFooterButton variant="check" active={activeStatus === "test"}/>
     </footer>
   );
 }
+
+
+/* Frame 2783 */
+
+// box-sizing: border-box;
+
+// position: absolute;
+// width: 259px;
+// height: 64px;
+// left: calc(50% - 259px/2 - 3.5px);
+// top: 868px;
+
+// background: #F3F3F3;
+// box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+// border-radius: 20px;

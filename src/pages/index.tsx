@@ -19,7 +19,9 @@ export default function HomePage() {
         <UiFooterButton variant="book" active></UiFooterButton>
         <UiFooterButton variant="man">as</UiFooterButton>
         <UiFooterButton variant="check">as</UiFooterButton>
-        <UiFooter/>
+        <UiFooter activeStatus="atlas"/>
+        <UiFooter activeStatus="main"/>
+        <UiFooter activeStatus="test"/>
       </div>
   );
 }
