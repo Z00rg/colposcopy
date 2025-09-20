@@ -3,11 +3,16 @@ import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiFooterButton } from "@/shared/ui/ui-footer-button";
 import { UiHeader } from "@/shared/ui/ui-header";
 import { UiLink } from "@/shared/ui/ui-link";
+import { UiScrollImg } from "@/shared/ui/ui-scroll-img";
 // import { UiPageSpinner } from "@/shared/ui/ui-page-spinner";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
 import { UiTextField } from "@/shared/ui/ui-text-field";
+import Image from "next/image";
 
 export default function HomePage() {
+
+  const imgContainer = ["/logo.png", "/logo.png", "/logo.png", "/logo.png"]
+
   return (
       <div className={`flex justify-center items-center min-h-screen flex-col gap-10`}>
         <UiHeader variant="logo"/>
@@ -22,6 +27,7 @@ export default function HomePage() {
         <UiFooter activeStatus="atlas"/>
         <UiFooter activeStatus="main"/>
         <UiFooter activeStatus="test"/>
+        <UiScrollImg img= {imgContainer}/>
       </div>
   );
 }
