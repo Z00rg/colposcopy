@@ -1,4 +1,6 @@
 import { UiButton } from "@/shared/ui/ui-button";
+import { UiFooter } from "@/shared/ui/ui-footer";
+import { UiFooterButton } from "@/shared/ui/ui-footer-button";
 import { UiHeader } from "@/shared/ui/ui-header";
 import { UiLink } from "@/shared/ui/ui-link";
 // import { UiPageSpinner } from "@/shared/ui/ui-page-spinner";
@@ -14,6 +16,10 @@ export default function HomePage() {
         <UiLink href={"/"}>Ссылка</UiLink>
         {/* <UiPageSpinner/> */}
         <UiTextField placeholder="Email"/>
+        <UiFooterButton variant="book" active></UiFooterButton>
+        <UiFooterButton variant="man">as</UiFooterButton>
+        <UiFooterButton variant="check">as</UiFooterButton>
+        <UiFooter/>
       </div>
   );
 }
