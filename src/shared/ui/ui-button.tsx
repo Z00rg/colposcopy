@@ -10,7 +10,7 @@ export function UiButton({ className, ...props }: UiButtonProps) {
       {...props}
       className={clsx(
         className,
-        "w-80 h-20 rounded-3xl cursor-pointer flex items-center justify-center text-3xl bg-[#7BAEE4] hover:bg-[#6899D2] text-white shadow-[0px_30px_30px_rgba(0,0,0,0.2)]"
+        "w-[323px] h-[85px] rounded-[20px] cursor-pointer flex items-center justify-center text-3xl bg-[#7BAEE4] hover:bg-[#6899D2] text-white shadow-[0px_30px_30px_rgba(0,0,0,0.2)]"
       )}
     />
   );

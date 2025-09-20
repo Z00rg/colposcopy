@@ -3,6 +3,7 @@ import { UiHeader } from "@/shared/ui/ui-header";
 import { UiLink } from "@/shared/ui/ui-link";
 // import { UiPageSpinner } from "@/shared/ui/ui-page-spinner";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
+import { UiTextField } from "@/shared/ui/ui-text-field";
 
 export default function HomePage() {
   return (
@@ -12,6 +13,7 @@ export default function HomePage() {
         <UiSpinner/>
         <UiLink href={"/"}>Ссылка</UiLink>
         {/* <UiPageSpinner/> */}
+        <UiTextField placeholder="Email"/>
       </div>
   );
 }
