@@ -56,6 +56,12 @@ export default function HomePage() {
         <UiList>
           <UiListButtonTry informationOfTry={informationOfTry1}/>
           <UiListButtonTry informationOfTry={informationOfTry2}/>
+          <UiListButtonTry informationOfTry={informationOfTry1}/>
+          <UiListButtonTry informationOfTry={informationOfTry2}/>
+          <UiListButtonTry informationOfTry={informationOfTry1}/>
+          <UiListButtonTry informationOfTry={informationOfTry2}/>
+          <UiListButtonTry informationOfTry={informationOfTry1}/>
+          <UiListButtonTry informationOfTry={informationOfTry2}/>
         </UiList>
         <UiList>
           <UiListButtonAtlas index={1} informationOfPathology={informationOfPathology1}/>
