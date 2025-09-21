@@ -3,11 +3,11 @@ import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiFooterButton } from "@/shared/ui/ui-footer-button";
 import { UiHeader } from "@/shared/ui/ui-header";
 import { UiLink } from "@/shared/ui/ui-link";
+import { UiList } from "@/shared/ui/ui-list";
 import { UiScrollImg } from "@/shared/ui/ui-scroll-img";
 // import { UiPageSpinner } from "@/shared/ui/ui-page-spinner";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
 import { UiTextField } from "@/shared/ui/ui-text-field";
-import Image from "next/image";
 
 export default function HomePage() {
 
@@ -28,6 +28,10 @@ export default function HomePage() {
         <UiFooter activeStatus="main"/>
         <UiFooter activeStatus="test"/>
         <UiScrollImg img= {imgContainer}/>
+        <UiList>
+          <div>asdasd</div>
+          <div>asdasd</div>
+        </UiList>
       </div>
   );
 }
