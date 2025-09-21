@@ -4,6 +4,7 @@ import { UiFooterButton } from "@/shared/ui/ui-footer-button";
 import { UiHeader } from "@/shared/ui/ui-header";
 import { UiLink } from "@/shared/ui/ui-link";
 import { UiList } from "@/shared/ui/ui-list";
+import { UiListButtonAtlas } from "@/shared/ui/ui-list-button-atlas";
 import { UiListButtonTry } from "@/shared/ui/ui-list-button-try";
 import { UiScrollImg } from "@/shared/ui/ui-scroll-img";
 // import { UiPageSpinner } from "@/shared/ui/ui-page-spinner";
@@ -27,6 +28,16 @@ export default function HomePage() {
     time: "35:10",
   }
 
+  const informationOfPathology1 = {
+    id: 1,
+    name: "Многослойный плоский эпителий ",
+  }
+
+  const informationOfPathology2 = {
+    id: 2,
+    name: "Сквамозно –цилиндрический стык визуализируемый полностью на экзоцервиксе",
+  }
+
   return (
       <div className={`flex justify-center items-center min-h-screen flex-col gap-10`}>
         <UiHeader variant="logo"/>
@@ -45,6 +56,10 @@ export default function HomePage() {
         <UiList>
           <UiListButtonTry informationOfTry={informationOfTry1}/>
           <UiListButtonTry informationOfTry={informationOfTry2}/>
+        </UiList>
+        <UiList>
+          <UiListButtonAtlas index={1} informationOfPathology={informationOfPathology1}/>
+          <UiListButtonAtlas index={2} informationOfPathology={informationOfPathology2}/>
         </UiList>
       </div>
   );
