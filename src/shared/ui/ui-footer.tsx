@@ -16,18 +16,3 @@ export function UiFooter({activeStatus, className}: UiFooterProps) {
     </footer>
   );
 }
-
-
-/* Frame 2783 */
-
-// box-sizing: border-box;
-
-// position: absolute;
-// width: 259px;
-// height: 64px;
-// left: calc(50% - 259px/2 - 3.5px);
-// top: 868px;
-
-// background: #F3F3F3;
-// box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-// border-radius: 20px;
