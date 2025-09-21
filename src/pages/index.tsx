@@ -11,6 +11,7 @@ import { UiScrollImg } from "@/shared/ui/ui-scroll-img";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
 import { UiTextField } from "@/shared/ui/ui-text-field";
 import { UiTextArea } from "@/shared/ui/ui-textarea";
+import { Profile } from "@/shared/widgets/profile";
 
 export default function HomePage() {
   const imgContainer = ["/logo.png", "/logo.png", "/logo.png", "/logo.png"];
@@ -151,6 +152,7 @@ export default function HomePage() {
         earum repellat animi asperiores assumenda odio a iure accusamus
         similique esse sint ratione!
       </UiTextArea>
+      <Profile/>
     </div>
   );
 }
