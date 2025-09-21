@@ -1,3 +1,3 @@
-import UiKitPage from "@/pages";
+import UiKitPage from "@/pages/ui-kit";
 
 export default UiKitPage

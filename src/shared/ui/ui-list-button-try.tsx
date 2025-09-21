@@ -22,7 +22,7 @@ export function UiListButtonTry({
     <div
       className={clsx(
         className,
-        "w-[360px] border-b-1 border-[#BDBDBD] flex flex-col px-[9px]"
+        "min-w-[300px] max-w-[388px] border-b-1 border-[#BDBDBD] flex flex-col px-[9px]"
       )}
     >
       <div className="h-[50px] flex justify-between items-center text-[18px] font-bold mb-1">

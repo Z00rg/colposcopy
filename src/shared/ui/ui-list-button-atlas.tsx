@@ -19,7 +19,7 @@ export function UiListButtonAtlas({
     <div
       className={clsx(
         className,
-        "w-[360px] border-b-1 border-[#BDBDBD] flex text-[18px] pb-2 px-[9px] font-medium gap-2 cursor-pointer"
+        "min-w-[300px] max-w-[388px] border-b-1 border-[#BDBDBD] flex text-[18px] pb-2 px-[9px] font-medium gap-2 cursor-pointer"
       )}
     >
       <div>
