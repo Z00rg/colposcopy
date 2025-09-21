@@ -66,6 +66,16 @@ export default function HomePage() {
         <UiList>
           <UiListButtonAtlas index={1} informationOfPathology={informationOfPathology1}/>
           <UiListButtonAtlas index={2} informationOfPathology={informationOfPathology2}/>
+          <UiListButtonAtlas index={1} informationOfPathology={informationOfPathology1}/>
+          <UiListButtonAtlas index={2} informationOfPathology={informationOfPathology2}/>
+          <UiListButtonAtlas index={1} informationOfPathology={informationOfPathology1}/>
+          <UiListButtonAtlas index={2} informationOfPathology={informationOfPathology2}/>
+          <UiListButtonAtlas index={1} informationOfPathology={informationOfPathology1}/>
+          <UiListButtonAtlas index={2} informationOfPathology={informationOfPathology2}/>
+          <UiListButtonAtlas index={1} informationOfPathology={informationOfPathology1}/>
+          <UiListButtonAtlas index={2} informationOfPathology={informationOfPathology2}/>
+          <UiListButtonAtlas index={1} informationOfPathology={informationOfPathology1}/>
+          <UiListButtonAtlas index={2} informationOfPathology={informationOfPathology2}/>
         </UiList>
       </div>
   );

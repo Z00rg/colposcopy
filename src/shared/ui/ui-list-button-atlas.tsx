@@ -19,13 +19,13 @@ export function UiListButtonAtlas({
     <div
       className={clsx(
         className,
-        "w-[360px] min-h-[50px] border-b-1 border-[#BDBDBD] flex text-[18px] pb-2 px-[9px] font-medium gap-2 cursor-pointer"
+        "w-[360px] border-b-1 border-[#BDBDBD] flex text-[18px] pb-2 px-[9px] font-medium gap-2 cursor-pointer"
       )}
     >
       <div>
         {index}. 
       </div>
-      <div>
+      <div className="break-words whitespace-normal">
         {informationOfPathology.name}
       </div>
     </div>

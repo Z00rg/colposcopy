@@ -25,7 +25,7 @@ export function UiListButtonTry({
         "w-[360px] border-b-1 border-[#BDBDBD] flex flex-col px-[9px]"
       )}
     >
-      <div className=" h-[50px] flex justify-between items-center text-[18px] font-bold mb-1">
+      <div className="h-[50px] flex justify-between items-center text-[18px] font-bold mb-1">
         <div className="flex gap-2.5">
           {informationOfTry.status ? <TestCheckTrue /> : <TestCheckFalse />}
           <div className="flex items-center">
