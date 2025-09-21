@@ -11,7 +11,7 @@ export function UiScrollImg({ img, className }: UiScrollImgProps) {
     <div
       className={clsx(className,
         "flex snap-x snap-mandatory overflow-x-auto gap-4 scrollbar-hide",
-        "w-[300px] h-[345px]"
+        "w-[300px] h-[345px] items-center",
       )}
     >
       {img.map((src, index) => (
