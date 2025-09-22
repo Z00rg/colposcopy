@@ -26,7 +26,6 @@ export function App({ Component, pageProps }: AppProps) {
                h-[338px] w-[754px] rounded-full bg-[#B8D3F9] blur-[100px]"
           />
         </div>
-
         <Component {...pageProps} />
       </div>
     </AppProvider>
