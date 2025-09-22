@@ -30,7 +30,8 @@ export function UiTextField({
         placeholder={placeholder}
         className={clsx(
           inputProps?.className,
-          "w-[323px] h-[69px] rounded-[20px] text-[rgba(255,255,255,0.9)] text-[24px] px-6 bg-[#7BAEE4] shadow-[0px_30px_30px_rgba(0,0,0,0.2)]"
+          "w-[323px] h-[69px] rounded-[20px] text-[rgba(255,255,255,0.9)] text-[24px] px-6 bg-[#7BAEE4] shadow-[0px_30px_30px_rgba(0,0,0,0.2)]",
+          "focus:outline-none focus:ring-2 focus:ring-blue-400"
         )}
       />
       {error && <div className="text-rose-400 text-sm">{error}</div>}
