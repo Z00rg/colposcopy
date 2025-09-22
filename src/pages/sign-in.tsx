@@ -5,7 +5,7 @@ import { UiTextField } from "@/shared/ui/ui-text-field";
 
 export function SignInPage() {
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center">
+    <div className="flex flex-col min-h-[667px] max-h-[956px] items-center justify-center lg:w-[440px] lg:border-2 lg:rounded-[40px]">
       <UiHeader variant="logo" className="mt-16" />
       <form className="flex flex-col justify-between mt-20 flex-1">
         <div className="flex flex-col justify-center items-center gap-5">
