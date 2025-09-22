@@ -26,7 +26,10 @@ export function App({ Component, pageProps }: AppProps) {
                h-[338px] w-[754px] lg:h-[550px] lg:w-[900px] rounded-full bg-[#B8D3F9] blur-[100px]"
           />
         </div>
-        <Component {...pageProps} />
+        <div className="min-h-[667px] max-h-[956px] lg:w-[440px] lg:border-2 lg:rounded-[40px]">
+          <Component {...pageProps} />
+        </div>
+        
       </div>
     </AppProvider>
   );
