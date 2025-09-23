@@ -13,7 +13,7 @@ export function SignInPage() {
             Авторизация
           </div>
           <UiTextField placeholder="Email" />
-          <UiTextField placeholder="Пароль" />
+          <UiTextField inputProps={{ type: "password" }} placeholder="Пароль" />
           <UiLink href={"/"}>Забыли пароль?</UiLink>
         </div>
         <div className="flex flex-col justify-center my-10 items-center">
