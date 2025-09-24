@@ -1,13 +1,47 @@
-import { UiTextArea } from "@/shared/ui/ui-textarea";
+import { UiFooter } from "@/shared/ui/ui-footer";
+import { UiHeader } from "@/shared/ui/ui-header";
+import { UiList } from "@/shared/ui/ui-list";
+import { UiListButtonTry } from "@/shared/ui/ui-list-button-try";
+import { Profile } from "@/shared/widgets/profile";
 
 export default function HomePage() {
+  const informationOfTry1 = {
+    date: "21.04.2001",
+    status: true,
+    mark: "Отлично",
+    time: "46:20",
+  };
+
+  const informationOfTry2 = {
+    date: "22.09.2006",
+    status: false,
+    mark: "Удовлетворительно",
+    time: "35:10",
+  };
+
   return (
-    <div
-      className={`flex justify-center items-center min-h-screen flex-col gap-10`}
-    >
-      <UiTextArea>
-        Тут будет главное меню
-      </UiTextArea>
+    <div className="flex flex-col items-center min-h-screen lg:min-h-[667px]">
+      <UiHeader variant="withoutLogo" className="mt-16" />
+      <div className="flex flex-col justify-between items-center gap-5 flex-1 mb-4">
+        <div>
+          <div className="font-medium text-[20px] font-[#4B4242] mt-7">Основной аккаунт</div>
+          <Profile className="w-full mt-2" />
+          <UiList className="mt-4">
+            <UiListButtonTry informationOfTry={informationOfTry1} />
+            <UiListButtonTry informationOfTry={informationOfTry2} />
+            <UiListButtonTry informationOfTry={informationOfTry1} />
+            <UiListButtonTry informationOfTry={informationOfTry2} />
+            <UiListButtonTry informationOfTry={informationOfTry1} />
+            <UiListButtonTry informationOfTry={informationOfTry2} />
+            <UiListButtonTry informationOfTry={informationOfTry1} />
+            <UiListButtonTry informationOfTry={informationOfTry2} />
+            <UiListButtonTry informationOfTry={informationOfTry1} />
+            <UiListButtonTry informationOfTry={informationOfTry2} />
+          </UiList>
+        </div>
+        <UiFooter activeStatus="main" />
+      </div>
     </div>
   );
 }
+
