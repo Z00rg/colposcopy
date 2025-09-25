@@ -1,5 +1,7 @@
 import clsx from "clsx";
+import { useRouter } from "next/router";
 import { ButtonHTMLAttributes } from "react";
+import { ROUTES } from "../constants/routes";
 
 type UiFooterButtonVariants = "book" | "man" | "check";
 export type UiButtonProps = {
@@ -31,6 +33,14 @@ export function UiFooterButton({
     check: "Тест",
   };
 
+  const variantRoute = {
+    book: ROUTES.ATLAS,
+    man: ROUTES.HOME,
+    check: ROUTES.TEST,
+  };
+
+  const router = useRouter();
+
   return (
     <button
       {...props}
@@ -39,6 +49,7 @@ export function UiFooterButton({
         "cursor-pointer flex flex-col gap-2 items-center justify-center text-[11px] hover:text-[#7BAEE4]",
         active && "text-[#7BAEE4]",
       )}
+      onClick={() => (router.push(variantRoute[variant]))}
     >
       {active ?  variantActiveIcons[variant] : variantIcons[variant]}
       {variantTexts[variant]}
