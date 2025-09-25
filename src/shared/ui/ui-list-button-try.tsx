@@ -22,11 +22,11 @@ export function UiListButtonTry({
     <div
       className={clsx(
         className,
-        "min-w-[300px] max-w-[388px] border-b-1 border-[#BDBDBD] flex flex-col px-[9px]"
+        "w-full border-b-1 border-[#BDBDBD] flex flex-col px-[9px]"
       )}
     >
-      <div className="h-[50px] flex justify-between items-center text-[18px] font-bold mb-1">
-        <div className="flex gap-2.5">
+      <div className="h-[50px] flex justify-between items-center text-[18px] font-bold mb-1 gap-26">
+        <div className="flex gap-2.5 w-full">
           {informationOfTry.status ? <TestCheckTrue /> : <TestCheckFalse />}
           <div className="flex items-center">
             Попытка {informationOfTry?.date}
