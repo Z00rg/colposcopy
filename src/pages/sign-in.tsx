@@ -1,4 +1,4 @@
-import { SignInForm } from "@/features/auth/ui/sign-in-form";
+import { SignInForm } from "@/features/auth";
 import { UiHeader } from "@/shared/ui/ui-header";
 
 export function SignInPage() {

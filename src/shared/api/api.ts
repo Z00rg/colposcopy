@@ -8,6 +8,13 @@ export interface SignInBodyDto {
   password: string;
 }
 
+export interface GetSessionInfoDto {
+  id: number;
+  email: string;
+  iat: number;
+  exp: number;
+}
+
 export const authControllerSignIn = (
   signInBodyDto: BodyType<SignInBodyDto>,
   options?: SecondParameter<typeof createInstance>,
@@ -19,6 +26,15 @@ export const authControllerSignIn = (
       headers: { "Content-Type": "application/json" },
       data: signInBodyDto,
     },
+    options,
+  );
+};
+
+export const authControllerGetSessionInfo = (
+  options?: SecondParameter<typeof createInstance>,
+) => {
+  return createInstance<GetSessionInfoDto>(
+    { url: `/auth/session`, method: "GET" },
     options,
   );
 };
