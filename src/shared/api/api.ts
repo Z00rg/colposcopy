@@ -15,6 +15,18 @@ export interface GetSessionInfoDto {
   exp: number;
 }
 
+interface TryInfo {
+  id: string;
+  date: string;
+  status: boolean;
+  mark: string;
+  time: string;
+}
+
+export interface GetTryListInfoDto {
+    items: TryInfo[];
+}
+
 export const authControllerSignIn = (
   signInBodyDto: BodyType<SignInBodyDto>,
   options?: SecondParameter<typeof createInstance>,
@@ -35,6 +47,15 @@ export const authControllerGetSessionInfo = (
 ) => {
   return createInstance<GetSessionInfoDto>(
     { url: `/auth/session`, method: "GET" },
+    options,
+  );
+};
+
+export const authControllerGetTryListInfo = (
+  options?: SecondParameter<typeof createInstance>,
+) => {
+  return createInstance<GetTryListInfoDto>(
+    { url: `/auth/try-list`, method: "GET" },
     options,
   );
 };

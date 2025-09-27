@@ -1,3 +1,4 @@
+import { TryList } from "@/features/try-list";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiHeader } from "@/shared/ui/ui-header";
 import { UiList } from "@/shared/ui/ui-list";
@@ -41,41 +42,6 @@ export default function HomePage() {
       mark: "Отлично",
       time: "46:20",
     },
-    {
-      id: "2",
-      date: "22.09.2006",
-      status: false,
-      mark: "Удовлетворительно",
-      time: "35:10",
-    },
-    {
-      id: "1",
-      date: "21.04.2001",
-      status: true,
-      mark: "Отлично",
-      time: "46:20",
-    },
-    {
-      id: "2",
-      date: "22.09.2006",
-      status: false,
-      mark: "Удовлетворительно",
-      time: "35:10",
-    },
-    {
-      id: "1",
-      date: "21.04.2001",
-      status: true,
-      mark: "Отлично",
-      time: "46:20",
-    },
-    {
-      id: "2",
-      date: "22.09.2006",
-      status: false,
-      mark: "Удовлетворительно",
-      time: "35:10",
-    },
   ];
 
   return (
@@ -87,6 +53,7 @@ export default function HomePage() {
             Основной аккаунт
           </div>
           <Profile className="w-full mt-4" />
+          {/* <TryList/> */}
           <UiList className="mt-4">
             {informationOfTry.map((item) => (
               <UiListButtonTry key={item.id} informationOfTry={item} />
