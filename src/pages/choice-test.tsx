@@ -1,13 +1,126 @@
-import { UiTextArea } from "@/shared/ui/ui-textarea";
+import { UiFooter } from "@/shared/ui/ui-footer";
+import { UiHeader } from "@/shared/ui/ui-header";
+import { UiList } from "@/shared/ui/ui-list";
+import { UiListButtonTest } from "@/shared/ui/ui-list-button-test";
+import clsx from "clsx";
+import { useState } from "react";
 
 export function ChoiceTestPage() {
+  const informationOfPathology = [
+    {
+      id: 1,
+      name: "Зона трансформации 1 типаЗона трансформации 1 типаЗона трансформации 1 типа",
+    },
+    {
+      id: 2,
+      name: " Зона трансформации 2 типа",
+    },
+    {
+      id: 1,
+      name: "Зона трансформации 1 типаЗона трансформации 1 типаЗона трансформации 1 типа",
+    },
+    {
+      id: 2,
+      name: " Зона трансформации 2 типа",
+    },
+  ];
+
+  const [active, setActive] = useState(false);
+
   return (
-        <div
-          className={`flex justify-center items-center min-h-screen flex-col gap-10 text-5xl`}
-        >
-          <UiTextArea>
-            Тут будет страничка с выбором тестов
-          </UiTextArea>
+    <div className="flex flex-col items-center min-h-screen lg:min-h-[667px]">
+      <UiHeader variant="withoutLogo" className="mt-16" />
+      <div className="flex flex-col justify-between items-center gap-5 flex-1 mb-4">
+        <div className="px-5">
+          <div className="font-medium text-[20px] font-[#4B4242] mt-7">
+            Настройки тестирования
+          </div>
+          <UiList className="mt-4 items-start max-h-[530px]">
+            <div className="font-bold text-[18px] text-[#4B4242]">
+              Выберите параметры
+            </div>
+            {informationOfPathology.map((item, index) => (
+              <UiListButtonTest
+                className="w-full"
+                key={item.id}
+                index={index + 1}
+                informationOfPathology={item}
+              />
+            ))}
+            <div className="flex w-full border border-b-1 border-[#BDBDBD]"></div>
+            <div
+              className={clsx(
+                "w-full border-b-1 border-[#BDBDBD] flex flex-col px-[9px]"
+              )}
+            >
+              <div className="h-[50px] flex justify-between font-bold text-[18px] text-[#4B4242] mb-1 gap-26">
+                <div className="flex gap-2.5 w-full">
+                  Инструкция к прохождению
+                </div>
+                <button onClick={() => setActive(!active)}>
+                  <ArrowRight
+                    className={clsx(
+                      "transition-transform duration-300 ease-in-out",
+                      active && "rotate-90"
+                    )}
+                  />
+                </button>
+              </div>
+              <div
+                className={clsx(
+                  "flex flex-col gap-[9px] text-[18px] my-2 text-[#4B4242]",
+                  "transition-all duration-300 ease-in-out overflow-hidden",
+                  {
+                    "max-h-0": !active,
+                    "max-h-[500px]": active,
+                  }
+                )}
+              >
+                Тут Инструкция Тут ИнструкцияТут ИнструкцияТут ИнструкцияТут
+                ИнструкцияТут ИнструкцияТут ИнструкцияТут Инструкция Тут
+                ИнструкцияТут ИнструкцияТут ИнструкцияТут ИнструкцияТут
+                ИнструкцияТут ИнструкцияТут Инструкция Тут ИнструкцияТут
+                ИнструкцияТут ИнструкцияТут ИнструкцияТут ИнструкцияТут
+                ИнструкцияТут Инструкция Тут ИнструкцияТут ИнструкцияТут
+                ИнструкцияТут ИнструкцияТут ИнструкцияТут Инструкция
+              </div>
+            </div>
+          </UiList>
         </div>
-      );
+        <UiFooter activeStatus="test" />
+      </div>
+    </div>
+  );
 }
+
+export const ArrowRight = ({ className }: { className?: string }) => (
+  <svg
+    className={className}
+    width="9"
+    height="16"
+    viewBox="0 0 9 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M8.70711 8.70711C9.09763 8.31658 9.09763 7.68342 8.70711 7.29289L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L6.58579 8L0.928932 13.6569C0.538408 14.0474 0.538408 14.6805 0.928932 15.0711C1.31946 15.4616 1.95262 15.4616 2.34315 15.0711L8.70711 8.70711ZM6 8V9H8V8V7H6V8Z"
+      fill="black"
+    />
+  </svg>
+);
+
+export const ArrowBottom = ({ className }: { className?: string }) => (
+  <svg
+    className={className}
+    width="16"
+    height="9"
+    viewBox="0 0 16 9"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M7.29289 8.70711C7.68342 9.09763 8.31658 9.09763 8.70711 8.70711L15.0711 2.34315C15.4616 1.95262 15.4616 1.31946 15.0711 0.928932C14.6805 0.538408 14.0474 0.538408 13.6569 0.928932L8 6.58579L2.34315 0.928932C1.95262 0.538408 1.31946 0.538408 0.928932 0.928932C0.538408 1.31946 0.538408 1.95262 0.928932 2.34315L7.29289 8.70711ZM8 6H7V8H8H9V6H8Z"
+      fill="black"
+    />
+  </svg>
+);
