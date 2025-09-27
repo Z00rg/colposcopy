@@ -86,7 +86,7 @@ export default function HomePage() {
           <div className="font-medium text-[20px] font-[#4B4242] mt-7">
             Основной аккаунт
           </div>
-          <Profile className="w-full mt-2" />
+          <Profile className="w-full mt-4" />
           <UiList className="mt-4">
             {informationOfTry.map((item) => (
               <UiListButtonTry key={item.id} informationOfTry={item} />

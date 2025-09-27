@@ -23,6 +23,14 @@ export function ChoiceTestPage() {
       id: 2,
       name: " Зона трансформации 2 типа",
     },
+    {
+      id: 1,
+      name: "Зона трансформации 1 типаЗона трансформации 1 типаЗона трансформации 1 типа",
+    },
+    {
+      id: 2,
+      name: " Зона трансформации 2 типа",
+    },
   ];
 
   const [active, setActive] = useState(false);
