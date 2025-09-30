@@ -22,13 +22,13 @@ export function UiListButtonTest({
         "flex text-[18px] pb-4 font-medium gap-2 cursor-pointer"
       )}
     >
-      <div>
-        {index}. 
-      </div>
+      <div>{index}.</div>
       <div className="break-words whitespace-normal">
         {informationOfPathology.name}
       </div>
-      <input className="ml-auto w-5 h-5" type="checkbox" />
+      <div className="ml-auto w-6 h-6 flex justify-center items-center">
+        <input className="w-5 h-5" type="checkbox" />
+      </div>
     </div>
   );
 }
