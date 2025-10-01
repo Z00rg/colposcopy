@@ -12,7 +12,7 @@ export function PathologyPage() {
     <div className="flex flex-col items-center min-h-screen lg:min-h-[667px]">
       <UiHeader variant="withoutLogo" className="mt-6" />
       <div className="flex flex-col justify-center items-center gap-3 flex-1 mb-4 px-5 mt-5">
-        <UiScrollImg className="pt-6" img={imgContainer} />
+        <UiScrollImg img={imgContainer} />
         <UiTextArea className="mt-5">
           Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
