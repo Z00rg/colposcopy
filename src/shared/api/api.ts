@@ -27,6 +27,15 @@ export interface GetTryListInfoDto {
     items: TryInfo[];
 }
 
+export interface GetProfileInfoDto {
+  email: string;
+  firstName: string;
+  surname: string;
+  lastName: string;
+  course: number;
+  group: string;
+}
+
 export const authControllerSignIn = (
   signInBodyDto: BodyType<SignInBodyDto>,
   options?: SecondParameter<typeof createInstance>,
@@ -56,6 +65,15 @@ export const authControllerGetTryListInfo = (
 ) => {
   return createInstance<GetTryListInfoDto>(
     { url: `/auth/try-list`, method: "GET" },
+    options,
+  );
+};
+
+export const authControllerGetProfileInfo = (
+  options?: SecondParameter<typeof createInstance>,
+) => {
+  return createInstance<GetProfileInfoDto>(
+    { url: `/auth/profile`, method: "GET" },
     options,
   );
 };
