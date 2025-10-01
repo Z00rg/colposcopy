@@ -13,7 +13,7 @@ export function App({ Component, pageProps }: AppProps) {
           {/* Верхний овал */}
           <div
             className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 
-               h-[338px] w-[754px] lg:h-[550px] lg:w-[900px] rounded-full bg-[#C1D5F1] blur-[100px]"
+               h-[338px] w-[754px] lg:h-[550px] lg:w-[900px] rounded-full bg-[#B8D3F9] blur-[100px]"
           />
           {/* Средний овал */}
           <div
