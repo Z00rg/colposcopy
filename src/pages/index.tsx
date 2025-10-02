@@ -1,9 +1,8 @@
-import { TryList } from "@/features/try-list";
+import { Profile } from "@/features/profile/ui/profile";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiHeader } from "@/shared/ui/ui-header";
 import { UiList } from "@/shared/ui/ui-list";
 import { UiListButtonTry } from "@/shared/ui/ui-list-button-try";
-import { Profile } from "@/shared/widgets/profile";
 
 export default function HomePage() {
   const informationOfTry = [
@@ -52,7 +51,7 @@ export default function HomePage() {
           <div className="font-medium text-[20px] font-[#4B4242] mt-7">
             Основной аккаунт
           </div>
-          <Profile className="w-full mt-4" />
+          <Profile/>
           {/* <TryList/> */}
           <UiList className="mt-4">
             {informationOfTry.map((item) => (
