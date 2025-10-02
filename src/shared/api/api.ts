@@ -31,7 +31,7 @@ export interface GetProfileInfoDto {
   email: string;
   firstName: string;
   surname: string;
-  lastName: string;
+  middleName: string;
   course: number;
   group: string;
 }
