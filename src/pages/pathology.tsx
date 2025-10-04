@@ -36,7 +36,7 @@ export function PathologyPage() {
 
   return (
     <div className="flex flex-col items-center min-h-screen lg:min-h-[667px]">
-      <UiHeader variant="withoutLogo" className="mt-6" />
+      <UiHeader variant="withoutLogo" className="mt-6 [@media(max-height:930px)]:hidden" />
       <div className="flex flex-col justify-center items-center gap-3 flex-1 mb-4 px-5 mt-5">
         <UiScrollImg img={imgContainer} onIndexChange={handleImageChange} />
 
