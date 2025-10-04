@@ -1,8 +1,9 @@
 import clsx from "clsx";
+import { ReactNode } from "react";
 
 export type UiTextAreaProps = {
     className?: string;
-    children?: string;
+    children?: ReactNode;
 };
 
 export function UiTextArea({className, children} : UiTextAreaProps) {

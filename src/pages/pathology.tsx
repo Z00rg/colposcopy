@@ -5,6 +5,7 @@ import { UiLink } from "@/shared/ui/ui-link";
 import { UiScrollImg } from "@/shared/ui/ui-scroll-img";
 import { UiTextArea } from "@/shared/ui/ui-textarea";
 import { useState } from "react";
+import Image from "next/image";
 
 export function PathologyPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -37,13 +38,21 @@ export function PathologyPage() {
     <div className="flex flex-col items-center min-h-screen lg:min-h-[667px]">
       <UiHeader variant="withoutLogo" className="mt-6" />
       <div className="flex flex-col justify-center items-center gap-3 flex-1 mb-4 px-5 mt-5">
-        <UiScrollImg 
-          img={imgContainer} 
-          onIndexChange={handleImageChange}
-        />
-        <UiTextArea className="mt-5">
-          {textContainer[currentImageIndex]}
-        </UiTextArea>
+        <UiScrollImg img={imgContainer} onIndexChange={handleImageChange} />
+
+        {currentImageIndex === 3 ? (
+          <Image
+            src="/imageFourth.png"
+            alt="Test image"
+            width={385}
+            height={285}
+            className="rounded-xl object-contain mt-5"
+          />
+        ) : (
+          <UiTextArea className="mt-5">
+            {textContainer[currentImageIndex]}
+          </UiTextArea>
+        )}
         <UiLink href={ROUTES.ATLAS} className="mr-auto">
           Назад
         </UiLink>
