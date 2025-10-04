@@ -1,17 +1,47 @@
 import clsx from "clsx";
 import Image from "next/image";
+import { useRef } from "react";
 
 type UiScrollImgProps = {
   img: string[];
   className?: string;
-}
+  onIndexChange: (index: number) => void;
+};
 
-export function UiScrollImg({ img, className }: UiScrollImgProps) {
+const IMAGE_WIDTH = 300;
+
+export function UiScrollImg({
+  img,
+  className,
+  onIndexChange,
+}: UiScrollImgProps) {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Обработчик прокрутки
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+
+    // Текущая позиция прокрутки
+    const scrollLeft = scrollContainerRef.current.scrollLeft;
+
+    // Вычисляем индекс элемента в центре
+    // Делим позицию прокрутки на ширину одного элемента и округляем до ближайшего целого.
+    const newIndex = Math.round(scrollLeft / IMAGE_WIDTH);
+
+    // Проверка, что индекс не выходит за пределы массива
+    const clampedIndex = Math.min(Math.max(0, newIndex), img.length - 1);
+
+    // Вызываем коллбек с новым индексом
+    onIndexChange(clampedIndex);
+  };
+
   return (
     <div
+      ref={scrollContainerRef}
+      onScroll={handleScroll}
       className={clsx(
         className,
-        "flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden gap-4 scrollbar-hide",
+        "flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden scrollbar-hide",
         "w-[300px] h-[345px] items-center rounded-2xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]"
       )}
     >
@@ -20,7 +50,7 @@ export function UiScrollImg({ img, className }: UiScrollImgProps) {
           <Image
             src={src}
             alt={`Image ${index + 1}`}
-            width={300}
+            width={IMAGE_WIDTH}
             height={345}
           />
         </div>
