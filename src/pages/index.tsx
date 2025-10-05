@@ -1,4 +1,4 @@
-import { Profile } from "@/features/profile/ui/profile";
+import { Profile } from "@/features/profile";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiHeader } from "@/shared/ui/ui-header";
 import { UiList } from "@/shared/ui/ui-list";

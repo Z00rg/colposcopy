@@ -16,7 +16,7 @@ export interface GetSessionInfoDto {
 }
 
 interface TryInfo {
-  id: string;
+  id: number;
   date: string;
   status: boolean;
   mark: string;
@@ -24,7 +24,7 @@ interface TryInfo {
 }
 
 export interface GetTryListInfoDto {
-    items: TryInfo[];
+  items: TryInfo[];
 }
 
 export interface GetProfileInfoDto {
@@ -32,13 +32,23 @@ export interface GetProfileInfoDto {
   firstName: string;
   surname: string;
   middleName: string;
+  university: string;
   course: number;
   group: string;
 }
 
+interface AtlasInfo {
+  id: number;
+  name: string;
+}
+
+export interface GetAtlasListInfoDto {
+  items: AtlasInfo[];
+}
+
 export const authControllerSignIn = (
   signInBodyDto: BodyType<SignInBodyDto>,
-  options?: SecondParameter<typeof createInstance>,
+  options?: SecondParameter<typeof createInstance>
 ) => {
   return createInstance<void>(
     {
@@ -47,33 +57,42 @@ export const authControllerSignIn = (
       headers: { "Content-Type": "application/json" },
       data: signInBodyDto,
     },
-    options,
+    options
   );
 };
 
 export const authControllerGetSessionInfo = (
-  options?: SecondParameter<typeof createInstance>,
+  options?: SecondParameter<typeof createInstance>
 ) => {
   return createInstance<GetSessionInfoDto>(
     { url: `/auth/session`, method: "GET" },
-    options,
+    options
   );
 };
 
 export const authControllerGetTryListInfo = (
-  options?: SecondParameter<typeof createInstance>,
+  options?: SecondParameter<typeof createInstance>
 ) => {
   return createInstance<GetTryListInfoDto>(
     { url: `/auth/try-list`, method: "GET" },
-    options,
+    options
   );
 };
 
 export const authControllerGetProfileInfo = (
-  options?: SecondParameter<typeof createInstance>,
+  options?: SecondParameter<typeof createInstance>
 ) => {
   return createInstance<GetProfileInfoDto>(
     { url: `/auth/profile`, method: "GET" },
-    options,
+    options
+  );
+};
+
+export const authControllerGetAtlasListInfo = (
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<GetAtlasListInfoDto>(
+    { url: `/auth/atlas-list`, method: "GET" },
+    options
   );
 };

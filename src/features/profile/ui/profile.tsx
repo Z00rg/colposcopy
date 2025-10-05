@@ -10,6 +10,7 @@ export function Profile({ className }: { className?: string }) {
     firstName: "Артем",
     surname: "Аюпов",
     middleName: "Дмитриевич",
+    university: "СамГМУ",
     course: 1,
     group: "22-ИИ",
   };

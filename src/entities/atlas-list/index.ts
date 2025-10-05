@@ -1,0 +1,1 @@
+export { useAtlasListQuery } from "./queries"
