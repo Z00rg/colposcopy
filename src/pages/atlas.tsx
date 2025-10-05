@@ -1,4 +1,4 @@
-import { AtlasList } from "@/features/atlas-list";
+import { AtlasList } from "@/features/atlas";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiHeader } from "@/shared/ui/ui-header";
 
