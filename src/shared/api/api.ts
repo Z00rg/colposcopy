@@ -70,29 +70,29 @@ export const authControllerGetSessionInfo = (
   );
 };
 
-export const authControllerGetTryListInfo = (
+export const tryControllerGetTryListInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
   return createInstance<GetTryListInfoDto>(
-    { url: `/auth/try-list`, method: "GET" },
+    { url: `/try/try-list`, method: "GET" },
     options
   );
 };
 
-export const authControllerGetProfileInfo = (
+export const accountControllerGetProfileInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
   return createInstance<GetProfileInfoDto>(
-    { url: `/auth/profile`, method: "GET" },
+    { url: `/account/profile`, method: "GET" },
     options
   );
 };
 
-export const authControllerGetAtlasListInfo = (
+export const atlasControllerGetAtlasListInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
   return createInstance<GetAtlasListInfoDto>(
-    { url: `/auth/atlas-list`, method: "GET" },
+    { url: `/atlas/atlas-list`, method: "GET" },
     options
   );
 };
