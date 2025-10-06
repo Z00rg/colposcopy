@@ -2,8 +2,6 @@ import { Profile } from "@/features/account";
 import { TryList } from "@/features/try";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiHeader } from "@/shared/ui/ui-header";
-import { UiList } from "@/shared/ui/ui-list";
-import { UiListButtonTry } from "@/shared/ui/ui-list-button-try";
 
 export default function HomePage() {
 
