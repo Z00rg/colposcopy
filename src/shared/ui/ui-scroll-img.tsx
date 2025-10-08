@@ -5,7 +5,7 @@ import { useRef } from "react";
 type UiScrollImgProps = {
   img: string[];
   className?: string;
-  onIndexChange: (index: number) => void;
+  onIndexChange?: (index: number) => void;
 };
 
 const IMAGE_WIDTH = 300;
