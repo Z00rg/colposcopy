@@ -32,7 +32,9 @@ export function UiScrollImg({
     const clampedIndex = Math.min(Math.max(0, newIndex), img.length - 1);
 
     // Вызываем коллбек с новым индексом
-    onIndexChange(clampedIndex);
+     if (onIndexChange) {
+      onIndexChange(clampedIndex);
+    }
   };
 
   return (
