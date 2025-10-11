@@ -10,8 +10,6 @@ export function UiProgressBar({
   numOfCurrentTask: number;
 }) {
   return (
-    <div className="relative">
-      {/* Обёртка с ограничением ширины и скроллом */}
       <div className="overflow-x-auto overflow-y-hidden custom-scrollbar max-w-[340px] border-[#DEDEDE] bg-[#FFFFFF] rounded-[20px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
           <div
           className={clsx(
@@ -32,6 +30,5 @@ export function UiProgressBar({
           ))}
         </div>
       </div>
-    </div>
   );
 }
