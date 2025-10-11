@@ -1,5 +1,4 @@
 import { UiFooter } from "@/shared/ui/ui-footer";
-import { UiHeader } from "@/shared/ui/ui-header";
 import { UiScrollImg } from "@/shared/ui/ui-scroll-img";
 import { UiTextArea } from "@/shared/ui/ui-textarea";
 import { useState } from "react";
@@ -8,6 +7,7 @@ import clsx from "clsx";
 import { useRouter } from "next/router";
 import { ROUTES } from "@/shared/constants/routes";
 import { UiCheckBox } from "@/shared/ui/ui-checkbox";
+
 
 export function PassingTestPage() {
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
