@@ -1,1 +1,30 @@
 @import "tailwindcss";
+
+/* Общие стили для всех горизонтальных и вертикальных скроллов */
+::-webkit-scrollbar {
+  width: 1px;       /* вертикальный скролл */
+  height: 1px;      /* горизонтальный скролл */
+}
+
+/* Дорожка */
+::-webkit-scrollbar-track {
+  background: transparent;  /* можно #f0f0f0, если хочешь слегка видно */
+  border-radius: 10px;
+}
+
+/* Сам ползунок */
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+/* При наведении */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}

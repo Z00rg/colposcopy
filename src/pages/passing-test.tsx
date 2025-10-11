@@ -375,10 +375,7 @@ export function PassingTestPage() {
 
   return (
     <div className="flex flex-col items-center min-h-screen lg:min-h-[667px]">
-      <UiHeader
-        variant="withoutLogo"
-        className="mt-6 [@media(max-height:930px)]:hidden"
-      />
+      
       <div className="flex flex-col justify-center items-center gap-3 flex-1 mb-4 px-5 mt-5">
         <UiProgressBar numOfCurrentTask={currentTaskIndex} tasks={tasks} />
         <UiScrollImg img={tasks.items[currentTaskIndex].imageSrcs} />
@@ -410,7 +407,7 @@ export function PassingTestPage() {
                   {answer}
                 </div>
                 <div className="ml-auto w-6 h-6 flex justify-center items-center">
-                  <UiCheckBox />
+                  <UiCheckBox/>
                 </div>
               </div>
                 ))}
@@ -449,7 +446,7 @@ export function PassingTestPage() {
             Закончить попытку
           </button>
         </div>
-        <UiFooter activeStatus="test" />
+        <UiFooter activeStatus="test" className="mt-auto"/>
       </div>
     </div>
   );
