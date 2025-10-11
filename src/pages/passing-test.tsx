@@ -446,7 +446,7 @@ export function PassingTestPage() {
             Закончить попытку
           </button>
         </div>
-        <UiFooter activeStatus="test" className="mt-auto"/>
+        <UiFooter activeStatus="test"/>
       </div>
     </div>
   );
