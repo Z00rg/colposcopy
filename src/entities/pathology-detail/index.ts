@@ -1,0 +1,1 @@
+export { usePathologyDetailQuery } from "./queries";
