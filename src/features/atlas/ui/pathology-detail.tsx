@@ -8,7 +8,7 @@ import { UiFooter } from "@/shared/ui/ui-footer";
 import { ROUTES } from "@/shared/constants/routes";
 import clsx from "clsx";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
-import { usePathologyDetail } from "../model/use-pathology-detail";
+import { usePathology } from "../model/use-pathology";
 
 export function PathologyDetail ({ className }: {className?: string}) {
       const router = useRouter();
@@ -17,7 +17,7 @@ export function PathologyDetail ({ className }: {className?: string}) {
 
     const validPathologyId = typeof pathologyId === "string" ? pathologyId : undefined;
 
-    const { pathologyDetails, isLoading, isError } = usePathologyDetail(validPathologyId as string);  
+    const { pathologyDetails, isLoading, isError } = usePathology(validPathologyId as string);  
       
       const [currentImageIndex, setCurrentImageIndex] = useState(0);
     
@@ -40,11 +40,6 @@ export function PathologyDetail ({ className }: {className?: string}) {
       const handleImageChange = (index: number) => {
         setCurrentImageIndex(index);
       };
-    
-
-      if (!pathologyId) {
-        return <div className="flex items-center justify-center"><UiSpinner/></div>; 
-      }
 
     return (
     <div className={clsx(className, "flex flex-col justify-center items-center gap-3 flex-1 mb-4 px-5 mt-5")}>

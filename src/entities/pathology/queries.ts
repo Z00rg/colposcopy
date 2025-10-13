@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { atlasControllerGetPathologyInfo } from "@/shared/api/api";
 
-const pathologyDetailKey = (id: string) => ["pathology-detail", id];
+const pathologyKey = (id: string) => ["pathology", id];
 
-export function usePathologyDetailQuery(pathologyId: string) {
+export function usePathologyQuery(pathologyId: string) {
   return useQuery({
-    queryKey: pathologyDetailKey(pathologyId),
+    queryKey: pathologyKey(pathologyId),
     queryFn: () => {
       if (!pathologyId) {
         throw new Error("Pathology ID is required.");
