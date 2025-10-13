@@ -46,6 +46,8 @@ export interface GetAtlasListInfoDto {
   items: AtlasInfo[];
 }
 
+
+
 export const authControllerSignIn = (
   signInBodyDto: BodyType<SignInBodyDto>,
   options?: SecondParameter<typeof createInstance>
