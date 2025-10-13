@@ -4,7 +4,7 @@ export function usePathologyDetail(pathologyId: string) {
     const pathologyDetailQuery = usePathologyDetailQuery(pathologyId);
 
     return {
-        pathologyDeatails: pathologyDetailQuery.data,
+        pathologyDetails: pathologyDetailQuery.data,
         isLoading: pathologyDetailQuery.isPending,
         isError: pathologyDetailQuery.isError
     }

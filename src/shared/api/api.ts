@@ -109,7 +109,7 @@ export const atlasControllerGetPathologyInfo = (
   pathologyId: number | string,
   options?: SecondParameter<typeof createInstance>
 ) => {
-  return createInstance<GetAtlasListInfoDto>(
+  return createInstance<GetPathologyInfoDto>(
     { url: `/atlas/pathology-detail/${pathologyId}`, method: "GET" },
     options
   );
