@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { UiList } from "@/shared/ui/ui-list";
 import { useAtlasList } from "../model/use-atlas-list";
 import { UiListButtonAtlas } from "@/shared/ui/ui-list-button-atlas";
@@ -5,6 +6,7 @@ import { UiSpinner } from "@/shared/ui/ui-spinner";
 import clsx from "clsx";
 
 export function AtlasList({ className }: { className?: string }) {
+  const router = useRouter();
   const { items, isLoading, isError } = useAtlasList();
 
   const testItems = [
@@ -42,6 +44,12 @@ export function AtlasList({ className }: { className?: string }) {
     },
   ];
 
+  // 💡 Функция, которая будет выполнять переход
+  const handleItemClick = (id: number) => {
+    // Используем router.push для навигации на динамический маршрут
+    router.push(`/pathology/${id}`);
+  };
+
   return (
     // <UiList className={clsx(className, "mt-4 items-start max-h-[530px]")}>
     //   {isLoading && <UiSpinner />}
@@ -57,6 +65,7 @@ export function AtlasList({ className }: { className?: string }) {
     //         key={item.id}
     //         index={index + 1}
     //         informationOfPathology={item}
+    //         onClick={() => handleItemClick(item.id)}
     //       />
     //     ))}
     // </UiList>
@@ -67,6 +76,7 @@ export function AtlasList({ className }: { className?: string }) {
                 key={item.id}
                 index={index + 1}
                 informationOfPathology={item}
+                onClick={() => handleItemClick(item.id)}
               />
             ))}
           </UiList>

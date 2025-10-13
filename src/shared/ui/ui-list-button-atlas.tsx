@@ -8,12 +8,14 @@ export type UiListButtonAtlasProps = {
   className?: string;
   index: number;
   informationOfPathology: PathologyInformation;
+  onClick: () => void; 
 };
 
 export function UiListButtonAtlas({
   className,
   index,
   informationOfPathology,
+  onClick,
 }: UiListButtonAtlasProps) {
   return (
     <div
@@ -21,6 +23,7 @@ export function UiListButtonAtlas({
         className,
         "border-b-1 border-[#BDBDBD] flex text-[18px] pb-4 font-medium gap-2 cursor-pointer"
       )}
+      onClick={onClick}
     >
       <div>
         {index}. 
