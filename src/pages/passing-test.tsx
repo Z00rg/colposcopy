@@ -18,6 +18,7 @@ export function PassingTestPage() {
   const tasks = {
     items: [
       {
+        id: 1,
         imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
         pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
@@ -47,6 +48,7 @@ export function PassingTestPage() {
         ],
       },
       {
+        id: 2,
         imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
         pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
@@ -76,6 +78,7 @@ export function PassingTestPage() {
         ],
       },
       {
+        id: 3,
         imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
         pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
@@ -105,6 +108,7 @@ export function PassingTestPage() {
         ],
       },
       {
+        id: 4,
         imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
         pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
@@ -134,6 +138,7 @@ export function PassingTestPage() {
         ],
       },
       {
+        id: 5,
         imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
         pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
@@ -163,6 +168,7 @@ export function PassingTestPage() {
         ],
       },
       {
+        id: 6,
         imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
         pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
@@ -192,6 +198,7 @@ export function PassingTestPage() {
         ],
       },
       {
+        id: 7,
         imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
         pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
@@ -221,6 +228,7 @@ export function PassingTestPage() {
         ],
       },
       {
+        id: 8,
         imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
         pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
@@ -250,6 +258,7 @@ export function PassingTestPage() {
         ],
       },
       {
+        id: 9,
         imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
         pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
@@ -279,6 +288,7 @@ export function PassingTestPage() {
         ],
       },
       {
+        id: 10,
         imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
         pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
@@ -308,6 +318,7 @@ export function PassingTestPage() {
         ],
       },
       {
+        id: 11,
         imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
         pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
@@ -337,6 +348,7 @@ export function PassingTestPage() {
         ],
       },
       {
+        id: 12,
         imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
         pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
