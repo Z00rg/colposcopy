@@ -6,8 +6,15 @@ import { UiScrollImg } from "@/shared/ui/ui-scroll-img";
 import { UiTextArea } from "@/shared/ui/ui-textarea";
 import { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
-export function PathologyPage() {
+export function PathologyDetailPage() {
+  // 💡 Шаг 1: Получаем router
+  const router = useRouter();
+  
+  // 💡 Шаг 2: Извлекаем динамический параметр (имя файла без скобок)
+  const { pathologyId } = router.query; 
+  
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const imgContainer = ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg", "/imageFourth.png"];
@@ -29,6 +36,15 @@ export function PathologyPage() {
   const handleImageChange = (index: number) => {
     setCurrentImageIndex(index);
   };
+
+
+  // 💡 Шаг 3: Обработка состояния загрузки/отсутствия ID
+  // Это важно для SSR/SSG и пока роутер не готов
+  if (!pathologyId) {
+    // Можно показать спиннер или просто вернуть null, 
+    // пока Next.js не предоставит параметры
+    return <div>Загрузка параметров...</div>; 
+  }
 
   return (
     <div className="flex flex-col items-center min-h-screen lg:min-h-[667px]">
