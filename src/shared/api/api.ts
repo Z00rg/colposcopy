@@ -46,6 +46,12 @@ export interface GetAtlasListInfoDto {
   items: AtlasInfo[];
 }
 
+export interface GetPathologyInfoDto {
+  id: number;
+  imgContainer: string[];
+  textContainer: string[];
+}
+
 
 
 export const authControllerSignIn = (
@@ -95,6 +101,16 @@ export const atlasControllerGetAtlasListInfo = (
 ) => {
   return createInstance<GetAtlasListInfoDto>(
     { url: `/atlas/atlas-list`, method: "GET" },
+    options
+  );
+};
+
+export const atlasControllerGetPathologyInfo = (
+  pathologyId: number | string,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<GetAtlasListInfoDto>(
+    { url: `/atlas/pathology-detail/${pathologyId}`, method: "GET" },
     options
   );
 };
