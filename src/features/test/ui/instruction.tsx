@@ -1,8 +1,13 @@
 import clsx from "clsx";
 import { useState } from "react";
+import { useInstruction } from "../model/use-instruction";
+import { UiSpinner } from "@/shared/ui/ui-spinner";
 
 export function Instruction({ className }: { className?: string }) {
   const [active, setActive] = useState(false);
+
+  const { instructionDetails, isLoading, isError } = useInstruction();
+
   return (
     <div
       className={clsx(
@@ -31,12 +36,13 @@ export function Instruction({ className }: { className?: string }) {
           }
         )}
       >
-        Тут Инструкция Тут ИнструкцияТут ИнструкцияТут ИнструкцияТут
-        ИнструкцияТут ИнструкцияТут ИнструкцияТут Инструкция Тут ИнструкцияТут
-        ИнструкцияТут ИнструкцияТут ИнструкцияТут ИнструкцияТут ИнструкцияТут
-        Инструкция Тут ИнструкцияТут ИнструкцияТут ИнструкцияТут ИнструкцияТут
-        ИнструкцияТут ИнструкцияТут Инструкция Тут ИнструкцияТут ИнструкцияТут
-        ИнструкцияТут ИнструкцияТут ИнструкцияТут Инструкция
+        {isLoading && <UiSpinner />}
+        {isError && (
+          <div className="font-bold text-rose-500">
+            Ошибка при загрузке инструкции
+          </div>
+        )}
+        {instructionDetails && instructionDetails.text}
       </div>
     </div>
   );

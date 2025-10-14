@@ -123,7 +123,7 @@ export const atlasControllerGetPathologyInfo = (
 export const testControllerGetInstructionInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
-  return createInstance<GetPathologyInfoDto>(
+  return createInstance<GetInstructionInfoDto>(
     { url: `/test/instruction`, method: "GET" },
     options
   );
