@@ -49,6 +49,7 @@ export interface GetAtlasListInfoDto {
 export interface GetPathologyInfoDto {
   id: number;
   imgContainer: string[];
+  imgSchema: string;
   textContainer: string[];
 }
 
