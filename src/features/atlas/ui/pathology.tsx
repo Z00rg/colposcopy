@@ -10,7 +10,7 @@ import clsx from "clsx";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
 import { usePathology } from "../model/use-pathology";
 
-export function PathologyDetail ({ className }: {className?: string}) {
+export function Pathology ({ className }: {className?: string}) {
       const router = useRouter();
       
     const { pathologyId } = router.query; 
