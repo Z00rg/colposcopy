@@ -17,22 +17,16 @@ export function UiScrollImg({
 }: UiScrollImgProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Обработчик прокрутки
   const handleScroll = () => {
     if (!scrollContainerRef.current) return;
 
-    // Текущая позиция прокрутки
     const scrollLeft = scrollContainerRef.current.scrollLeft;
 
-    // Вычисляем индекс элемента в центре
-    // Делим позицию прокрутки на ширину одного элемента и округляем до ближайшего целого.
     const newIndex = Math.round(scrollLeft / IMAGE_WIDTH);
 
-    // Проверка, что индекс не выходит за пределы массива
     const clampedIndex = Math.min(Math.max(0, newIndex), img.length - 1);
 
-    // Вызываем коллбек с новым индексом
-     if (onIndexChange) {
+    if (onIndexChange) {
       onIndexChange(clampedIndex);
     }
   };

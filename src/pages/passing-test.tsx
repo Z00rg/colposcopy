@@ -11,7 +11,7 @@ import { UiCheckBox } from "@/shared/ui/ui-checkbox";
 
 export function PassingTestPage() {
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
-  const router = useRouter(); // 👈 Инициализируем роутер
+  const router = useRouter();
   const handleFinishAttempt = () => {
     router.push(ROUTES.HOME);
   };
