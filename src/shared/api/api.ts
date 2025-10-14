@@ -53,6 +53,10 @@ export interface GetPathologyInfoDto {
   textContainer: string[];
 }
 
+export interface GetInstructionInfoDto {
+  text: string;
+}
+
 
 
 export const authControllerSignIn = (
@@ -112,6 +116,15 @@ export const atlasControllerGetPathologyInfo = (
 ) => {
   return createInstance<GetPathologyInfoDto>(
     { url: `/atlas/pathology-detail/${pathologyId}`, method: "GET" },
+    options
+  );
+};
+
+export const testControllerGetInstructionInfo = (
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<GetPathologyInfoDto>(
+    { url: `/test/instruction`, method: "GET" },
     options
   );
 };
