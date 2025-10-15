@@ -16,37 +16,37 @@ export function PassingTestPage() {
   // Тут реализация получения testIds из query параметра
 
   // Получаем параметр testIds из URL
-  const { testIds } = router.query;
+  // const { testIds } = router.query;
 
-  // useMemo для парсинга ID.
-  // Зависим только от testIds, чтобы пересчитывать только при изменении URL.
-  const selectedPathologyIds: number[] = useMemo(() => {
-    let ids: number[] = [];
-    if (typeof testIds === "string" && testIds.length > 0) {
-      ids = testIds
-        .split(",")
-        .map((id) => Number(id))
-        .filter((id) => !isNaN(id) && id > 0);
-    }
-    return ids;
-  }, [testIds]);
+  // // useMemo для парсинга ID.
+  // // Зависим только от testIds, чтобы пересчитывать только при изменении URL.
+  // const selectedPathologyIds: number[] = useMemo(() => {
+  //   let ids: number[] = [];
+  //   if (typeof testIds === "string" && testIds.length > 0) {
+  //     ids = testIds
+  //       .split(",")
+  //       .map((id) => Number(id))
+  //       .filter((id) => !isNaN(id) && id > 0);
+  //   }
+  //   return ids;
+  // }, [testIds]);
 
-  // Логика редиректа при отсутствии выбранных патологий
-  useEffect(() => {
-    if (router.isReady && selectedPathologyIds.length === 0) {
-      router.push(ROUTES.TEST);
-    }
-  }, [router.isReady, selectedPathologyIds.length, router.push, router]);
-  // ------------------------------------------------------------------
+  // // Логика редиректа при отсутствии выбранных патологий
+  // useEffect(() => {
+  //   if (router.isReady && selectedPathologyIds.length === 0) {
+  //     router.push(ROUTES.TEST);
+  //   }
+  // }, [router.isReady, selectedPathologyIds.length, router.push, router]);
+  // // ------------------------------------------------------------------
 
-  // Обработка состояния загрузки/ожидания
-  if (!router.isReady || selectedPathologyIds.length === 0) {
-    return (
-      <div className="p-5 flex justify-center items-center h-screen">
-        <UiSpinner />
-      </div>
-    );
-  }
+  // // Обработка состояния загрузки/ожидания
+  // if (!router.isReady || selectedPathologyIds.length === 0) {
+  //   return (
+  //     <div className="p-5 flex justify-center items-center h-screen">
+  //       <UiSpinner />
+  //     </div>
+  //   );
+  // }
 
   const handleFinishAttempt = () => {
     router.push(ROUTES.HOME);
