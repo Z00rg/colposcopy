@@ -18,7 +18,7 @@ export function PassingTestPage() {
   // Получаем параметр testIds из URL
   const { testIds } = router.query;
 
-  // 1. Используем useMemo для парсинга ID.
+  // useMemo для парсинга ID.
   // Зависим только от testIds, чтобы пересчитывать только при изменении URL.
   const selectedPathologyIds: number[] = useMemo(() => {
     let ids: number[] = [];
