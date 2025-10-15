@@ -1,6 +1,8 @@
 import { Instruction } from "@/features/test/ui/instruction";
+import { ROUTES } from "@/shared/constants/routes";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiHeader } from "@/shared/ui/ui-header";
+import { UiLink } from "@/shared/ui/ui-link";
 import { UiList } from "@/shared/ui/ui-list";
 import { UiListButtonTest } from "@/shared/ui/ui-list-button-test";
 
@@ -52,6 +54,9 @@ export function ChoiceTestPage() {
                 informationOfPathology={item}
               />
             ))}
+            <UiLink className="ml-auto" href={ROUTES.PASSING}>
+              Начать попытку
+            </UiLink>
             <div className="flex w-full border border-b-1 border-[#BDBDBD]"></div>
             <Instruction />
           </UiList>
