@@ -129,11 +129,11 @@ export const testControllerGetInstructionInfo = (
   );
 };
 
-export const testControllerGetTestChoiceInfo = (
+export const testControllerGetTestListInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
   return createInstance<GetPathologyListInfoDto>(
-    { url: `/test/test-choice`, method: "GET" },
+    { url: `/test/test-list`, method: "GET" },
     options
   );
 };
