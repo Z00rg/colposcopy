@@ -1,19 +1,56 @@
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiScrollImg } from "@/shared/ui/ui-scroll-img";
 import { UiTextArea } from "@/shared/ui/ui-textarea";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { UiProgressBar } from "@/shared/ui/ui-progress-bar";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import { ROUTES } from "@/shared/constants/routes";
 import { UiCheckBox } from "@/shared/ui/ui-checkbox";
-
+import { UiSpinner } from "@/shared/ui/ui-spinner";
 
 export function PassingTestPage() {
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   const router = useRouter();
+
+  // Тут реализация получения testIds из query параметра
+
+  // Получаем параметр testIds из URL
+  const { testIds } = router.query;
+
+  // 1. Используем useMemo для парсинга ID.
+  // Зависим только от testIds, чтобы пересчитывать только при изменении URL.
+  const selectedPathologyIds: number[] = useMemo(() => {
+    let ids: number[] = [];
+    if (typeof testIds === "string" && testIds.length > 0) {
+      ids = testIds
+        .split(",")
+        .map((id) => Number(id))
+        .filter((id) => !isNaN(id) && id > 0);
+    }
+    return ids;
+  }, [testIds]);
+
+  // Логика редиректа при отсутствии выбранных патологий
+  useEffect(() => {
+    if (router.isReady && selectedPathologyIds.length === 0) {
+      router.push(ROUTES.TEST);
+    }
+  }, [router.isReady, selectedPathologyIds.length, router.push, router]);
+  // ------------------------------------------------------------------
+
+  // Обработка состояния загрузки/ожидания
+  if (!router.isReady || selectedPathologyIds.length === 0) {
+    return (
+      <div className="p-5 flex justify-center items-center h-screen">
+        <UiSpinner />
+      </div>
+    );
+  }
+
   const handleFinishAttempt = () => {
     router.push(ROUTES.HOME);
+    return null;
   };
   const tasks = {
     items: [
@@ -387,7 +424,6 @@ export function PassingTestPage() {
 
   return (
     <div className="flex flex-col items-center min-h-screen lg:min-h-[667px]">
-      
       <div className="flex flex-col justify-center items-center gap-3 flex-1 mb-4 px-5 mt-5">
         <UiProgressBar numOfCurrentTask={currentTaskIndex} tasks={tasks} />
         <UiScrollImg img={tasks.items[currentTaskIndex].imageSrcs} />
@@ -403,26 +439,28 @@ export function PassingTestPage() {
               <div className="flex w-full">
                 <span>
                   {" "}
-                  <span className="font-bold">Задание №{index+1}:</span> {item.question}
+                  <span className="font-bold">Задание №{index + 1}:</span>{" "}
+                  {item.question}
                 </span>
               </div>
               <div className="flex w-full">
                 <span>
                   {" "}
-                  <span className="font-bold">Инструкция:</span> {item.instructions}
+                  <span className="font-bold">Инструкция:</span>{" "}
+                  {item.instructions}
                 </span>
               </div>
               {item.answers.map((answer, answerIndex) => (
-                  <div className="flex gap-2" key={answerIndex}>
-                <div className="flex justify-center">{answerIndex+1}.</div>
-                <div className="flex justify-center break-words whitespace-normal">
-                  {answer}
+                <div className="flex gap-2" key={answerIndex}>
+                  <div className="flex justify-center">{answerIndex + 1}.</div>
+                  <div className="flex justify-center break-words whitespace-normal">
+                    {answer}
+                  </div>
+                  <div className="ml-auto w-6 h-6 flex justify-center items-center">
+                    <UiCheckBox />
+                  </div>
                 </div>
-                <div className="ml-auto w-6 h-6 flex justify-center items-center">
-                  <UiCheckBox/>
-                </div>
-              </div>
-                ))}
+              ))}
             </div>
           ))}
         </UiTextArea>
@@ -458,7 +496,7 @@ export function PassingTestPage() {
             Закончить попытку
           </button>
         </div>
-        <UiFooter activeStatus="test"/>
+        <UiFooter activeStatus="test" />
       </div>
     </div>
   );
