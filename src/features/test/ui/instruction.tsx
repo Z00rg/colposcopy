@@ -15,8 +15,8 @@ export function Instruction({ className }: { className?: string }) {
         "w-full border-b-1 border-[#BDBDBD] flex flex-col px-[9px]"
       )}
     >
-      <div className="h-[50px] flex justify-between font-bold text-[18px] text-[#4B4242] mb-1 gap-26">
-        <div className="flex gap-2.5 w-full">Инструкция к прохождению</div>
+      <div className="h-[30px] flex justify-between font-bold text-[18px] text-[#4B4242] mb-1 gap-26">
+        <div className="flex gap-2.5 w-full">Инструкция</div>
         <button onClick={() => setActive(!active)}>
           <ArrowRight
             className={clsx(
