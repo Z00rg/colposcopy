@@ -37,13 +37,13 @@ export interface GetProfileInfoDto {
   group: string;
 }
 
-interface AtlasInfo {
+interface PathologyInfo {
   id: number;
   name: string;
 }
 
-export interface GetAtlasListInfoDto {
-  items: AtlasInfo[];
+export interface GetPathologyListInfoDto {
+  items: PathologyInfo[];
 }
 
 export interface GetPathologyInfoDto {
@@ -55,11 +55,6 @@ export interface GetPathologyInfoDto {
 
 export interface GetInstructionInfoDto {
   text: string;
-}
-
-export interface GetTestChoiceInfoDto {
-  id: number;
-  name: string;
 }
 
 
@@ -109,7 +104,7 @@ export const accountControllerGetProfileInfo = (
 export const atlasControllerGetAtlasListInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
-  return createInstance<GetAtlasListInfoDto>(
+  return createInstance<GetPathologyListInfoDto>(
     { url: `/atlas/atlas-list`, method: "GET" },
     options
   );
@@ -137,7 +132,7 @@ export const testControllerGetInstructionInfo = (
 export const testControllerGetTestChoiceInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
-  return createInstance<GetTestChoiceInfoDto>(
+  return createInstance<GetPathologyListInfoDto>(
     { url: `/test/test-choice`, method: "GET" },
     options
   );
