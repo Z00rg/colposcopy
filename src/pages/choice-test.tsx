@@ -1,4 +1,4 @@
-import { TestList } from "@/features/test/ui/test-list";
+import { TestList } from "@/features/test";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiHeader } from "@/shared/ui/ui-header";
 
