@@ -57,6 +57,11 @@ export interface GetInstructionInfoDto {
   text: string;
 }
 
+export interface GetTestChoiceInfoDto {
+  id: number;
+  name: string;
+}
+
 
 
 export const authControllerSignIn = (
@@ -125,6 +130,15 @@ export const testControllerGetInstructionInfo = (
 ) => {
   return createInstance<GetInstructionInfoDto>(
     { url: `/test/instruction`, method: "GET" },
+    options
+  );
+};
+
+export const testControllerGetTestChoiceInfo = (
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<GetTestChoiceInfoDto>(
+    { url: `/test/test-choice`, method: "GET" },
     options
   );
 };
