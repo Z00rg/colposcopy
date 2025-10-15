@@ -2,7 +2,6 @@ import { Instruction } from "@/features/test/ui/instruction";
 import { ROUTES } from "@/shared/constants/routes";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiHeader } from "@/shared/ui/ui-header";
-import { UiLink } from "@/shared/ui/ui-link";
 import { UiList } from "@/shared/ui/ui-list";
 import { UiListButtonTest } from "@/shared/ui/ui-list-button-test";
 import clsx from "clsx";
