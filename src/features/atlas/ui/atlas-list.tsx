@@ -6,7 +6,6 @@ import { UiSpinner } from "@/shared/ui/ui-spinner";
 import clsx from "clsx";
 
 export function AtlasList({ className }: { className?: string }) {
-  const router = useRouter();
   const { items, isLoading, isError, handleClick } = useAtlasList();
 
   const testItems = [
