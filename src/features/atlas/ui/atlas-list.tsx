@@ -7,7 +7,7 @@ import clsx from "clsx";
 
 export function AtlasList({ className }: { className?: string }) {
   const router = useRouter();
-  const { items, isLoading, isError } = useAtlasList();
+  const { items, isLoading, isError, handleClick } = useAtlasList();
 
   const testItems = [
     {
@@ -44,12 +44,6 @@ export function AtlasList({ className }: { className?: string }) {
     },
   ];
 
-  // 💡 Функция, которая будет выполнять переход
-  const handleItemClick = (id: number) => {
-    // Используем router.push для навигации на динамический маршрут
-    router.push(`/pathology/${id}`);
-  };
-
   return (
     // <UiList className={clsx(className, "mt-4 items-start max-h-[530px]")}>
     //   {isLoading && <UiSpinner />}
@@ -65,20 +59,20 @@ export function AtlasList({ className }: { className?: string }) {
     //         key={item.id}
     //         index={index + 1}
     //         informationOfPathology={item}
-    //         onClick={() => handleItemClick(item.id)}
+    //         onClick={() => handleClick(item.id)}
     //       />
     //     ))}
     // </UiList>
     <UiList className="mt-4 items-start max-h-[530px]">
-            {testItems.map((item, index) => (
-              <UiListButtonAtlas
-                className="w-full"
-                key={item.id}
-                index={index + 1}
-                informationOfPathology={item}
-                onClick={() => handleItemClick(item.id)}
-              />
-            ))}
-          </UiList>
+      {testItems.map((item, index) => (
+        <UiListButtonAtlas
+          className="w-full"
+          key={item.id}
+          index={index + 1}
+          informationOfPathology={item}
+          onClick={() => handleClick(item.id)}
+        />
+      ))}
+    </UiList>
   );
 }
