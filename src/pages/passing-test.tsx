@@ -11,47 +11,14 @@ import { UiSpinner } from "@/shared/ui/ui-spinner";
 
 export function PassingTestPage() {
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
+  // структура: { [taskId]: { [questionIndex]: number[] } }
+  const [selectedAnswers, setSelectedAnswers] = useState<
+    Record<number, Record<number, number[]>>
+  >({});
+
   const router = useRouter();
 
-  // Тут реализация получения testIds из query параметра
-
-  // Получаем параметр testIds из URL
-  // const { testIds } = router.query;
-
-  // // useMemo для парсинга ID.
-  // // Зависим только от testIds, чтобы пересчитывать только при изменении URL.
-  // const selectedPathologyIds: number[] = useMemo(() => {
-  //   let ids: number[] = [];
-  //   if (typeof testIds === "string" && testIds.length > 0) {
-  //     ids = testIds
-  //       .split(",")
-  //       .map((id) => Number(id))
-  //       .filter((id) => !isNaN(id) && id > 0);
-  //   }
-  //   return ids;
-  // }, [testIds]);
-
-  // // Логика редиректа при отсутствии выбранных патологий
-  // useEffect(() => {
-  //   if (router.isReady && selectedPathologyIds.length === 0) {
-  //     router.push(ROUTES.TEST);
-  //   }
-  // }, [router.isReady, selectedPathologyIds.length, router.push, router]);
-  // // ------------------------------------------------------------------
-
-  // // Обработка состояния загрузки/ожидания
-  // if (!router.isReady || selectedPathologyIds.length === 0) {
-  //   return (
-  //     <div className="p-5 flex justify-center items-center h-screen">
-  //       <UiSpinner />
-  //     </div>
-  //   );
-  // }
-
-  const handleFinishAttempt = () => {
-    router.push(ROUTES.HOME);
-    return null;
-  };
+  // --- tasks (тот же объект, который ты дал) ---
   const tasks = {
     items: [
       {
@@ -177,9 +144,48 @@ export function PassingTestPage() {
     ],
   };
 
+  // Когда переключаешь тему — не очищаем глобально selectedAnswers,
+  // чтобы ответы сохранились при возвращении.
   const handleTaskChange = (index: number) => {
+    if (index < 0 || index >= tasks.items.length) return;
     setCurrentTaskIndex(index);
-    console.log(index);
+  };
+
+  const handleFinishAttempt = () => {
+    router.push(ROUTES.HOME);
+  };
+
+  // Хелпер: получить массив выбранных индексов для конкретного задания+вопроса
+  const getSelectedFor = (taskId: number, questionIndex: number): number[] =>
+    selectedAnswers[taskId]?.[questionIndex] ?? [];
+
+  // Обработчик изменения чекбокса для конкретного вопроса
+  const toggleAnswer = (
+    taskId: number,
+    questionIndex: number,
+    answerIndex: number,
+    typeQuestion: number
+  ) => {
+    setSelectedAnswers((prev) => {
+      const taskAnswers = { ...(prev[taskId] || {}) };
+      const current = taskAnswers[questionIndex]
+        ? [...taskAnswers[questionIndex]]
+        : [];
+
+      if (typeQuestion === 0) {
+        // одиночный выбор: установить только этот индекс
+        taskAnswers[questionIndex] = [answerIndex];
+      } else {
+        // множественный выбор: toggle
+        if (current.includes(answerIndex)) {
+          taskAnswers[questionIndex] = current.filter((i) => i !== answerIndex);
+        } else {
+          taskAnswers[questionIndex] = [...current, answerIndex];
+        }
+      }
+
+      return { ...prev, [taskId]: taskAnswers };
+    });
   };
 
   return (
@@ -191,39 +197,69 @@ export function PassingTestPage() {
           <div className="font-bold text-[15px]">
             Выполните следующие задания:
           </div>
-          {tasks.items[currentTaskIndex].testsQuestions.map((item, index) => (
-            <div
-              className="flex flex-col gap-2 w-full text-[13px] pb-5 border-b-2 border-[#BDBDBD]"
-              key={index}
-            >
-              <div className="flex w-full">
-                <span>
-                  {" "}
-                  <span className="font-bold">Задание №{index + 1}:</span>{" "}
-                  {item.question}
-                </span>
-              </div>
-              <div className="flex w-full">
-                <span>
-                  {" "}
-                  <span className="font-bold">Инструкция:</span>{" "}
-                  {item.instructions}
-                </span>
-              </div>
-              {item.answers.map((answer, answerIndex) => (
-                <div className="flex gap-2" key={answerIndex}>
-                  <div className="flex justify-center">{answerIndex + 1}.</div>
-                  <div className="flex justify-center break-words whitespace-normal">
-                    {answer}
+
+          {tasks.items[currentTaskIndex].testsQuestions.map(
+            (item: any, questionIndex: number) => {
+              const taskId = tasks.items[currentTaskIndex].id;
+              const selectedForThis = getSelectedFor(taskId, questionIndex);
+
+              return (
+                <div
+                  className="flex flex-col gap-2 w-full text-[13px] pb-5 border-b-2 border-[#BDBDBD]"
+                  key={`${taskId}-${questionIndex}`}
+                >
+                  <div className="flex w-full">
+                    <span>
+                      <span className="font-bold">
+                        Задание №{questionIndex + 1}:
+                      </span>{" "}
+                      {item.question}
+                    </span>
                   </div>
-                  <div className="ml-auto w-6 h-6 flex justify-center items-center">
-                    <UiCheckBox />
+                  <div className="flex w-full">
+                    <span>
+                      <span className="font-bold">Инструкция:</span>{" "}
+                      {item.instructions}
+                    </span>
                   </div>
+
+                  {item.answers.map((answer: string, answerIndex: number) => {
+                    const isChecked = selectedForThis.includes(answerIndex);
+                    return (
+                      <div
+                        className="flex gap-2"
+                        key={`${taskId}-${questionIndex}-${answerIndex}`}
+                      >
+                        <div className="flex justify-center">
+                          {answerIndex + 1}.
+                        </div>
+                        <div className="flex justify-center break-words whitespace-normal">
+                          {answer}
+                        </div>
+                        <div className="ml-auto w-6 h-6 flex justify-center items-center">
+                          <UiCheckBox
+                            checked={isChecked}
+                            onChange={() =>
+                              toggleAnswer(
+                                taskId,
+                                questionIndex,
+                                answerIndex,
+                                item.typeQuestion
+                              )
+                            }
+                            // передаём уникальный id, если потребуется
+                            id={`chk-${taskId}-${questionIndex}-${answerIndex}`}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              ))}
-            </div>
-          ))}
+              );
+            }
+          )}
         </UiTextArea>
+
         <div className="flex w-full">
           <button
             className={clsx(
@@ -235,6 +271,7 @@ export function PassingTestPage() {
           >
             Назад
           </button>
+
           <button
             className={clsx(
               { hidden: currentTaskIndex === tasks.items.length - 1 },
@@ -245,19 +282,24 @@ export function PassingTestPage() {
           >
             Далее
           </button>
+
           <button
             className={clsx(
-              { hidden: currentTaskIndex != tasks.items.length - 1 },
+              { hidden: currentTaskIndex !== tasks.items.length - 1 },
               "ml-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointer"
             )}
-            onClick={() => handleFinishAttempt}
-            disabled={currentTaskIndex != tasks.items.length - 1}
+            onClick={handleFinishAttempt}
+            disabled={currentTaskIndex !== tasks.items.length - 1}
           >
             Закончить попытку
           </button>
         </div>
+
         <UiFooter activeStatus="test" />
       </div>
     </div>
   );
 }
+
+
+
