@@ -1,18 +1,9 @@
 import clsx from "clsx";
 import { useProfile } from "../model/use-profile";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
-import { useStore } from "@/app/store/root-store-context";
-import { useEffect } from "react";
 
 export function Profile({ className }: { className?: string }) {
-  const { profileStore } = useStore();
   const { info, isLoading, isError } = useProfile();
-
-  useEffect(() => {
-    if (info) {
-      profileStore.setTempProfile(info);
-    }
-  }, [info, profileStore]);
 
   const testInfo = {
     email: "ayupov.artev@mail.ru",
@@ -59,9 +50,9 @@ export function Profile({ className }: { className?: string }) {
     //   {info && (
     //     <div className="flex flex-col">
     //       <div className="font-bold flex flex-wrap">
-    //         {profileStore.fullName}
+    //         {info.surname} {info.firstName} {info.middleName}
     //       </div>
-    //       <div className="font-medium flex flex-wrap">{profileStore.email}</div>
+    //       <div className="font-medium flex flex-wrap">{info.email}</div>
     //     </div>
     //   )}
     // </div>
