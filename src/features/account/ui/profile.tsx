@@ -61,7 +61,7 @@ export function Profile({ className }: { className?: string }) {
     //       <div className="font-bold flex flex-wrap">
     //         {profileStore.fullName}
     //       </div>
-    //       <div className="font-medium flex flex-wrap">{info.email}</div>
+    //       <div className="font-medium flex flex-wrap">{profileStore.email}</div>
     //     </div>
     //   )}
     // </div>

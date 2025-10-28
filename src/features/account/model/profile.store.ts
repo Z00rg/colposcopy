@@ -25,6 +25,10 @@ export class ProfileStore {
     this.tempProfile = profile;
   }
 
+  get email() {
+    return this.tempProfile?.email || "";
+  }
+
   get fullName() {
     if (!this.tempProfile) return "";
     const { surname, firstName, middleName } = this.tempProfile;
