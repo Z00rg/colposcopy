@@ -1,28 +1,11 @@
-import { makeAutoObservable } from "mobx";
+import { ProfileStore } from "@/features/account/model/profile.store";
 
-// Пример TimerStore
-class TimerStore {
-  secondsPassed = 0;
-
-  constructor() {
-    makeAutoObservable(this);
-  }
-
-  increase() {
-    this.secondsPassed++;
-  }
-
-  reset() {
-    this.secondsPassed = 0;
-  }
-}
-
-// Корневой стор, где собираются все остальные
+// Корневой стор
 export class RootStore {
-  timerStore: TimerStore;
+  profileStore: ProfileStore;
 
   constructor() {
-    this.timerStore = new TimerStore();
+    this.profileStore = new ProfileStore();
   }
 }
 
