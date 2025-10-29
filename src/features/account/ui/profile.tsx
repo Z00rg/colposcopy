@@ -22,15 +22,15 @@ export function Profile({ className }: { className?: string }) {
         "gap-4 px-[17px] py-2.5 text-[18px] flex bg-[#F3F3F3] items-center justify-start shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px]"
       )}
     >
-        <div className="flex justify-center items-center">
-          <Man />
+      <div className="flex justify-center items-center">
+        <Man />
+      </div>
+      <div className="flex flex-col">
+        <div className="font-bold flex flex-wrap">
+          {testInfo.surname} {testInfo.firstName} {testInfo.middleName}
         </div>
-        <div className="flex flex-col">
-          <div className="font-bold flex flex-wrap">
-            {testInfo.surname} {testInfo.firstName} {testInfo.middleName}
-          </div>
-          <div className="font-medium flex flex-wrap">{testInfo.email}</div>
-        </div>
+        <div className="font-medium flex flex-wrap">{testInfo.email}</div>
+      </div>
     </div>
     // <div
     //   className={clsx(
