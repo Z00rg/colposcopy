@@ -93,6 +93,19 @@ export interface GetTestTasksDataDto {
 }
 
 
+export type SubmitTestAnswersBodyDto = BodyType<{
+  testIds: string;
+  answers: Record<number, Record<number, number[]>>; 
+}>;
+
+
+export type SubmitTestAnswersResponseDto = {
+  success: boolean;
+  message?: string;
+  resultId?: string;
+};
+
+
 
 export const authControllerSignIn = (
   signInBodyDto: BodyType<SignInBodyDto>,
@@ -179,6 +192,20 @@ export const testControllerGetTestTasksInfo = (
 ) => {
   return createInstance<GetTestTasksDataDto>(
     { url: `/test/test-list/${tasksId}`, method: "GET" },
+    options
+  );
+};
+
+export const testControllerSubmitTestAnswers = (
+  body: SubmitTestAnswersBodyDto,
+  options?: Parameters<typeof createInstance>[1]
+) => {
+  return createInstance<SubmitTestAnswersResponseDto>(
+    {
+      url: `/test/submit-answers`,
+      method: "POST",
+      data: body,
+    },
     options
   );
 };
