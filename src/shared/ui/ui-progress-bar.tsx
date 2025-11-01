@@ -17,7 +17,7 @@ export function UiProgressBar({
             "flex h-7 px-3 w-max"
           )}
         >
-          {tasks.items.map((_: any, index: number) => (
+          {tasks.map((_: any, index: number) => (
             <button
               key={index}
               className={clsx(
