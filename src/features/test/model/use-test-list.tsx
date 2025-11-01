@@ -1,4 +1,4 @@
-import { useTestListQuery } from "@/entities/test-list";
+import { useTestListQuery } from "@/entities/test";
 import { ROUTES } from "@/shared/constants/routes";
 import { useRouter } from "next/router";
 import { useState } from "react";
