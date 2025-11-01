@@ -247,7 +247,7 @@ export function PassingTestPage() {
   // ФИЛЬТРАЦИЯ И ПРОВЕРКА ЗАДАНИЙ
   // ------------------------------------------------------------------
 
-  // useMemo: Фильтрация заданий по ID, полученным из URL.
+  // useMemo: Фильтрация заданий по ID, полученным из URL. Это временно для теста, потом это будет с бэка.
   const filteredTasks = useMemo(() => {
     return {
       ...tasks,
@@ -256,13 +256,6 @@ export function PassingTestPage() {
       ),
     };
   }, [tasks, selectedPathologyIds]);
-
-  // useEffect: Дополнительный редирект, если после фильтрации список заданий пуст.
-  useEffect(() => {
-    if (router.isReady && filteredTasks.items.length === 0) {
-      router.push(ROUTES.TEST);
-    }
-  }, [router.isReady, filteredTasks.items.length, router]);
 
   // ------------------------------------------------------------------
   // ОБРАБОТЧИКИ
@@ -368,20 +361,41 @@ export function PassingTestPage() {
                     const isChecked = selectedForThis.includes(answerIndex);
                     return (
                       <div
-                        className="flex gap-2"
                         key={`${taskId}-${questionIndex}-${answerIndex}`}
+                        className={clsx(
+                          "flex items-center gap-3 cursor-pointer select-none border-b border-[#E0E0E0] px-3 py-3 rounded-xl transition-all duration-200 ease-out",
+                          {
+                            "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md hover:scale-[1.01]":
+                              true,
+                            "bg-gradient-to-r from-blue-50 to-blue-100 border-blue-400 shadow-md":
+                              isChecked,
+                          }
+                        )}
+                        onClick={() =>
+                          toggleAnswer(
+                            taskId,
+                            questionIndex,
+                            answerIndex,
+                            item.typeQuestion
+                          )
+                        }
                       >
                         {/* Номер варианта ответа */}
-                        <div className="flex justify-center">
+                        <div className="text-gray-700 font-semibold">
                           {answerIndex + 1}.
                         </div>
+
                         {/* Текст варианта ответа */}
-                        <div className="flex justify-center break-words whitespace-normal">
+                        <div className="break-words whitespace-normal flex-1 text-gray-800">
                           {answer}
                         </div>
-                        {/* Чекбокс/Радиобаттон для выбора ответа */}
-                        <div className="ml-auto w-6 h-6 flex justify-center items-center">
-                          <UiCheckBox // Используется UiCheckBox, но логика в `toggleAnswer` имитирует и одиночный выбор
+
+                        {/* Чекбокс/Радиобаттон */}
+                        <div
+                          className="ml-auto w-6 h-6 flex justify-center items-center"
+                          onClick={(e) => e.stopPropagation()} // предотвращаем срабатывание клика на родителе
+                        >
+                          <UiCheckBox
                             checked={isChecked}
                             onChange={() =>
                               toggleAnswer(
@@ -451,6 +465,3 @@ export function PassingTestPage() {
     </div>
   );
 }
-
-
-
