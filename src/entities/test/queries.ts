@@ -1,5 +1,10 @@
-import { testControllerGetTestListInfo, testControllerGetTestTasksInfo } from "@/shared/api/api";
-import { useQuery } from "@tanstack/react-query";
+import {
+  SubmitTestAnswersBodyDto,
+  testControllerGetTestListInfo,
+  testControllerGetTestTasksInfo,
+  testControllerSubmitTestAnswers,
+} from "@/shared/api/api";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const testListKey = ["test-list"];
 
@@ -20,5 +25,12 @@ export function useTestTasksQuery(tasksId: string) {
     queryFn: () => testControllerGetTestTasksInfo(tasksId),
     retry: 0,
     staleTime: 60 * 60 * 1000,
+  });
+}
+
+export function useSubmitAnswersMutation() {
+  return useMutation({
+    mutationFn: (body: SubmitTestAnswersBodyDto) =>
+      testControllerSubmitTestAnswers(body),
   });
 }
