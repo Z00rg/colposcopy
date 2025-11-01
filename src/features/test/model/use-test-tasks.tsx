@@ -1,4 +1,5 @@
 import { useSubmitAnswersMutation, useTestTasksQuery } from "@/entities/test/queries";
+import { ROUTES } from "@/shared/constants/routes";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
 
@@ -57,7 +58,7 @@ export function useTestTasks() {
     });
 
     console.log("✅ Ответы успешно отправлены!");
-    // router.push(ROUTES.HOME);
+    router.push(ROUTES.HOME);
   } catch (error) {
     console.error("❌ Ошибка при отправке ответов:", error);
   }
