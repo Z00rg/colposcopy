@@ -83,7 +83,7 @@ export function useTestTasks() {
   // ВОЗВРАТ
   // ------------------------------------------------------------------
   return {
-    filteredTasks: tasks,
+    tasks,
     isLoading: testTasksQuery.isPending,
     isError: testTasksQuery.isError,
     currentTaskIndex,
