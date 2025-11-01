@@ -177,7 +177,7 @@ export const testControllerGetTestTasksInfo = (
   tasksId: string,
   options?: SecondParameter<typeof createInstance>
 ) => {
-  return createInstance<GetPathologyListInfoDto>(
+  return createInstance<GetTestTasksDataDto>(
     { url: `/test/test-list/${tasksId}`, method: "GET" },
     options
   );

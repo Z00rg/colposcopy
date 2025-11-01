@@ -16,7 +16,7 @@ export function useTestListQuery() {
 
 export function useTestTasksQuery(tasksId: string) {
   return useQuery({
-    queryKey: testListKey,
+    queryKey: testTasksKey,
     queryFn: () => testControllerGetTestTasksInfo(tasksId),
     retry: 0,
     staleTime: 60 * 60 * 1000,

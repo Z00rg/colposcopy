@@ -1,1 +1,1 @@
-export { useTestListQuery } from "./queries";
+export { useTestListQuery, useTestTasksQuery } from "./queries";
