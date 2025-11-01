@@ -1,4 +1,4 @@
-import { useTestTasksQuery } from "@/entities/test/queries";
+import { useSubmitAnswersMutation, useTestTasksQuery } from "@/entities/test/queries";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
 
@@ -12,6 +12,8 @@ export function useTestTasks() {
   >({});
 
   const router = useRouter();
+
+  const submitAnswersMutation = useSubmitAnswersMutation();
 
   // ------------------------------------------------------------------
   // ОБРАБОТКА URL-ПАРАМЕТРОВ
@@ -45,10 +47,22 @@ export function useTestTasks() {
     setCurrentTaskIndex(index);
   };
 
-  const handleFinishAttempt = () => {
-    console.log("Завершение попытки с ответами:", selectedAnswers);
+  const handleFinishAttempt = async () => {
+  if (!selectedPathologyIds) return;
+
+  try {
+    await submitAnswersMutation.mutateAsync({
+      testIds: selectedPathologyIds,
+      answers: selectedAnswers,
+    });
+
+    console.log("✅ Ответы успешно отправлены!");
     // router.push(ROUTES.HOME);
-  };
+  } catch (error) {
+    console.error("❌ Ошибка при отправке ответов:", error);
+  }
+};
+
 
   const getSelectedFor = (taskId: number, questionIndex: number): number[] =>
     selectedAnswers[taskId]?.[questionIndex] ?? [];
