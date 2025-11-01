@@ -10,6 +10,7 @@ export function usePathology() {
   const validPathologyId =
     typeof pathologyId === "string" ? pathologyId : undefined;
   const pathologyQuery = usePathologyQuery(validPathologyId as string);
+  // console.log(`Прошел запрос по id ${pathologyId}`)
 
   const handleImageChange = (index: number) => {
     setCurrentImageIndex(index);
