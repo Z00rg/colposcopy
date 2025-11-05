@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { useTestTasks } from "../model/use-test-tasks";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
+import { useEffect, useRef } from "react";
 
 export function TestTasks() {
   const {
@@ -20,6 +21,13 @@ export function TestTasks() {
     toggleAnswer,
     completionByTask,
   } = useTestTasks();
+
+  const textAreaRef = useRef<HTMLDivElement>(null);
+
+  // Скролл при смене задания
+  useEffect(() => {
+    textAreaRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentTaskIndex]);
 
   return (
     <div className="flex flex-col justify-center items-center gap-3 flex-1 mb-4 px-5 mt-5">
@@ -52,7 +60,10 @@ export function TestTasks() {
           <UiScrollImg img={tasks[currentTaskIndex].imageSrcs} />
 
           {/* Компонент Блока для текста и вопросов */}
-          <UiTextArea className="mt-5 gap-3 w-full text-[13px] items-start">
+          <UiTextArea
+            textAreaRef={textAreaRef}
+            className="mt-5 gap-3 w-full text-[13px] items-start"
+          >
             <div className="font-bold text-[15px]">
               Выполните следующие задания:
             </div>
