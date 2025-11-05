@@ -1,4 +1,7 @@
+"use client";
+
 import clsx from "clsx";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function UiProgressBar({
   className,
@@ -10,33 +13,56 @@ export function UiProgressBar({
   className?: string;
   tasks: any;
   numOfCurrentTask: number;
-  completionByTask: { taskId: number; isComplete: boolean }[];
+  completionByTask?: { taskId: number; isComplete: boolean }[];
   changeCurrentTask?: (index: number) => void;
 }) {
   return (
-    <div className="overflow-x-auto overflow-y-hidden custom-scrollbar max-w-[340px] border-[#DEDEDE] bg-[#FFFFFF] rounded-[20px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
-      <div className={clsx(className, "flex h-7 px-3 w-max")}>
+    <div className="relative overflow-x-auto overflow-y-hidden custom-scrollbar max-w-[340px] border-[#DEDEDE] bg-[#FFFFFF] rounded-[20px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
+      <div className={clsx(className, "relative flex h-10 px-3 w-max py-1")}>
         {tasks.map((task: any, index: number) => {
-          const completion = completionByTask.find((t) => t.taskId === task.id);
-
+          const completion = completionByTask?.find(
+            (t) => t.taskId === task.id
+          );
           const isComplete = completion?.isComplete ?? false;
           const isCurrent = index === numOfCurrentTask;
 
           return (
-            <button
+            <div
               key={task.id}
-              onClick={() => changeCurrentTask?.(index)}
-              className={clsx(
-                "flex w-12 flex-shrink-0 justify-center items-center cursor-pointer transition-colors duration-200",
-                {
-                  "border-b-[2px] border-[#2997F1]": isComplete,
-                  "bg-[#2997F1] text-white rounded-full scale-110 shadow-md":
-                    isCurrent,
-                }
-              )}
+              className="relative flex justify-center items-center"
             >
-              <span className="font-normal text-[16px]">{index + 1}</span>
-            </button>
+              {/* Активный кружок (анимируется поверх кнопки) */}
+              <AnimatePresence>
+                {isCurrent && (
+                  <motion.div
+                    layoutId="activeTask"
+                    className="absolute w-9 h-9 bg-[#2997F1] rounded-full shadow-md z-10"
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 30,
+                    }}
+                  />
+                )}
+              </AnimatePresence>
+
+              {/* Кнопка номера шага */}
+              <button
+                onClick={() => changeCurrentTask?.(index)}
+                className={clsx(
+                  "relative flex w-9 h-9 flex-shrink-0 justify-center items-center cursor-pointer font-medium text-[15px] transition-all duration-200",
+                  {
+                    "text-white z-20": isCurrent,
+                    "border-b-[2px] border-[#2997F1] text-[#2997F1]":
+                      isComplete && !isCurrent,
+                    "text-gray-500 hover:text-[#2997F1]":
+                      !isComplete && !isCurrent,
+                  }
+                )}
+              >
+                {index + 1}
+              </button>
+            </div>
           );
         })}
       </div>
