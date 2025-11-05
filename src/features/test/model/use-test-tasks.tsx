@@ -34,67 +34,6 @@ export function useTestTasks() {
   }, [testIds]);
 
   // ------------------------------------------------------------------
-  // ЗАПРОС К СЕРВЕРУ
-  // ------------------------------------------------------------------
-  const testTasksQuery = useTestTasksQuery(selectedPathologyIds);
-  const tasks = testTasksQuery.data?.items ?? [];
-
-  // ------------------------------------------------------------------
-  // ОБРАБОТЧИКИ
-  // ------------------------------------------------------------------
-  const handleTaskChange = (index: number) => {
-    // Проверяем границы, защищаемся от undefined
-    if (index < 0 || index >= tasks.length) return;
-    setCurrentTaskIndex(index);
-  };
-
-  const handleFinishAttempt = async () => {
-  if (!selectedPathologyIds) return;
-
-  try {
-    await submitAnswersMutation.mutateAsync({
-      testIds: selectedPathologyIds,
-      answers: selectedAnswers,
-    });
-
-    console.log("✅ Ответы успешно отправлены!");
-    router.push(ROUTES.HOME);
-  } catch (error) {
-    console.error("❌ Ошибка при отправке ответов:", error);
-  }
-};
-
-
-  const getSelectedFor = (taskId: number, questionIndex: number): number[] =>
-    selectedAnswers[taskId]?.[questionIndex] ?? [];
-
-  const toggleAnswer = (
-    taskId: number,
-    questionIndex: number,
-    answerIndex: number,
-    typeQuestion: number // 0 - одиночный, 1 - множественный
-  ) => {
-    setSelectedAnswers((prev) => {
-      const taskAnswers = { ...(prev[taskId] || {}) };
-      const current = taskAnswers[questionIndex]
-        ? [...taskAnswers[questionIndex]]
-        : [];
-
-      if (typeQuestion === 0) {
-        taskAnswers[questionIndex] = [answerIndex];
-      } else {
-        if (current.includes(answerIndex)) {
-          taskAnswers[questionIndex] = current.filter((i) => i !== answerIndex);
-        } else {
-          taskAnswers[questionIndex] = [...current, answerIndex];
-        }
-      }
-
-      return { ...prev, [taskId]: taskAnswers };
-    });
-  };
-
-  // ------------------------------------------------------------------
   // 🧩 ДАННЫЕ ЗАДАНИЙ (ЗАГЛУШКА)
   // ------------------------------------------------------------------
 
@@ -162,9 +101,71 @@ export function useTestTasks() {
     },
   ];
 
+  // ------------------------------------------------------------------
+  // ЗАПРОС К СЕРВЕРУ
+  // ------------------------------------------------------------------
+  const testTasksQuery = useTestTasksQuery(selectedPathologyIds);
+
+  // Для разработки выбран тестовый набор вопросов
+  // const tasks = testTasksQuery.data?.items ?? [];
+  const tasks = tasksTesting;
+
+  // ------------------------------------------------------------------
+  // ОБРАБОТЧИКИ
+  // ------------------------------------------------------------------
+  const handleTaskChange = (index: number) => {
+    // Проверяем границы, защищаемся от undefined
+    if (index < 0 || index >= tasks.length) return;
+    setCurrentTaskIndex(index);
+  };
+
+  const handleFinishAttempt = async () => {
+    if (!selectedPathologyIds) return;
+
+    try {
+      await submitAnswersMutation.mutateAsync({
+        testIds: selectedPathologyIds,
+        answers: selectedAnswers,
+      });
+
+      console.log("✅ Ответы успешно отправлены!");
+      router.push(ROUTES.HOME);
+    } catch (error) {
+      console.error("❌ Ошибка при отправке ответов:", error);
+    }
+  };
+
+  const getSelectedFor = (taskId: number, questionIndex: number): number[] =>
+    selectedAnswers[taskId]?.[questionIndex] ?? [];
+
+  const toggleAnswer = (
+    taskId: number,
+    questionIndex: number,
+    answerIndex: number,
+    typeQuestion: number // 0 - одиночный, 1 - множественный
+  ) => {
+    setSelectedAnswers((prev) => {
+      const taskAnswers = { ...(prev[taskId] || {}) };
+      const current = taskAnswers[questionIndex]
+        ? [...taskAnswers[questionIndex]]
+        : [];
+
+      if (typeQuestion === 0) {
+        taskAnswers[questionIndex] = [answerIndex];
+      } else {
+        if (current.includes(answerIndex)) {
+          taskAnswers[questionIndex] = current.filter((i) => i !== answerIndex);
+        } else {
+          taskAnswers[questionIndex] = [...current, answerIndex];
+        }
+      }
+
+      return { ...prev, [taskId]: taskAnswers };
+    });
+  };
+
   return {
-    tasks: tasksTesting,
-    // tasks,
+    tasks,
     isLoading: testTasksQuery.isPending,
     isError: testTasksQuery.isError,
     currentTaskIndex,
