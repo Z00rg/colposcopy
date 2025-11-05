@@ -20,6 +20,7 @@ export function TestTasks() {
     getSelectedFor,
     toggleAnswer,
     completionByTask,
+    isAllTasksComplete,
   } = useTestTasks();
 
   const textAreaRef = useRef<HTMLDivElement>(null);
@@ -185,10 +186,13 @@ export function TestTasks() {
             <button
               className={clsx(
                 { hidden: currentTaskIndex !== tasks.length - 1 },
-                "ml-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointer"
+                "ml-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointer",
+                {
+                  "text-gray-400 hover:text-gray-500": !isAllTasksComplete,
+                }
               )}
               onClick={handleFinishAttempt}
-              disabled={currentTaskIndex !== tasks.length - 1}
+              disabled={!isAllTasksComplete}
             >
               Закончить попытку
             </button>
