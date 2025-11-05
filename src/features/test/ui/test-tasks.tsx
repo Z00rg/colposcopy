@@ -10,6 +10,7 @@ import { UiSpinner } from "@/shared/ui/ui-spinner";
 export function TestTasks() {
   const {
     tasks,
+    setCurrentTaskIndex,
     isLoading,
     isError,
     currentTaskIndex,
@@ -17,6 +18,7 @@ export function TestTasks() {
     handleFinishAttempt,
     getSelectedFor,
     toggleAnswer,
+    completionByTask,
   } = useTestTasks();
 
   return (
@@ -39,7 +41,12 @@ export function TestTasks() {
       {tasks.length > 0 && (
         <>
           {/* Компонент Прогресс-бара */}
-          <UiProgressBar numOfCurrentTask={currentTaskIndex} tasks={tasks} />
+          <UiProgressBar
+            numOfCurrentTask={currentTaskIndex}
+            tasks={tasks}
+            completionByTask={completionByTask}
+            changeCurrentTask={setCurrentTaskIndex}
+          />
 
           {/* Компонент Прокручиваемого Изображения (для текущего задания) */}
           <UiScrollImg img={tasks[currentTaskIndex].imageSrcs} />

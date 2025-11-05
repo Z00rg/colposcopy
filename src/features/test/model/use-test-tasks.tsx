@@ -99,6 +99,66 @@ export function useTestTasks() {
         },
       ],
     },
+    {
+      id: 3,
+      imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
+      pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
+          всей площади стыка многослойного плоского эпителия и цилиндрического
+          эпителия, включая его наиболее важный для скрининга компонент —
+          границу метаплазии, расположенную на эктоцервиксе.`,
+      testsQuestions: [
+        {
+          question: "ТРЕТИЙ ПТАЛАГОИЯ Первичный осмотр",
+          typeQuestion: 0,
+          instructions: "Выберите один ответ.",
+          answers: [
+            "Кольпоскопическая картина адекватная ",
+            "Кольпоскопическая картина неадекватная ",
+          ],
+        },
+        {
+          question: "Граница между МПЭ и ЦЭ",
+          typeQuestion: 1,
+          instructions:
+            "Оцените видимость границы между эпителиями. Выберите один ответ.",
+          answers: [
+            "Визуализируется полностью",
+            "Визуализируется частично",
+            "Не визуализируется",
+          ],
+        },
+      ],
+    },
+    {
+      id: 4,
+      imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
+      pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
+          всей площади стыка многослойного плоского эпителия и цилиндрического
+          эпителия, включая его наиболее важный для скрининга компонент —
+          границу метаплазии, расположенную на эктоцервиксе.`,
+      testsQuestions: [
+        {
+          question: "ЭТО ОТ ЧЕТВЕРТОГО ВОПРОСА Первичный осмотр",
+          typeQuestion: 0,
+          instructions: "Выберите один ответ.",
+          answers: [
+            "Кольпоскопическая картина адекватная ",
+            "Кольпоскопическая картина неадекватная ",
+          ],
+        },
+        {
+          question: "Граница между МПЭ и ЦЭ",
+          typeQuestion: 1,
+          instructions:
+            "Оцените видимость границы между эпителиями. Выберите один ответ.",
+          answers: [
+            "Визуализируется полностью",
+            "Визуализируется частично",
+            "Не визуализируется",
+          ],
+        },
+      ],
+    },
   ];
 
   // ------------------------------------------------------------------
@@ -120,19 +180,20 @@ export function useTestTasks() {
   };
 
   const handleFinishAttempt = async () => {
-    if (!selectedPathologyIds) return;
+    // if (!selectedPathologyIds) return;
 
-    try {
-      await submitAnswersMutation.mutateAsync({
-        testIds: selectedPathologyIds,
-        answers: selectedAnswers,
-      });
+    // try {
+    //   await submitAnswersMutation.mutateAsync({
+    //     testIds: selectedPathologyIds,
+    //     answers: selectedAnswers,
+    //   });
 
-      console.log("✅ Ответы успешно отправлены!");
-      router.push(ROUTES.HOME);
-    } catch (error) {
-      console.error("❌ Ошибка при отправке ответов:", error);
-    }
+    //   console.log("✅ Ответы успешно отправлены!");
+    //   router.push(ROUTES.HOME);
+    // } catch (error) {
+    //   console.error("❌ Ошибка при отправке ответов:", error);
+    // }
+    console.log(selectedAnswers);
   };
 
   const getSelectedFor = (taskId: number, questionIndex: number): number[] =>
@@ -164,8 +225,37 @@ export function useTestTasks() {
     });
   };
 
+  // ------------------------------------------------------------------
+  // 🧮 СТАТУС ЗАПОЛНЕНИЯ
+  // ------------------------------------------------------------------
+
+  const completionByTask = useMemo(() => {
+    return tasks.map((task) => {
+      const answersForTask = selectedAnswers[task.id] || {};
+      const totalQuestions = task.testsQuestions.length;
+
+      // количество отвеченных вопросов (где есть хотя бы 1 выбранный ответ)
+      const answeredCount = Object.values(answersForTask).filter(
+        (arr) => arr.length > 0
+      ).length;
+
+      return {
+        taskId: task.id,
+        totalQuestions,
+        answeredCount,
+        isComplete: answeredCount === totalQuestions,
+      };
+    });
+  }, [selectedAnswers, tasks]);
+
+  const isAllTasksComplete = useMemo(
+    () => completionByTask.every((t) => t.isComplete),
+    [completionByTask]
+  );
+
   return {
     tasks,
+    setCurrentTaskIndex,
     isLoading: testTasksQuery.isPending,
     isError: testTasksQuery.isError,
     currentTaskIndex,
@@ -173,5 +263,7 @@ export function useTestTasks() {
     handleFinishAttempt,
     getSelectedFor,
     toggleAnswer,
+    completionByTask, // [{ taskId, answeredCount, totalQuestions, isComplete }]
+    isAllTasksComplete,
   };
 }
