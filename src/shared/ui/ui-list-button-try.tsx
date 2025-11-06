@@ -27,9 +27,12 @@ export function UiListButtonTry({
     >
       <div className="h-[50px] flex justify-between items-center text-[18px] font-bold mb-1 gap-26">
         <div className="flex gap-2.5 w-full">
-          {informationOfTry.status ? <TestCheckTrue /> : <TestCheckFalse />}
-          <div className="flex items-center">
-            Попытка {informationOfTry?.date}
+          <div className="flex justify-center items-center">
+            {informationOfTry.status ? <TestCheckTrue /> : <TestCheckFalse />}
+          </div>
+          <div className="flex flex-col">
+            <span>Попытка</span>
+            <span>{informationOfTry?.date}</span>
           </div>
         </div>
         <button onClick={() => setActive(!active)}>

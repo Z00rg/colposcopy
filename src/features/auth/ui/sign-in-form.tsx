@@ -26,7 +26,7 @@ export function SignInForm() {
           placeholder="Пароль"
         />
         {errorMessage && <div className="text-rose-500">{errorMessage}</div>}
-        <UiLink href={"/"}>Забыли пароль?</UiLink>
+        <UiLink href={ROUTES.SIGN_IN}>Забыли пароль?</UiLink>
       </div>
       <div className="flex flex-col justify-center my-10 items-center">
         <UiButton disabled={isPending}>{isPending ? <UiSpinner/> : "Начать"}</UiButton>
