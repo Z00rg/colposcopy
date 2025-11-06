@@ -13,7 +13,7 @@ export default function HomePage() {
           <div className="font-medium text-[20px] font-[#4B4242] mt-7">
             Основной аккаунт
           </div>
-          <Profile/>
+          <Profile className="mt-4"/>
           <TryList/>
         </div>
         <UiFooter activeStatus="main" />
