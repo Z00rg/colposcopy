@@ -8,6 +8,16 @@ export interface SignInBodyDto {
   password: string;
 }
 
+export interface SignUpBodyDto {
+  firstName: string;
+  surname: string;
+  middleName: string;
+  work: string;
+  position: string;
+  email: string;
+  password: string;
+}
+
 export interface GetSessionInfoDto {
   id: number;
   email: string;
@@ -114,6 +124,21 @@ export const authControllerSignIn = (
   return createInstance<void>(
     {
       url: `/auth/sign-in`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: signInBodyDto,
+    },
+    options
+  );
+};
+
+export const authControllerSignUp = (
+  signInBodyDto: BodyType<SignUpBodyDto>,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<void>(
+    {
+      url: `/auth/sign-up`,
       method: "POST",
       headers: { "Content-Type": "application/json" },
       data: signInBodyDto,
