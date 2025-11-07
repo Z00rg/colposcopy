@@ -2,8 +2,8 @@ import { UiButton } from "@/shared/ui/ui-button";
 import { UiHeader } from "@/shared/ui/ui-header";
 import { UiLink } from "@/shared/ui/ui-link";
 import { UiList } from "@/shared/ui/ui-list";
-import { UiTextField } from "@/shared/ui/ui-text-field";
 import { UiWhiteTextField } from "@/shared/ui/ui-white-text-field";
+import clsx from "clsx";
 
 export function SignUpPage() {
   return (
@@ -21,12 +21,52 @@ export function SignUpPage() {
               </div>
               <div className="font-bold text-[18px]">counter</div>
             </div>
-            <div className="flex flex-col gap-2">
-              <UiWhiteTextField label="Ваша фамилия"/>
-              <UiWhiteTextField label="Ваше имя"/>
-              <UiWhiteTextField label="Ваше отчество"/>
+            <div className="flex flex-col gap-2 mb-2">
+              <UiWhiteTextField label="Ваша фамилия" />
+              <UiWhiteTextField label="Ваше имя" />
+              <UiWhiteTextField label="Ваше отчество" />
             </div>
-            <div className="bg-[#A8A8A8] h-[1px] flex w-full"></div>
+            <div className="mt-auto flex flex-col w-full gap-2">
+              <div className="bg-[#A8A8A8] h-[1px] flex w-full"></div>
+              {/* Навигационные кнопки */}
+              <div className="flex w-full">
+                <button
+                  className={clsx(
+                    // { hidden: currentTaskIndex === 0 },
+                    "mr-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointer"
+                  )}
+                  // onClick={() => handleTaskChange(currentTaskIndex - 1)}
+                  // disabled={currentTaskIndex === 0}
+                >
+                  Назад
+                </button>
+
+                <button
+                  className={clsx(
+                    // { hidden: currentTaskIndex === tasks.length - 1 },
+                    "ml-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointer"
+                  )}
+                  // onClick={() => handleTaskChange(currentTaskIndex + 1)}
+                  // disabled={currentTaskIndex === tasks.length - 1}
+                >
+                  Далее
+                </button>
+
+                <button
+                  className={clsx(
+                    // { hidden: currentTaskIndex !== tasks.length - 1 },
+                    "ml-auto hidden text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointer"
+                    // {
+                    //   "text-gray-400 hover:text-gray-500": !isAllTasksComplete,
+                    // }
+                  )}
+                  // onClick={handleFinishAttempt}
+                  // disabled={!isAllTasksComplete}
+                >
+                  Закончить попытку
+                </button>
+              </div>
+            </div>
           </UiList>
         </div>
         <div className="flex flex-col justify-center my-10 items-center">
