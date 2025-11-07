@@ -1,7 +1,9 @@
 import { UiButton } from "@/shared/ui/ui-button";
 import { UiHeader } from "@/shared/ui/ui-header";
 import { UiLink } from "@/shared/ui/ui-link";
+import { UiList } from "@/shared/ui/ui-list";
 import { UiTextField } from "@/shared/ui/ui-text-field";
+import { UiWhiteTextField } from "@/shared/ui/ui-white-text-field";
 
 export function SignUpPage() {
   return (
@@ -12,17 +14,20 @@ export function SignUpPage() {
           <div className="w-full ml-9 text-[20px] font-medium text-[#4B4242]">
             Регистрация
           </div>
-          <div className="overflow-y-auto overflow-x-hidden max-h-[285px] bg-transparent w-[360px] flex flex-col items-center gap-5">
-            <UiTextField placeholder="Фамилия" />
-            <UiTextField placeholder="Имя" />
-            <UiTextField placeholder="Отчество" />
-            <div className="w-full mt-5 border-t-[1px] border-[#A8A8A8]"></div>
-            <UiTextField placeholder="Курс" />
-            <UiTextField placeholder="Группа" />
-            <div className="w-full mt-5 border-t-[1px] border-[#A8A8A8]"></div>
-            <UiTextField placeholder="Email" />
-            <UiTextField className="mb-15" placeholder="Пароль" />
-          </div>
+          <UiList className="items-start">
+            <div className="flex justify-between w-full">
+              <div className="font-semibold text-[18px] text-[#4B4242]">
+                Личные данные
+              </div>
+              <div className="font-bold text-[18px]">counter</div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <UiWhiteTextField label="Ваша фамилия"/>
+              <UiWhiteTextField label="Ваше имя"/>
+              <UiWhiteTextField label="Ваше отчество"/>
+            </div>
+            <div className="bg-[#A8A8A8] h-[1px] flex w-full"></div>
+          </UiList>
         </div>
         <div className="flex flex-col justify-center my-10 items-center">
           <UiButton>Начать</UiButton>
