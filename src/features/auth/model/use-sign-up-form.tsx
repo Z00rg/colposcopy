@@ -2,10 +2,16 @@ import { authControllerSignUp } from "@/shared/api/api";
 import { ROUTES } from "@/shared/constants/routes";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export function useSignUpForm() {
   const router = useRouter();
+  const [currentStageIndex, setCurrentStageIndex] = useState(1);
+
+  const handleStageChange = (index: number) => {
+    setCurrentStageIndex(index);
+  };
 
   const { register, handleSubmit } = useForm<{
     firstName: string;
@@ -24,14 +30,14 @@ export function useSignUpForm() {
     },
   });
 
-  const errorMessage = signInMutation.error
-    ? "Ошибка сервера"
-    : undefined;
+  const errorMessage = signInMutation.error ? "Ошибка сервера" : undefined;
 
   return {
     register,
     errorMessage,
     handleSubmit: handleSubmit((data) => signInMutation.mutate(data)),
     isPending: signInMutation.isPending,
+    currentStageIndex,
+    handleStageChange,
   };
 }
