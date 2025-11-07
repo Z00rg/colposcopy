@@ -13,7 +13,11 @@ export function useSignUpForm() {
     setCurrentStageIndex(index);
   };
 
-  const { register, handleSubmit } = useForm<{
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm<{
     firstName: string;
     surname: string;
     middleName: string;
@@ -21,7 +25,9 @@ export function useSignUpForm() {
     position: string;
     email: string;
     password: string;
-  }>();
+  }>({
+    mode: "onChange",
+  });
 
   const signInMutation = useMutation({
     mutationFn: authControllerSignUp,
@@ -39,5 +45,6 @@ export function useSignUpForm() {
     isPending: signInMutation.isPending,
     currentStageIndex,
     handleStageChange,
+    isAllFieldsFilled: isValid,
   };
 }

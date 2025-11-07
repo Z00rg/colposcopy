@@ -8,7 +8,7 @@ import { ROUTES } from "@/shared/constants/routes";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
 
 export function SignUpForm() {
-  const { register, errorMessage, handleSubmit, isPending, currentStageIndex, handleStageChange } = useSignUpForm();
+  const { register, errorMessage, handleSubmit, isPending, currentStageIndex, handleStageChange, isAllFieldsFilled } = useSignUpForm();
 
   return (
     <form className="flex flex-col justify-between mt-14 flex-1" onSubmit={handleSubmit}>
@@ -81,7 +81,7 @@ export function SignUpForm() {
       </div>
       <div className="flex flex-col justify-center my-10 items-center">
         {errorMessage && <div className="text-rose-500">{errorMessage}</div>}
-        <UiButton disabled={isPending}>{isPending ? <UiSpinner/> : "Регистрация"}</UiButton>
+        <UiButton className={clsx({ "bg-[#BAC0C6]": !isAllFieldsFilled})} disabled={!isAllFieldsFilled ||isPending}>{isPending ? <UiSpinner/> : "Регистрация"}</UiButton>
         <div className="text-[20px] text-white mt-8">
           <UiLink href={ROUTES.SIGN_UP}>Нужна помощь?</UiLink>
         </div>
