@@ -1,0 +1,37 @@
+import { authControllerSignUp } from "@/shared/api/api";
+import { ROUTES } from "@/shared/constants/routes";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+
+export function useSignUpForm() {
+  const router = useRouter();
+
+  const { register, handleSubmit } = useForm<{
+    firstName: string;
+    surname: string;
+    middleName: string;
+    work: string;
+    position: string;
+    email: string;
+    password: string;
+  }>();
+
+  const signInMutation = useMutation({
+    mutationFn: authControllerSignUp,
+    onSuccess: () => {
+      router.push(ROUTES.SIGN_IN);
+    },
+  });
+
+  const errorMessage = signInMutation.error
+    ? "Ошибка сервера"
+    : undefined;
+
+  return {
+    register,
+    errorMessage,
+    handleSubmit: handleSubmit((data) => signInMutation.mutate(data)),
+    isPending: signInMutation.isPending,
+  };
+}

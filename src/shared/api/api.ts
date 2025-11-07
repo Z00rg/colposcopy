@@ -133,7 +133,7 @@ export const authControllerSignIn = (
 };
 
 export const authControllerSignUp = (
-  signInBodyDto: BodyType<SignUpBodyDto>,
+  signUpBodyDto: BodyType<SignUpBodyDto>,
   options?: SecondParameter<typeof createInstance>
 ) => {
   return createInstance<void>(
@@ -141,7 +141,7 @@ export const authControllerSignUp = (
       url: `/auth/sign-up`,
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      data: signInBodyDto,
+      data: signUpBodyDto,
     },
     options
   );
