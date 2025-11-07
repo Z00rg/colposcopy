@@ -71,7 +71,7 @@ export function SignUpForm() {
                   "ml-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointer"
                 )}
                 onClick={() => handleStageChange(currentStageIndex + 1)}
-                // disabled={currentStageIndex === tasks.length - 1}
+                disabled={currentStageIndex === 3}
               >
                 Далее
               </button>

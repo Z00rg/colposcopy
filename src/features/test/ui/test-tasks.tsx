@@ -188,7 +188,7 @@ export function TestTasks() {
                 { hidden: currentTaskIndex !== tasks.length - 1 },
                 "ml-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointer",
                 {
-                  "text-gray-400 hover:text-gray-500": !isAllTasksComplete,
+                  "text-gray-400 hover:text-gray-400": !isAllTasksComplete,
                 }
               )}
               onClick={handleFinishAttempt}
