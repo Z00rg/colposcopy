@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 type UiScrollImgProps = {
   img: string[];
@@ -30,6 +30,13 @@ export function UiScrollImg({
       onIndexChange(clampedIndex);
     }
   };
+
+  // Сброс скролла при смене изображений
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ left: 0, behavior: "smooth" });
+    }
+  }, [img]);
 
   return (
     <div
