@@ -11,7 +11,10 @@ export function SignUpForm() {
   const { register, errorMessage, handleSubmit, isPending, currentStageIndex, handleStageChange, isAllFieldsFilled } = useSignUpForm();
 
   return (
-    <form className="flex flex-col justify-between mt-14 flex-1" onSubmit={handleSubmit}>
+    <form
+      className="flex flex-col justify-between mt-14 flex-1"
+      onSubmit={handleSubmit}
+    >
       <div className="flex flex-col justify-center items-center gap-5">
         <div className="w-full ml-9 text-[20px] font-medium text-[#4B4242]">
           Регистрация
@@ -19,7 +22,9 @@ export function SignUpForm() {
         <UiList className="items-start min-h-[310px]">
           <div className="flex justify-between w-full">
             <div className="font-semibold text-[18px] text-[#4B4242]">
-              Личные данные
+              {currentStageIndex === 1 && "Личные данные"}
+              {currentStageIndex === 2 && "Профессиональные данные"}
+              {currentStageIndex === 3 && "Данные для входа"}
             </div>
             <div className="font-bold text-[18px]">{currentStageIndex}/3</div>
           </div>
@@ -28,25 +33,49 @@ export function SignUpForm() {
               hidden: currentStageIndex !== 1,
             })}
           >
-            <UiWhiteTextField label="Ваша фамилия" inputProps={{ ...register("surname", { required: true }) }}/>
-            <UiWhiteTextField label="Ваше имя" inputProps={{ ...register("firstName", { required: true }) }}/>
-            <UiWhiteTextField label="Ваше отчество" inputProps={{ ...register("middleName", { required: true }) }}/>
+            <UiWhiteTextField
+              label="Ваша фамилия"
+              inputProps={{ ...register("surname", { required: true }) }}
+            />
+            <UiWhiteTextField
+              label="Ваше имя"
+              inputProps={{ ...register("firstName", { required: true }) }}
+            />
+            <UiWhiteTextField
+              label="Ваше отчество"
+              inputProps={{ ...register("middleName", { required: true }) }}
+            />
           </div>
           <div
             className={clsx("flex flex-col gap-2 mb-2", {
               hidden: currentStageIndex !== 2,
             })}
           >
-            <UiWhiteTextField label="Ваше место работы/учебы" inputProps={{ ...register("work", { required: true }) }}/>
-            <UiWhiteTextField label="Ваша должность" inputProps={{ ...register("position", { required: true }) }}/>
+            <UiWhiteTextField
+              label="Ваше место работы/учебы"
+              inputProps={{ ...register("work", { required: true }) }}
+            />
+            <UiWhiteTextField
+              label="Ваша должность"
+              inputProps={{ ...register("position", { required: true }) }}
+            />
           </div>
           <div
             className={clsx("flex flex-col gap-2 mb-2", {
               hidden: currentStageIndex !== 3,
             })}
           >
-            <UiWhiteTextField label="Ваш Email" inputProps={{ ...register("email", { required: true }) }}/>
-            <UiWhiteTextField label="Ваш пароль" inputProps={{ type: "password", ...register("password", { required: true }) }}/>
+            <UiWhiteTextField
+              label="Ваш Email"
+              inputProps={{ ...register("email", { required: true }) }}
+            />
+            <UiWhiteTextField
+              label="Ваш пароль"
+              inputProps={{
+                type: "password",
+                ...register("password", { required: true }),
+              }}
+            />
           </div>
           <div className="mt-auto flex flex-col w-full gap-2">
             <div className="bg-[#A8A8A8] h-[1px] flex w-full"></div>
@@ -81,7 +110,15 @@ export function SignUpForm() {
       </div>
       <div className="flex flex-col justify-center my-10 items-center">
         {errorMessage && <div className="text-rose-500">{errorMessage}</div>}
-        <UiButton className={clsx({ "bg-[#BAC0C6]": !isAllFieldsFilled})} disabled={!isAllFieldsFilled ||isPending}>{isPending ? <UiSpinner/> : "Регистрация"}</UiButton>
+        <UiButton
+          className={clsx(
+            { "bg-[#BAC0C6]": !isAllFieldsFilled },
+            "hover:bg-[#BAC0C6]"
+          )}
+          disabled={!isAllFieldsFilled || isPending}
+        >
+          {isPending ? <UiSpinner /> : "Регистрация"}
+        </UiButton>
         <div className="text-[20px] text-white mt-8">
           <UiLink href={ROUTES.SIGN_UP}>Нужна помощь?</UiLink>
         </div>
