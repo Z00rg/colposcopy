@@ -20,7 +20,7 @@ export function Profile({ className }: { className?: string }) {
           <Man />
         </div>
         <div className="flex flex-col">
-          <div className="font-bold flex flex-wrap">
+          <div className="font-bold flex flex-wrap max-w-[200px] overflow-auto">
             {formData.surname} {formData.firstName} {formData.middleName}
           </div>
           <div className="font-medium flex flex-wrap">{formData.email}</div>
