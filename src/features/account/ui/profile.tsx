@@ -7,6 +7,7 @@ import { UiWhiteTextField } from "@/shared/ui/ui-white-text-field";
 export function Profile({ className }: { className?: string }) {
   const { info, isLoading, isError } = useProfile();
   const [active, setActive] = useState(false);
+  const [editState, setEditState] = useState<boolean[]>([false, false, false]);
 
   const testInfo = {
     firstName: "Артем",
@@ -16,6 +17,14 @@ export function Profile({ className }: { className?: string }) {
     position: "Ассистент кафедры медицинской физики, математики и информатики",
     email: "ayupov.artev@mail.ru",
     password: "123456789A+",
+  };
+
+  const toggleEdit = (index: number) => {
+    setEditState((prev) => {
+      const newState = [...prev];
+      newState[index] = !newState[index];
+      return newState;
+    });
   };
 
   return (
@@ -60,24 +69,47 @@ export function Profile({ className }: { className?: string }) {
             Личные данные
           </div>
           <div className="flex justify-center items-center">
-            <Pencil />
+            {!editState[0] ? (
+              <button onClick={() => toggleEdit(0)}>
+                <Pencil />
+              </button>
+            ) : (
+              <button
+                className="text-[#639EDD] hover:text-[#26628A] text-[18px] font-bold cursor-pointer"
+                onClick={() => {
+                  console.log("Отправляем POST запрос для личных данных");
+                  toggleEdit(0);
+                }}
+              >
+                Сохранить
+              </button>
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-2 mb-2">
           <UiWhiteTextField
             label="Ваша фамилия"
-            placeholder={testInfo.surname}
-            // inputProps={{ ...register("surname", { required: true }) }}
+            inputProps={{
+              disabled: !editState[0],
+              value: testInfo.surname,
+              // ...register("surname", { required: true })
+            }}
           />
           <UiWhiteTextField
             label="Ваше имя"
-            placeholder={testInfo.firstName}
-            // inputProps={{ ...register("firstName", { required: true }) }}
+            inputProps={{
+              disabled: !editState[0],
+              value: testInfo.firstName,
+              // ...register("firstName", { required: true })
+            }}
           />
           <UiWhiteTextField
             label="Ваше отчество"
-            placeholder={testInfo.middleName}
-            // inputProps={{ ...register("middleName", { required: true }) }}
+            inputProps={{
+              disabled: !editState[0],
+              value: testInfo.middleName,
+              // ...register("middleName", { required: true }),
+            }}
           />
         </div>
         <div className="bg-[#A8A8A8] h-[1px] mt-[9px] flex w-full"></div>
@@ -86,19 +118,39 @@ export function Profile({ className }: { className?: string }) {
             Cлужебные данные
           </div>
           <div className="flex justify-center items-center">
-            <Pencil />
+            {!editState[1] ? (
+              <button onClick={() => toggleEdit(1)}>
+                <Pencil />
+              </button>
+            ) : (
+              <button
+                className="text-[#639EDD] hover:text-[#26628A] text-[18px] font-bold cursor-pointer"
+                onClick={() => {
+                  console.log("Отправляем POST запрос для личных данных");
+                  toggleEdit(1);
+                }}
+              >
+                Сохранить
+              </button>
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-2 mb-2">
           <UiWhiteTextField
             label="Ваше место работы/учебы"
-            placeholder={testInfo.work}
-            // inputProps={{ ...register("work", { required: true }) }}
+            inputProps={{
+              disabled: !editState[1],
+              value: testInfo.work,
+              // ...register("work", { required: true })
+            }}
           />
           <UiWhiteTextField
             label="Ваша должность"
-            placeholder={testInfo.position}
-            // inputProps={{ ...register("position", { required: true }) }}
+            inputProps={{
+              disabled: !editState[1],
+              value: testInfo.position,
+              // ...register("position", { required: true })
+            }}
           />
         </div>
         <div className="bg-[#A8A8A8] h-[1px] mt-[9px] flex w-full"></div>
@@ -107,20 +159,38 @@ export function Profile({ className }: { className?: string }) {
             Данные для входа
           </div>
           <div className="flex justify-center items-center">
-            <Pencil />
+            {!editState[2] ? (
+              <button onClick={() => toggleEdit(2)}>
+                <Pencil />
+              </button>
+            ) : (
+              <button
+                className="text-[#639EDD] hover:text-[#26628A] text-[18px] font-bold cursor-pointer"
+                onClick={() => {
+                  console.log("Отправляем POST запрос для личных данных");
+                  toggleEdit(2);
+                }}
+              >
+                Сохранить
+              </button>
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-2 mb-2">
           <UiWhiteTextField
             label="Ваш Email"
-            placeholder={testInfo.email}
-            // inputProps={{ ...register("email", { required: true }) }}
+            inputProps={{
+              disabled: !editState[2],
+              value: testInfo.email,
+              // ...register("email", { required: true })
+            }}
           />
           <UiWhiteTextField
             label="Ваш пароль"
-            placeholder={testInfo.password}
             inputProps={{
               type: "password",
+              disabled: !editState[2],
+              value: testInfo.password,
               // ...register("password", { required: true }),
             }}
           />
@@ -128,39 +198,12 @@ export function Profile({ className }: { className?: string }) {
         <div className="bg-[#A8A8A8] h-[1px] mt-[9px] flex w-full"></div>
         <button
           className="ml-auto text-rose-500 hover:text-[#26628A] text-[20px] cursor-pointer"
-          onClick={() =>
-            console.log("Тут будет выход из аккаунта")
-          }
+          onClick={() => console.log("Тут будет выход из аккаунта")}
         >
           Выйти из аккаунта
         </button>
       </div>
     </div>
-
-    // <div
-    //   className={clsx(
-    //     className,
-    //     "gap-4 px-[17px] py-2.5 text-[18px] flex bg-[#F3F3F3] items-center justify-start shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px]"
-    //   )}
-    // >
-    //   <div className="flex justify-center items-center">
-    //     <Man />
-    //   </div>
-    //   {isLoading && <UiSpinner />}
-    //   {isError && (
-    //     <div className="font-bold text-rose-500">
-    //       Ошибка при загрузке профиля
-    //     </div>
-    //   )}
-    //   {info && (
-    //     <div className="flex flex-col">
-    //       <div className="font-bold flex flex-wrap">
-    //         {info.surname} {info.firstName} {info.middleName}
-    //       </div>
-    //       <div className="font-medium flex flex-wrap">{info.email}</div>
-    //     </div>
-    //   )}
-    // </div>
   );
 }
 

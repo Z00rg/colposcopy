@@ -234,3 +234,19 @@ export const testControllerSubmitTestAnswers = (
     options
   );
 };
+
+// Редактирование профиля
+export const accountControllerProfileEdit = (
+  body: Partial<GetProfileInfoDto>,
+  options?: Parameters<typeof createInstance>[1]
+) => {
+  return createInstance<void>(
+    {
+      url: `/account/profile/edit`,
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      data: body,
+    },
+    options
+  );
+};
