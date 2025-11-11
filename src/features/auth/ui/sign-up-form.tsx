@@ -34,14 +34,17 @@ export function SignUpForm() {
             })}
           >
             <UiWhiteTextField
+              className="w-[323px]"
               label="Ваша фамилия"
               inputProps={{ ...register("surname", { required: true }) }}
             />
             <UiWhiteTextField
+              className="w-[323px]"
               label="Ваше имя"
               inputProps={{ ...register("firstName", { required: true }) }}
             />
             <UiWhiteTextField
+              className="w-[323px]"
               label="Ваше отчество"
               inputProps={{ ...register("middleName", { required: true }) }}
             />
@@ -52,10 +55,12 @@ export function SignUpForm() {
             })}
           >
             <UiWhiteTextField
+              className="w-[323px]"
               label="Ваше место работы/учебы"
               inputProps={{ ...register("work", { required: true }) }}
             />
             <UiWhiteTextField
+              className="w-[323px]"
               label="Ваша должность"
               inputProps={{ ...register("position", { required: true }) }}
             />
@@ -66,10 +71,12 @@ export function SignUpForm() {
             })}
           >
             <UiWhiteTextField
+              className="w-[323px]"
               label="Ваш Email"
               inputProps={{ ...register("email", { required: true }) }}
             />
             <UiWhiteTextField
+              className="w-[323px]"
               label="Ваш пароль"
               inputProps={{
                 type: "password",
