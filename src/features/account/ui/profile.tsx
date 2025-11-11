@@ -9,7 +9,7 @@ export function Profile({ className }: { className?: string }) {
   
 
   return (
-    <div className="flex bg-[#F3F3F3] w-full px-[17px] pb-2.5 flex-col shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px]">
+    <div className="flex bg-[#F3F3F3] w-full px-[17px] pb-2.5 flex-col shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px] flex-1">
       <div
         className={clsx(
           className,
