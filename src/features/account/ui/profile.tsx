@@ -3,7 +3,10 @@ import { useProfile } from "../model/use-profile";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
 import { useEffect, useState } from "react";
 import { UiWhiteTextField } from "@/shared/ui/ui-white-text-field";
-import { accountControllerProfileEdit, GetProfileInfoDto } from "@/shared/api/api";
+import {
+  accountControllerProfileEdit,
+  GetProfileInfoDto,
+} from "@/shared/api/api";
 import { useMutation } from "@tanstack/react-query";
 
 export function Profile({ className }: { className?: string }) {
@@ -11,7 +14,7 @@ export function Profile({ className }: { className?: string }) {
   const [active, setActive] = useState(false);
   const [editState, setEditState] = useState<boolean[]>([false, false, false]);
 
-  // Начальные данные
+  // Начальные данные изменить на финале
   const initialData: GetProfileInfoDto = info || {
     firstName: "Артем",
     surname: "Аюпов",
@@ -23,7 +26,8 @@ export function Profile({ className }: { className?: string }) {
   };
 
   // Стейт для редактирования
-  const [formData, setFormData] = useState<Partial<GetProfileInfoDto>>(initialData);
+  const [formData, setFormData] =
+    useState<Partial<GetProfileInfoDto>>(initialData);
 
   // Обновление стейта при получении данных
   useEffect(() => {
