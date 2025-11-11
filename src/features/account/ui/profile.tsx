@@ -4,9 +4,17 @@ import { UiSpinner } from "@/shared/ui/ui-spinner";
 import { UiWhiteTextField } from "@/shared/ui/ui-white-text-field";
 
 export function Profile({ className }: { className?: string }) {
-  const { formData, active, setActive, editState, toggleEdit, handleChange, handleSave, isLoading, isError } = useProfile();
-
-  
+  const {
+    formData,
+    active,
+    setActive,
+    editState,
+    toggleEdit,
+    handleChange,
+    handleSave,
+    isLoading,
+    isError,
+  } = useProfile();
 
   return (
     <div className="flex bg-[#F3F3F3] w-full px-[17px] pb-2.5 flex-col shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px] flex-1">
@@ -44,29 +52,12 @@ export function Profile({ className }: { className?: string }) {
           }
         )}
       >
-        <div className="bg-[#A8A8A8] h-[1px] mt-[9px] flex w-full"></div>
-        <div className="flex justify-between w-full">
-          <div className="font-semibold text-[18px] text-[#4B4242]">
-            Личные данные
-          </div>
-          <div className="flex justify-center items-center">
-            {!editState[0] ? (
-              <button onClick={() => toggleEdit(0)}>
-                <Pencil />
-              </button>
-            ) : (
-              <button
-                className="text-[#639EDD] hover:text-[#26628A] text-[18px] font-bold cursor-pointer"
-                onClick={() => {
-                  handleSave(0);
-                }}
-              >
-                Сохранить
-              </button>
-            )}
-          </div>
-        </div>
-        <div className="flex flex-col gap-2 mb-2">
+        <Section
+          title="Личные данные"
+          isEditing={editState[0]}
+          onToggle={() => toggleEdit(0)}
+          onSave={() => handleSave(0)}
+        >
           <UiWhiteTextField
             label="Ваша фамилия"
             inputProps={{
@@ -91,30 +82,13 @@ export function Profile({ className }: { className?: string }) {
               onChange: (e) => handleChange("middleName", e.target.value),
             }}
           />
-        </div>
-        <div className="bg-[#A8A8A8] h-[1px] mt-[9px] flex w-full"></div>
-        <div className="flex justify-between w-full">
-          <div className="font-semibold text-[18px] text-[#4B4242]">
-            Cлужебные данные
-          </div>
-          <div className="flex justify-center items-center">
-            {!editState[1] ? (
-              <button onClick={() => toggleEdit(1)}>
-                <Pencil />
-              </button>
-            ) : (
-              <button
-                className="text-[#639EDD] hover:text-[#26628A] text-[18px] font-bold cursor-pointer"
-                onClick={() => {
-                  handleSave(1);
-                }}
-              >
-                Сохранить
-              </button>
-            )}
-          </div>
-        </div>
-        <div className="flex flex-col gap-2 mb-2">
+        </Section>
+        <Section
+          title="Служебные данные"
+          isEditing={editState[1]}
+          onToggle={() => toggleEdit(1)}
+          onSave={() => handleSave(1)}
+        >
           <UiWhiteTextField
             label="Ваше место работы/учебы"
             inputProps={{
@@ -131,30 +105,13 @@ export function Profile({ className }: { className?: string }) {
               onChange: (e) => handleChange("position", e.target.value),
             }}
           />
-        </div>
-        <div className="bg-[#A8A8A8] h-[1px] mt-[9px] flex w-full"></div>
-        <div className="flex justify-between w-full">
-          <div className="font-semibold text-[18px] text-[#4B4242]">
-            Данные для входа
-          </div>
-          <div className="flex justify-center items-center">
-            {!editState[2] ? (
-              <button onClick={() => toggleEdit(2)}>
-                <Pencil />
-              </button>
-            ) : (
-              <button
-                className="text-[#639EDD] hover:text-[#26628A] text-[18px] font-bold cursor-pointer"
-                onClick={() => {
-                  handleSave(2);
-                }}
-              >
-                Сохранить
-              </button>
-            )}
-          </div>
-        </div>
-        <div className="flex flex-col gap-2 mb-2">
+        </Section>
+        <Section
+          title="Данные для входа"
+          isEditing={editState[2]}
+          onToggle={() => toggleEdit(2)}
+          onSave={() => handleSave(2)}
+        >
           <UiWhiteTextField
             label="Ваш Email"
             inputProps={{
@@ -172,7 +129,7 @@ export function Profile({ className }: { className?: string }) {
               onChange: (e) => handleChange("password", e.target.value),
             }}
           />
-        </div>
+        </Section>
         <div className="bg-[#A8A8A8] h-[1px] mt-[9px] flex w-full"></div>
         <button
           className="ml-auto text-rose-500 hover:text-[#26628A] text-[20px] cursor-pointer"
@@ -184,6 +141,43 @@ export function Profile({ className }: { className?: string }) {
     </div>
   );
 }
+
+// Универсальная секция
+const Section = ({
+  title,
+  isEditing,
+  onToggle,
+  onSave,
+  children,
+}: {
+  title: string;
+  isEditing: boolean;
+  onToggle: () => void;
+  onSave: () => void;
+  children: React.ReactNode;
+}) => (
+  <>
+    <div className="bg-[#A8A8A8] h-[1px] mt-[9px] flex w-full"></div>
+    <div className="flex justify-between w-full">
+      <div className="font-semibold text-[18px] text-[#4B4242]">{title}</div>
+      <div className="flex justify-center items-center">
+        {!isEditing ? (
+          <button onClick={onToggle}>
+            <Pencil />
+          </button>
+        ) : (
+          <button
+            className="text-[#639EDD] hover:text-[#26628A] text-[18px] font-bold cursor-pointer"
+            onClick={onSave}
+          >
+            Сохранить
+          </button>
+        )}
+      </div>
+    </div>
+    <div className="flex flex-col gap-2 mb-2">{children}</div>
+  </>
+);
 
 export const Man = ({ className }: { className?: string }) => (
   <svg
