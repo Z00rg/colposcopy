@@ -1,84 +1,12 @@
 import clsx from "clsx";
 import { useProfile } from "../model/use-profile";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
-import { useEffect, useState } from "react";
 import { UiWhiteTextField } from "@/shared/ui/ui-white-text-field";
-import {
-  accountControllerProfileEdit,
-  GetProfileInfoDto,
-} from "@/shared/api/api";
-import { useMutation } from "@tanstack/react-query";
 
 export function Profile({ className }: { className?: string }) {
-  const { info, isLoading, isError } = useProfile();
-  const [active, setActive] = useState(false);
-  const [editState, setEditState] = useState<boolean[]>([false, false, false]);
+  const { formData, active, setActive, editState, toggleEdit, handleChange, handleSave, isLoading, isError } = useProfile();
 
-  // Начальные данные изменить на финале
-  const initialData: GetProfileInfoDto = info || {
-    firstName: "Артем",
-    surname: "Аюпов",
-    middleName: "Дмитриевич",
-    work: "СамГМУ",
-    position: "Ассистент кафедры медицинской физики, математики и информатики",
-    email: "ayupov.artev@mail.ru",
-    password: "123456789A+",
-  };
-
-  // Стейт для редактирования
-  const [formData, setFormData] =
-    useState<Partial<GetProfileInfoDto>>(initialData);
-
-  // Обновление стейта при получении данных
-  useEffect(() => {
-    if (info) setFormData(info);
-  }, [info]);
-
-  // Мутация для отправки профиля
-  const profileEditMutation = useMutation({
-    mutationFn: accountControllerProfileEdit,
-    onSuccess: () => {
-      console.log("✅ Профиль успешно обновлён");
-    },
-    onError: (error) => {
-      console.error("❌ Ошибка при обновлении профиля:", error);
-    },
-  });
-
-  const toggleEdit = (index: number) => {
-    setEditState((prev) => {
-      const newState = [...prev];
-      newState[index] = !newState[index];
-      return newState;
-    });
-  };
-
-  const handleChange = (field: keyof typeof formData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  // Сравнение и отправка изменений
-  const handleSave = (index: number) => {
-    const changedFields = Object.entries(formData).reduce(
-      (acc, [key, value]) => {
-        if (value !== (initialData as any)[key]) {
-          acc[key as keyof GetProfileInfoDto] = value!;
-        }
-        return acc;
-      },
-      {} as Partial<GetProfileInfoDto>
-    );
-
-    if (Object.keys(changedFields).length === 0) {
-      console.log("Ничего не изменено");
-      toggleEdit(index);
-      return;
-    }
-
-    console.log("Отправляем изменённые поля:", changedFields);
-    profileEditMutation.mutate(changedFields);
-    toggleEdit(index);
-  };
+  
 
   return (
     <div className="flex bg-[#F3F3F3] px-[17px] pb-2.5 flex-col shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px]">
@@ -145,7 +73,6 @@ export function Profile({ className }: { className?: string }) {
               disabled: !editState[0],
               value: formData.surname,
               onChange: (e) => handleChange("surname", e.target.value),
-              // ...register("surname", { required: true })
             }}
           />
           <UiWhiteTextField
@@ -154,7 +81,6 @@ export function Profile({ className }: { className?: string }) {
               disabled: !editState[0],
               value: formData.firstName,
               onChange: (e) => handleChange("firstName", e.target.value),
-              // ...register("firstName", { required: true })
             }}
           />
           <UiWhiteTextField
@@ -163,7 +89,6 @@ export function Profile({ className }: { className?: string }) {
               disabled: !editState[0],
               value: formData.middleName,
               onChange: (e) => handleChange("middleName", e.target.value),
-              // ...register("middleName", { required: true }),
             }}
           />
         </div>
@@ -196,7 +121,6 @@ export function Profile({ className }: { className?: string }) {
               disabled: !editState[1],
               value: formData.work,
               onChange: (e) => handleChange("work", e.target.value),
-              // ...register("work", { required: true })
             }}
           />
           <UiWhiteTextField
@@ -205,7 +129,6 @@ export function Profile({ className }: { className?: string }) {
               disabled: !editState[1],
               value: formData.position,
               onChange: (e) => handleChange("position", e.target.value),
-              // ...register("position", { required: true })
             }}
           />
         </div>
@@ -238,7 +161,6 @@ export function Profile({ className }: { className?: string }) {
               disabled: !editState[2],
               value: formData.email,
               onChange: (e) => handleChange("email", e.target.value),
-              // ...register("email", { required: true })
             }}
           />
           <UiWhiteTextField
@@ -248,7 +170,6 @@ export function Profile({ className }: { className?: string }) {
               disabled: !editState[2],
               value: formData.password,
               onChange: (e) => handleChange("password", e.target.value),
-              // ...register("password", { required: true }),
             }}
           />
         </div>
