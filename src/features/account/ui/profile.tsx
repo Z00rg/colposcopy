@@ -9,7 +9,7 @@ export function Profile({ className }: { className?: string }) {
   
 
   return (
-    <div className="flex bg-[#F3F3F3] px-[17px] pb-2.5 flex-col shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px]">
+    <div className="flex bg-[#F3F3F3] w-full px-[17px] pb-2.5 flex-col shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px]">
       <div
         className={clsx(
           className,
@@ -20,7 +20,7 @@ export function Profile({ className }: { className?: string }) {
           <Man />
         </div>
         <div className="flex flex-col">
-          <div className="font-bold flex flex-wrap max-w-[200px] overflow-auto">
+          <div className="font-bold flex flex-wrap max-w-[280px] overflow-auto">
             {formData.surname} {formData.firstName} {formData.middleName}
           </div>
           <div className="font-medium flex flex-wrap">{formData.email}</div>
