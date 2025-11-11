@@ -38,13 +38,13 @@ export interface GetTryListInfoDto {
 }
 
 export interface GetProfileInfoDto {
-  email: string;
   firstName: string;
   surname: string;
   middleName: string;
-  university: string;
-  course: number;
-  group: string;
+  work: string;
+  position: string;
+  email: string;
+  password: string;
 }
 
 interface PathologyInfo {

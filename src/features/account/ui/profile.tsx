@@ -6,13 +6,13 @@ export function Profile({ className }: { className?: string }) {
   const { info, isLoading, isError } = useProfile();
 
   const testInfo = {
-    email: "ayupov.artev@mail.ru",
     firstName: "Артем",
     surname: "Аюпов",
     middleName: "Дмитриевич",
-    university: "СамГМУ",
-    course: 1,
-    group: "22-ИИ",
+    work: "СамГМУ",
+    position: "Ассистент кафедры медицинской физики, математики и информатики",
+    email: "ayupov.artev@mail.ru",
+    password: "123456789A+"
   };
 
   return (
