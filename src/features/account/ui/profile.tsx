@@ -9,7 +9,8 @@ export function Profile({ className }: { className?: string }) {
   const [active, setActive] = useState(false);
   const [editState, setEditState] = useState<boolean[]>([false, false, false]);
 
-  const testInfo = {
+  // 🔹 начальные данные (можно потом подставить из useProfile)
+  const [formData, setFormData] = useState({
     firstName: "Артем",
     surname: "Аюпов",
     middleName: "Дмитриевич",
@@ -17,7 +18,7 @@ export function Profile({ className }: { className?: string }) {
     position: "Ассистент кафедры медицинской физики, математики и информатики",
     email: "ayupov.artev@mail.ru",
     password: "123456789A+",
-  };
+  });
 
   const toggleEdit = (index: number) => {
     setEditState((prev) => {
@@ -25,6 +26,10 @@ export function Profile({ className }: { className?: string }) {
       newState[index] = !newState[index];
       return newState;
     });
+  };
+
+  const handleChange = (field: keyof typeof formData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   return (
@@ -40,9 +45,9 @@ export function Profile({ className }: { className?: string }) {
         </div>
         <div className="flex flex-col">
           <div className="font-bold flex flex-wrap">
-            {testInfo.surname} {testInfo.firstName} {testInfo.middleName}
+            {formData.surname} {formData.firstName} {formData.middleName}
           </div>
-          <div className="font-medium flex flex-wrap">{testInfo.email}</div>
+          <div className="font-medium flex flex-wrap">{formData.email}</div>
         </div>
         <button className="ml-5 mr-2" onClick={() => setActive(!active)}>
           <ArrowRight
@@ -91,7 +96,8 @@ export function Profile({ className }: { className?: string }) {
             label="Ваша фамилия"
             inputProps={{
               disabled: !editState[0],
-              value: testInfo.surname,
+              value: formData.surname,
+              onChange: (e) => handleChange("surname", e.target.value),
               // ...register("surname", { required: true })
             }}
           />
@@ -99,7 +105,8 @@ export function Profile({ className }: { className?: string }) {
             label="Ваше имя"
             inputProps={{
               disabled: !editState[0],
-              value: testInfo.firstName,
+              value: formData.firstName,
+              onChange: (e) => handleChange("firstName", e.target.value),
               // ...register("firstName", { required: true })
             }}
           />
@@ -107,7 +114,8 @@ export function Profile({ className }: { className?: string }) {
             label="Ваше отчество"
             inputProps={{
               disabled: !editState[0],
-              value: testInfo.middleName,
+              value: formData.middleName,
+              onChange: (e) => handleChange("middleName", e.target.value),
               // ...register("middleName", { required: true }),
             }}
           />
@@ -140,7 +148,8 @@ export function Profile({ className }: { className?: string }) {
             label="Ваше место работы/учебы"
             inputProps={{
               disabled: !editState[1],
-              value: testInfo.work,
+              value: formData.work,
+              onChange: (e) => handleChange("work", e.target.value),
               // ...register("work", { required: true })
             }}
           />
@@ -148,7 +157,8 @@ export function Profile({ className }: { className?: string }) {
             label="Ваша должность"
             inputProps={{
               disabled: !editState[1],
-              value: testInfo.position,
+              value: formData.position,
+              onChange: (e) => handleChange("position", e.target.value),
               // ...register("position", { required: true })
             }}
           />
@@ -181,7 +191,8 @@ export function Profile({ className }: { className?: string }) {
             label="Ваш Email"
             inputProps={{
               disabled: !editState[2],
-              value: testInfo.email,
+              value: formData.email,
+              onChange: (e) => handleChange("email", e.target.value),
               // ...register("email", { required: true })
             }}
           />
@@ -190,7 +201,8 @@ export function Profile({ className }: { className?: string }) {
             inputProps={{
               type: "password",
               disabled: !editState[2],
-              value: testInfo.password,
+              value: formData.password,
+              onChange: (e) => handleChange("password", e.target.value),
               // ...register("password", { required: true }),
             }}
           />
