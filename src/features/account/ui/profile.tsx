@@ -1,16 +1,18 @@
 import clsx from "clsx";
 import { useProfile } from "../model/use-profile";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UiWhiteTextField } from "@/shared/ui/ui-white-text-field";
+import { accountControllerProfileEdit, GetProfileInfoDto } from "@/shared/api/api";
+import { useMutation } from "@tanstack/react-query";
 
 export function Profile({ className }: { className?: string }) {
   const { info, isLoading, isError } = useProfile();
   const [active, setActive] = useState(false);
   const [editState, setEditState] = useState<boolean[]>([false, false, false]);
 
-  // 🔹 начальные данные (можно потом подставить из useProfile)
-  const [formData, setFormData] = useState({
+  // Начальные данные
+  const initialData: GetProfileInfoDto = info || {
     firstName: "Артем",
     surname: "Аюпов",
     middleName: "Дмитриевич",
@@ -18,6 +20,25 @@ export function Profile({ className }: { className?: string }) {
     position: "Ассистент кафедры медицинской физики, математики и информатики",
     email: "ayupov.artev@mail.ru",
     password: "123456789A+",
+  };
+
+  // Стейт для редактирования
+  const [formData, setFormData] = useState<Partial<GetProfileInfoDto>>(initialData);
+
+  // Обновление стейта при получении данных
+  useEffect(() => {
+    if (info) setFormData(info);
+  }, [info]);
+
+  // Мутация для отправки профиля
+  const profileEditMutation = useMutation({
+    mutationFn: accountControllerProfileEdit,
+    onSuccess: () => {
+      console.log("✅ Профиль успешно обновлён");
+    },
+    onError: (error) => {
+      console.error("❌ Ошибка при обновлении профиля:", error);
+    },
   });
 
   const toggleEdit = (index: number) => {
@@ -30,6 +51,29 @@ export function Profile({ className }: { className?: string }) {
 
   const handleChange = (field: keyof typeof formData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  // Сравнение и отправка изменений
+  const handleSave = (index: number) => {
+    const changedFields = Object.entries(formData).reduce(
+      (acc, [key, value]) => {
+        if (value !== (initialData as any)[key]) {
+          acc[key as keyof GetProfileInfoDto] = value!;
+        }
+        return acc;
+      },
+      {} as Partial<GetProfileInfoDto>
+    );
+
+    if (Object.keys(changedFields).length === 0) {
+      console.log("Ничего не изменено");
+      toggleEdit(index);
+      return;
+    }
+
+    console.log("Отправляем изменённые поля:", changedFields);
+    profileEditMutation.mutate(changedFields);
+    toggleEdit(index);
   };
 
   return (
@@ -82,8 +126,7 @@ export function Profile({ className }: { className?: string }) {
               <button
                 className="text-[#639EDD] hover:text-[#26628A] text-[18px] font-bold cursor-pointer"
                 onClick={() => {
-                  console.log("Отправляем POST запрос для личных данных");
-                  toggleEdit(0);
+                  handleSave(0);
                 }}
               >
                 Сохранить
@@ -134,8 +177,7 @@ export function Profile({ className }: { className?: string }) {
               <button
                 className="text-[#639EDD] hover:text-[#26628A] text-[18px] font-bold cursor-pointer"
                 onClick={() => {
-                  console.log("Отправляем POST запрос для личных данных");
-                  toggleEdit(1);
+                  handleSave(1);
                 }}
               >
                 Сохранить
@@ -177,8 +219,7 @@ export function Profile({ className }: { className?: string }) {
               <button
                 className="text-[#639EDD] hover:text-[#26628A] text-[18px] font-bold cursor-pointer"
                 onClick={() => {
-                  console.log("Отправляем POST запрос для личных данных");
-                  toggleEdit(2);
+                  handleSave(2);
                 }}
               >
                 Сохранить
