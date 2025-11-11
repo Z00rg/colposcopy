@@ -156,6 +156,16 @@ export const authControllerGetSessionInfo = (
   );
 };
 
+//Выход из аккаунта
+export const authControllerSignOut = (
+  options?: SecondParameter<typeof createInstance>,
+) => {
+  return createInstance<void>(
+    { url: `/auth/sign-out`, method: "POST" },
+    options,
+  );
+};
+
 export const tryControllerGetTryListInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {

@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { useProfile } from "../model/use-profile";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
 import { UiWhiteTextField } from "@/shared/ui/ui-white-text-field";
+import { SignOutButton } from "@/features/auth";
 
 export function Profile({ className }: { className?: string }) {
   const {
@@ -131,12 +132,7 @@ export function Profile({ className }: { className?: string }) {
           />
         </Section>
         <div className="bg-[#A8A8A8] h-[1px] mt-[9px] flex w-full"></div>
-        <button
-          className="ml-auto text-rose-500 hover:text-rose-700 text-[20px] cursor-pointer"
-          onClick={() => console.log("Тут будет выход из аккаунта")}
-        >
-          Выйти из аккаунта
-        </button>
+        <SignOutButton/>
       </div>
     </div>
   );
