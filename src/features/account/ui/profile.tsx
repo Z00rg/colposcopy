@@ -132,7 +132,7 @@ export function Profile({ className }: { className?: string }) {
         </Section>
         <div className="bg-[#A8A8A8] h-[1px] mt-[9px] flex w-full"></div>
         <button
-          className="ml-auto text-rose-500 hover:text-[#26628A] text-[20px] cursor-pointer"
+          className="ml-auto text-rose-500 hover:text-rose-700 text-[20px] cursor-pointer"
           onClick={() => console.log("Тут будет выход из аккаунта")}
         >
           Выйти из аккаунта
@@ -142,7 +142,6 @@ export function Profile({ className }: { className?: string }) {
   );
 }
 
-// Универсальная секция
 const Section = ({
   title,
   isEditing,
