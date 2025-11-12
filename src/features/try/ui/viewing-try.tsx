@@ -102,7 +102,7 @@ export function ViewingTry() {
                         <div
                           key={`${taskId}-${questionIndex}-${answerIndex}`}
                           className={clsx(
-                            "flex items-center gap-3 cursor-pointer select-none border-b border-[#E0E0E0] px-3 py-3 rounded-xl transition-all duration-200 ease-out",
+                            "flex items-center gap-3 select-none border-b border-[#E0E0E0] px-3 py-3 rounded-xl transition-all duration-200 ease-out",
                             {
                               "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md hover:scale-[1.01]":
                                 true,
@@ -128,6 +128,7 @@ export function ViewingTry() {
                           >
                             <UiCheckBox
                               checked={isChecked}
+                              readOnly
                               id={`chk-${taskId}-${questionIndex}-${answerIndex}`}
                             />
                           </div>
