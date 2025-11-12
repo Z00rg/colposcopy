@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import { useState } from "react";
-import { UiLink } from "./ui-link";
 
 type TryInformation = {
   id: number;
@@ -11,11 +10,13 @@ type TryInformation = {
 export type UiListButtonTryProps = {
   className?: string;
   informationOfTry: TryInformation;
+  handleClick: (id: number) => void;
 };
 
 export function UiListButtonTry({
   className,
   informationOfTry,
+  handleClick,
 }: UiListButtonTryProps) {
   const [active, setActive] = useState(false);
 
@@ -60,7 +61,7 @@ export function UiListButtonTry({
         <button
           className="ml-auto text-[#639EDD] hover:text-[#26628A] text-[20px] font-bold cursor-pointer"
           onClick={() =>
-            console.log(`Тут будет переход к попытке ${informationOfTry.id}`)
+            handleClick(informationOfTry.id)
           }
         >
           Просмотр попытки

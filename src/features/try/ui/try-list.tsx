@@ -5,7 +5,7 @@ import { UiSpinner } from "@/shared/ui/ui-spinner";
 import clsx from "clsx";
 
 export function TryList({ className }: { className?: string }) {
-  const { isLoading, items, isError } = useTryList();
+  const { isLoading, items, isError, handleTryClick } = useTryList();
 
   const isLoader = isLoading;
   const isEmptyText = !isLoading && !isError && items.length === 0;
@@ -14,37 +14,32 @@ export function TryList({ className }: { className?: string }) {
 
   const testInformationOfTry = [
     {
-      id: "1",
+      id: 1,
       date: "21.04.2001",
-      status: true,
       mark: "Отлично",
       time: "46:20",
     },
     {
-      id: "2",
+      id: 2,
       date: "22.09.2006",
-      status: false,
       mark: "Удовлетворительно",
       time: "35:10",
     },
     {
-      id: "3",
+      id: 3,
       date: "21.04.2001",
-      status: true,
       mark: "Отлично",
       time: "46:20",
     },
     {
-      id: "4",
+      id: 4,
       date: "22.09.2006",
-      status: false,
       mark: "Удовлетворительно",
       time: "35:10",
     },
     {
-      id: "5",
+      id: 5,
       date: "21.04.2001",
-      status: true,
       mark: "Отлично",
       time: "46:20",
     },
@@ -68,7 +63,7 @@ export function TryList({ className }: { className?: string }) {
       // </UiList>
       <UiList className="mt-4">
             {testInformationOfTry.map((item) => (
-              <UiListButtonTry key={item.id} informationOfTry={item} />
+              <UiListButtonTry key={item.id} informationOfTry={item} handleClick={handleTryClick}/>
             ))}
           </UiList>
   );
