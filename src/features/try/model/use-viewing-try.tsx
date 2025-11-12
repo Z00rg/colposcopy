@@ -1,4 +1,4 @@
-import { useSubmitAnswersMutation, useTestTasksQuery } from "@/entities/test/queries";
+import { useTestTasksQuery } from "@/entities/test/queries";
 import { ROUTES } from "@/shared/constants/routes";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
@@ -8,30 +8,24 @@ export function useViewingTry() {
   // СОСТОЯНИЕ
   // ------------------------------------------------------------------
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<
-    Record<number, Record<number, number[]>>
-  >({});
+  //Заполнено заглушкой заполненных ответов
+  const selectedAnswers: Record<number, Record<number, number[]>> = useMemo(
+    () => ({
+      1: { 0: [0], 1: [0, 1] },
+      2: { 0: [1], 1: [1, 2] },
+      3: { 0: [1], 1: [1, 2] },
+      4: { 0: [0], 1: [0, 1] },
+    }),
+    []
+  );
 
   const router = useRouter();
-
-  const submitAnswersMutation = useSubmitAnswersMutation();
 
   // ------------------------------------------------------------------
   // ОБРАБОТКА URL-ПАРАМЕТРОВ
   // ------------------------------------------------------------------
-  const { testIds } = router.query;
-
-  // Преобразуем testIds из query в формат "1-2-3"
-  const selectedPathologyIds: string = useMemo(() => {
-    if (typeof testIds === "string" && testIds.length > 0) {
-      const ids = testIds
-        .split(",")
-        .map((id) => Number(id))
-        .filter((id) => !isNaN(id) && id > 0);
-      return ids.join("-");
-    }
-    return "";
-  }, [testIds]);
+  const { tryId } = router.query;
+  console.log(`Открыта страница попытки с id ${tryId}`);
 
   // ------------------------------------------------------------------
   // 🧩 ДАННЫЕ ЗАДАНИЙ (ЗАГЛУШКА)
@@ -164,7 +158,7 @@ export function useViewingTry() {
   // ------------------------------------------------------------------
   // ЗАПРОС К СЕРВЕРУ
   // ------------------------------------------------------------------
-  const testTasksQuery = useTestTasksQuery(selectedPathologyIds);
+  const testTasksQuery = useTestTasksQuery(tryId as string);
 
   // Для разработки выбран тестовый набор вопросов
   // const tasks = testTasksQuery.data?.items ?? [];
@@ -179,51 +173,8 @@ export function useViewingTry() {
     setCurrentTaskIndex(index);
   };
 
-  const handleFinishAttempt = async () => {
-    // if (!selectedPathologyIds) return;
-
-    // try {
-    //   await submitAnswersMutation.mutateAsync({
-    //     testIds: selectedPathologyIds,
-    //     answers: selectedAnswers,
-    //   });
-
-    //   console.log("✅ Ответы успешно отправлены!");
-    //   router.push(ROUTES.HOME);
-    // } catch (error) {
-    //   console.error("❌ Ошибка при отправке ответов:", error);
-    // }
-    console.log(selectedAnswers);
-  };
-
   const getSelectedFor = (taskId: number, questionIndex: number): number[] =>
     selectedAnswers[taskId]?.[questionIndex] ?? [];
-
-  const toggleAnswer = (
-    taskId: number,
-    questionIndex: number,
-    answerIndex: number,
-    typeQuestion: number // 0 - одиночный, 1 - множественный
-  ) => {
-    setSelectedAnswers((prev) => {
-      const taskAnswers = { ...(prev[taskId] || {}) };
-      const current = taskAnswers[questionIndex]
-        ? [...taskAnswers[questionIndex]]
-        : [];
-
-      if (typeQuestion === 0) {
-        taskAnswers[questionIndex] = [answerIndex];
-      } else {
-        if (current.includes(answerIndex)) {
-          taskAnswers[questionIndex] = current.filter((i) => i !== answerIndex);
-        } else {
-          taskAnswers[questionIndex] = [...current, answerIndex];
-        }
-      }
-
-      return { ...prev, [taskId]: taskAnswers };
-    });
-  };
 
   // ------------------------------------------------------------------
   // 🧮 СТАТУС ЗАПОЛНЕНИЯ
@@ -248,11 +199,6 @@ export function useViewingTry() {
     });
   }, [selectedAnswers, tasks]);
 
-  const isAllTasksComplete = useMemo(
-    () => completionByTask.every((t) => t.isComplete),
-    [completionByTask]
-  );
-
   return {
     tasks,
     setCurrentTaskIndex,
@@ -260,10 +206,7 @@ export function useViewingTry() {
     isError: testTasksQuery.isError,
     currentTaskIndex,
     handleTaskChange,
-    handleFinishAttempt,
     getSelectedFor,
-    toggleAnswer,
     completionByTask, // [{ taskId, answeredCount, totalQuestions, isComplete }]
-    isAllTasksComplete,
   };
 }

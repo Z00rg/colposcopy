@@ -16,11 +16,8 @@ export function ViewingTry() {
     isError,
     currentTaskIndex,
     handleTaskChange,
-    handleFinishAttempt,
     getSelectedFor,
-    toggleAnswer,
     completionByTask,
-    isAllTasksComplete,
   } = useViewingTry();
 
   const textAreaRef = useRef<HTMLDivElement>(null);
@@ -113,14 +110,6 @@ export function ViewingTry() {
                                 isChecked,
                             }
                           )}
-                          onClick={() =>
-                            toggleAnswer(
-                              taskId,
-                              questionIndex,
-                              answerIndex,
-                              item.typeQuestion
-                            )
-                          }
                         >
                           {/* Номер варианта ответа */}
                           <div className="text-gray-700 font-semibold">
@@ -139,14 +128,6 @@ export function ViewingTry() {
                           >
                             <UiCheckBox
                               checked={isChecked}
-                              onChange={() =>
-                                toggleAnswer(
-                                  taskId,
-                                  questionIndex,
-                                  answerIndex,
-                                  item.typeQuestion
-                                )
-                              }
                               id={`chk-${taskId}-${questionIndex}-${answerIndex}`}
                             />
                           </div>
@@ -181,20 +162,6 @@ export function ViewingTry() {
               disabled={currentTaskIndex === tasks.length - 1}
             >
               Далее
-            </button>
-
-            <button
-              className={clsx(
-                { hidden: currentTaskIndex !== tasks.length - 1 },
-                "ml-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointer",
-                {
-                  "text-gray-400 hover:text-gray-400": !isAllTasksComplete,
-                }
-              )}
-              onClick={handleFinishAttempt}
-              disabled={!isAllTasksComplete}
-            >
-              Закончить попытку
             </button>
           </div>
         </>
