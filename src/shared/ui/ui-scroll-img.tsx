@@ -6,6 +6,7 @@ type UiScrollImgProps = {
   img: string[];
   className?: string;
   onIndexChange?: (index: number) => void;
+  isAtlas?: boolean;
 };
 
 const IMAGE_WIDTH = 300;
@@ -14,6 +15,7 @@ export function UiScrollImg({
   img,
   className,
   onIndexChange,
+  isAtlas,
 }: UiScrollImgProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -33,10 +35,10 @@ export function UiScrollImg({
 
   // Сброс скролла при смене изображений
   useEffect(() => {
-    if (scrollContainerRef.current) {
+    if (scrollContainerRef.current && !isAtlas) {
       scrollContainerRef.current.scrollTo({ left: 0, behavior: "smooth" });
     }
-  }, [img]);
+  }, [img, isAtlas]);
 
   return (
     <div

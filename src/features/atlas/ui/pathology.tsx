@@ -40,9 +40,9 @@ export function Pathology({ className }: { className?: string }) {
         "flex flex-col justify-center items-center gap-3 flex-1 mb-4 px-5 mt-5"
       )}
     >
-      <UiScrollImg img={imgContainer} onIndexChange={handleImageChange} />
+      <UiScrollImg isAtlas img={imgContainer} onIndexChange={handleImageChange} />
 
-      {currentImageIndex === 3 ? (
+      {currentImageIndex === imgContainer.length-1 ? (
         <Image
           src={imgSchema}
           alt="Test image"
@@ -65,8 +65,8 @@ export function Pathology({ className }: { className?: string }) {
     //     {isError && <div className="font-bold text-rose-500">Ошибка при загрузке деталей патологии</div>}
     //     {pathologyDetails && (
     //       <>
-    //         <UiScrollImg img={pathologyDetails.imgContainer} onIndexChange={handleImageChange} />
-    //         {currentImageIndex === 3 ? (
+    //         <UiScrollImg isAtlas img={pathologyDetails.imgContainer} onIndexChange={handleImageChange} />
+    //         {currentImageIndex === pathologyDetails.imgContainer.length-1 ? (
     //           <Image
     //             src={pathologyDetails.imgSchema}
     //             alt="Схематическое изображение"
