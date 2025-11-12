@@ -62,9 +62,6 @@ export function ViewingTry() {
             textAreaRef={textAreaRef}
             className="mt-5 gap-3 w-full text-[13px] items-start"
           >
-            <div className="font-bold text-[15px]">
-              Выполните следующие задания:
-            </div>
 
             {/* Итерация по вопросам текущего задания */}
             {tasks[currentTaskIndex].testsQuestions.map(
@@ -168,8 +165,7 @@ export function ViewingTry() {
         </>
       )}
 
-      {/* Компонент Футера с активным статусом "test" */}
-      <UiFooter activeStatus="test" />
+      <UiFooter activeStatus="main" />
     </div>
   );
 }
