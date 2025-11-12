@@ -1,1 +1,1 @@
-export { useTryListQuery } from "./queries";
+export { useTryListQuery, useTryTasksQuery } from "./queries";

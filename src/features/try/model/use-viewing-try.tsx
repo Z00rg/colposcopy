@@ -8,16 +8,6 @@ export function useViewingTry() {
   // СОСТОЯНИЕ
   // ------------------------------------------------------------------
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
-  //Заполнено заглушкой заполненных ответов
-  const selectedAnswers: Record<number, Record<number, number[]>> = useMemo(
-    () => ({
-      1: { 0: [0], 1: [0, 1] },
-      2: { 0: [1], 1: [1, 2] },
-      3: { 0: [1], 1: [1, 2] },
-      4: { 0: [0], 1: [0, 1] },
-    }),
-    []
-  );
 
   const router = useRouter();
 
@@ -163,6 +153,18 @@ export function useViewingTry() {
   // Для разработки выбран тестовый набор вопросов
   // const tasks = testTasksQuery.data?.items ?? [];
   const tasks = tasksTesting;
+
+  
+  //Заполнено заглушкой заполненных ответов
+  const selectedAnswers: Record<number, Record<number, number[]>> = useMemo(
+    () => ({
+      1: { 0: [0], 1: [0, 1] },
+      2: { 0: [1], 1: [1, 2] },
+      3: { 0: [1], 1: [1, 2] },
+      4: { 0: [0], 1: [0, 1] },
+    }),
+    []
+  );
 
   // ------------------------------------------------------------------
   // ОБРАБОТЧИКИ
