@@ -1,8 +1,8 @@
-import { tryControllerGetTryListInfo, tryControllerGetTryTasksInfo } from "@/shared/api/api";
+import { tryControllerGetTryListInfo, tryControllerGetTryAnswersInfo } from "@/shared/api/api";
 import { useQuery } from "@tanstack/react-query";
 
 const tryListKey = ["try-list"];
-const tryTasksKey = ["try-tasks"];
+const tryAnswersKey = ["try-answers"];
 
 export function useTryListQuery() {
     return useQuery({
@@ -13,10 +13,10 @@ export function useTryListQuery() {
       });
 }
 
-export function useTryTasksQuery(tryId: string) {
+export function useTryAnswersQuery(tryId: string) {
     return useQuery({
-        queryKey: tryTasksKey, //ключ для кеширования запроса с сервара
-        queryFn: () => tryControllerGetTryTasksInfo(tryId),
+        queryKey: tryAnswersKey, //ключ для кеширования запроса с сервара
+        queryFn: () => tryControllerGetTryAnswersInfo(tryId),
         retry: 0, //один запрос без повторений
         staleTime: 5 * 60 * 1000, //время жизни кеша 5 минут
       });

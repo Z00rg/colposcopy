@@ -37,8 +37,8 @@ export interface GetTryListInfoDto {
   items: TryInfo[];
 }
 
-export interface GetTryTasksInfoDto {
-  tryTasks: Record<number, Record<number, number[]>>;
+export interface GetTryAnswersInfoDto {
+  tryAnswers: Record<number, Record<number, number[]>>;
 }
 
 export interface GetProfileInfoDto {
@@ -179,11 +179,11 @@ export const tryControllerGetTryListInfo = (
   );
 };
 
-export const tryControllerGetTryTasksInfo = (
+export const tryControllerGetTryAnswersInfo = (
   tryId: string,
   options?: SecondParameter<typeof createInstance>
 ) => {
-  return createInstance<GetTryTasksInfoDto>(
+  return createInstance<GetTryAnswersInfoDto>(
     { url: `/try/viewing-try/${tryId}`, method: "GET" },
     options
   );

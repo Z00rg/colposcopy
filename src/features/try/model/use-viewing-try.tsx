@@ -1,5 +1,5 @@
 import { useTestTasksQuery } from "@/entities/test/queries";
-import { useTryTasksQuery } from "@/entities/try-list";
+import { useTryAnswersQuery } from "@/entities/try-list";
 import { ROUTES } from "@/shared/constants/routes";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
@@ -155,8 +155,8 @@ export function useViewingTry() {
   // const tasks = testTasksQuery.data?.items ?? [];
   const tasks = tasksTesting;
 
-  const tryAnswersQuery = useTryTasksQuery(tryId as string);
-  const tryAnswersData = tryAnswersQuery.data?.tryTasks;
+  const tryAnswersQuery = useTryAnswersQuery(tryId as string);
+  const tryAnswersData = tryAnswersQuery.data?.tryAnswers;
 
   //Заполнено заглушкой заполненных ответов
   const selectedAnswers: Record<number, Record<number, number[]>> = useMemo(
