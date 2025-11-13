@@ -71,7 +71,13 @@ export function useTestTasks() {
     },
     {
       id: 2,
-      imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
+      imageSrcs: [
+        "/test2.png",
+        "/test2.png",
+        "/test2.png",
+        "/test2.png",
+        "/test2.png",
+      ],
       pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
           эпителия, включая его наиболее важный для скрининга компонент —
