@@ -40,9 +40,9 @@ export function Pathology({ className }: { className?: string }) {
         "flex flex-col justify-center items-center gap-3 flex-1 mb-4 px-5 mt-5"
       )}
     >
-      <UiScrollImg isAtlas img={imgContainer} onIndexChange={handleImageChange} />
+      <UiScrollImg img={imgContainer} onIndexChange={handleImageChange} />
 
-      {currentImageIndex === imgContainer.length-1 ? (
+      {currentImageIndex === imgContainer.length - 1 ? (
         <Image
           src={imgSchema}
           alt="Test image"

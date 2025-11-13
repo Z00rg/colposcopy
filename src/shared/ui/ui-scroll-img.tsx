@@ -1,12 +1,11 @@
 import clsx from "clsx";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 type UiScrollImgProps = {
   img: string[];
   className?: string;
   onIndexChange?: (index: number) => void;
-  isAtlas?: boolean;
 };
 
 const IMAGE_WIDTH = 300;
@@ -15,7 +14,6 @@ export function UiScrollImg({
   img,
   className,
   onIndexChange,
-  isAtlas,
 }: UiScrollImgProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -32,13 +30,6 @@ export function UiScrollImg({
       onIndexChange(clampedIndex);
     }
   };
-
-  // Сброс скролла при смене изображений
-  useEffect(() => {
-    if (scrollContainerRef.current && !isAtlas) {
-      scrollContainerRef.current.scrollTo({ left: 0, behavior: "smooth" });
-    }
-  }, [img, isAtlas]);
 
   return (
     <div

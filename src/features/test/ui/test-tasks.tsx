@@ -58,7 +58,10 @@ export function TestTasks() {
           />
 
           {/* Компонент Прокручиваемого Изображения (для текущего задания) */}
-          <UiScrollImg isAtlas={false} img={tasks[currentTaskIndex].imageSrcs} />
+          <UiScrollImg
+            key={currentTaskIndex}
+            img={tasks[currentTaskIndex].imageSrcs}
+          />
 
           {/* Компонент Блока для текста и вопросов */}
           <UiTextArea

@@ -55,14 +55,16 @@ export function ViewingTry() {
           />
 
           {/* Компонент Прокручиваемого Изображения (для текущего задания) */}
-          <UiScrollImg isAtlas={false} img={tasks[currentTaskIndex].imageSrcs} />
+          <UiScrollImg
+            key={currentTaskIndex}
+            img={tasks[currentTaskIndex].imageSrcs}
+          />
 
           {/* Компонент Блока для текста и вопросов */}
           <UiTextArea
             textAreaRef={textAreaRef}
             className="mt-5 gap-3 w-full text-[13px] items-start"
           >
-
             {/* Итерация по вопросам текущего задания */}
             {tasks[currentTaskIndex].testsQuestions.map(
               (item: any, questionIndex: number) => {
