@@ -18,6 +18,7 @@ export function ViewingTry() {
     handleTaskChange,
     getSelectedFor,
     completionByTask,
+    getIsCorrect,
   } = useViewingTry();
 
   const textAreaRef = useRef<HTMLDivElement>(null);
@@ -70,6 +71,7 @@ export function ViewingTry() {
               (item: any, questionIndex: number) => {
                 const taskId = tasks[currentTaskIndex].id;
                 const selectedForThis = getSelectedFor(taskId, questionIndex);
+                const isCorrect = getIsCorrect(taskId, questionIndex);
 
                 return (
                   <div
@@ -79,7 +81,10 @@ export function ViewingTry() {
                     {/* Заголовок вопроса */}
                     <div className="flex w-full">
                       <span>
-                        <span className="font-bold">
+                        <span className={clsx("font-bold",
+                          { "text-green-600": isCorrect === true },
+                          { "text-red-600": isCorrect === false }
+                        )}>
                           Задание №{questionIndex + 1}:
                         </span>{" "}
                         {item.question}
@@ -134,6 +139,18 @@ export function ViewingTry() {
                         </div>
                       );
                     })}
+
+                    {isCorrect !== null && (
+                      <div className="text-sm font-semibold">
+                        {isCorrect ? (
+                          <span className="text-green-600">
+                            ✔ Ответ верный
+                          </span>
+                        ) : (
+                          <span className="text-red-600">✘ Ответ неверный</span>
+                        )}
+                      </div>
+                    )}
                   </div>
                 );
               }

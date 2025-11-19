@@ -38,7 +38,16 @@ export interface GetTryListInfoDto {
 }
 
 export interface GetTryAnswersInfoDto {
-  tryAnswers: Record<number, Record<number, number[]>>;
+  tryAnswers: Record<
+    number, // taskId
+    Record<
+      number, // questionIndex
+      {
+        selected: number[];
+        isCorrect: boolean;
+      }
+    >
+  >;
 }
 
 export interface GetProfileInfoDto {
@@ -106,20 +115,16 @@ export interface GetTestTasksDataDto {
   items: ITestTask[];
 }
 
-
 export type SubmitTestAnswersBodyDto = BodyType<{
   testIds: string;
-  answers: Record<number, Record<number, number[]>>; 
+  answers: Record<number, Record<number, number[]>>;
 }>;
-
 
 export type SubmitTestAnswersResponseDto = {
   success: boolean;
   message?: string;
   resultId?: string;
 };
-
-
 
 export const authControllerSignIn = (
   signInBodyDto: BodyType<SignInBodyDto>,
@@ -162,11 +167,11 @@ export const authControllerGetSessionInfo = (
 
 //Выход из аккаунта
 export const authControllerSignOut = (
-  options?: SecondParameter<typeof createInstance>,
+  options?: SecondParameter<typeof createInstance>
 ) => {
   return createInstance<void>(
     { url: `/auth/sign-out`, method: "POST" },
-    options,
+    options
   );
 };
 

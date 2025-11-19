@@ -19,7 +19,7 @@ export function useViewingTry() {
   console.log(`Открыта страница попытки с id ${tryId}`);
 
   // ------------------------------------------------------------------
-  // 🧩 ДАННЫЕ ЗАДАНИЙ (ЗАГЛУШКА)
+  // ДАННЫЕ ЗАДАНИЙ (ЗАГЛУШКА)
   // ------------------------------------------------------------------
 
   // tasks данные заглушки
@@ -159,15 +159,36 @@ export function useViewingTry() {
   const tryAnswersData = tryAnswersQuery.data?.tryAnswers;
 
   //Заполнено заглушкой заполненных ответов
-  const selectedAnswers: Record<number, Record<number, number[]>> = useMemo(
-    () => ({
-      1: { 0: [0], 1: [0, 1] },
-      2: { 0: [1], 1: [1, 2] },
-      3: { 0: [1], 1: [1, 2] },
-      4: { 0: [0], 1: [0, 1] },
-    }),
-    []
-  );
+  const selectedAnswers: Record<
+  number, // taskId
+  Record<
+    number, // questionIndex
+    {
+      selected: number[];
+      isCorrect: boolean;
+    }
+  >
+> = useMemo(
+  () => ({
+    1: {
+      0: { selected: [0], isCorrect: true },
+      1: { selected: [0, 1], isCorrect: false },
+    },
+    2: {
+      0: { selected: [1], isCorrect: false },
+      1: { selected: [1, 2], isCorrect: true },
+    },
+    3: {
+      0: { selected: [1], isCorrect: false },
+      1: { selected: [1, 2], isCorrect: false },
+    },
+    4: {
+      0: { selected: [0], isCorrect: true },
+      1: { selected: [0, 1], isCorrect: true },
+    },
+  }),
+  []
+);
   // Реализация через данные с сервера
   // const selectedAnswers: Record<number, Record<number, number[]>> = useMemo(
   //   () => ({
@@ -186,10 +207,10 @@ export function useViewingTry() {
   };
 
   const getSelectedFor = (taskId: number, questionIndex: number): number[] =>
-    selectedAnswers[taskId]?.[questionIndex] ?? [];
+    selectedAnswers[taskId]?.[questionIndex]?.selected ?? [];
 
   // ------------------------------------------------------------------
-  // 🧮 СТАТУС ЗАПОЛНЕНИЯ
+  // СТАТУС ЗАПОЛНЕНИЯ
   // ------------------------------------------------------------------
 
   const completionByTask = useMemo(() => {
@@ -199,7 +220,7 @@ export function useViewingTry() {
 
       // количество отвеченных вопросов (где есть хотя бы 1 выбранный ответ)
       const answeredCount = Object.values(answersForTask).filter(
-        (arr) => arr.length > 0
+        (arr) => arr.selected.length > 0
       ).length;
 
       return {
@@ -211,6 +232,12 @@ export function useViewingTry() {
     });
   }, [selectedAnswers, tasks]);
 
+  // ------------------------------------------------------------------
+  // СТАТУС КОРРЕКТНОСТИ ОТВЕТОВ
+  // ------------------------------------------------------------------
+  const getIsCorrect = (taskId: number, questionIndex: number): boolean | null =>
+  selectedAnswers[taskId]?.[questionIndex]?.isCorrect ?? null;
+
   return {
     tasks,
     setCurrentTaskIndex,
@@ -220,5 +247,6 @@ export function useViewingTry() {
     handleTaskChange,
     getSelectedFor,
     completionByTask, // [{ taskId, answeredCount, totalQuestions, isComplete }]
+    getIsCorrect,
   };
 }
