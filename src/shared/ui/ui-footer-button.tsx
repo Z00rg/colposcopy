@@ -56,7 +56,7 @@ export function UiFooterButton({
       onClick={() => router.push(variantRoute[variant])}
     >
       {active ? variantActiveIcons[variant] : variantIcons[variant]}
-      <div className="whitespace-nowrap w-12">{variantTexts[variant]}</div>
+      <div className="whitespace-nowrap w-12 text-center justify-center flex">{variantTexts[variant]}</div>
     </button>
   );
 }
