@@ -1,7 +1,7 @@
 import { useAtlasListQuery } from "@/entities/atlas-list";
 import router from "next/router";
 
-export function useClinicalCasesList() {
+export function useClinicalCases() {
   const atlasListQuery = useAtlasListQuery();
 
   const items = atlasListQuery.data?.items ?? [];
