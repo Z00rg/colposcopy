@@ -79,6 +79,13 @@ export interface GetClinicalCasesInfoDto {
   items: ClinicalCaseInfo[];
 }
 
+export interface GetCaseInfoDto {
+  id: number;
+  imgContainer: string[];
+  imgSchema: string;
+  textContainer: string[];
+}
+
 export interface GetPathologyInfoDto {
   id: number;
   imgContainer: string[];
@@ -237,6 +244,16 @@ export const casesControllerGetClinicalCasesInfo = (
 ) => {
   return createInstance<GetClinicalCasesInfoDto>(
     { url: `/clinical-cases`, method: "GET" },
+    options
+  );
+};
+
+export const casesControllerGetCaseInfo = (
+  caseId: number | string,
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<GetCaseInfoDto>(
+    { url: `/case/${caseId}`, method: "GET" },
     options
   );
 };

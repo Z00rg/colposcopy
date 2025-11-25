@@ -1,1 +1,2 @@
 export { ClinicalCasesList } from "./ui/clinical-cases-list";
+export {Case } from "./ui/case";

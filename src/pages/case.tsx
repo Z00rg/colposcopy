@@ -1,4 +1,4 @@
-import { Pathology } from "@/features/atlas";
+import { Case } from "@/features/clinical-case/ui/case";
 import { UiHeader } from "@/shared/ui/ui-header";
 
 export function CasePage() {
@@ -8,8 +8,7 @@ export function CasePage() {
         variant="withoutLogo"
         className="mt-6 [@media(max-height:930px)]:hidden"
       />
-      страничка случая
-      <Pathology />
+      <Case />
     </div>
   );
 }
