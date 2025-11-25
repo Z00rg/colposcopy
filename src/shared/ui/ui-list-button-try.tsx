@@ -7,6 +7,7 @@ type TryInformation = {
   mark: string;
   time: string;
 };
+
 export type UiListButtonTryProps = {
   className?: string;
   informationOfTry: TryInformation;
@@ -24,52 +25,59 @@ export function UiListButtonTry({
     <div
       className={clsx(
         className,
-        "w-full border-b-1 border-[#BDBDBD] flex flex-col px-[9px]"
+        "flex w-full flex-col select-none cursor-pointer border-b border-[#E0E0E0] rounded-xl px-3 py-3 transition-all duration-200 ease-out",
+        "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md hover:scale-[1.01]"
       )}
     >
-      <div className="h-[50px] flex justify-between items-center text-[18px] font-bold mb-1 gap-26">
-        <div className="flex gap-2.5 w-full">
-          <div className="flex justify-center items-center">
-            <TestCheckTrue />
-          </div>
-          <div className="flex flex-col">
+      {/* Верхняя строка */}
+      <div
+        className="flex justify-between items-center gap-3"
+        onClick={() => setActive(!active)}
+      >
+        <div className="flex items-center gap-3 flex-1">
+          <TestCheckTrue className="w-[28px] h-[28px]" />
+          <div className="flex flex-col text-[17px] font-semibold text-gray-800 leading-tight">
             <span>Попытка</span>
-            <span>{informationOfTry?.date}</span>
+            <span className="text-[15px] font-normal text-gray-600">
+              {informationOfTry.date}
+            </span>
           </div>
         </div>
-        <button onClick={() => setActive(!active)}>
-          <ArrowRight
-            className={clsx(
-              "transition-transform duration-300 ease-in-out",
-              active && "rotate-90"
-            )}
-          />
-        </button>
+
+        <ArrowRight
+          className={clsx(
+            "transition-transform duration-300 ease-in-out w-[11px] h-[18px]",
+            active && "rotate-90"
+          )}
+        />
       </div>
+
+      {/* Раскрывающаяся часть */}
       <div
         className={clsx(
-          "flex flex-col gap-[9px] text-[18px] mb-1 text-[#4B4242]",
-          "transition-all duration-300 ease-in-out overflow-hidden",
-          {
-            "max-h-0": !active,
-            "max-h-[500px]": active,
-          }
+          "transition-all duration-300 ease-in-out overflow-hidden text-[16px] text-gray-700 mt-2",
+          active ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
         )}
       >
-        <div>Оценка: {informationOfTry.mark}</div>
-        <div>Затраченное время: {informationOfTry.time}</div>
-        <button
-          className="ml-auto text-[#639EDD] hover:text-[#26628A] text-[20px] font-bold cursor-pointer"
-          onClick={() =>
-            handleClick(informationOfTry.id)
-          }
-        >
-          Просмотр попытки
-        </button>
+        <div className="flex flex-col gap-2 pl-11 pr-2 pb-2">
+          <div>Оценка: {informationOfTry.mark}</div>
+          <div>Затраченное время: {informationOfTry.time}</div>
+
+          <button
+            className="ml-auto mt-1 text-[#639EDD] hover:text-[#26628A] text-[17px] font-semibold"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClick(informationOfTry.id);
+            }}
+          >
+            Просмотр попытки
+          </button>
+        </div>
       </div>
     </div>
   );
 }
+
 
 export const TestCheckTrue = ({ className }: { className?: string }) => (
   <svg
