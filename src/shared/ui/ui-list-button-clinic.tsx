@@ -31,16 +31,12 @@ export function UiListButtonClinic({
       className={clsx(
         className,
         "flex w-full flex-col select-none border-b border-[#E0E0E0] rounded-xl px-3 py-3 transition-all duration-200 ease-out",
-          "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md hover:scale-[1.01] cursor-pointer"
-       
+        "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md hover:scale-[1.01] cursor-pointer"
       )}
     >
       {/* Верхняя строка */}
       <div
-        className={clsx(
-          "flex items-center text-[18px] font-medium gap-3",
-          "px-3 py-3 rounded-xl"
-        )}
+        className="flex items-center text-[18px] font-medium gap-3 px-1 py-1"
         onClick={() => setActive(!active)}
       >
         <div className="text-gray-700 font-semibold">{index}.</div>
@@ -48,33 +44,44 @@ export function UiListButtonClinic({
         <div className="break-words whitespace-normal flex-1 text-gray-800">
           {informationOfPathology.name}
         </div>
+
         <ArrowRight
-                  className={clsx(
-                    "transition-transform duration-300 ease-in-out w-[11px] h-[18px]",
-                    active && "rotate-90"
-                  )}
-                />
+          className={clsx(
+            "transition-transform duration-300 ease-in-out w-[11px] h-[18px]",
+            active && "rotate-90"
+          )}
+        />
       </div>
 
       {/* Раскрывающаяся часть */}
+      {/* Раскрывающаяся часть */}
+<div
+  className={clsx(
+    "transition-all duration-300 ease-in-out overflow-hidden",
+    active ? "max-h-[500px] opacity-100 mt-2" : "max-h-0 opacity-0"
+  )}
+>
+  <div className="flex flex-col gap-[8px] pl-9 pr-2 pb-2">
+
+    {cases.map((caseItem, idx) => (
       <div
-        className={clsx(
-          "transition-all duration-300 ease-in-out overflow-hidden mt-2",
-          active ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-        )}
+        key={caseItem.id}
+        className="flex items-center gap-3 text-[16px] text-gray-700 leading-tight py-[6px] px-[6px] rounded-lg cursor-pointer transition-all duration-150 hover:bg-blue-100 hover:text-blue-800"
+        onClick={(e) => {
+          e.stopPropagation();
+          handleCaseClick(caseItem.id);
+        }}
       >
-        <div className="flex flex-col gap-2 pl-11 pr-2 pb-2">
-          {cases.map((caseItem, idx) => (
-            <div
-              key={caseItem.id}
-              className="text-gray-700 text-[15px] font-medium"
-              onClick={() => handleCaseClick(caseItem.id)}
-            >
-              Случай {idx + 1}
-            </div>
-          ))}
-        </div>
+        {/* Точка-маркер */}
+        <div className="w-[8px] h-[8px] rounded-full bg-blue-400 flex-shrink-0"></div>
+
+        <span>Случай {idx + 1}</span>
       </div>
+    ))}
+
+  </div>
+</div>
+
     </div>
   );
 }
