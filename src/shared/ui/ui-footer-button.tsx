@@ -40,7 +40,7 @@ export function UiFooterButton({
     book: ROUTES.ATLAS,
     man: ROUTES.HOME,
     check: ROUTES.TEST,
-    clinic: ROUTES.ATLAS,
+    clinic: ROUTES.CLINIC,
   };
 
   const router = useRouter();
