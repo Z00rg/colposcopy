@@ -1,5 +1,4 @@
 import { createInstance } from "./api-instance";
-import type { BodyType } from "./api-instance";
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
@@ -123,26 +122,19 @@ export interface GetTestTasksDataDto {
   items: ITestTask[];
 }
 
-export type SubmitTestAnswersBodyDto = BodyType<{
+export type SubmitTestAnswersBodyDto = {
   testIds: string;
   answers: Record<number, Record<number, number[]>>;
-}>;
-
-export type SubmitTestAnswersResponseDto = {
-  success: boolean;
-  message?: string;
-  resultId?: string;
 };
 
 export const authControllerSignIn = (
-  signInBodyDto: BodyType<SignInBodyDto>,
+  signInBodyDto: SignInBodyDto,
   options?: SecondParameter<typeof createInstance>
 ) => {
   return createInstance<void>(
     {
       url: `/auth/sign-in`,
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       data: signInBodyDto,
     },
     options
@@ -150,14 +142,13 @@ export const authControllerSignIn = (
 };
 
 export const authControllerSignUp = (
-  signUpBodyDto: BodyType<SignUpBodyDto>,
+  signUpBodyDto: SignUpBodyDto,
   options?: SecondParameter<typeof createInstance>
 ) => {
   return createInstance<void>(
     {
       url: `/auth/sign-up`,
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       data: signUpBodyDto,
     },
     options
@@ -281,7 +272,7 @@ export const testControllerSubmitTestAnswers = (
   body: SubmitTestAnswersBodyDto,
   options?: Parameters<typeof createInstance>[1]
 ) => {
-  return createInstance<SubmitTestAnswersResponseDto>(
+  return createInstance<void>(
     {
       url: `/test/submit-answers`,
       method: "POST",
@@ -300,7 +291,6 @@ export const accountControllerProfileEdit = (
     {
       url: `/account/profile/edit`,
       method: "POST",
-      headers: { "Content-Type": "application/json" },
       data: body,
     },
     options
