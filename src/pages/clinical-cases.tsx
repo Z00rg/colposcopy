@@ -1,4 +1,4 @@
-import { AtlasList } from "@/features/atlas";
+import { ClinicalCasesList } from "@/features/clinical-case/ui/clinical-cases-list";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiHeader } from "@/shared/ui/ui-header";
 
@@ -12,7 +12,7 @@ export function ClinicalCasesPage() {
           <div className="font-medium text-[20px] font-[#4B4242] mt-7">
             Клинические случаи
           </div>
-          <AtlasList/>
+          <ClinicalCasesList/>
         </div>
         <UiFooter activeStatus="clinic" />
       </div>

@@ -18,11 +18,17 @@ export function Profile({ className }: { className?: string }) {
   } = useProfile();
 
   return (
-    <div className="flex bg-[#F3F3F3] w-full px-[17px] pb-2.5 flex-col shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px] flex-1">
+    <div
+      className={clsx(
+        "flex bg-[#F3F3F3] w-full px-[17px] pb-2.5 flex-col",
+        "shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px] flex-1",
+        {"hover:bg-blue-50 hover:border-blue-400 hover:shadow-md hover:scale-[1.01] cursor-pointer": !active}
+      )}
+    >
       <div
         className={clsx(
           className,
-          "gap-4 text-[18px] flex items-center justify-start",
+          "gap-4 text-[18px] flex items-center justify-start"
         )}
         onClick={() => setActive(!active)}
       >
@@ -133,7 +139,7 @@ export function Profile({ className }: { className?: string }) {
           />
         </Section>
         <div className="bg-[#A8A8A8] h-[1px] mt-[9px] flex w-full"></div>
-        <SignOutButton/>
+        <SignOutButton />
       </div>
     </div>
   );
