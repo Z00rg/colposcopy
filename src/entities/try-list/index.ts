@@ -1,1 +1,1 @@
-export { useTryListQuery, useTryAnswersQuery } from "./queries";
+export { useTryListQuery, useTryQuery } from "./queries";

@@ -37,7 +37,8 @@ export interface GetTryListInfoDto {
   items: TryInfo[];
 }
 
-export interface GetTryAnswersInfoDto {
+export interface GetTryInfoDto {
+  items: ITestTask[];
   tryAnswers: Record<
     number, // taskId
     Record<
@@ -191,11 +192,11 @@ export const tryControllerGetTryListInfo = (
   );
 };
 
-export const tryControllerGetTryAnswersInfo = (
+export const tryControllerGetTryInfo = (
   tryId: string,
   options?: SecondParameter<typeof createInstance>
 ) => {
-  return createInstance<GetTryAnswersInfoDto>(
+  return createInstance<GetTryInfoDto>(
     { url: `/try/viewing-try/${tryId}`, method: "GET" },
     options
   );

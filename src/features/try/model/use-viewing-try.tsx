@@ -1,5 +1,5 @@
 import { useTestTasksQuery } from "@/entities/test/queries";
-import { useTryAnswersQuery } from "@/entities/try-list";
+import { useTryQuery } from "@/entities/try-list";
 import { ROUTES } from "@/shared/constants/routes";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
@@ -153,12 +153,14 @@ export function useViewingTry() {
 
   // Для разработки выбран тестовый набор вопросов
   // const tasks = testTasksQuery.data?.items ?? [];
+
+  const tryQuery = useTryQuery(tryId as string);
+  // const tasks = tryQuery.data?.items;
   const tasks = tasksTesting;
 
-  const tryAnswersQuery = useTryAnswersQuery(tryId as string);
-  const tryAnswersData = tryAnswersQuery.data?.tryAnswers;
 
   //Заполнено заглушкой заполненных ответов
+  // const selectedAnswers = tryQuery.data?.tryAnswers;
   const selectedAnswers: Record<
   number, // taskId
   Record<
