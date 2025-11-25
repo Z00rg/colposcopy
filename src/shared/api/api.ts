@@ -89,8 +89,7 @@ export interface GetCaseInfoDto {
 export interface GetPathologyInfoDto {
   id: number;
   imgContainer: string[];
-  imgSchema: string;
-  textContainer: string[];
+  description: string;
 }
 
 export interface GetInstructionInfoDto {
@@ -100,35 +99,26 @@ export interface GetInstructionInfoDto {
 export type QuestionType = 0 | 1; // 0: Одиночный выбор , 1: Множественный выбор
 
 export interface ITestQuestion {
-  /** Текст самого вопроса. */
   question: string;
 
-  /** Тип вопроса: 0 - одиночный выбор, 1 - множественный выбор. */
   typeQuestion: QuestionType;
 
-  /** Дополнительная инструкция для пользователя. */
   instructions: string;
 
-  /** Массив строковых вариантов ответов. */
   answers: string[];
 }
 
 export interface ITestTask {
-  /** Уникальный идентификатор задания/патологии. */
   id: number;
 
-  /** Массив URL-адресов изображений для данного задания. */
   imageSrcs: string[];
 
-  /** Основной текст описания патологии или контекста. */
   pathologyText: string;
 
-  /** Массив вопросов, относящихся к данному заданию. */
   testsQuestions: ITestQuestion[];
 }
 
 export interface GetTestTasksDataDto {
-  /** Массив всех доступных заданий. */
   items: ITestTask[];
 }
 
