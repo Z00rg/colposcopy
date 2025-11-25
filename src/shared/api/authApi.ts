@@ -64,7 +64,6 @@ const signOut = (options?: RequestOptions) =>
     options
   );
 
-
 export const authApi = {
   signIn,
   signUp,

@@ -1,12 +1,12 @@
 import { createInstance } from "./api-instance";
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
-
+//
 export interface SignInBodyDto {
   email: string;
   password: string;
 }
-
+//
 export interface SignUpBodyDto {
   firstName: string;
   surname: string;
@@ -16,14 +16,14 @@ export interface SignUpBodyDto {
   email: string;
   password: string;
 }
-
+//
 export interface GetSessionInfoDto {
   id: number;
   email: string;
   iat: number;
   exp: number;
 }
-
+//
 interface TryInfo {
   id: number;
   date: string;
@@ -31,11 +31,11 @@ interface TryInfo {
   mark: string;
   time: string;
 }
-
+//
 export interface GetTryListInfoDto {
   items: TryInfo[];
 }
-
+//
 export interface GetTryInfoDto {
   items: ITestTask[];
   tryAnswers: Record<
@@ -49,7 +49,7 @@ export interface GetTryInfoDto {
     >
   >;
 }
-
+//
 export interface GetProfileInfoDto {
   firstName: string;
   surname: string;
@@ -59,45 +59,45 @@ export interface GetProfileInfoDto {
   email: string;
   password: string;
 }
-
+//
 interface PathologyInfo {
   id: number;
   name: string;
 }
-
+//
 export interface GetPathologyListInfoDto {
   items: PathologyInfo[];
 }
-
+//
 interface ClinicalCaseInfo {
   id: number;
   name: string;
   cases: { id: number }[];
 }
-
+//
 export interface GetClinicalCasesInfoDto {
   items: ClinicalCaseInfo[];
 }
-
+//
 export interface GetCaseInfoDto {
   id: number;
   imgContainer: string[];
   imgSchema: string;
   textContainer: string[];
 }
-
+//
 export interface GetPathologyInfoDto {
   id: number;
   imgContainer: string[];
   description: string;
 }
-
+//
 export interface GetInstructionInfoDto {
   text: string;
 }
-
+//
 export type QuestionType = 0 | 1; // 0: Одиночный выбор , 1: Множественный выбор
-
+//
 export interface ITestQuestion {
   question: string;
 
@@ -107,7 +107,7 @@ export interface ITestQuestion {
 
   answers: string[];
 }
-
+//
 export interface ITestTask {
   id: number;
 
@@ -117,16 +117,16 @@ export interface ITestTask {
 
   testsQuestions: ITestQuestion[];
 }
-
+//
 export interface GetTestTasksDataDto {
   items: ITestTask[];
 }
-
+//
 export type SubmitTestAnswersBodyDto = {
   testIds: string;
   answers: Record<number, Record<number, number[]>>;
 };
-
+//
 export const authControllerSignIn = (
   signInBodyDto: SignInBodyDto,
   options?: SecondParameter<typeof createInstance>
@@ -140,7 +140,7 @@ export const authControllerSignIn = (
     options
   );
 };
-
+//
 export const authControllerSignUp = (
   signUpBodyDto: SignUpBodyDto,
   options?: SecondParameter<typeof createInstance>
@@ -154,7 +154,7 @@ export const authControllerSignUp = (
     options
   );
 };
-
+//
 export const authControllerGetSessionInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
@@ -165,6 +165,7 @@ export const authControllerGetSessionInfo = (
 };
 
 //Выход из аккаунта
+//
 export const authControllerSignOut = (
   options?: SecondParameter<typeof createInstance>
 ) => {
@@ -173,7 +174,7 @@ export const authControllerSignOut = (
     options
   );
 };
-
+//
 export const tryControllerGetTryListInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
@@ -182,7 +183,7 @@ export const tryControllerGetTryListInfo = (
     options
   );
 };
-
+//
 export const tryControllerGetTryInfo = (
   tryId: string,
   options?: SecondParameter<typeof createInstance>
@@ -192,7 +193,7 @@ export const tryControllerGetTryInfo = (
     options
   );
 };
-
+//
 export const accountControllerGetProfileInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
@@ -201,7 +202,7 @@ export const accountControllerGetProfileInfo = (
     options
   );
 };
-
+//
 export const atlasControllerGetAtlasListInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
@@ -210,7 +211,7 @@ export const atlasControllerGetAtlasListInfo = (
     options
   );
 };
-
+//
 export const atlasControllerGetPathologyInfo = (
   pathologyId: number | string,
   options?: SecondParameter<typeof createInstance>
@@ -220,7 +221,7 @@ export const atlasControllerGetPathologyInfo = (
     options
   );
 };
-
+//
 export const casesControllerGetClinicalCasesInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
@@ -229,7 +230,7 @@ export const casesControllerGetClinicalCasesInfo = (
     options
   );
 };
-
+//
 export const casesControllerGetCaseInfo = (
   caseId: number | string,
   options?: SecondParameter<typeof createInstance>
@@ -239,7 +240,7 @@ export const casesControllerGetCaseInfo = (
     options
   );
 };
-
+//
 export const testControllerGetInstructionInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
@@ -248,7 +249,7 @@ export const testControllerGetInstructionInfo = (
     options
   );
 };
-
+//
 export const testControllerGetTestListInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
@@ -257,7 +258,7 @@ export const testControllerGetTestListInfo = (
     options
   );
 };
-
+//
 export const testControllerGetTestTasksInfo = (
   tasksId: string,
   options?: SecondParameter<typeof createInstance>
@@ -267,7 +268,7 @@ export const testControllerGetTestTasksInfo = (
     options
   );
 };
-
+//
 export const testControllerSubmitTestAnswers = (
   body: SubmitTestAnswersBodyDto,
   options?: Parameters<typeof createInstance>[1]
@@ -283,6 +284,7 @@ export const testControllerSubmitTestAnswers = (
 };
 
 // Редактирование профиля
+//
 export const accountControllerProfileEdit = (
   body: Partial<GetProfileInfoDto>,
   options?: Parameters<typeof createInstance>[1]
