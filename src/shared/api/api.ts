@@ -69,6 +69,16 @@ export interface GetPathologyListInfoDto {
   items: PathologyInfo[];
 }
 
+interface ClinicalCaseInfo {
+  id: number;
+  name: string;
+  cases: { id: number }[];
+}
+
+export interface GetClinicalCasesInfoDto {
+  items: ClinicalCaseInfo[];
+}
+
 export interface GetPathologyInfoDto {
   id: number;
   imgContainer: string[];
@@ -218,6 +228,15 @@ export const atlasControllerGetPathologyInfo = (
 ) => {
   return createInstance<GetPathologyInfoDto>(
     { url: `/atlas/pathology-detail/${pathologyId}`, method: "GET" },
+    options
+  );
+};
+
+export const atlasControllerGetClinicalCasesInfo = (
+  options?: SecondParameter<typeof createInstance>
+) => {
+  return createInstance<GetClinicalCasesInfoDto>(
+    { url: `/clinical-cases`, method: "GET" },
     options
   );
 };
