@@ -52,36 +52,32 @@ export function UiListButtonClinic({
           )}
         />
       </div>
-
+      
       {/* Раскрывающаяся часть */}
-      {/* Раскрывающаяся часть */}
-<div
-  className={clsx(
-    "transition-all duration-300 ease-in-out overflow-hidden",
-    active ? "max-h-[500px] opacity-100 mt-2" : "max-h-0 opacity-0"
-  )}
->
-  <div className="flex flex-col gap-[8px] pl-9 pr-2 pb-2">
-
-    {cases.map((caseItem, idx) => (
       <div
-        key={caseItem.id}
-        className="flex items-center gap-3 text-[16px] text-gray-700 leading-tight py-[6px] px-[6px] rounded-lg cursor-pointer transition-all duration-150 hover:bg-blue-100 hover:text-blue-800"
-        onClick={(e) => {
-          e.stopPropagation();
-          handleCaseClick(caseItem.id);
-        }}
+        className={clsx(
+          "transition-all duration-300 ease-in-out overflow-hidden",
+          active ? "max-h-[500px] opacity-100 mt-2" : "max-h-0 opacity-0"
+        )}
       >
-        {/* Точка-маркер */}
-        <div className="w-[8px] h-[8px] rounded-full bg-blue-400 flex-shrink-0"></div>
+        <div className="flex flex-col gap-[8px] pl-9 pr-2 pb-2">
+          {cases.map((caseItem, idx) => (
+            <div
+              key={caseItem.id}
+              className="flex items-center gap-3 text-[16px] text-gray-700 leading-tight py-[6px] px-[6px] rounded-lg cursor-pointer transition-all duration-150 hover:bg-blue-100 hover:text-blue-800"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCaseClick(caseItem.id);
+              }}
+            >
+              {/* Точка-маркер */}
+              <div className="w-[8px] h-[8px] rounded-full bg-blue-400 flex-shrink-0"></div>
 
-        <span>Случай {idx + 1}</span>
+              <span>Случай {idx + 1}</span>
+            </div>
+          ))}
+        </div>
       </div>
-    ))}
-
-  </div>
-</div>
-
     </div>
   );
 }
