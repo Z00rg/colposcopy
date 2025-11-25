@@ -22,8 +22,9 @@ export function Profile({ className }: { className?: string }) {
       <div
         className={clsx(
           className,
-          "gap-4 text-[18px] flex items-center justify-start"
+          "gap-4 text-[18px] flex items-center justify-start",
         )}
+        onClick={() => setActive(!active)}
       >
         <div className="flex justify-center items-center">
           <Man />
@@ -34,7 +35,7 @@ export function Profile({ className }: { className?: string }) {
           </div>
           <div className="font-medium flex flex-wrap">{formData.email}</div>
         </div>
-        <button className="ml-5 mr-2" onClick={() => setActive(!active)}>
+        <button className="ml-5 mr-2">
           <ArrowRight
             className={clsx(
               "transition-transform duration-300 ease-in-out",
