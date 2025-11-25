@@ -1,0 +1,73 @@
+import { createInstance, RequestOptions } from "./api-instance";
+
+// DTO
+
+export interface SignInBodyDto {
+  email: string;
+  password: string;
+}
+
+export interface SignUpBodyDto {
+  firstName: string;
+  surname: string;
+  middleName: string;
+  work: string;
+  position: string;
+  email: string;
+  password: string;
+}
+
+export interface GetSessionInfoDto {
+  id: number;
+  email: string;
+  iat: number;
+  exp: number;
+}
+
+// API
+
+const signIn = (body: SignInBodyDto, options?: RequestOptions) =>
+  createInstance<void>(
+    {
+      url: "/auth/sign-in",
+      method: "POST",
+      data: body,
+    },
+    options
+  );
+
+const signUp = (body: SignUpBodyDto, options?: RequestOptions) =>
+  createInstance<void>(
+    {
+      url: "/auth/sign-up",
+      method: "POST",
+      data: body,
+    },
+    options
+  );
+
+const getSession = (options?: RequestOptions) =>
+  createInstance<GetSessionInfoDto>(
+    {
+      url: "/auth/session",
+      method: "GET",
+    },
+    options
+  );
+
+const signOut = (options?: RequestOptions) =>
+  createInstance<void>(
+    {
+      url: "/auth/sign-out",
+      method: "POST",
+    },
+    options
+  );
+
+
+export const authApi = {
+  signIn,
+  signUp,
+  getSession,
+  signOut,
+};

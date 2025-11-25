@@ -17,6 +17,8 @@ export const createInstance = <T>(
   }).then((r) => r.data);
 };
 
+export type RequestOptions = Parameters<typeof createInstance>[1];
+
 export type BodyType<Data> = Data;
 
 export type ErrorType<Error> = AxiosError<Error>;
