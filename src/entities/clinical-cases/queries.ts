@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const clinicalCasesKey = ["clinical-cases"];
 
-export function useClinicalCasesListQuery() {
+export function useClinicalCasesQuery() {
   return useQuery({
     queryKey: clinicalCasesKey,
     queryFn: casesControllerGetClinicalCasesInfo,

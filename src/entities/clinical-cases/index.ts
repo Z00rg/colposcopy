@@ -1,1 +1,1 @@
-export { useAtlasListQuery } from "./queries"
+export { useClinicalCasesQuery } from "./queries"
