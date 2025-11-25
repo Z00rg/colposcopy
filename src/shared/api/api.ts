@@ -232,7 +232,7 @@ export const atlasControllerGetPathologyInfo = (
   );
 };
 
-export const atlasControllerGetClinicalCasesInfo = (
+export const casesControllerGetClinicalCasesInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
   return createInstance<GetClinicalCasesInfoDto>(
