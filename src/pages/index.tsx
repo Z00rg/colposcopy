@@ -10,7 +10,7 @@ export default function HomePage() {
       <UiHeader variant="withoutLogo" className="mt-16" />
       <div className="flex flex-col justify-between items-center gap-5 flex-1 mb-4 px-5">
         <div>
-          <div className="font-medium text-[20px] font-[#4B4242] mt-7">
+          <div className="font-medium text-[20px] font-[#4B4242] mt-7 mb-4">
             Основной аккаунт
           </div>
           <Profile className="mt-4" />
