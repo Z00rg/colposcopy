@@ -226,7 +226,7 @@ export const atlasControllerGetAtlasListInfo = (
     options
   );
 };
-//
+//+
 export const atlasControllerGetPathologyInfo = (
   pathologyId: number | string,
   options?: SecondParameter<typeof createInstance>
