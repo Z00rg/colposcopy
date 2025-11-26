@@ -18,6 +18,8 @@ export interface GetPathologyListInfoDto {
 export type QuestionType = 0 | 1; // 0: Один ответ , 1: Множественный ответ
 
 export interface ITestQuestion {
+  // id: number;
+
   question: string;
 
   typeQuestion: QuestionType;

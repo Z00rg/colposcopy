@@ -40,7 +40,7 @@ export function useTestTasks() {
   // tasks данные заглушки
   const tasksTesting = [
     {
-      id: 1,
+      id: 132,
       imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
       pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
@@ -48,6 +48,7 @@ export function useTestTasks() {
           границу метаплазии, расположенную на эктоцервиксе.`,
       testsQuestions: [
         {
+          id: 123,
           question: "ПЕЕРВЫЙ ПТАЛАГОИЯ Первичный осмотр",
           typeQuestion: 0,
           instructions: "Выберите один ответ.",
@@ -57,6 +58,7 @@ export function useTestTasks() {
           ],
         },
         {
+          id: 124,
           question: "Граница между МПЭ и ЦЭ",
           typeQuestion: 1,
           instructions:
@@ -70,7 +72,7 @@ export function useTestTasks() {
       ],
     },
     {
-      id: 2,
+      id: 212,
       imageSrcs: [
         "/test2.png",
         "/test2.png",
@@ -84,6 +86,7 @@ export function useTestTasks() {
           границу метаплазии, расположенную на эктоцервиксе.`,
       testsQuestions: [
         {
+          id: 125,
           question: "ЭТО ОТ ВТОРОГО ВОПРОСА Первичный осмотр",
           typeQuestion: 0,
           instructions: "Выберите один ответ.",
@@ -93,6 +96,7 @@ export function useTestTasks() {
           ],
         },
         {
+          id: 126,
           question: "Граница между МПЭ и ЦЭ",
           typeQuestion: 1,
           instructions:
@@ -106,7 +110,7 @@ export function useTestTasks() {
       ],
     },
     {
-      id: 3,
+      id: 311,
       imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
       pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
@@ -114,6 +118,7 @@ export function useTestTasks() {
           границу метаплазии, расположенную на эктоцервиксе.`,
       testsQuestions: [
         {
+          id: 127,
           question: "ТРЕТИЙ ПТАЛАГОИЯ Первичный осмотр",
           typeQuestion: 0,
           instructions: "Выберите один ответ.",
@@ -123,6 +128,7 @@ export function useTestTasks() {
           ],
         },
         {
+          id: 128,
           question: "Граница между МПЭ и ЦЭ",
           typeQuestion: 1,
           instructions:
@@ -136,7 +142,7 @@ export function useTestTasks() {
       ],
     },
     {
-      id: 4,
+      id: 144,
       imageSrcs: ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"],
       pathologyText: `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
           всей площади стыка многослойного плоского эпителия и цилиндрического
@@ -144,6 +150,7 @@ export function useTestTasks() {
           границу метаплазии, расположенную на эктоцервиксе.`,
       testsQuestions: [
         {
+          id: 129,
           question: "ЭТО ОТ ЧЕТВЕРТОГО ВОПРОСА Первичный осмотр",
           typeQuestion: 0,
           instructions: "Выберите один ответ.",
@@ -153,6 +160,7 @@ export function useTestTasks() {
           ],
         },
         {
+          id: 130,
           question: "Граница между МПЭ и ЦЭ",
           typeQuestion: 1,
           instructions:

@@ -99,6 +99,8 @@ export interface GetInstructionInfoDto {
 export type QuestionType = 0 | 1; // 0: Одиночный выбор , 1: Множественный выбор
 //
 export interface ITestQuestion {
+  // id: number;
+  
   question: string;
 
   typeQuestion: QuestionType;
