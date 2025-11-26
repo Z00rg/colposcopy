@@ -174,7 +174,7 @@ export const authControllerSignOut = (
     options
   );
 };
-//
+//+
 export const tryControllerGetTryListInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
@@ -183,7 +183,7 @@ export const tryControllerGetTryListInfo = (
     options
   );
 };
-//
+//+
 export const tryControllerGetTryInfo = (
   tryId: string,
   options?: SecondParameter<typeof createInstance>
