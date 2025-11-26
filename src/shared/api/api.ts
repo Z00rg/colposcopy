@@ -236,7 +236,7 @@ export const atlasControllerGetPathologyInfo = (
     options
   );
 };
-//
+//+
 export const casesControllerGetClinicalCasesInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
@@ -245,7 +245,7 @@ export const casesControllerGetClinicalCasesInfo = (
     options
   );
 };
-//
+//+
 export const casesControllerGetCaseInfo = (
   caseId: number | string,
   options?: SecondParameter<typeof createInstance>
@@ -255,7 +255,7 @@ export const casesControllerGetCaseInfo = (
     options
   );
 };
-//
+//+
 export const testControllerGetInstructionInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
