@@ -126,7 +126,7 @@ export type SubmitTestAnswersBodyDto = {
   testIds: string;
   answers: Record<number, Record<number, number[]>>;
 };
-//
+//+
 export const authControllerSignIn = (
   signInBodyDto: SignInBodyDto,
   options?: SecondParameter<typeof createInstance>
@@ -140,7 +140,7 @@ export const authControllerSignIn = (
     options
   );
 };
-//
+//+
 export const authControllerSignUp = (
   signUpBodyDto: SignUpBodyDto,
   options?: SecondParameter<typeof createInstance>
@@ -154,7 +154,7 @@ export const authControllerSignUp = (
     options
   );
 };
-//
+//+
 export const authControllerGetSessionInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
@@ -165,7 +165,7 @@ export const authControllerGetSessionInfo = (
 };
 
 //Выход из аккаунта
-//
+//+
 export const authControllerSignOut = (
   options?: SecondParameter<typeof createInstance>
 ) => {
