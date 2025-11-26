@@ -22,13 +22,17 @@ export function Profile({ className }: { className?: string }) {
       className={clsx(
         "flex bg-[#F3F3F3] w-full px-[17px] pb-2.5 flex-col",
         "shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px] flex-1",
-        {"hover:bg-blue-50 hover:border-blue-400 hover:shadow-md hover:scale-[1.01] cursor-pointer": !active}
+        {
+          "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md hover:scale-[1.01] cursor-pointer":
+            !active,
+        }
       )}
     >
       <div
         className={clsx(
           className,
-          "gap-4 text-[18px] flex items-center justify-start"
+          "gap-4 text-[18px] flex items-center justify-start",
+          { "cursor-pointer": active }
         )}
         onClick={() => setActive(!active)}
       >
