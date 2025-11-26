@@ -1,6 +1,7 @@
 import { useProfileQuery } from "@/entities/profile";
+import { accountApi } from "@/shared/api/accountApi";
 import {
-  accountControllerProfileEdit,
+  // accountControllerProfileEdit,
   GetProfileInfoDto,
 } from "@/shared/api/api";
 import { useMutation } from "@tanstack/react-query";
@@ -35,7 +36,8 @@ export function useProfile() {
 
   // Мутация для отправки профиля
   const profileEditMutation = useMutation({
-    mutationFn: accountControllerProfileEdit,
+    // mutationFn: accountControllerProfileEdit,
+    mutationFn: accountApi.editProfile,
     onSuccess: () => {
       console.log("✅ Профиль успешно обновлён");
     },
@@ -58,31 +60,30 @@ export function useProfile() {
 
   // Сравнение и отправка изменений
   const handleSave = (index: number) => {
-  const changedFields = Object.entries(formData).reduce(
-    (acc, [key, value]) => {
-      const oldValue = (initialData as any)[key];
+    const changedFields = Object.entries(formData).reduce(
+      (acc, [key, value]) => {
+        const oldValue = (initialData as any)[key];
 
-      if (value === oldValue) return acc;
+        if (value === oldValue) return acc;
 
-      if (value === undefined || value === null || value === "") return acc;
+        if (value === undefined || value === null || value === "") return acc;
 
-      acc[key as keyof GetProfileInfoDto] = value!;
-      return acc;
-    },
-    {} as Partial<GetProfileInfoDto>
-  );
+        acc[key as keyof GetProfileInfoDto] = value!;
+        return acc;
+      },
+      {} as Partial<GetProfileInfoDto>
+    );
 
-  if (Object.keys(changedFields).length === 0) {
-    console.log("⚪️ Ничего не изменено или поля пустые — не отправляем");
+    if (Object.keys(changedFields).length === 0) {
+      console.log("⚪️ Ничего не изменено или поля пустые — не отправляем");
+      toggleEdit(index);
+      return;
+    }
+
+    console.log("🔹 Отправляем изменённые поля:", changedFields);
+    profileEditMutation.mutate(changedFields);
     toggleEdit(index);
-    return;
-  }
-
-  console.log("🔹 Отправляем изменённые поля:", changedFields);
-  profileEditMutation.mutate(changedFields);
-  toggleEdit(index);
-};
-
+  };
 
   return {
     formData,

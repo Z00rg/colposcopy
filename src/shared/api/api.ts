@@ -193,12 +193,27 @@ export const tryControllerGetTryInfo = (
     options
   );
 };
-//
+//+
 export const accountControllerGetProfileInfo = (
   options?: SecondParameter<typeof createInstance>
 ) => {
   return createInstance<GetProfileInfoDto>(
     { url: `/account/profile`, method: "GET" },
+    options
+  );
+};
+// Редактирование профиля
+//+
+export const accountControllerProfileEdit = (
+  body: Partial<GetProfileInfoDto>,
+  options?: Parameters<typeof createInstance>[1]
+) => {
+  return createInstance<void>(
+    {
+      url: `/account/profile/edit`,
+      method: "POST",
+      data: body,
+    },
     options
   );
 };
@@ -283,18 +298,4 @@ export const testControllerSubmitTestAnswers = (
   );
 };
 
-// Редактирование профиля
-//
-export const accountControllerProfileEdit = (
-  body: Partial<GetProfileInfoDto>,
-  options?: Parameters<typeof createInstance>[1]
-) => {
-  return createInstance<void>(
-    {
-      url: `/account/profile/edit`,
-      method: "POST",
-      data: body,
-    },
-    options
-  );
-};
+
