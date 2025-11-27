@@ -1,4 +1,5 @@
 // import { authControllerSignIn } from "@/shared/api/api";
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/shared/api/api-instance";
 import { authApi } from "@/shared/api/authApi";
 import { ROUTES } from "@/shared/constants/routes";
 import { useMutation } from "@tanstack/react-query";
@@ -16,7 +17,9 @@ export function useSignInForm() {
   const signInMutation = useMutation({
     // mutationFn: authControllerSignIn,
     mutationFn: authApi.signIn,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      localStorage.setItem(ACCESS_TOKEN_KEY, data.access_token);
+      localStorage.setItem(REFRESH_TOKEN_KEY, data.refresh_token);
       router.push(ROUTES.HOME);
     },
   });

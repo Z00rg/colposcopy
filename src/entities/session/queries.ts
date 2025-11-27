@@ -5,18 +5,20 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 const sessionKey = ["session"];
 
 export function useSessionQuery() {
-    return useQuery({
-        queryKey: sessionKey,
-        // queryFn: authControllerGetSessionInfo,
-        queryFn: authApi.getSession,
-        retry: 0,
-        staleTime: 24 * 60 * 60 * 1000, //время жизни кеша 24 часа
-      });
+  return useQuery({
+    queryKey: sessionKey,
+    // queryFn: authControllerGetSessionInfo,
+    queryFn: authApi.getSession,
+    retry: 0,
+    staleTime: 24 * 60 * 60 * 1000, //время жизни кеша 24 часа
+  });
 }
 
-
-export function useResetSession(){
-    const queryClient = useQueryClient();
-    return () => queryClient.removeQueries();
+export function useResetSession() {
+  const queryClient = useQueryClient();
+  return () => {
+    queryClient.removeQueries();
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+  };
 }
-

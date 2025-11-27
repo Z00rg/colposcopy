@@ -7,6 +7,11 @@ export interface SignInBodyDto {
   password: string;
 }
 
+export interface GetTokenDto {
+  refresh_token: string;
+  access_token: string;
+}
+
 export interface SignUpBodyDto {
   firstName: string;
   surname: string;
@@ -25,11 +30,11 @@ export interface GetSessionInfoDto {
 }
 
 // API
-
+//+
 const signIn = (body: SignInBodyDto, options?: RequestOptions) =>
-  createInstance<void>(
+  createInstance<GetTokenDto>(
     {
-      url: "/auth/sign-in",
+      url: "/auth/login/",
       method: "POST",
       data: body,
     },
@@ -58,7 +63,7 @@ const getSession = (options?: RequestOptions) =>
 const signOut = (options?: RequestOptions) =>
   createInstance<void>(
     {
-      url: "/auth/sign-out",
+      url: "/auth/logout/",
       method: "POST",
     },
     options
