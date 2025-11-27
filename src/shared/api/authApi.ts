@@ -59,7 +59,7 @@ const getSession = (options?: RequestOptions) =>
     },
     options
   );
-
+//+
 const signOut = (options?: RequestOptions) =>
   createInstance<void>(
     {

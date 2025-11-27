@@ -18,7 +18,5 @@ export function useResetSession() {
   const queryClient = useQueryClient();
   return () => {
     queryClient.removeQueries();
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
   };
 }
