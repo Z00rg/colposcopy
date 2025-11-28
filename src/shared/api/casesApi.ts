@@ -26,7 +26,7 @@ export const getCaseList = (options?: RequestOptions) =>
     { url: `/clincal-cases/cases/`, method: "GET" },
     options
   );
-
+//+
 export const getCaseInfo = (
   caseId: number | string,
   options?: RequestOptions
