@@ -30,7 +30,7 @@ export const getPathologyInfo = (
   options?: RequestOptions
 ) =>
   createInstance<GetPathologyInfoDto>(
-    { url: `/atlas/pathology/${pathologyId}`, method: "GET" },
+    { url: `/atlas/pathology/${pathologyId}/`, method: "GET" },
     options
   );
 
