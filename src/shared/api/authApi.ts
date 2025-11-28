@@ -15,7 +15,7 @@ export interface GetTokenDto {
 export interface SignUpBodyDto {
   firstName: string;
   surname: string;
-  middleName: string;
+  patronymic: string;
   work: string;
   position: string;
   email: string;
