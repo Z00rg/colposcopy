@@ -19,7 +19,7 @@ export function useSignUpForm() {
     handleSubmit,
     formState: { isValid },
   } = useForm<{
-    firstName: string;
+    name: string;
     surname: string;
     patronymic: string;
     work: string;
@@ -39,7 +39,7 @@ export function useSignUpForm() {
     },
   });
 
-  const errorMessage = signInMutation.error ? "Ошибка сервера" : undefined;
+  const errorMessage = signInMutation.error?.name
 
   return {
     register,

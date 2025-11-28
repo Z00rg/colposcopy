@@ -13,7 +13,7 @@ export interface GetTokenDto {
 }
 
 export interface SignUpBodyDto {
-  firstName: string;
+  name: string;
   surname: string;
   patronymic: string;
   work: string;
@@ -41,7 +41,7 @@ const signIn = (body: SignInBodyDto, options?: RequestOptions) =>
     },
     options
   );
-// TODO: Замена названий полей осталась на беке/фронте
+//+
 const signUp = (body: SignUpBodyDto, options?: RequestOptions) =>
   createInstance<void>(
     {

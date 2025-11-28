@@ -41,7 +41,7 @@ export function SignUpForm() {
             <UiWhiteTextField
               className="w-[323px]"
               label="Ваше имя"
-              inputProps={{ ...register("firstName", { required: true }) }}
+              inputProps={{ ...register("name", { required: true }) }}
             />
             <UiWhiteTextField
               className="w-[323px]"
