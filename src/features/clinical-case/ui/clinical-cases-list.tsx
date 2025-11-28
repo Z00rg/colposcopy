@@ -52,34 +52,34 @@ export function ClinicalCasesList({ className }: { className?: string }) {
   ];
 
   return (
-    // <UiList className={clsx(className, "mt-4 items-start max-h-[530px]")}>
-    //   {isLoading && <UiSpinner />}
-    //   {isError && (
-    //     <div className="font-bold text-rose-500">
-    //       Ошибка при загрузке списка патологий
-    //     </div>
-    //   )}
-    //   {items &&
-    //     items.map((item, index) => (
-    //       <UiListButtonClinic
-    //         className="w-full"
-    //         key={item.id}
-    //         index={index + 1}
-    //         informationOfPathology={item}
-    //         cases={item.cases}
-    //       />
-    //     ))}
-    // </UiList>
-    <UiList className="mt-4 items-start max-h-[530px]">
-      {testItems.map((item, index) => (
-        <UiListButtonClinic
-          className="w-full"
-          key={item.id}
-          index={index + 1}
-          informationOfPathology={item}
-          cases={item.cases}
-        />
-      ))}
+    <UiList className={clsx(className, "mt-4 items-start max-h-[530px]")}>
+      {isLoading && <UiSpinner />}
+      {isError && (
+        <div className="font-bold text-rose-500">
+          Ошибка при загрузке списка патологий
+        </div>
+      )}
+      {items &&
+        items.map((item, index) => (
+          <UiListButtonClinic
+            className="w-full"
+            key={item.id}
+            index={index + 1}
+            informationOfPathology={item}
+            cases={item.cases}
+          />
+        ))}
     </UiList>
+    // <UiList className="mt-4 items-start max-h-[530px]">
+    //   {testItems.map((item, index) => (
+    //     <UiListButtonClinic
+    //       className="w-full"
+    //       key={item.id}
+    //       index={index + 1}
+    //       informationOfPathology={item}
+    //       cases={item.cases}
+    //     />
+    //   ))}
+    // </UiList>
   );
 }

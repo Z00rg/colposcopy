@@ -20,10 +20,10 @@ export interface GetCaseInfoDto {
 }
 
 // API
-
+//+
 export const getCaseList = (options?: RequestOptions) =>
   createInstance<GetClinicalCasesInfoDto>(
-    { url: `/cases/clinical-cases`, method: "GET" },
+    { url: `/clincal-cases/cases/`, method: "GET" },
     options
   );
 
