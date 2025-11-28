@@ -14,15 +14,15 @@ export const apiInstance = axios.create({
   withCredentials: true,
 });
 
-//Функция куки
+//Функции работы с куки
 function getCookie(name: string): string | null {
   // Декодируем URI и разбиваем на пары "ключ=значение"
   const cookies = document.cookie.split(';').map(cookie => cookie.trim());
   
   for (const cookie of cookies) {
-    // Разделяем имя и значение (учитываем, что значение может содержать '=')
+    // Разделяем имя и значение, значение содержит '=')
     const [cookieName, ...cookieValueParts] = cookie.split('=');
-    const cookieValue = cookieValueParts.join('='); // Собираем обратно, если было несколько '='
+    const cookieValue = cookieValueParts.join('='); // Сбор обратно, если было несколько '='
     
     if (cookieName === name) {
       // Декодируем значение (токены часто кодируются)
@@ -146,7 +146,4 @@ export type ErrorType<Error> = AxiosError<Error>;
  *
  * ErrorType: Вспомогательный дженерик-тип для удобной работы с ошибками Axios,
  * предоставляя доступ к деталям, таким как статус-код.
- *
- * Такой подход обеспечивает чистоту кода, переиспользуемость и строгую типизацию
- * для всех API-запросов в приложении.
  */

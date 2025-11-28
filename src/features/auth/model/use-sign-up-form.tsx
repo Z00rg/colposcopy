@@ -21,7 +21,7 @@ export function useSignUpForm() {
   } = useForm<{
     firstName: string;
     surname: string;
-    middleName: string;
+    patronymic: string;
     work: string;
     position: string;
     email: string;
