@@ -20,6 +20,7 @@ export interface SignUpBodyDto {
   position: string;
   email: string;
   password: string;
+  password2: string;
 }
 
 export interface GetSessionInfoDto {
@@ -44,7 +45,7 @@ const signIn = (body: SignInBodyDto, options?: RequestOptions) =>
 const signUp = (body: SignUpBodyDto, options?: RequestOptions) =>
   createInstance<void>(
     {
-      url: "/auth/sign-up",
+      url: "/auth/register/worker/",
       method: "POST",
       data: body,
     },

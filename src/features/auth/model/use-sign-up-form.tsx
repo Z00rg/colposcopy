@@ -26,6 +26,7 @@ export function useSignUpForm() {
     position: string;
     email: string;
     password: string;
+    password2: string;
   }>({
     mode: "onChange",
   });

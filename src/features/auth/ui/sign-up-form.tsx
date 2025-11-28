@@ -83,6 +83,14 @@ export function SignUpForm() {
                 ...register("password", { required: true }),
               }}
             />
+            <UiWhiteTextField
+              className="w-[323px]"
+              label="Подтвердите пароль"
+              inputProps={{
+                type: "password",
+                ...register("password2", { required: true }),
+              }}
+            />
           </div>
           <div className="mt-auto flex flex-col w-full gap-2">
             <div className="bg-[#A8A8A8] h-[1px] flex w-full"></div>

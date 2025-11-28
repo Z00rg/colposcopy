@@ -4,7 +4,7 @@ export const ACCESS_TOKEN_KEY = "access";
 export const ACCESS_TOKEN_LIFE = 1;
 export const REFRESH_TOKEN_KEY = "refresh";
 const CSRF_TOKEN_KEY = 'csrftoken';
-const AUTH_URLS = ["/auth/login/", "/auth/refresh_token/"];
+const AUTH_URLS = ["/auth/login/", "/auth/refresh_token/", "/auth/register/worker/"];
 
 export const apiInstance = axios.create({
   baseURL: "http://localhost:8000/api",
