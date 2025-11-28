@@ -41,7 +41,7 @@ const signIn = (body: SignInBodyDto, options?: RequestOptions) =>
     },
     options
   );
-
+//Замена названий полей осталась на беке/фронте
 const signUp = (body: SignUpBodyDto, options?: RequestOptions) =>
   createInstance<void>(
     {
