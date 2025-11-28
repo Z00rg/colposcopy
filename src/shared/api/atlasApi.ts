@@ -18,10 +18,10 @@ export interface GetPathologyInfoDto {
 }
 
 // API
-
+//+
 export const getAtlasList = (options?: RequestOptions) =>
   createInstance<GetPathologyListInfoDto>(
-    { url: `/atlas/atlas-list`, method: "GET" },
+    { url: `/atlas/atlas-list/`, method: "GET" },
     options
   );
 
