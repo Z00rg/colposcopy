@@ -19,7 +19,7 @@ export function Case({ className }: { className?: string }) {
 
   const imgContainer = ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"];
   const imgSchema = "/imageFourth.png";
-  const textContainer = [
+  const descriptionContainer = [
     `Картинка 1: Зона трансформации (3Т) 1го типа характеризуется полной визуализацией
               всей площади стыка многослойного плоского эпителия и цилиндрического
               эпителия, включая его наиболее важный для скрининга компонент —
@@ -53,7 +53,7 @@ export function Case({ className }: { className?: string }) {
         />
       ) : (
         <UiTextArea className="mt-5">
-          {textContainer[currentImageIndex]}
+          {descriptionContainer[currentImageIndex]}
         </UiTextArea>
       )}
       <UiLink href={ROUTES.CLINIC} className="mr-auto">
@@ -77,7 +77,7 @@ export function Case({ className }: { className?: string }) {
       //         />
       //       ) : (
       //         <UiTextArea className="mt-5">
-      //           {caseDetails.textContainer[currentImageIndex]}
+      //           {caseDetails.descriptionContainer[currentImageIndex]}
       //         </UiTextArea>
       //       )}
       //       <UiLink href={ROUTES.ATLAS} className="mr-auto">

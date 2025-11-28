@@ -16,7 +16,7 @@ export interface GetCaseInfoDto {
   id: number;
   imgContainer: string[];
   imgSchema: string;
-  textContainer: string[];
+  descriptionContainer: string[];
 }
 
 // API
@@ -32,7 +32,7 @@ export const getCaseInfo = (
   options?: RequestOptions
 ) =>
   createInstance<GetCaseInfoDto>(
-    { url: `/cases/case/${caseId}`, method: "GET" },
+    { url: `/clincal-cases/case/${caseId}/`, method: "GET" },
     options
   );
 
