@@ -52,7 +52,7 @@ export function ClinicalCasesList({ className }: { className?: string }) {
   ];
 
   return (
-    <UiList className={clsx(className, "mt-4 items-start max-h-[530px]")}>
+    <UiList className={clsx(className, "mt-4 items-start max-h-[530px] min-w-[373px]")}>
       {isLoading && <UiSpinner />}
       {isError && (
         <div className="font-bold text-rose-500">

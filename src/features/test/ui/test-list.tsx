@@ -25,56 +25,20 @@ export function TestList() {
   ];
 
   return (
-    <UiList className="mt-4 items-start max-h-[530px]">
-      <div className="font-bold text-[18px] text-[#4B4242]">
-        Выберите параметры
-      </div>
-      {informationOfPathology.map((item, index) => (
-        <UiListButtonTest
-          className="w-full"
-          key={item.id}
-          index={index + 1}
-          informationOfPathology={item}
-          isChecked={selectedIds.includes(item.id)}
-          onToggle={handleTogglePathology}
-        />
-      ))}
-      <div className="flex w-full border border-b-1 border-[#BDBDBD]"></div>
-      <Instruction />
-      <button
-        onClick={handleStartAttempt}
-        disabled={selectedIds.length === 0}
-        className={clsx(
-          "ml-auto text-[20px] mb-3 font-normal transition-colors",
-          selectedIds.length === 0
-            ? "text-gray-400 cursor-not-allowed"
-            : "text-[#2E76AA] hover:text-[#26628A] cursor-pointer"
-        )}
-      >
-        Начать попытку
-      </button>
-    </UiList>
     // <UiList className="mt-4 items-start max-h-[530px]">
     //   <div className="font-bold text-[18px] text-[#4B4242]">
     //     Выберите параметры
     //   </div>
-    //   {isLoading && <UiSpinner />}
-    //   {isError && (
-    //     <div className="font-bold text-rose-500">
-    //       Ошибка при загрузке списка патологий
-    //     </div>
-    //   )}
-    //   {items &&
-    //     items.map((item, index) => (
-    //       <UiListButtonTest
-    //         className="w-full"
-    //         key={item.id}
-    //         index={index + 1}
-    //         informationOfPathology={item}
-    //         isChecked={selectedIds.includes(item.id)}
-    //         onToggle={handleTogglePathology}
-    //       />
-    //     ))}
+    //   {informationOfPathology.map((item, index) => (
+    //     <UiListButtonTest
+    //       className="w-full"
+    //       key={item.id}
+    //       index={index + 1}
+    //       informationOfPathology={item}
+    //       isChecked={selectedIds.includes(item.id)}
+    //       onToggle={handleTogglePathology}
+    //     />
+    //   ))}
     //   <div className="flex w-full border border-b-1 border-[#BDBDBD]"></div>
     //   <Instruction />
     //   <button
@@ -90,5 +54,41 @@ export function TestList() {
     //     Начать попытку
     //   </button>
     // </UiList>
+    <UiList className="mt-4 items-start max-h-[530px] min-w-[373px]">
+      <div className="font-bold text-[18px] text-[#4B4242]">
+        Выберите параметры
+      </div>
+      {isLoading && <UiSpinner />}
+      {isError && (
+        <div className="font-bold text-rose-500">
+          Ошибка при загрузке списка патологий
+        </div>
+      )}
+      {items &&
+        items.map((item, index) => (
+          <UiListButtonTest
+            className="w-full"
+            key={item.id}
+            index={index + 1}
+            informationOfPathology={item}
+            isChecked={selectedIds.includes(item.id)}
+            onToggle={handleTogglePathology}
+          />
+        ))}
+      <div className="flex w-full border border-b-1 border-[#BDBDBD]"></div>
+      <Instruction />
+      <button
+        onClick={handleStartAttempt}
+        disabled={selectedIds.length === 0}
+        className={clsx(
+          "ml-auto text-[20px] mb-3 font-normal transition-colors",
+          selectedIds.length === 0
+            ? "text-gray-400 cursor-not-allowed"
+            : "text-[#2E76AA] hover:text-[#26628A] cursor-pointer"
+        )}
+      >
+        Начать попытку
+      </button>
+    </UiList>
   );
 }

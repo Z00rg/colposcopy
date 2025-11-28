@@ -55,10 +55,10 @@ export const getInstructionInfo = (options?: RequestOptions) =>
     { url: `/test/instruction`, method: "GET" },
     options
   );
-
+//+
 export const getTestListInfo = (options?: RequestOptions) =>
   createInstance<GetPathologyListInfoDto>(
-    { url: `/test/test-list`, method: "GET" },
+    { url: `/atlas/atlas-list/`, method: "GET" },
     options
   );
 
