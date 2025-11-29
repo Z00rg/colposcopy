@@ -65,7 +65,7 @@ export const getTestListInfo = (options?: RequestOptions) =>
     { url: `/atlas/atlas-list/`, method: "GET" },
     options
   );
-
+//+
 export const getTestTasks = (tasksId: string, options?: RequestOptions) =>
   createInstance<GetTestTasksDataDto>(
     { url: `/test/test-tasks/${tasksId}`, method: "GET" },
