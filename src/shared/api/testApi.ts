@@ -17,8 +17,14 @@ export interface GetPathologyListInfoDto {
 
 export type QuestionType = 0 | 1; // 0: Один ответ , 1: Множественный ответ
 
+export interface IAnswers {
+  id: number;
+
+  text: string;
+}
+
 export interface ITestQuestion {
-  // id: number;
+  id: number;
 
   question: string;
 
@@ -26,15 +32,13 @@ export interface ITestQuestion {
 
   instructions: string;
 
-  answers: string[];
+  answers: IAnswers[];
 }
 
 export interface ITestTask {
   id: number;
 
   imageSrcs: string[];
-
-  pathologyText: string;
 
   testsQuestions: ITestQuestion[];
 }
@@ -64,7 +68,7 @@ export const getTestListInfo = (options?: RequestOptions) =>
 
 export const getTestTasks = (tasksId: string, options?: RequestOptions) =>
   createInstance<GetTestTasksDataDto>(
-    { url: `/test/test-list/${tasksId}`, method: "GET" },
+    { url: `/test/test-tasks/${tasksId}`, method: "GET" },
     options
   );
 

@@ -24,7 +24,7 @@ export const getAtlasList = (options?: RequestOptions) =>
     { url: `/atlas/atlas-list/`, method: "GET" },
     options
   );
-
+//+
 export const getPathologyInfo = (
   pathologyId: number | string,
   options?: RequestOptions

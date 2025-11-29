@@ -7,6 +7,7 @@ import { useTestTasks } from "../model/use-test-tasks";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
 import { useEffect, useRef } from "react";
+import { ITestQuestion, IAnswers } from "@/shared/api/testApi";
 import { UiSpinnerSpecial } from "@/shared/ui/ui-spinner-special";
 
 export function TestTasks() {
@@ -75,8 +76,9 @@ export function TestTasks() {
 
             {/* Итерация по вопросам текущего задания */}
             {tasks[currentTaskIndex].testsQuestions.map(
-              (item: any, questionIndex: number) => {
+              (item: ITestQuestion, questionIndex: number) => {
                 const taskId = tasks[currentTaskIndex].id;
+                const questionId = tasks[currentTaskIndex].testsQuestions[questionIndex].id;
                 const selectedForThis = getSelectedFor(taskId, questionIndex);
 
                 return (
@@ -103,7 +105,7 @@ export function TestTasks() {
                     </div>
 
                     {/* Итерация по вариантам ответов текущего вопроса */}
-                    {item.answers.map((answer: string, answerIndex: number) => {
+                    {item.answers.map((answer: IAnswers, answerIndex: number) => {
                       const isChecked = selectedForThis.includes(answerIndex);
                       return (
                         <div
@@ -133,7 +135,7 @@ export function TestTasks() {
 
                           {/* Текст варианта ответа */}
                           <div className="break-words whitespace-normal flex-1 text-gray-800">
-                            {answer}
+                            {answer.text}
                           </div>
 
                           {/* Чекбокс/Радиобаттон */}
@@ -151,7 +153,7 @@ export function TestTasks() {
                                   item.typeQuestion
                                 )
                               }
-                              id={`chk-${taskId}-${questionIndex}-${answerIndex}`}
+                              id={`chk-${taskId}-${questionId}-${answer.id}`}
                             />
                           </div>
                         </div>
