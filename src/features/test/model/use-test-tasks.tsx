@@ -2,7 +2,7 @@ import {
   useSubmitAnswersMutation,
   useTestTasksQuery,
 } from "@/entities/test/queries";
-import { ITestTask } from "@/shared/api/testApi";
+import { ISelectedCase, ISelectedQuestion, ITestTask, SubmitTestAnswersBodyDto } from "@/shared/api/testApi";
 import { ROUTES } from "@/shared/constants/routes";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
@@ -176,6 +176,54 @@ export function useTestTasks() {
 
   // const tasks = tasksTesting;
 
+// ------------------------------------------------------------------
+// 🛠️ ПРЕОБРАЗОВАНИЕ ДАННЫХ
+// ------------------------------------------------------------------
+
+// Преобразует ответы из формата Record<taskId, Record<questionIndex, answerIndex[]>> в формат SubmitTestAnswersBodyDto.
+// Не проверено
+const transformAnswersToDto = (): SubmitTestAnswersBodyDto => {
+  const selectedCases: ISelectedCase[] = tasks
+    .map((task) => {
+      const answersForTask = selectedAnswers[task.id];
+      if (!answersForTask) {
+        return null; // Если для таска нет ответов, пропускаем его
+      }
+
+      const selectedQuestions: ISelectedQuestion[] = task.testsQuestions
+        .map((question, questionIndex) => {
+          const selectedAnswersForQuestion = answersForTask[questionIndex];
+
+          // Проверяем, есть ли ответы для этого вопроса по его индексу
+          if (
+            selectedAnswersForQuestion &&
+            selectedAnswersForQuestion.length > 0
+          ) {
+            return {
+              questionId: question.id, // Используем фактический ID вопроса
+              selectedAnswer: selectedAnswersForQuestion, // Массив ID ответов
+            };
+          }
+          return null;
+        })
+        .filter(
+          (q): q is ISelectedQuestion => q !== null
+        ); // Отфильтровываем вопросы без ответов
+
+      // Возвращаем объект кейса, только если есть хоть один отвеченный вопрос
+      if (selectedQuestions.length > 0) {
+        return {
+          caseId: task.id,
+          answers: selectedQuestions,
+        };
+      }
+      return null;
+    })
+    .filter((c): c is ISelectedCase => c !== null); // Отфильтровываем кейсы без ответов
+
+  return { items: selectedCases };
+};
+
   // ------------------------------------------------------------------
   // ОБРАБОТЧИКИ
   // ------------------------------------------------------------------
@@ -186,12 +234,13 @@ export function useTestTasks() {
   };
 
   const handleFinishAttempt = async () => {
+    const selectedAnswersForSubmit: SubmitTestAnswersBodyDto = transformAnswersToDto();
+
     // if (!selectedPathologyIds) return;
 
     // try {
     //   await submitAnswersMutation.mutateAsync({
-    //     testIds: selectedPathologyIds,
-    //     answers: selectedAnswers,
+    //     items: selectedAnswersForSubmit.items,
     //   });
 
     //   console.log("✅ Ответы успешно отправлены!");
@@ -199,7 +248,7 @@ export function useTestTasks() {
     // } catch (error) {
     //   console.error("❌ Ошибка при отправке ответов:", error);
     // }
-    console.log(selectedAnswers);
+    console.log(selectedAnswersForSubmit.items);
   };
 
   const getSelectedFor = (taskId: number, questionIndex: number): number[] =>

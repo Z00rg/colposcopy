@@ -47,10 +47,24 @@ export interface GetTestTasksDataDto {
   items: ITestTask[];
 }
 
-export type SubmitTestAnswersBodyDto = {
-  testIds: string;
-  answers: Record<number, Record<number, number[]>>;
+// export type SubmitTestAnswersBodyDto = {
+//   answers: Record<number, Record<number, number[]>>;
+// };
+
+export interface ISelectedQuestion {
+  questionId: number,
+  selectedAnswer: number[]
+}
+
+export interface ISelectedCase {
+  caseId: number,
+  answers: ISelectedQuestion[]
+}
+
+export interface SubmitTestAnswersBodyDto {
+  items: ISelectedCase[]
 };
+
 
 // API
 
