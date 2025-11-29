@@ -106,6 +106,7 @@ export function TestTasks() {
 
                     {/* Итерация по вариантам ответов текущего вопроса */}
                     {item.answers.map((answer: IAnswers, answerIndex: number) => {
+                      const answerId = answer.id
                       const isChecked = selectedForThis.includes(answerIndex);
                       return (
                         <div
@@ -153,7 +154,7 @@ export function TestTasks() {
                                   item.typeQuestion
                                 )
                               }
-                              id={`chk-${taskId}-${questionId}-${answer.id}`}
+                              id={`chk-${taskId}-${questionId}-${answerId}`}
                             />
                           </div>
                         </div>
