@@ -126,10 +126,9 @@ export function SignUpForm() {
       <div className="flex flex-col justify-center my-10 items-center">
         {errorMessage && <div className="text-rose-500">{errorMessage}</div>}
         <UiButton
-          className={clsx(
-            { "bg-[#BAC0C6]": !isAllFieldsFilled },
-            "hover:bg-[#BAC0C6]"
-          )}
+          className={clsx({
+            "bg-[#BAC0C6] hover:bg-[#BAC0C6]": !isAllFieldsFilled,
+          })}
           disabled={!isAllFieldsFilled || isPending}
         >
           {isPending ? <UiSpinner /> : "Регистрация"}

@@ -39,7 +39,9 @@ export function useSignUpForm() {
     },
   });
 
-  const errorMessage = signInMutation.error?.name
+  const errorMessage = signInMutation.error
+    ? "Проверьте введенные данные"
+    : undefined;
 
   return {
     register,

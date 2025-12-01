@@ -51,9 +51,13 @@ export interface GetTestTasksDataDto {
 //   answers: Record<number, Record<number, number[]>>;
 // };
 
+export interface ISelectedAnswer {
+  id: number;
+}
+
 export interface ISelectedQuestion {
   questionId: number,
-  selectedAnswer: number[]
+  selectedAnswers: number[]
 }
 
 export interface ISelectedCase {
