@@ -96,7 +96,7 @@ export const submitTestAnswers = (
 ) =>
   createInstance<void>(
     {
-      url: `/test/submit-answers`,
+      url: `/test/submit-answers/`,
       method: "POST",
       data: body,
     },
