@@ -2,10 +2,15 @@ import {
   useSubmitAnswersMutation,
   useTestTasksQuery,
 } from "@/entities/test/queries";
-import { ISelectedCase, ISelectedQuestion, ITestTask, SubmitTestAnswersBodyDto } from "@/shared/api/testApi";
+import {
+  ISelectedCase,
+  ISelectedQuestion,
+  ITestTask,
+  SubmitTestAnswersBodyDto,
+} from "@/shared/api/testApi";
 import { ROUTES } from "@/shared/constants/routes";
 import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export function useTestTasks() {
   // ------------------------------------------------------------------
@@ -15,6 +20,7 @@ export function useTestTasks() {
   const [selectedAnswers, setSelectedAnswers] = useState<
     Record<number, Record<number, number[]>>
   >({});
+  const [startTime, setStartTime] = useState<number | null>(null);
 
   const router = useRouter();
 
@@ -168,11 +174,17 @@ export function useTestTasks() {
   // ------------------------------------------------------------------
   const testTasksQuery = useTestTasksQuery(selectedPathologyIds);
 
-  // Для разработки выбран тестовый набор вопросов
-    const tasks = useMemo(
+  const tasks = useMemo(
     () => testTasksQuery.data?.items ?? [],
     [testTasksQuery]
   );
+
+  // Время начала попытки
+  useEffect(() => {
+    if (tasks.length > 0 && !startTime) {
+      setStartTime(Date.now());
+    }
+  }, [tasks, startTime]);
 
   // const tasks = tasksTesting;
 
@@ -181,8 +193,7 @@ export function useTestTasks() {
   // ------------------------------------------------------------------
 
   // Преобразует ответы из формата Record<taskId, Record<questionIndex, answerIndex[]>> в формат SubmitTestAnswersBodyDto.
-  // Не проверено
-  const transformAnswersToDto = (): SubmitTestAnswersBodyDto => {
+  const transformAnswersToDto = () => {
     const selectedCases: ISelectedCase[] = tasks
       .map((task) => {
         const answersForTask = selectedAnswers[task.id];
@@ -238,13 +249,18 @@ export function useTestTasks() {
   };
 
   const handleFinishAttempt = async () => {
-    const selectedAnswersForSubmit: SubmitTestAnswersBodyDto = transformAnswersToDto();
+    const selectedAnswersForSubmit = transformAnswersToDto();
+    // Длительность теста в секундах
+    const duration = startTime
+      ? Math.round((Date.now() - startTime) / 1000)
+      : 0;
 
     if (!selectedPathologyIds) return;
 
     try {
       await submitAnswersMutation.mutateAsync({
         items: selectedAnswersForSubmit.items,
+        duration: duration,
       });
 
       console.log("✅ Ответы успешно отправлены!");
@@ -252,7 +268,6 @@ export function useTestTasks() {
     } catch (error) {
       console.error("❌ Ошибка при отправке ответов:", error);
     }
-    console.log(selectedAnswersForSubmit.items);
   };
 
   const getSelectedFor = (taskId: number, questionIndex: number): number[] =>

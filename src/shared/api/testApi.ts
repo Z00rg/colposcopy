@@ -66,7 +66,8 @@ export interface ISelectedCase {
 }
 
 export interface SubmitTestAnswersBodyDto {
-  items: ISelectedCase[]
+  items: ISelectedCase[],
+  duration: number,
 };
 
 
