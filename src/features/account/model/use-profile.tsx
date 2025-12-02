@@ -3,7 +3,7 @@ import { accountApi } from "@/shared/api/accountApi";
 import {
   // accountControllerProfileEdit,
   GetProfileInfoDto,
-} from "@/shared/api/api";
+} from "@/shared/api/accountApi";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
@@ -14,16 +14,7 @@ export function useProfile() {
 
   const info = profileQuery.data;
 
-  // Начальные данные изменить на финале
-  const initialData: GetProfileInfoDto = info || {
-    firstName: "Артем",
-    surname: "Аюпов",
-    middleName: "Дмитриевич",
-    work: "СамГМУ",
-    position: "Ассистент кафедры медицинской физики, математики и информатики",
-    email: "ayupov.artev@mail.ru",
-    password: "123456789A+",
-  };
+  const initialData: Partial<GetProfileInfoDto> = info ?? {};
 
   // Стейт для редактирования
   const [formData, setFormData] =

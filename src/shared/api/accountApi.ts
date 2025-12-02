@@ -3,9 +3,9 @@ import { createInstance, RequestOptions } from "./api-instance";
 // DTO
 
 export interface GetProfileInfoDto {
-  firstName: string;
+  name: string;
   surname: string;
-  middleName: string;
+  patronymic: string;
   work: string;
   position: string;
   email: string;
@@ -13,21 +13,21 @@ export interface GetProfileInfoDto {
 }
 
 // API
-
+//+
 export const getProfileInfo = (options?: RequestOptions) =>
   createInstance<GetProfileInfoDto>(
-    { url: `/account/profile`, method: "GET" },
+    { url: `/account/profile/`, method: "GET" },
     options
   );
-
+//+
 export const editProfile = (
   body: Partial<GetProfileInfoDto>,
   options?: RequestOptions
 ) =>
   createInstance<void>(
     {
-      url: `/account/edit`,
-      method: "POST",
+      url: `/account/profile/`,
+      method: "PATCH",
       data: body,
     },
     options

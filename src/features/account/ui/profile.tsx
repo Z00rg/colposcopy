@@ -41,11 +41,11 @@ export function Profile({ className }: { className?: string }) {
         </div>
         <div className="flex flex-col">
           <div className="font-bold flex flex-wrap max-w-[280px] overflow-auto">
-            {formData.surname} {formData.firstName} {formData.middleName}
+            {formData.surname} {formData.name} {formData.patronymic}
           </div>
           <div className="font-medium flex flex-wrap">{formData.email}</div>
         </div>
-        <button className="ml-5 mr-2">
+        <button className="ml-auto mr-2">
           <ArrowRight
             className={clsx(
               "transition-transform duration-300 ease-in-out",
@@ -82,16 +82,16 @@ export function Profile({ className }: { className?: string }) {
             label="Ваше имя"
             inputProps={{
               disabled: !editState[0],
-              value: formData.firstName,
-              onChange: (e) => handleChange("firstName", e.target.value),
+              value: formData.name,
+              onChange: (e) => handleChange("name", e.target.value),
             }}
           />
           <UiWhiteTextField
             label="Ваше отчество"
             inputProps={{
               disabled: !editState[0],
-              value: formData.middleName,
-              onChange: (e) => handleChange("middleName", e.target.value),
+              value: formData.patronymic,
+              onChange: (e) => handleChange("patronymic", e.target.value),
             }}
           />
         </Section>
