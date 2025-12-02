@@ -169,12 +169,12 @@ export function useTestTasks() {
   const testTasksQuery = useTestTasksQuery(selectedPathologyIds);
 
   // Для разработки выбран тестовый набор вопросов
-  //   const tasks = useMemo(
-  //   () => testTasksQuery.data?.items ?? [],
-  //   [testTasksQuery]
-  // );
+    const tasks = useMemo(
+    () => testTasksQuery.data?.items ?? [],
+    [testTasksQuery]
+  );
 
-  const tasks = tasksTesting;
+  // const tasks = tasksTesting;
 
   // ------------------------------------------------------------------
   // 🛠️ ПРЕОБРАЗОВАНИЕ ДАННЫХ
@@ -240,18 +240,18 @@ export function useTestTasks() {
   const handleFinishAttempt = async () => {
     const selectedAnswersForSubmit: SubmitTestAnswersBodyDto = transformAnswersToDto();
 
-    // if (!selectedPathologyIds) return;
+    if (!selectedPathologyIds) return;
 
-    // try {
-    //   await submitAnswersMutation.mutateAsync({
-    //     items: selectedAnswersForSubmit.items,
-    //   });
+    try {
+      await submitAnswersMutation.mutateAsync({
+        items: selectedAnswersForSubmit.items,
+      });
 
-    //   console.log("✅ Ответы успешно отправлены!");
-    //   router.push(ROUTES.HOME);
-    // } catch (error) {
-    //   console.error("❌ Ошибка при отправке ответов:", error);
-    // }
+      console.log("✅ Ответы успешно отправлены!");
+      router.push(ROUTES.HOME);
+    } catch (error) {
+      console.error("❌ Ошибка при отправке ответов:", error);
+    }
     console.log(selectedAnswersForSubmit.items);
   };
 
