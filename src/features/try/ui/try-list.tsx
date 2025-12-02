@@ -46,25 +46,25 @@ export function TryList({ className }: { className?: string }) {
   ];
 
   return (
-      // <UiList className={clsx(className, "mt-4")}>
-      //   {isLoader && <UiSpinner />}
-      //   {isEmptyText && (
-      //     <div className="flex text-[18px] pb-4 font-medium">Пока не было начато ни одной попытки</div>
-      //   )}
-      //   {isErrorText && (
-      //     <div className="flex text-[18px] text-center text-red-600 pb-4 font-medium">
-      //       Ошибка загрузки попыток с сервера. Попробуйте перезагрузить страницу.
-      //     </div>
-      //   )}
-      //   {isItems &&
-      //     items.map((item) => (
-      //       <UiListButtonTry key={item.id} informationOfTry={item} />
-      //     ))}
-      // </UiList>
-      <UiList className="mt-4">
-            {testInformationOfTry.map((item) => (
-              <UiListButtonTry key={item.id} informationOfTry={item} handleClick={handleTryClick}/>
-            ))}
-          </UiList>
+      <UiList className={clsx(className, "mt-4")}>
+        {isLoader && <UiSpinner />}
+        {isEmptyText && (
+          <div className="flex text-[18px] pb-4 font-medium">Пока не было начато ни одной попытки</div>
+        )}
+        {isErrorText && (
+          <div className="flex text-[18px] text-center text-red-600 pb-4 font-medium">
+            Ошибка загрузки попыток с сервера. Попробуйте перезагрузить страницу.
+          </div>
+        )}
+        {isItems &&
+          items.map((item) => (
+            <UiListButtonTry key={item.id} informationOfTry={item} handleClick={handleTryClick}/>
+          ))}
+      </UiList>
+      // <UiList className="mt-4">
+      //       {testInformationOfTry.map((item) => (
+      //         <UiListButtonTry key={item.id} informationOfTry={item} handleClick={handleTryClick}/>
+      //       ))}
+      //     </UiList>
   );
 }

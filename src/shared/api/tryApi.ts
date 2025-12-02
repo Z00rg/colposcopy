@@ -54,7 +54,7 @@ export interface GetTryInfoDto {
 
 export const getTryList = (options?: RequestOptions) =>
   createInstance<GetTryListInfoDto>(
-    { url: `/try/try-list`, method: "GET" },
+    { url: `/account/try-list/`, method: "GET" },
     options
   );
 
