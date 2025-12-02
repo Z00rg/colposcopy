@@ -14,16 +14,28 @@ export interface GetTryListInfoDto {
   items: TryInfo[];
 }
 
-export type QuestionType = 0 | 1; // 0: Одиночный выбор , 1: Множественный выбор
+export type QuestionType = 0 | 1; // 0: Один ответ , 1: Множественный ответ
+
+export interface IAnswers {
+  id: number;
+
+  text: string;
+
+  isSelected: boolean;
+}
 
 export interface ITestQuestion {
+  id: number;
+
   question: string;
+
+  isCorrect: boolean;
 
   typeQuestion: QuestionType;
 
   instructions: string;
 
-  answers: string[];
+  answers: IAnswers[];
 }
 
 export interface ITestTask {
@@ -31,23 +43,11 @@ export interface ITestTask {
 
   imageSrcs: string[];
 
-  pathologyText: string;
-
   testsQuestions: ITestQuestion[];
 }
 
 export interface GetTryInfoDto {
   items: ITestTask[];
-  tryAnswers: Record<
-    number, // taskId
-    Record<
-      number, // questionIndex
-      {
-        selected: number[];
-        isCorrect: boolean;
-      }
-    >
-  >;
 }
 
 // API
@@ -60,7 +60,7 @@ export const getTryList = (options?: RequestOptions) =>
 
 export const getTryInfo = (tryId: string, options?: RequestOptions) =>
   createInstance<GetTryInfoDto>(
-    { url: `/try/viewing-try/${tryId}`, method: "GET" },
+    { url: `/account/attempt/${tryId}/`, method: "GET" },
     options
   );
 

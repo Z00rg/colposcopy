@@ -7,6 +7,7 @@ import { useViewingTry } from "../model/use-viewing-try";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
 import { useEffect, useRef } from "react";
+import { IAnswers, ITestQuestion } from "@/shared/api/tryApi";
 
 export function ViewingTry() {
   const {
@@ -16,9 +17,6 @@ export function ViewingTry() {
     isError,
     currentTaskIndex,
     handleTaskChange,
-    getSelectedFor,
-    completionByTask,
-    getIsCorrect,
   } = useViewingTry();
 
   const textAreaRef = useRef<HTMLDivElement>(null);
@@ -51,7 +49,6 @@ export function ViewingTry() {
           <UiProgressBar
             numOfCurrentTask={currentTaskIndex}
             tasks={tasks}
-            completionByTask={completionByTask}
             changeCurrentTask={setCurrentTaskIndex}
           />
 
@@ -68,10 +65,9 @@ export function ViewingTry() {
           >
             {/* Итерация по вопросам текущего задания */}
             {tasks[currentTaskIndex].testsQuestions.map(
-              (item: any, questionIndex: number) => {
+              (item: ITestQuestion, questionIndex: number) => {
                 const taskId = tasks[currentTaskIndex].id;
-                const selectedForThis = getSelectedFor(taskId, questionIndex);
-                const isCorrect = getIsCorrect(taskId, questionIndex);
+                const isCorrect = item.isCorrect
 
                 return (
                   <div
@@ -100,8 +96,8 @@ export function ViewingTry() {
                     </div>
 
                     {/* Итерация по вариантам ответов текущего вопроса */}
-                    {item.answers.map((answer: string, answerIndex: number) => {
-                      const isChecked = selectedForThis.includes(answerIndex);
+                    {item.answers.map((answer: IAnswers, answerIndex: number) => {
+                      const isChecked = answer.isSelected
                       return (
                         <div
                           key={`${taskId}-${questionIndex}-${answerIndex}`}
@@ -122,7 +118,7 @@ export function ViewingTry() {
 
                           {/* Текст варианта ответа */}
                           <div className="break-words whitespace-normal flex-1 text-gray-800">
-                            {answer}
+                            {answer.text}
                           </div>
 
                           {/* Чекбокс/Радиобаттон */}
