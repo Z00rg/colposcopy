@@ -1,9 +1,6 @@
 import { useProfileQuery } from "@/entities/profile";
 import { accountApi } from "@/shared/api/accountApi";
-import {
-  // accountControllerProfileEdit,
-  GetProfileInfoDto,
-} from "@/shared/api/accountApi";
+import { GetProfileInfoDto } from "@/shared/api/accountApi";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
@@ -27,13 +24,9 @@ export function useProfile() {
 
   // Мутация для отправки профиля
   const profileEditMutation = useMutation({
-    // mutationFn: accountControllerProfileEdit,
     mutationFn: accountApi.editProfile,
     onSuccess: () => {
       console.log("✅ Профиль успешно обновлён");
-    },
-    onError: (error) => {
-      console.error("❌ Ошибка при обновлении профиля:", error);
     },
   });
 
