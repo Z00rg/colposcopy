@@ -332,6 +332,8 @@ export function useTestTasks() {
     setCurrentTaskIndex,
     isLoading: testTasksQuery.isPending,
     isError: testTasksQuery.isError,
+    isLoadingSubmit: submitAnswersMutation.isPending,
+    isErrorSubmit: submitAnswersMutation.isError,
     currentTaskIndex,
     handleTaskChange,
     handleFinishAttempt,

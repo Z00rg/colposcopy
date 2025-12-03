@@ -6,9 +6,10 @@ import clsx from "clsx";
 import { useTestTasks } from "../model/use-test-tasks";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ITestQuestion, IAnswers } from "@/shared/api/testApi";
 import { UiSpinnerSpecial } from "@/shared/ui/ui-spinner-special";
+import { UiErrorMessage } from "@/shared/ui/ui-errror-msg";
 
 export function TestTasks() {
   const {
@@ -16,6 +17,8 @@ export function TestTasks() {
     setCurrentTaskIndex,
     isLoading,
     isError,
+    isLoadingSubmit,
+    isErrorSubmit,
     currentTaskIndex,
     handleTaskChange,
     handleFinishAttempt,
@@ -78,7 +81,8 @@ export function TestTasks() {
             {tasks[currentTaskIndex].testsQuestions.map(
               (item: ITestQuestion, questionIndex: number) => {
                 const taskId = tasks[currentTaskIndex].id;
-                const questionId = tasks[currentTaskIndex].testsQuestions[questionIndex].id;
+                const questionId =
+                  tasks[currentTaskIndex].testsQuestions[questionIndex].id;
                 const selectedForThis = getSelectedFor(taskId, questionIndex);
 
                 return (
@@ -105,61 +109,63 @@ export function TestTasks() {
                     </div>
 
                     {/* Итерация по вариантам ответов текущего вопроса */}
-                    {item.answers.map((answer: IAnswers, answerIndex: number) => {
-                      const answerId = answer.id
-                      const isChecked = selectedForThis.includes(answerIndex);
-                      return (
-                        <div
-                          key={`${taskId}-${questionIndex}-${answerIndex}`}
-                          className={clsx(
-                            "flex items-center gap-3 cursor-pointer select-none border-b border-[#E0E0E0] px-3 py-3 rounded-xl transition-all duration-200 ease-out",
-                            {
-                              "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md hover:scale-[1.01]":
-                                true,
-                              "bg-gradient-to-r from-blue-50 to-blue-100 border-blue-400 shadow-md":
-                                isChecked,
-                            }
-                          )}
-                          onClick={() =>
-                            toggleAnswer(
-                              taskId,
-                              questionIndex,
-                              answerIndex,
-                              item.typeQuestion
-                            )
-                          }
-                        >
-                          {/* Номер варианта ответа */}
-                          <div className="text-gray-700 font-semibold">
-                            {answerIndex + 1}.
-                          </div>
-
-                          {/* Текст варианта ответа */}
-                          <div className="break-words whitespace-normal flex-1 text-gray-800">
-                            {answer.text}
-                          </div>
-
-                          {/* Чекбокс/Радиобаттон */}
+                    {item.answers.map(
+                      (answer: IAnswers, answerIndex: number) => {
+                        const answerId = answer.id;
+                        const isChecked = selectedForThis.includes(answerIndex);
+                        return (
                           <div
-                            className="ml-auto w-6 h-6 flex justify-center items-center"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <UiCheckBox
-                              checked={isChecked}
-                              onChange={() =>
-                                toggleAnswer(
-                                  taskId,
-                                  questionIndex,
-                                  answerIndex,
-                                  item.typeQuestion
-                                )
+                            key={`${taskId}-${questionIndex}-${answerIndex}`}
+                            className={clsx(
+                              "flex items-center gap-3 cursor-pointer select-none border-b border-[#E0E0E0] px-3 py-3 rounded-xl transition-all duration-200 ease-out",
+                              {
+                                "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md hover:scale-[1.01]":
+                                  true,
+                                "bg-gradient-to-r from-blue-50 to-blue-100 border-blue-400 shadow-md":
+                                  isChecked,
                               }
-                              id={`chk-${taskId}-${questionId}-${answerId}`}
-                            />
+                            )}
+                            onClick={() =>
+                              toggleAnswer(
+                                taskId,
+                                questionIndex,
+                                answerIndex,
+                                item.typeQuestion
+                              )
+                            }
+                          >
+                            {/* Номер варианта ответа */}
+                            <div className="text-gray-700 font-semibold">
+                              {answerIndex + 1}.
+                            </div>
+
+                            {/* Текст варианта ответа */}
+                            <div className="break-words whitespace-normal flex-1 text-gray-800">
+                              {answer.text}
+                            </div>
+
+                            {/* Чекбокс/Радиобаттон */}
+                            <div
+                              className="ml-auto w-6 h-6 flex justify-center items-center"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <UiCheckBox
+                                checked={isChecked}
+                                onChange={() =>
+                                  toggleAnswer(
+                                    taskId,
+                                    questionIndex,
+                                    answerIndex,
+                                    item.typeQuestion
+                                  )
+                                }
+                                id={`chk-${taskId}-${questionId}-${answerId}`}
+                              />
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      }
+                    )}
                   </div>
                 );
               }
@@ -167,7 +173,7 @@ export function TestTasks() {
           </UiTextArea>
 
           {/* Навигационные кнопки */}
-          <div className="flex w-full">
+          <div className="flex w-full relative">
             <button
               className={clsx(
                 { hidden: currentTaskIndex === 0 },
@@ -190,19 +196,32 @@ export function TestTasks() {
               Далее
             </button>
 
-            <button
-              className={clsx(
-                { hidden: currentTaskIndex !== tasks.length - 1 },
-                "ml-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointer",
-                {
-                  "text-gray-400 hover:text-gray-400": !isAllTasksComplete,
-                }
-              )}
-              onClick={handleFinishAttempt}
-              disabled={!isAllTasksComplete}
-            >
-              Закончить попытку
-            </button>
+            <UiErrorMessage condition={isErrorSubmit}>
+              Не удалось отправить ответы. Попробуйте еще раз.
+            </UiErrorMessage>
+
+            {isLoadingSubmit && (
+              <div className="ml-auto flex items-center">
+                <UiSpinner />
+              </div>
+            )}
+
+            {!isLoadingSubmit && (
+              <button
+                className={clsx(
+                  { hidden: currentTaskIndex !== tasks.length - 1 },
+                  "ml-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointer",
+                  {
+                    "text-gray-400 hover:text-gray-400 cursor-not-allowed":
+                      !isAllTasksComplete,
+                  }
+                )}
+                onClick={handleFinishAttempt}
+                disabled={!isAllTasksComplete || isLoadingSubmit}
+              >
+                Закончить попытку
+              </button>
+            )}
           </div>
         </>
       )}
