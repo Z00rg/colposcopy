@@ -32,7 +32,7 @@ export const getCaseInfo = (
   options?: RequestOptions
 ) =>
   createInstance<GetCaseInfoDto>(
-    { url: `/clincal-cases/case/${caseId}/`, method: "GET" },
+    { url: `/cases/case/${caseId}/`, method: "GET" },
     options
   );
 
