@@ -6,7 +6,7 @@ import { useState } from "react";
 export function useTestList() {
   const router = useRouter();
 
-  // Состояние для хранения ID
+  // Состояние для хранения ID попыток
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   // Функция для переключения выбора патологии

@@ -225,7 +225,6 @@ export function TestTasks() {
         </>
       )}
 
-      {/* Компонент Футера с активным статусом "test" */}
       <UiFooter activeStatus="test" />
     </div>
   );
