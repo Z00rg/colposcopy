@@ -3,6 +3,7 @@
 //   // testControllerGetTestTasksInfo,
 //   // testControllerSubmitTestAnswers,
 // } from "@/shared/api/api";
+import { queryClient } from "@/shared/api/query-client";
 import { testApi, SubmitTestAnswersBodyDto } from "@/shared/api/testApi";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -36,5 +37,8 @@ export function useSubmitAnswersMutation() {
     //   testControllerSubmitTestAnswers(body),
     mutationFn: (body: SubmitTestAnswersBodyDto) =>
       testApi.submitTestAnswers(body),
+    onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ["try-list"] });
+  },
   });
 }
