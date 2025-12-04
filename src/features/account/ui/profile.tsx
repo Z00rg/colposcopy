@@ -39,6 +39,12 @@ export function Profile({ className }: { className?: string }) {
         <div className="flex justify-center items-center">
           <Man />
         </div>
+        {isLoading && <UiSpinner />}
+        {isError && (
+          <div className="font-bold text-red-500">
+            Ошибка загрузки данных профиля.
+          </div>
+        )}
         <div className="flex flex-col">
           <div className="font-bold flex flex-wrap max-w-[280px] overflow-auto">
             {formData.surname} {formData.name} {formData.patronymic}
