@@ -54,7 +54,7 @@ export function TestList() {
     //     Начать попытку
     //   </button>
     // </UiList>
-    <UiList className="mt-4 items-start max-h-[530px] min-w-[373px]">
+    <UiList className="mt-4 items-start max-h-[530px]">
       <div className="font-bold text-[18px] text-[#4B4242]">
         Выберите параметры
       </div>

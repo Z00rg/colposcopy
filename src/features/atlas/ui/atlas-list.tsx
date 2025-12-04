@@ -44,7 +44,7 @@ export function AtlasList({ className }: { className?: string }) {
   // ];
 
   return (
-    <UiList className={clsx(className, "mt-4 items-start max-h-[530px] min-w-[373px]")}>
+    <UiList className={clsx(className, "mt-4 items-start max-h-[530px]")}>
       {isLoading && <UiSpinner />}
       {isError && (
         <div className="font-bold text-rose-500">

@@ -80,10 +80,10 @@ export function Case({ className }: { className?: string }) {
                 {caseDetails.descriptionContainer[currentImageIndex]}
               </UiTextArea>
             )}
-            <UiLink href={ROUTES.ATLAS} className="mr-auto">
+            <UiLink href={ROUTES.CLINIC} className="mr-auto">
               Назад
             </UiLink>
-            <UiFooter activeStatus="atlas" />
+            <UiFooter activeStatus="clinic" />
           </>
         )}
 
