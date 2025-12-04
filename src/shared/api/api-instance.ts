@@ -7,7 +7,8 @@ const CSRF_TOKEN_KEY = 'csrftoken';
 const AUTH_URLS = ["/auth/login/", "/auth/refresh_token/", "/auth/register/worker/"];
 
 export const apiInstance = axios.create({
-  baseURL: "http://localhost:8000/api",
+  // baseURL: "http://localhost:8000/api",
+  baseURL: "http://atlascolposcopy.ru/api",
   headers: {
     "Content-Type": "application/json",
   },
