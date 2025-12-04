@@ -18,10 +18,10 @@ export function UiHeader({ className, variant }: UiHeaderProps) {
     >
       {variant === "logo" && (
         <Image
-          src="/logo.png" // Путь к изображению начинается с корневой папки public
+          src="/logo.png" 
           width={270}
           height={97}
-          alt="Логотип приложения" // Альтернативный текст для доступности
+          alt="Логотип приложения"
         />
       )}
       <div className="text-4xl w-80 font-normal text-center">

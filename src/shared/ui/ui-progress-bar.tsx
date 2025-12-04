@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
 import { ITestTask as TryApiITestTask } from "../api/tryApi";
-import { ITestTask as AnotherApiITestTask } from "../api/testApi"; // путь к второму интерфейсу
+import { ITestTask as AnotherApiITestTask } from "../api/testApi";
 
 type CompatibleITestTask = TryApiITestTask | AnotherApiITestTask;
 

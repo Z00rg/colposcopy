@@ -38,9 +38,9 @@ export function getCookie(name: string): string | null {
   return null;
 }
 
-function setCookie(name: string, value: string, days: number = 7) {
+function setCookie(name: string, value: string, hours: number) {
   const expires = new Date();
-  expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+  expires.setTime(expires.getTime() + hours * 60 * 60 * 1000);
   document.cookie = `${name}=${value}; expires=${expires.toUTCString()}; path=/; SameSite=Lax; Secure=false`;
 }
 
