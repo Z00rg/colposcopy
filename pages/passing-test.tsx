@@ -1,3 +1,4 @@
+import { protectedPage } from "@/features/auth";
 import { PassingTestPage } from "@/pages/passing-test";
 
-export default PassingTestPage;
+export default protectedPage(PassingTestPage);

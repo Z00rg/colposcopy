@@ -21,9 +21,8 @@ export function protectedPage<P>(Component: (props: P) => ReactElement) {
       }
     }, [router]);
 
-    // На сервере и в первом рендере — показываем спиннер/заглушку
     if (!isClient || isLoading) {
-      return <UiPageSpinner message="Загрузка странички..." />;
+      return <UiPageSpinner/>;
     }
 
     // После проверки — рендерим защищённый компонент

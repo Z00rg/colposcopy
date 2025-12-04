@@ -1,3 +1,4 @@
+import { protectedPage } from "@/features/auth";
 import { ClinicalCasesPage } from "@/pages/clinical-cases";
 
-export default ClinicalCasesPage;
+export default protectedPage(ClinicalCasesPage);
