@@ -92,7 +92,6 @@ export function SignUpForm() {
           </div>
           <div className="mt-auto flex flex-col w-full gap-2">
             <div className="bg-[#A8A8A8] h-[1px] flex w-full"></div>
-            {/* Навигационные кнопки */}
             <div className="flex w-full">
               <button
                 type="button"

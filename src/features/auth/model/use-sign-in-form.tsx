@@ -1,4 +1,3 @@
-// import { authControllerSignIn } from "@/shared/api/api";
 import { authApi } from "@/shared/api/authApi";
 import { ROUTES } from "@/shared/constants/routes";
 import { useMutation } from "@tanstack/react-query";
@@ -14,7 +13,6 @@ export function useSignInForm() {
   }>();
 
   const signInMutation = useMutation({
-    // mutationFn: authControllerSignIn,
     mutationFn: authApi.signIn,
     onSuccess: () => {
       router.push(ROUTES.HOME);

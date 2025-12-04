@@ -25,7 +25,6 @@ export function protectedPage<P>(Component: (props: P) => ReactElement) {
       return <UiPageSpinner/>;
     }
 
-    // После проверки — рендерим защищённый компонент
     return <Component {...props} />;
   };
 }
