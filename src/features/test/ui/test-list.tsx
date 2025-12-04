@@ -15,6 +15,8 @@ export function TestList() {
     handleStartAttempt,
   } = useTestList();
 
+  const isEmptyText = !isLoading && !isError && items.length === 0;
+
   // const informationOfPathology = [
   //   { id: 1, name: "Зона трансформации 1 типа A" },
   //   { id: 2, name: "Зона трансформации 2 типа B" },
@@ -64,6 +66,9 @@ export function TestList() {
           Ошибка при загрузке списка патологий
         </div>
       )}
+      {isEmptyText && (
+          <div className="flex text-[18px] pb-4 font-medium">Нет доступных тем для тестирования</div>
+        )}
       {items &&
         items.map((item, index) => (
           <UiListButtonTest

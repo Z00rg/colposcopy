@@ -7,7 +7,7 @@ import { useClinicalCases } from "../model/use-clinical-cases";
 
 export function ClinicalCasesList({ className }: { className?: string }) {
   const { items, isLoading, isError } = useClinicalCases();
-
+  const isEmptyText = !isLoading && !isError && items.length === 0;
   // const testItems = [
   //   {
   //     id: 1,
@@ -59,6 +59,9 @@ export function ClinicalCasesList({ className }: { className?: string }) {
           Ошибка при загрузке списка патологий
         </div>
       )}
+      {isEmptyText && (
+          <div className="flex text-[18px] pb-4 font-medium">Нет доступных клинических случаев</div>
+        )}
       {items &&
         items.map((item, index) => (
           <UiListButtonClinic

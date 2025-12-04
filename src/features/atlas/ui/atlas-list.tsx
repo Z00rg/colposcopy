@@ -8,6 +8,8 @@ import clsx from "clsx";
 export function AtlasList({ className }: { className?: string }) {
   const { items, isLoading, isError, handleClick } = useAtlasList();
 
+  const isEmptyText = !isLoading && !isError && items.length === 0;
+
   // const testItems = [
   //   {
   //     id: 1,
@@ -51,6 +53,9 @@ export function AtlasList({ className }: { className?: string }) {
           Ошибка при загрузке списка патологий
         </div>
       )}
+      {isEmptyText && (
+          <div className="flex text-[18px] pb-4 font-medium">Нет доступных патологий</div>
+        )}
       {items &&
         items.map((item, index) => (
           <UiListButtonAtlas
