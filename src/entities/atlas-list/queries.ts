@@ -8,6 +8,6 @@ export function useAtlasListQuery() {
     queryKey: atlasListKey,
     queryFn: atlasApi.getAtlasList,
     retry: 0,
-    staleTime: 60 * 60 * 1000,
+    staleTime: 60 * 60 * 1000, // 60 минут
   });
 }

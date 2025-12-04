@@ -1,1 +1,0 @@
-export { useInstructionQuery } from "./queries";

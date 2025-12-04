@@ -1,12 +1,8 @@
 import clsx from "clsx";
 import { useState } from "react";
-// import { useInstruction } from "../model/use-instruction";
-// import { UiSpinner } from "@/shared/ui/ui-spinner";
 
 export function Instruction({ className }: { className?: string }) {
   const [active, setActive] = useState(false);
-
-  // const { instructionDetails, isLoading, isError } = useInstruction();
 
   return (
     <div
@@ -36,13 +32,6 @@ export function Instruction({ className }: { className?: string }) {
           }
         )}
       >
-        {/* {isLoading && <UiSpinner />}
-        {isError && (
-          <div className="font-bold text-rose-500">
-            Ошибка при загрузке инструкции
-          </div>
-        )}
-        {instructionDetails && instructionDetails.text} */}
         Вам будут выданы тесты по выбранным паталогиям, выберите ответы на вопросы в соответствии с инструкцией в них и закончите попытку.
       </div>
     </div>

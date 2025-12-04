@@ -1,6 +1,7 @@
 import { useProfileQuery } from "@/entities/profile";
 import { accountApi } from "@/shared/api/accountApi";
 import { GetProfileInfoDto } from "@/shared/api/accountApi";
+import { queryClient } from "@/shared/api/query-client";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
@@ -66,6 +67,8 @@ export function useProfile() {
 
     console.log("🔹 Отправляем изменённые поля:", changedFields);
     profileEditMutation.mutate(changedFields);
+    queryClient.invalidateQueries({ queryKey: ["profile"] });
+    console.log("asd")
     toggleEdit(index);
   };
 

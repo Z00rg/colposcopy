@@ -1,1 +1,1 @@
-export { useResetSession, useSessionQuery } from "./queries";
+export { useResetSession } from "./queries";
