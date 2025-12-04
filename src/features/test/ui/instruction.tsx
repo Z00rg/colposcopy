@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useState } from "react";
 // import { useInstruction } from "../model/use-instruction";
-import { UiSpinner } from "@/shared/ui/ui-spinner";
+// import { UiSpinner } from "@/shared/ui/ui-spinner";
 
 export function Instruction({ className }: { className?: string }) {
   const [active, setActive] = useState(false);
@@ -43,7 +43,7 @@ export function Instruction({ className }: { className?: string }) {
           </div>
         )}
         {instructionDetails && instructionDetails.text} */}
-        Тут будет инструкция
+        Вам будут выданы тесты по выбранным паталогиям, выберите ответы на вопросы в соответствии с инструкцией в них и закончите попытку.
       </div>
     </div>
   );

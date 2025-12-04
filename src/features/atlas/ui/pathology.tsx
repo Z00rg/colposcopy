@@ -1,5 +1,4 @@
 import { UiScrollImg } from "@/shared/ui/ui-scroll-img";
-import Image from "next/image";
 import { UiTextArea } from "@/shared/ui/ui-textarea";
 import { UiLink } from "@/shared/ui/ui-link";
 import { UiFooter } from "@/shared/ui/ui-footer";
@@ -13,13 +12,12 @@ export function Pathology({ className }: { className?: string }) {
     pathologyDetails,
     isLoading,
     isError,
-    currentImageIndex,
     handleImageChange,
   } = usePathology();
 
-  const imgContainer = ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"];
-  const description =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.v";
+  // const imgContainer = ["/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg", "/test.jpg"];
+  // const description =
+  //   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.v";
 
   return (
     // <div

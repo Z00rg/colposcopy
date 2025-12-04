@@ -12,38 +12,38 @@ export function TryList({ className }: { className?: string }) {
   const isErrorText = isError;
   const isItems = items.length > 0;
 
-  const testInformationOfTry = [
-    {
-      id: 1,
-      date: "21.04.2001",
-      mark: "Отлично",
-      time: "46:20",
-    },
-    {
-      id: 2,
-      date: "22.09.2006",
-      mark: "Удовлетворительно",
-      time: "35:10",
-    },
-    {
-      id: 3,
-      date: "21.04.2001",
-      mark: "Отлично",
-      time: "46:20",
-    },
-    {
-      id: 4,
-      date: "22.09.2006",
-      mark: "Удовлетворительно",
-      time: "35:10",
-    },
-    {
-      id: 5,
-      date: "21.04.2001",
-      mark: "Отлично",
-      time: "46:20",
-    },
-  ];
+  // const testInformationOfTry = [
+  //   {
+  //     id: 1,
+  //     date: "21.04.2001",
+  //     mark: "Отлично",
+  //     time: "46:20",
+  //   },
+  //   {
+  //     id: 2,
+  //     date: "22.09.2006",
+  //     mark: "Удовлетворительно",
+  //     time: "35:10",
+  //   },
+  //   {
+  //     id: 3,
+  //     date: "21.04.2001",
+  //     mark: "Отлично",
+  //     time: "46:20",
+  //   },
+  //   {
+  //     id: 4,
+  //     date: "22.09.2006",
+  //     mark: "Удовлетворительно",
+  //     time: "35:10",
+  //   },
+  //   {
+  //     id: 5,
+  //     date: "21.04.2001",
+  //     mark: "Отлично",
+  //     time: "46:20",
+  //   },
+  // ];
 
   return (
       <UiList className={clsx(className, "mt-4")}>

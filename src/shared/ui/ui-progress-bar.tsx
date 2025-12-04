@@ -2,6 +2,10 @@
 
 import clsx from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
+import { ITestTask as TryApiITestTask } from "../api/tryApi";
+import { ITestTask as AnotherApiITestTask } from "../api/testApi"; // путь к второму интерфейсу
+
+type CompatibleITestTask = TryApiITestTask | AnotherApiITestTask;
 
 export function UiProgressBar({
   className,
@@ -11,7 +15,7 @@ export function UiProgressBar({
   changeCurrentTask,
 }: {
   className?: string;
-  tasks: any;
+  tasks: CompatibleITestTask[];
   numOfCurrentTask: number;
   completionByTask?: { taskId: number; isComplete: boolean }[];
   changeCurrentTask?: (index: number) => void;
@@ -19,7 +23,7 @@ export function UiProgressBar({
   return (
     <div className="relative overflow-x-auto overflow-y-hidden custom-scrollbar max-w-[340px] border-[#DEDEDE] bg-[#FFFFFF] rounded-[20px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
       <div className={clsx(className, "relative flex h-10 px-3 w-max py-1")}>
-        {tasks.map((task: any, index: number) => {
+        {tasks.map((task: CompatibleITestTask, index: number) => {
           const completion = completionByTask?.find(
             (t) => t.taskId === task.id
           );

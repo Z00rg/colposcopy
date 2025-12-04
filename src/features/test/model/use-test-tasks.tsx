@@ -5,8 +5,6 @@ import {
 import {
   ISelectedCase,
   ISelectedQuestion,
-  ITestTask,
-  SubmitTestAnswersBodyDto,
 } from "@/shared/api/testApi";
 import { ROUTES } from "@/shared/constants/routes";
 import { useRouter } from "next/router";

@@ -6,9 +6,8 @@ import clsx from "clsx";
 import { useTestTasks } from "../model/use-test-tasks";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { ITestQuestion, IAnswers } from "@/shared/api/testApi";
-import { UiSpinnerSpecial } from "@/shared/ui/ui-spinner-special";
 import { UiErrorMessage } from "@/shared/ui/ui-errror-msg";
 
 export function TestTasks() {

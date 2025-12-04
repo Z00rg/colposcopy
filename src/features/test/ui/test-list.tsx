@@ -15,14 +15,14 @@ export function TestList() {
     handleStartAttempt,
   } = useTestList();
 
-  const informationOfPathology = [
-    { id: 1, name: "Зона трансформации 1 типа A" },
-    { id: 2, name: "Зона трансформации 2 типа B" },
-    { id: 3, name: "Зона трансформации 1 типа C" },
-    { id: 4, name: "Зона трансформации 2 типа D" },
-    { id: 5, name: "Зона трансформации 1 типа E" },
-    { id: 6, name: "Зона трансформации 2 типа F" },
-  ];
+  // const informationOfPathology = [
+  //   { id: 1, name: "Зона трансформации 1 типа A" },
+  //   { id: 2, name: "Зона трансформации 2 типа B" },
+  //   { id: 3, name: "Зона трансформации 1 типа C" },
+  //   { id: 4, name: "Зона трансформации 2 типа D" },
+  //   { id: 5, name: "Зона трансформации 1 типа E" },
+  //   { id: 6, name: "Зона трансформации 2 типа F" },
+  // ];
 
   return (
     // <UiList className="mt-4 items-start max-h-[530px]">
