@@ -46,7 +46,7 @@ export function useProfile() {
   const handleSave = (index: number) => {
     const changedFields = Object.entries(formData).reduce(
       (acc, [key, value]) => {
-        const oldValue = (initialData as any)[key];
+        const oldValue = (initialData as Partial<GetProfileInfoDto>)[key as keyof GetProfileInfoDto];
 
         if (value === oldValue) return acc;
 
