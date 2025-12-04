@@ -11,8 +11,8 @@ const AUTH_URLS = [
 ];
 
 export const apiInstance = axios.create({
-  baseURL: "http://localhost:8000/api",
-  // baseURL: "http://atlascolposcopy.ru/api",
+  // baseURL: "http://localhost:8000/api",
+  baseURL: "https://atlascolposcopy.ru/api",
   headers: {
     "Content-Type": "application/json",
   },
