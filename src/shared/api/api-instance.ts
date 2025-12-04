@@ -58,8 +58,8 @@ const isAuthUrl = (url: string) => {
 //Итерцептор запросов: добавляет Access Token в заголовки каждого запроса
 apiInstance.interceptors.request.use(
   (config) => {
-    const requestUrl: string = config.url;
-
+    const requestUrl = config.url;
+    if (requestUrl) {
     if (!isAuthUrl(requestUrl)) {
       // 1. Логика Access Token
       const token = getCookie(ACCESS_TOKEN_KEY);
@@ -73,6 +73,9 @@ apiInstance.interceptors.request.use(
       if (csrfToken) {
         config.headers['X-CSRFtoken'] = csrfToken;
       }
+    }
+    } else {
+      console.warn('Request URL is undefined', config);
     }
 
     return config;
