@@ -38,7 +38,7 @@ export function useSubmitAnswersMutation() {
     mutationFn: (body: SubmitTestAnswersBodyDto) =>
       testApi.submitTestAnswers(body),
     onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: ["try-list"] });
-  },
+      queryClient.invalidateQueries({ queryKey: ["try-list"] });
+    },
   });
 }
