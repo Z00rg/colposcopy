@@ -19,7 +19,7 @@ export function SignUpForm() {
         <div className="w-full ml-9 text-[20px] font-medium text-[#4B4242]">
           Регистрация
         </div>
-        <UiList className="items-start min-h-[310px]">
+        <UiList className="items-start min-h-[310px] max-h-[320px]">
           <div className="flex justify-between w-full">
             <div className="font-semibold text-[18px] text-[#4B4242]">
               {currentStageIndex === 1 && "Личные данные"}
@@ -133,9 +133,6 @@ export function SignUpForm() {
         >
           {isPending ? <UiSpinner /> : "Регистрация"}
         </UiButton>
-        <div className="text-[20px] text-white mt-8">
-          <UiLink href={ROUTES.SIGN_UP}>Нужна помощь?</UiLink>
-        </div>
       </div>
     </form>
   );
