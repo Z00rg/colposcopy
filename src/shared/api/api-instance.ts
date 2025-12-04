@@ -3,12 +3,16 @@ import axios, { AxiosError, AxiosRequestConfig } from "axios";
 export const ACCESS_TOKEN_KEY = "access";
 export const ACCESS_TOKEN_LIFE = 1;
 export const REFRESH_TOKEN_KEY = "refresh";
-const CSRF_TOKEN_KEY = 'csrftoken';
-const AUTH_URLS = ["/auth/login/", "/auth/refresh_token/", "/auth/register/worker/"];
+const CSRF_TOKEN_KEY = "csrftoken";
+const AUTH_URLS = [
+  "/auth/login/",
+  "/auth/refresh_token/",
+  "/auth/register/worker/",
+];
 
 export const apiInstance = axios.create({
-  // baseURL: "http://localhost:8000/api",
-  baseURL: "http://atlascolposcopy.ru/api",
+  baseURL: "http://localhost:8000/api",
+  // baseURL: "http://atlascolposcopy.ru/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -16,21 +20,21 @@ export const apiInstance = axios.create({
 });
 
 //Функции работы с куки
-function getCookie(name: string): string | null {
+export function getCookie(name: string): string | null {
   // Декодируем URI и разбиваем на пары "ключ=значение"
-  const cookies = document.cookie.split(';').map(cookie => cookie.trim());
-  
+  const cookies = document.cookie.split(";").map((cookie) => cookie.trim());
+
   for (const cookie of cookies) {
     // Разделяем имя и значение, значение содержит '=')
-    const [cookieName, ...cookieValueParts] = cookie.split('=');
-    const cookieValue = cookieValueParts.join('='); // Сбор обратно, если было несколько '='
-    
+    const [cookieName, ...cookieValueParts] = cookie.split("=");
+    const cookieValue = cookieValueParts.join("="); // Сбор обратно, если было несколько '='
+
     if (cookieName === name) {
       // Декодируем значение (токены часто кодируются)
       return decodeURIComponent(cookieValue);
     }
   }
-  
+
   return null;
 }
 
@@ -61,22 +65,22 @@ apiInstance.interceptors.request.use(
   (config) => {
     const requestUrl = config.url;
     if (requestUrl) {
-    if (!isAuthUrl(requestUrl)) {
-      // 1. Логика Access Token
-      const token = getCookie(ACCESS_TOKEN_KEY);
-      if (token) {
-        config.headers["Authorization"] = `Bearer ${token}`;
-      }
+      if (!isAuthUrl(requestUrl)) {
+        // 1. Логика Access Token
+        const token = getCookie(ACCESS_TOKEN_KEY);
+        if (token) {
+          config.headers["Authorization"] = `Bearer ${token}`;
+        }
 
-      // 2. Логика CSRF Token
-      const csrfToken = getCookie(CSRF_TOKEN_KEY);
+        // 2. Логика CSRF Token
+        const csrfToken = getCookie(CSRF_TOKEN_KEY);
 
-      if (csrfToken) {
-        config.headers['X-CSRFtoken'] = csrfToken;
+        if (csrfToken) {
+          config.headers["X-CSRFtoken"] = csrfToken;
+        }
       }
-    }
     } else {
-      console.warn('Request URL is undefined', config);
+      console.warn("Request URL is undefined", config);
     }
 
     return config;
@@ -100,10 +104,19 @@ apiInstance.interceptors.response.use(
     ) {
       originalRequest._isRetry = true;
 
+      // Проверяем наличие refresh-токена
+      const hasRefreshToken = !!getCookie(REFRESH_TOKEN_KEY);
+      if (!hasRefreshToken) {
+        deleteCookie(ACCESS_TOKEN_KEY);
+        deleteCookie(REFRESH_TOKEN_KEY);
+        window.location.href = "/sign-in";
+        return Promise.resolve({ data: null });
+      }
+
       try {
         // Отправляем запрос на обновление
         const resp = await apiInstance.post("/auth/refresh_token/");
-        setCookie("access", resp.data.access, ACCESS_TOKEN_LIFE)
+        setCookie("access", resp.data.access, ACCESS_TOKEN_LIFE);
 
         return apiInstance(originalRequest);
       } catch (refreshError) {
@@ -111,14 +124,13 @@ apiInstance.interceptors.response.use(
         deleteCookie(ACCESS_TOKEN_KEY);
         deleteCookie(REFRESH_TOKEN_KEY);
         window.location.href = "/sign-in";
-        return Promise.reject(refreshError);
+        return Promise.resolve({ data: null });
       }
     }
 
     return Promise.reject(error);
   }
 );
-
 
 export const createInstance = <T>(
   config: AxiosRequestConfig,

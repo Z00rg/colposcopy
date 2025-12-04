@@ -23,13 +23,6 @@ export interface SignUpBodyDto {
   password2: string;
 }
 
-export interface GetSessionInfoDto {
-  id: number;
-  email: string;
-  iat: number;
-  exp: number;
-}
-
 // API
 //+
 const signIn = (body: SignInBodyDto, options?: RequestOptions) =>
@@ -52,14 +45,6 @@ const signUp = (body: SignUpBodyDto, options?: RequestOptions) =>
     options
   );
 
-const getSession = (options?: RequestOptions) =>
-  createInstance<GetSessionInfoDto>(
-    {
-      url: "/auth/session",
-      method: "GET",
-    },
-    options
-  );
 //+
 const signOut = (options?: RequestOptions) =>
   createInstance<void>(
@@ -73,6 +58,5 @@ const signOut = (options?: RequestOptions) =>
 export const authApi = {
   signIn,
   signUp,
-  getSession,
   signOut,
 };
