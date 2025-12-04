@@ -3,8 +3,6 @@ import { useSignUpForm } from "../model/use-sign-up-form";
 import { UiWhiteTextField } from "@/shared/ui/ui-white-text-field";
 import { UiList } from "@/shared/ui/ui-list";
 import { UiButton } from "@/shared/ui/ui-button";
-import { UiLink } from "@/shared/ui/ui-link";
-import { ROUTES } from "@/shared/constants/routes";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
 
 export function SignUpForm() {
