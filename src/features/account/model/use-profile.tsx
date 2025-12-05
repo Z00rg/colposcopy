@@ -28,6 +28,7 @@ export function useProfile() {
     mutationFn: accountApi.editProfile,
     onSuccess: () => {
       console.log("Профиль успешно обновлён");
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
     },
   });
 
@@ -47,7 +48,9 @@ export function useProfile() {
   const handleSave = (index: number) => {
     const changedFields = Object.entries(formData).reduce(
       (acc, [key, value]) => {
-        const oldValue = (initialData as Partial<GetProfileInfoDto>)[key as keyof GetProfileInfoDto];
+        const oldValue = (initialData as Partial<GetProfileInfoDto>)[
+          key as keyof GetProfileInfoDto
+        ];
 
         if (value === oldValue) return acc;
 
@@ -67,8 +70,6 @@ export function useProfile() {
 
     console.log("Отправляем изменённые поля:", changedFields);
     profileEditMutation.mutate(changedFields);
-    queryClient.invalidateQueries({ queryKey: ["profile"] });
-    console.log("asd")
     toggleEdit(index);
   };
 

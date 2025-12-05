@@ -9,19 +9,31 @@ export function SignInForm() {
   const { register, handleSubmit, errorMessage, isPending } = useSignInForm();
 
   return (
-    <form className="flex flex-col justify-between mt-14 flex-1" onSubmit={handleSubmit}>
+    <form
+      className="flex flex-col justify-between mt-14 flex-1"
+      onSubmit={handleSubmit}
+      action="/auth/login/"
+      method="POST"
+    >
       <div className="flex flex-col justify-center items-center gap-5 mb-8">
         <div className="w-full ml-9 text-[20px] font-medium text-[#4B4242]">
           Авторизация
         </div>
         <UiTextField
-          inputProps={{ ...register("email", { required: true }) }}
+          inputProps={{
+            ...register("email", { required: true }),
+            type: "email",
+            name: "email",
+            autoComplete: "email",
+          }}
           placeholder="Email"
         />
         <UiTextField
           inputProps={{
             type: "password",
             ...register("password", { required: true }),
+            name: "password",
+            autoComplete: "current-password",
           }}
           placeholder="Пароль"
         />
@@ -29,7 +41,9 @@ export function SignInForm() {
         {/* <UiLink href={ROUTES.SIGN_IN}>Забыли пароль?</UiLink> */}
       </div>
       <div className="flex flex-col justify-center my-10 items-center">
-        <UiButton disabled={isPending}>{isPending ? <UiSpinner/> : "Начать"}</UiButton>
+        <UiButton disabled={isPending}>
+          {isPending ? <UiSpinner /> : "Начать"}
+        </UiButton>
         <div className="text-[20px] text-white mt-8">
           Нет аккаунта? <UiLink href={ROUTES.SIGN_UP}>Зарегистрируйтесь</UiLink>
         </div>
