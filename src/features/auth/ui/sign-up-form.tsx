@@ -4,9 +4,19 @@ import { UiWhiteTextField } from "@/shared/ui/ui-white-text-field";
 import { UiList } from "@/shared/ui/ui-list";
 import { UiButton } from "@/shared/ui/ui-button";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
+import { UiLink } from "@/shared/ui/ui-link";
+import { ROUTES } from "@/shared/constants/routes";
 
 export function SignUpForm() {
-  const { register, errorMessage, handleSubmit, isPending, currentStageIndex, handleStageChange, isAllFieldsFilled } = useSignUpForm();
+  const {
+    register,
+    errorMessage,
+    handleSubmit,
+    isPending,
+    currentStageIndex,
+    handleStageChange,
+    isAllFieldsFilled,
+  } = useSignUpForm();
 
   return (
     <form
@@ -130,6 +140,9 @@ export function SignUpForm() {
         >
           {isPending ? <UiSpinner /> : "Регистрация"}
         </UiButton>
+        <div className="text-[20px] text-white mt-8">
+          Есть аккаунт? <UiLink href={ROUTES.SIGN_IN}>Авторизируйтесь</UiLink>
+        </div>
       </div>
     </form>
   );

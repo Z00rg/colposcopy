@@ -9,8 +9,8 @@ export function SignUpPage() {
       <Head>
         <title>Регистрация</title>
       </Head>
-      <UiHeader variant="logo" className="mt-16" />
-      <SignUpForm/>
+      <UiHeader variant="withoutLogo" className="mt-16" />
+      <SignUpForm />
     </div>
   );
 }
