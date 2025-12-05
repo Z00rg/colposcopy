@@ -18,6 +18,11 @@ const nextConfig = {
         pathname: '/media/**',
       },
       {
+        protocol: 'http',
+        hostname: 'atlascolposcopy.ru',
+        pathname: '/media/**',
+      },
+      {
         protocol: 'https',
         hostname: 'atlascolposcopy.ru',
         pathname: '/media/**',
