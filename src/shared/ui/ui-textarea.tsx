@@ -12,6 +12,18 @@ export function UiTextArea({
   children,
   textAreaRef,
 }: UiTextAreaProps) {
+  const renderChildren = () => {
+    if (typeof children === "string") {
+      return children
+        .split(/\r?\n/)
+        .filter((paragraph) => paragraph.trim() !== "")
+        .map((paragraph, index) => <p key={index}>{paragraph}</p>);
+    }
+
+    // Если children — React-элементы (уже структурированные), просто рендерим как есть
+    return children;
+  };
+
   return (
     <div
       ref={textAreaRef}
@@ -21,7 +33,7 @@ export function UiTextArea({
         "overflow-y-auto overflow-x-hidden"
       )}
     >
-      {children}
+      {renderChildren()}
     </div>
   );
 }
