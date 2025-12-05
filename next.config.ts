@@ -17,6 +17,11 @@ const nextConfig = {
         port: '8000',
         pathname: '/media/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'atlascolposcopy.ru',
+        pathname: '/media/**',
+      },
     ],
   },
 };
