@@ -8,5 +8,6 @@ export const ROUTES = {
   CLINIC: "/clinical-cases",
   TEST: "/choice-test",
   PASSING: "/passing-test",
-  ADMIN: "/admin-home"
+  ADMIN: "/admin-home",
+  ADMIN_TEST: "/admin-test"
 };
