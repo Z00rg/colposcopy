@@ -1,4 +1,16 @@
-export const layout1 = {
+interface Answer {
+  text: string;
+  is_correct: boolean;
+}
+
+interface Question {
+  name: string;
+  instruction: string;
+  qtype: 'single' | 'multiple';
+  answers: Answer[];
+}
+
+export const layout1: { questions: Question[] } = {
     "questions": [
         {
             "name": "Первичный осмотр",
@@ -280,7 +292,7 @@ export const layout1 = {
     ]
 }
 
-export const layout2 = {
+export const layout2: { questions: Question[] } = {
     "questions": [
         {
             "name": "Первичный осмотр",
