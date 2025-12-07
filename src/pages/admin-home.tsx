@@ -6,6 +6,7 @@ import { atlasApi } from '@/shared/api/atlasApi';
 import { casesApi as clinicalCasesApi } from '@/shared/api/casesApi';
 import { layout1 } from '@/shared/constants/layoutsJSON';
 import { layout2 } from '@/shared/constants/layoutsJSON';
+import Head from 'next/head';
 
 // Типы данных
 interface Pathology {
@@ -902,6 +903,9 @@ const EditClinicalCaseForm = () => {
 export function AdminHomePage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <Head>
+        <title>Админ-панель</title>
+      </Head>
       <h1 className="text-3xl font-bold mb-8 text-center">Админ-панель</h1>
       
       <div className="space-y-8">
