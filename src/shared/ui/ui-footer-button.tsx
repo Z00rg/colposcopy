@@ -50,7 +50,7 @@ export function UiFooterButton({
       {...props}
       className={clsx(
         className,
-        "cursor-pointer flex flex-col gap-2 pt-1 items-center justify-center text-[11px] hover:text-[#7BAEE4]",
+        "mt-auto cursor-pointer flex flex-col gap-2 pt-1 items-center justify-center text-[11px] hover:text-[#7BAEE4]",
         active && "text-[#7BAEE4]"
       )}
       onClick={() => router.push(variantRoute[variant])}

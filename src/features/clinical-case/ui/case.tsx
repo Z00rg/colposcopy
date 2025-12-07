@@ -40,7 +40,7 @@ export function Case({ className }: { className?: string }) {
             <Image
               src={caseDetails.imgSchema}
               alt="Схематическое изображение"
-              width={385}
+              width={300}
               height={285}
               className="rounded-xl object-contain mt-5 w-full"
             />

@@ -19,6 +19,8 @@ export function UiScrollImg({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
 
+  const [orientations, setOrientations] = useState<("landscape" | "portrait")[]>([]);
+
   // ——— 1. Измеряем ширину контейнера ———
   useEffect(() => {
     const updateWidth = () => {
@@ -35,12 +37,31 @@ export function UiScrollImg({
     };
   }, []);
 
+  useEffect(() => {
+    if (img.length === 0) return;
+
+    const newOrientations: ("landscape" | "portrait")[] = Array(img.length).fill("landscape");
+
+    img.forEach((src, index) => {
+      const imgEl = new window.Image();
+      imgEl.onload = () => {
+        const isLandscape = imgEl.naturalWidth >= imgEl.naturalHeight;
+        newOrientations[index] = isLandscape ? "landscape" : "portrait";
+        setOrientations([...newOrientations]);
+      };
+      imgEl.src = src;
+    });
+  }, [img]);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   // ——— 2. Обработка скролла ———
   const handleScroll = () => {
     if (!scrollContainerRef.current) return;
     const scrollLeft = scrollContainerRef.current.scrollLeft;
     const newIndex = Math.round(scrollLeft / imageWidth);
     const clampedIndex = Math.min(Math.max(0, newIndex), img.length - 1);
+    setCurrentIndex(clampedIndex);
     onIndexChange?.(clampedIndex);
   };
 
@@ -62,6 +83,14 @@ export function UiScrollImg({
     }
   }, [isModalOpen]);
 
+  const containerWidthClass = orientations[currentIndex] === "portrait" 
+    ? "mx-auto w-[300px]" 
+    : "w-full";
+  
+    const classForImage = orientations[currentIndex] === "portrait" 
+    ? "mx-auto w-[300px]" 
+    : "w-full";
+
   return (
     <>
       {/* Скролл-контейнер */}
@@ -72,22 +101,22 @@ export function UiScrollImg({
           className,
           "flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden",
           "scrollbar-hide scroll-smooth",
-          "w-full lg:w-1/2 lg:mx-auto h-[345px] rounded-2xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]"
+          "max-h-min rounded-2xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]",
+          containerWidthClass
         )}
       >
         {img.map((src, index) => (
           <div
             key={"img-" + index}
-            className="flex-shrink-0 snap-center cursor-zoom-in"
-            style={{ width: imageWidth, height: 345 }}
+            className="flex-shrink-0 snap-center cursor-zoom-in w-full h-full"
             onClick={() => openModal(index)} // ← клик по изображению → модалка
           >
             <Image
               src={src}
               alt={`Image ${index + 1}`}
-              width={imageWidth}
-              height={345}
-              className="object-cover w-full h-full rounded-2xl"
+              width={300}
+              height={150}
+              className={clsx("object-cover rounded-2xl", classForImage)}
               priority={index === 0}
             />
           </div>
