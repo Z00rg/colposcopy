@@ -19,8 +19,6 @@ export function UiScrollImg({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
 
-  // const [orientations, setOrientations] = useState<("landscape" | "portrait")[]>([]);
-
   // ——— 1. Измеряем ширину контейнера ———
   useEffect(() => {
     const updateWidth = () => {
@@ -29,31 +27,13 @@ export function UiScrollImg({
       }
     };
     updateWidth();
-    const id = setTimeout(updateWidth, 50); // на случай, если клиент ещё не отрисовал
+    const id = setTimeout(updateWidth, 50);
     window.addEventListener("resize", updateWidth);
     return () => {
       clearTimeout(id);
       window.removeEventListener("resize", updateWidth);
     };
   }, []);
-
-  // useEffect(() => {
-  //   if (img.length === 0) return;
-
-  //   const newOrientations: ("landscape" | "portrait")[] = Array(img.length).fill("landscape");
-
-  //   img.forEach((src, index) => {
-  //     const imgEl = new window.Image();
-  //     imgEl.onload = () => {
-  //       const isLandscape = imgEl.naturalWidth >= imgEl.naturalHeight;
-  //       newOrientations[index] = isLandscape ? "landscape" : "portrait";
-  //       setOrientations([...newOrientations]);
-  //     };
-  //     imgEl.src = src;
-  //   });
-  // }, [img]);
-
-  // const [currentIndex, setCurrentIndex] = useState(0);
 
   // ——— 2. Обработка скролла ———
   const handleScroll = () => {
@@ -82,10 +62,6 @@ export function UiScrollImg({
       return () => window.removeEventListener("keydown", handleKeyDown);
     }
   }, [isModalOpen]);
-
-  // const containerWidthClass = orientations[currentIndex] === "portrait" 
-  //   ? "h-full my-auto" 
-  //   : "";
 
   return (
     <>
