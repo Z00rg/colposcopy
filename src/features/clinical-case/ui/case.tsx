@@ -21,7 +21,7 @@ export function Case({ className }: { className?: string }) {
     <div
       className={clsx(
         className,
-        "flex flex-col justify-center items-center gap-3 flex-1 mb-4 px-5 mt-5"
+        "flex flex-col justify-center w-full gap-3 flex-1 mb-4 px-5 mt-5"
       )}
     >
       {isLoading && <UiSpinner />}
@@ -42,7 +42,7 @@ export function Case({ className }: { className?: string }) {
               alt="Схематическое изображение"
               width={385}
               height={285}
-              className="rounded-xl object-contain mt-5"
+              className="rounded-xl object-contain mt-5 w-full"
             />
           ) : (
             <UiTextArea className="mt-5">

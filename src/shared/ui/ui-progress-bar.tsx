@@ -21,7 +21,7 @@ export function UiProgressBar({
   changeCurrentTask?: (index: number) => void;
 }) {
   return (
-    <div className="relative overflow-x-auto overflow-y-hidden custom-scrollbar max-w-[340px] border-[#DEDEDE] bg-[#FFFFFF] rounded-[20px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
+    <div className="relative mx-auto overflow-x-auto overflow-y-hidden custom-scrollbar max-w-[340px] border-[#DEDEDE] bg-[#FFFFFF] rounded-[20px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
       <div className={clsx(className, "relative flex h-10 px-3 w-max py-1")}>
         {tasks.map((task: CompatibleITestTask, index: number) => {
           const completion = completionByTask?.find(

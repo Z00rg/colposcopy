@@ -16,7 +16,7 @@ export function Pathology({ className }: { className?: string }) {
   } = usePathology();
 
   return (
-      <div className={clsx(className, "flex flex-col justify-center items-center gap-3 flex-1 mb-4 px-5 mt-5")}>
+      <div className={clsx(className, "flex flex-col justify-center w-full gap-3 flex-1 mb-4 px-5 mt-5")}>
         {isLoading && <UiSpinner/>}
         {isError && <div className="font-bold text-rose-500">Ошибка при загрузке деталей патологии</div>}
         {pathologyDetails && (
