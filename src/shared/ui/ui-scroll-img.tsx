@@ -98,13 +98,13 @@ export function UiScrollImg({
           className,
           "flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden",
           "scrollbar-hide scroll-smooth",
-          "mx-auto w-[345px] rounded-2xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]",
+          "mx-auto w-[345px] h-[475px] rounded-2xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]",
         )}
       >
         {img.map((src, index) => (
           <div
             key={"img-" + index}
-            className="flex-shrink-0 snap-center cursor-zoom-in w-[345px]"
+            className="flex-shrink-0 snap-center cursor-zoom-in w-[345px] h-[475px]"
             onClick={() => openModal(index)} // ← клик по изображению → модалка
           >
             <Image
