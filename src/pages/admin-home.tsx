@@ -37,18 +37,20 @@ interface ClinicalCase {
 //   image: File;
 // }
 
-// interface Layer {
-//   case: number;
-//   number: number;
-//   layer_img: File;
-//   layer_description: string;
-// }
+interface Layer {
+  id: number;
+  case: number;
+  number: number;
+  layer_img: string;
+  layer_description: string;
+}
 
-// interface Scheme {
-//   case: number;
-//   scheme_img: File;
-//   scheme_description_img: File;
-// }
+interface Scheme {
+  id: number;
+  case: number;
+  scheme_img: string;
+  scheme_description_img: string;
+}
 
 // API функции
 const createPathology = (data: Omit<Pathology, 'id'>) => {
@@ -99,6 +101,24 @@ const uploadScheme = (data: FormData) => {
       'Content-Type': 'multipart/form-data',
     },
   }).then(response => response.data);
+};
+
+// API функции для редактирования/удаления слоев
+const updateLayer = (id: number, data: { layer_description: string }) => {
+  return apiInstance.patch(`/layers/${id}/`, data).then(response => response.data);
+};
+
+const deleteLayer = (id: number) => {
+  return apiInstance.delete(`/layers/${id}/`).then(response => response.data);
+};
+
+// API функции для редактирования/удаления схем
+const updateScheme = (id: number, data: { scheme_description_img: string }) => {
+  return apiInstance.patch(`/schemes/${id}/`, data).then(response => response.data);
+};
+
+const deleteScheme = (id: number) => {
+  return apiInstance.delete(`/schemes/${id}/`).then(response => response.data);
 };
 
 // Компонент для выбора патологии из выпадающего списка
@@ -325,6 +345,7 @@ const PathologyImageForm = () => {
 
 const ClinicalCaseForm = () => {
   const { register, handleSubmit, formState: { errors }, watch, setValue, reset } = useForm<ClinicalCase>();
+  const [selectedLayout, setSelectedLayout] = useState('');
   const questions = watch('questions') || [];
   
   const mutation = useMutation({
@@ -416,13 +437,37 @@ const ClinicalCaseForm = () => {
         <div className="border-t pt-4">
           <div className="flex justify-between items-center mb-2">
             <h4 className="font-medium">Вопросы</h4>
-            <button
-              type="button"
-              onClick={addQuestion}
-              className="bg-green-500 text-white px-3 py-1 rounded text-sm"
-            >
-              Добавить вопрос
-            </button>
+            <div className="flex gap-2">
+              <select
+                className="border border-gray-300 rounded px-2 py-1 text-sm"
+                value={selectedLayout}
+                onChange={(e) => setSelectedLayout(e.target.value)}
+              >
+                <option value="">Выберите макет</option>
+                <option value="layout1">Макет 1</option>
+                <option value="layout2">Макет 2</option>
+              </select>
+              <button
+                type="button"
+                onClick={() => {
+                  if (selectedLayout === 'layout1') {
+                    setValue('questions', layout1.questions);
+                  } else if (selectedLayout === 'layout2') {
+                    setValue('questions', layout2.questions);
+                  }
+                }}
+                className="bg-purple-500 text-white px-3 py-1 rounded text-sm"
+              >
+                Добавить макет
+              </button>
+              <button
+                type="button"
+                onClick={addQuestion}
+                className="bg-green-500 text-white px-3 py-1 rounded text-sm"
+              >
+                Добавить вопрос
+              </button>
+            </div>
           </div>
           
           {questions.map((question, qIndex) => (
@@ -899,6 +944,240 @@ const EditClinicalCaseForm = () => {
   );
 };
 
+// Компонент для редактирования и удаления слоя
+const EditLayerForm = () => {
+  const [layerId, setLayerId] = useState('');
+  const [newDescription, setNewDescription] = useState('');
+  
+  const { data: layerList, isLoading, error: fetchError } = useQuery({
+    queryKey: ['layer-list'],
+    queryFn: () => apiInstance.get('/layers/').then(res => res.data.items),
+    retry: 1,
+    staleTime: 5 * 60 * 1000, // 5 минут
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({ id, data }: { id: number; data: { layer_description: string } }) => 
+      updateLayer(id, data),
+    onSuccess: () => {
+      alert('Слой успешно обновлен');
+      setLayerId('');
+      setNewDescription('');
+    },
+    onError: (error) => {
+      console.error('Ошибка при обновлении слоя:', error);
+      alert('Ошибка при обновлении слоя');
+    }
+  });
+  
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => deleteLayer(id),
+    onSuccess: () => {
+      alert('Слой успешно удален');
+      setLayerId('');
+    },
+    onError: (error) => {
+      console.error('Ошибка при удалении слоя:', error);
+      alert('Ошибка при удалении слоя');
+    }
+  });
+  
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!layerId || !newDescription) {
+      alert('Пожалуйста, заполните все поля');
+      return;
+    }
+    
+    updateMutation.mutate({ id: parseInt(layerId), data: { layer_description: newDescription } });
+  };
+  
+  const handleDelete = () => {
+    if (!layerId) {
+      alert('Пожалуйста, выберите слой для удаления');
+      return;
+    }
+    
+    if (window.confirm('Вы уверены, что хотите удалить этот слой?')) {
+      deleteMutation.mutate(parseInt(layerId));
+    }
+  };
+  
+  if (isLoading) return <div className="text-sm">Загрузка слоев...</div>;
+  if (fetchError) return <div className="text-red-500 text-sm">Ошибка загрузки слоев</div>;
+
+  return (
+    <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+      <h3 className="text-xl font-bold mb-4">Редактировать/удалить слой</h3>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium mb-1">ID слоя</label>
+          <select
+            value={layerId}
+            onChange={(e) => setLayerId(e.target.value)}
+            className="w-full border border-gray-300 rounded px-3 py-2"
+          >
+            <option value="">Выберите слой</option>
+            {layerList?.items?.map((layer: Layer) => (
+              <option key={layer.id} value={layer.id}>
+                Слой {layer.id} (Клинический случай {layer.case}, №{layer.number})
+              </option>
+            ))}
+          </select>
+        </div>
+        
+        <div>
+          <label className="block text-sm font-medium mb-1">Новое описание</label>
+          <textarea
+            value={newDescription}
+            onChange={(e) => setNewDescription(e.target.value)}
+            className="w-full border border-gray-300 rounded px-3 py-2"
+            placeholder="Введите новое описание слоя"
+            rows={4}
+          />
+        </div>
+        
+        <div className="flex gap-3">
+          <button
+            type="submit"
+            disabled={updateMutation.isPending}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
+          >
+            {updateMutation.isPending ? 'Обновление...' : 'Обновить слой'}
+          </button>
+          
+          <button
+            type="button"
+            onClick={handleDelete}
+            disabled={deleteMutation.isPending}
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 disabled:opacity-50"
+          >
+            {deleteMutation.isPending ? 'Удаление...' : 'Удалить слой'}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+// Компонент для редактирования и удаления схемы
+const EditSchemeForm = () => {
+  const [schemeId, setSchemeId] = useState('');
+  const [newDescription, setNewDescription] = useState('');
+  
+  const { data: schemeList, isLoading, error: fetchError } = useQuery({
+    queryKey: ['scheme-list'],
+    queryFn: () => apiInstance.get('/schemes/').then(res => res.data.items),
+    retry: 1,
+    staleTime: 5 * 60 * 1000, // 5 минут
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({ id, data }: { id: number; data: { scheme_description_img: string } }) => 
+      updateScheme(id, data),
+    onSuccess: () => {
+      alert('Схема успешно обновлена');
+      setSchemeId('');
+      setNewDescription('');
+    },
+    onError: (error) => {
+      console.error('Ошибка при обновлении схемы:', error);
+      alert('Ошибка при обновлении схемы');
+    }
+  });
+  
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => deleteScheme(id),
+    onSuccess: () => {
+      alert('Схема успешно удалена');
+      setSchemeId('');
+    },
+    onError: (error) => {
+      console.error('Ошибка при удалении схемы:', error);
+      alert('Ошибка при удалении схемы');
+    }
+  });
+  
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!schemeId || !newDescription) {
+      alert('Пожалуйста, заполните все поля');
+      return;
+    }
+    
+    updateMutation.mutate({ id: parseInt(schemeId), data: { scheme_description_img: newDescription } });
+  };
+  
+  const handleDelete = () => {
+    if (!schemeId) {
+      alert('Пожалуйста, выберите схему для удаления');
+      return;
+    }
+    
+    if (window.confirm('Вы уверены, что хотите удалить эту схему?')) {
+      deleteMutation.mutate(parseInt(schemeId));
+    }
+  };
+  
+  if (isLoading) return <div className="text-sm">Загрузка схем...</div>;
+  if (fetchError) return <div className="text-red-500 text-sm">Ошибка загрузки схем</div>;
+
+  return (
+    <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+      <h3 className="text-xl font-bold mb-4">Редактировать/удалить схему</h3>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium mb-1">ID схемы</label>
+          <select
+            value={schemeId}
+            onChange={(e) => setSchemeId(e.target.value)}
+            className="w-full border border-gray-300 rounded px-3 py-2"
+          >
+            <option value="">Выберите схему</option>
+            {schemeList?.items?.map((scheme: Scheme) => (
+              <option key={scheme.id} value={scheme.id}>
+                Схема {scheme.id} (Клинический случай {scheme.case})
+              </option>
+            ))}
+          </select>
+        </div>
+        
+        <div>
+          <label className="block text-sm font-medium mb-1">Новое описание</label>
+          <textarea
+            value={newDescription}
+            onChange={(e) => setNewDescription(e.target.value)}
+            className="w-full border border-gray-300 rounded px-3 py-2"
+            placeholder="Введите новое описание схемы"
+            rows={4}
+          />
+        </div>
+        
+        <div className="flex gap-3">
+          <button
+            type="submit"
+            disabled={updateMutation.isPending}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
+          >
+            {updateMutation.isPending ? 'Обновление...' : 'Обновить схему'}
+          </button>
+          
+          <button
+            type="button"
+            onClick={handleDelete}
+            disabled={deleteMutation.isPending}
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 disabled:opacity-50"
+          >
+            {deleteMutation.isPending ? 'Удаление...' : 'Удалить схему'}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
 export function AdminHomePage() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -912,6 +1191,8 @@ export function AdminHomePage() {
         <SchemeForm />
         <EditPathologyForm />
         <EditClinicalCaseForm />
+        <EditLayerForm />
+        <EditSchemeForm />
       </div>
     </div>
   );
