@@ -472,7 +472,7 @@ const ClinicalCaseForm = () => {
         />
 
         <div className="border-t pt-4">
-          <div className="flex flex-col items-center mb-2">
+          <div className="flex flex-col items-start gap-4 mb-2">
             <div className="flex gap-2">
               <h4 className="font-medium">Вопросы</h4>
               <button
@@ -491,8 +491,8 @@ const ClinicalCaseForm = () => {
                 onChange={(e) => setSelectedLayout(e.target.value)}
               >
                 <option value="">Выберите макет</option>
-                <option value="layout1">Макет 1</option>
-                <option value="layout2">Макет 2</option>
+                <option value="layout1">Макет на 11 вопросов</option>
+                <option value="layout2">Макет на 19 вопросов</option>
               </select>
               <button
                 type="button"
@@ -587,7 +587,8 @@ const ClinicalCaseForm = () => {
                       className="flex-1 border border-gray-300 rounded px-2 py-1 text-sm"
                       placeholder="Текст ответа"
                     />
-                    <label className="flex items-center text-sm">
+                    <div className="flex flex-col gap-2">
+                      <label className="flex items-center text-sm">
                       <input
                         type="checkbox"
                         checked={answer.is_correct}
@@ -603,6 +604,7 @@ const ClinicalCaseForm = () => {
                     >
                       Удалить
                     </button>
+                    </div>
                   </div>
                 ))}
               </div>
