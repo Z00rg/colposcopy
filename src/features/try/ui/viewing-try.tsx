@@ -27,9 +27,9 @@ export function ViewingTry() {
   }, [currentTaskIndex]);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-3 flex-1 mb-4 px-5 mt-5">
+    <div className="flex flex-col justify-center w-full gap-3 flex-1 mb-4 px-5 mt-5">
       {isLoading && (
-        <div className="flex justify-center items-center w-full h-full">
+        <div className="flex justify-center w-full h-full">
           <UiSpinner />
         </div>
       )}
