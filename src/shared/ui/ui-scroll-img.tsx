@@ -15,28 +15,27 @@ export function UiScrollImg({
   onIndexChange,
 }: UiScrollImgProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  // const [imageWidth, setImageWidth] = useState(300);
-  const imageWidth = 375;
+  const [imageWidth, setImageWidth] = useState(375);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
 
   // const [orientations, setOrientations] = useState<("landscape" | "portrait")[]>([]);
 
   // ——— 1. Измеряем ширину контейнера ———
-  // useEffect(() => {
-  //   const updateWidth = () => {
-  //     if (scrollContainerRef.current) {
-  //       setImageWidth(scrollContainerRef.current.clientWidth);
-  //     }
-  //   };
-  //   updateWidth();
-  //   const id = setTimeout(updateWidth, 50); // на случай, если клиент ещё не отрисовал
-  //   window.addEventListener("resize", updateWidth);
-  //   return () => {
-  //     clearTimeout(id);
-  //     window.removeEventListener("resize", updateWidth);
-  //   };
-  // }, []);
+  useEffect(() => {
+    const updateWidth = () => {
+      if (scrollContainerRef.current) {
+        setImageWidth(scrollContainerRef.current.clientWidth);
+      }
+    };
+    updateWidth();
+    const id = setTimeout(updateWidth, 50); // на случай, если клиент ещё не отрисовал
+    window.addEventListener("resize", updateWidth);
+    return () => {
+      clearTimeout(id);
+      window.removeEventListener("resize", updateWidth);
+    };
+  }, []);
 
   // useEffect(() => {
   //   if (img.length === 0) return;
@@ -98,13 +97,13 @@ export function UiScrollImg({
           className,
           "flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden",
           "scrollbar-hide scroll-smooth",
-          "mx-auto w-[375px] min-h-[200px] max-h-[475px]",
+          "mx-auto w-full min-h-[200px] max-h-[475px]",
         )}
       >
         {img.map((src, index) => (
           <div
             key={"img-" + index}
-            className="flex-shrink-0 items-center snap-center cursor-zoom-in w-[375px] min-h-[200px] max-h-[475px]"
+            className="flex-shrink-0 items-center snap-center cursor-zoom-in w-full min-h-[200px] max-h-[475px]"
             onClick={() => openModal(index)} // ← клик по изображению → модалка
           >
             <Image
@@ -112,7 +111,7 @@ export function UiScrollImg({
               alt={`Image ${index + 1}`}
               width={375}
               height={200}
-              className={clsx("object-scale-down w-full h-full rounded-4xl" )}
+              className={clsx("object-scale-down w-full h-full" )}
               priority={index === 0}
             />
           </div>
