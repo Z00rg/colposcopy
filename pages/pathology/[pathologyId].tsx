@@ -1,3 +1,4 @@
 import { PathologyDetailPage } from "@/pages/pathology";
+import { protectedPage } from "@/features/auth";
 
-export default PathologyDetailPage;
+export default protectedPage(PathologyDetailPage);
