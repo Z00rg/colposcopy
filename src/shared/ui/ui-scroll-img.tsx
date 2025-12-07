@@ -37,7 +37,7 @@ export function UiScrollImg({
       onScroll={handleScroll}
       className={clsx(
         className,
-        "flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden scrollbar-hide",
+        "flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden scrollbar-hide scroll-smooth",
         "w-[300px] h-[345px] items-center rounded-2xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]"
       )}
     >
