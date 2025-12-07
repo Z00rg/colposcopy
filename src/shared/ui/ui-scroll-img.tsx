@@ -72,7 +72,7 @@ export function UiScrollImg({
           className,
           "flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden",
           "scrollbar-hide scroll-smooth",
-          "w-full lg:w-1/2 h-[345px] rounded-2xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]"
+          "w-full lg:w-1/2 lg:mx-auto h-[345px] rounded-2xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]"
         )}
       >
         {img.map((src, index) => (
