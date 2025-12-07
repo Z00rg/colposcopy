@@ -16,11 +16,11 @@ export function UiScrollImg({
 }: UiScrollImgProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   // const [imageWidth, setImageWidth] = useState(300);
-  const imageWidth = 345;
+  const imageWidth = 375;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
 
-  const [orientations, setOrientations] = useState<("landscape" | "portrait")[]>([]);
+  // const [orientations, setOrientations] = useState<("landscape" | "portrait")[]>([]);
 
   // ——— 1. Измеряем ширину контейнера ———
   // useEffect(() => {
@@ -38,23 +38,23 @@ export function UiScrollImg({
   //   };
   // }, []);
 
-  useEffect(() => {
-    if (img.length === 0) return;
+  // useEffect(() => {
+  //   if (img.length === 0) return;
 
-    const newOrientations: ("landscape" | "portrait")[] = Array(img.length).fill("landscape");
+  //   const newOrientations: ("landscape" | "portrait")[] = Array(img.length).fill("landscape");
 
-    img.forEach((src, index) => {
-      const imgEl = new window.Image();
-      imgEl.onload = () => {
-        const isLandscape = imgEl.naturalWidth >= imgEl.naturalHeight;
-        newOrientations[index] = isLandscape ? "landscape" : "portrait";
-        setOrientations([...newOrientations]);
-      };
-      imgEl.src = src;
-    });
-  }, [img]);
+  //   img.forEach((src, index) => {
+  //     const imgEl = new window.Image();
+  //     imgEl.onload = () => {
+  //       const isLandscape = imgEl.naturalWidth >= imgEl.naturalHeight;
+  //       newOrientations[index] = isLandscape ? "landscape" : "portrait";
+  //       setOrientations([...newOrientations]);
+  //     };
+  //     imgEl.src = src;
+  //   });
+  // }, [img]);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // const [currentIndex, setCurrentIndex] = useState(0);
 
   // ——— 2. Обработка скролла ———
   const handleScroll = () => {
@@ -62,7 +62,7 @@ export function UiScrollImg({
     const scrollLeft = scrollContainerRef.current.scrollLeft;
     const newIndex = Math.round(scrollLeft / imageWidth);
     const clampedIndex = Math.min(Math.max(0, newIndex), img.length - 1);
-    setCurrentIndex(clampedIndex);
+    // setCurrentIndex(clampedIndex);
     onIndexChange?.(clampedIndex);
   };
 
@@ -84,9 +84,9 @@ export function UiScrollImg({
     }
   }, [isModalOpen]);
 
-  const containerWidthClass = orientations[currentIndex] === "portrait" 
-    ? "h-full my-auto" 
-    : "";
+  // const containerWidthClass = orientations[currentIndex] === "portrait" 
+  //   ? "h-full my-auto" 
+  //   : "";
 
   return (
     <>
@@ -98,21 +98,21 @@ export function UiScrollImg({
           className,
           "flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden",
           "scrollbar-hide scroll-smooth",
-          "mx-auto w-[345px] h-[475px] rounded-2xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]",
+          "mx-auto w-[375px] min-h-[200px] max-h-[475px] rounded-2xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]",
         )}
       >
         {img.map((src, index) => (
           <div
             key={"img-" + index}
-            className="flex-shrink-0 snap-center cursor-zoom-in w-[345px] h-[475px]"
+            className="flex-shrink-0 items-center snap-center cursor-zoom-in w-[375px] min-h-[200px] max-h-[475px]"
             onClick={() => openModal(index)} // ← клик по изображению → модалка
           >
             <Image
               src={src}
               alt={`Image ${index + 1}`}
-              width={345}
-              height={150}
-              className={clsx("object-cover rounded-2xl w-full", containerWidthClass )}
+              width={375}
+              height={200}
+              className={clsx("object-scale-down rounded-2xl w-full " )}
               priority={index === 0}
             />
           </div>
