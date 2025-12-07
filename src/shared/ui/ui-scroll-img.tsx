@@ -15,27 +15,28 @@ export function UiScrollImg({
   onIndexChange,
 }: UiScrollImgProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [imageWidth, setImageWidth] = useState(300);
+  // const [imageWidth, setImageWidth] = useState(300);
+  const imageWidth = 345;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
 
   // const [orientations, setOrientations] = useState<("landscape" | "portrait")[]>([]);
 
   // ——— 1. Измеряем ширину контейнера ———
-  useEffect(() => {
-    const updateWidth = () => {
-      if (scrollContainerRef.current) {
-        setImageWidth(scrollContainerRef.current.clientWidth);
-      }
-    };
-    updateWidth();
-    const id = setTimeout(updateWidth, 50); // на случай, если клиент ещё не отрисовал
-    window.addEventListener("resize", updateWidth);
-    return () => {
-      clearTimeout(id);
-      window.removeEventListener("resize", updateWidth);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const updateWidth = () => {
+  //     if (scrollContainerRef.current) {
+  //       setImageWidth(scrollContainerRef.current.clientWidth);
+  //     }
+  //   };
+  //   updateWidth();
+  //   const id = setTimeout(updateWidth, 50); // на случай, если клиент ещё не отрисовал
+  //   window.addEventListener("resize", updateWidth);
+  //   return () => {
+  //     clearTimeout(id);
+  //     window.removeEventListener("resize", updateWidth);
+  //   };
+  // }, []);
 
   // useEffect(() => {
   //   if (img.length === 0) return;
@@ -101,19 +102,19 @@ export function UiScrollImg({
           className,
           "flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden",
           "scrollbar-hide scroll-smooth",
-          "mx-auto w-3/4 rounded-2xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]",
+          "mx-auto w-[345px]rounded-2xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]",
         )}
       >
         {img.map((src, index) => (
           <div
             key={"img-" + index}
-            className="flex-shrink-0 snap-center cursor-zoom-in w-full h-full"
+            className="flex-shrink-0 snap-center cursor-zoom-in w-[345px]"
             onClick={() => openModal(index)} // ← клик по изображению → модалка
           >
             <Image
               src={src}
               alt={`Image ${index + 1}`}
-              width={300}
+              width={345}
               height={150}
               className={clsx("object-cover rounded-2xl w-full h-full")}
               priority={index === 0}
