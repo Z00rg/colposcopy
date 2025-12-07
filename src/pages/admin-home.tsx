@@ -4,6 +4,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { apiInstance } from '@/shared/api/api-instance';
 import { atlasApi } from '@/shared/api/atlasApi';
 import { casesApi as clinicalCasesApi } from '@/shared/api/casesApi';
+import { layout1 } from '@/shared/constants/layoutsJSON';
+import { layout2 } from '@/shared/constants/layoutsJSON';
 
 // Типы данных
 interface Pathology {
