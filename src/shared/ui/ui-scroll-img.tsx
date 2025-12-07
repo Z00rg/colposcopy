@@ -84,11 +84,11 @@ export function UiScrollImg({
   }, [isModalOpen]);
 
   const containerWidthClass = orientations[currentIndex] === "portrait" 
-    ? "mx-auto w-[300px]" 
+    ? "mx-auto w-3/4" 
     : "w-full";
   
     const classForImage = orientations[currentIndex] === "portrait" 
-    ? "mx-auto w-[300px]" 
+    ? "mx-auto w-3/4"
     : "w-full";
 
   return (
