@@ -101,7 +101,7 @@ export function UiScrollImg({
           className,
           "flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden",
           "scrollbar-hide scroll-smooth",
-          "max-h-min rounded-2xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]",
+          "rounded-2xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]",
           containerWidthClass
         )}
       >
