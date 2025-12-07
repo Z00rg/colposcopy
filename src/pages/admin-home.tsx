@@ -183,9 +183,12 @@ const ClinicalCaseSelector = ({
       >
         <option value="">Выберите клинический случай</option>
         {clinicalCaseList?.map((clinicalCase) => (
-          <option key={clinicalCase.id} value={clinicalCase.id}>
-            {clinicalCase.name} (ID: {clinicalCase.id})
+          clinicalCase.cases.map((item) => (
+            <option key={item.id} value={item.id}>
+            {clinicalCase.name} (ID паталогии: {clinicalCase.id})
+            Случай {item.id}
           </option>
+          ))
         ))}
       </select>
       {error && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
