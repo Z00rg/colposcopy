@@ -76,11 +76,11 @@ const createClinicalCase = (data: ClinicalCase) => {
 
 // API функции для редактирования/удаления клинических случаев
 const updateClinicalCase = (id: number, data: { name: string }) => {
-  return apiInstance.patch(`/cases/case/${id}/`, data).then(response => response.data);
+  return apiInstance.patch(`/case_submit/${id}/`, data).then(response => response.data);
 };
 
 const deleteClinicalCase = (id: number) => {
-  return apiInstance.delete(`/cases/case/${id}/`).then(response => response.data);
+  return apiInstance.delete(`/case_submit/${id}/`).then(response => response.data);
 };
 
 const uploadLayer = (data: FormData) => {
