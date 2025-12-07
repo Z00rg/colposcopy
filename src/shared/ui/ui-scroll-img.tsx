@@ -119,7 +119,7 @@ export function UiScrollImg({
               <img
                 src={img[modalImageIndex]}
                 alt={`Fullscreen ${modalImageIndex + 1}`}
-                className="max-w-full max-h-full object-contain"
+                className="max-w-screen max-h-screen object-contain"
                 loading="eager"
                 draggable="false"
               />
