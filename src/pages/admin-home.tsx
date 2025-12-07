@@ -38,21 +38,6 @@ interface ClinicalCase {
 //   image: File;
 // }
 
-interface Layer {
-  id: number;
-  case: number;
-  number: number;
-  layer_img: string;
-  layer_description: string;
-}
-
-interface Scheme {
-  id: number;
-  case: number;
-  scheme_img: string;
-  scheme_description_img: string;
-}
-
 // API функции
 const createPathology = (data: Omit<Pathology, "id">) => {
   return apiInstance
@@ -119,30 +104,6 @@ const uploadScheme = (data: FormData) => {
         "Content-Type": "multipart/form-data",
       },
     })
-    .then((response) => response.data);
-};
-
-// API функции для редактирования/удаления слоев
-const updateLayer = (id: number, data: { layer_description: string }) => {
-  return apiInstance
-    .patch(`/layers/${id}/`, data)
-    .then((response) => response.data);
-};
-
-const deleteLayer = (id: number) => {
-  return apiInstance.delete(`/layers/${id}/`).then((response) => response.data);
-};
-
-// API функции для редактирования/удаления схем
-const updateScheme = (id: number, data: { scheme_description_img: string }) => {
-  return apiInstance
-    .patch(`/schemes/${id}/`, data)
-    .then((response) => response.data);
-};
-
-const deleteScheme = (id: number) => {
-  return apiInstance
-    .delete(`/schemes/${id}/`)
     .then((response) => response.data);
 };
 
