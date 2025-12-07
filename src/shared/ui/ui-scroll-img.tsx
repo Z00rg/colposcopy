@@ -85,11 +85,7 @@ export function UiScrollImg({
   }, [isModalOpen]);
 
   // const containerWidthClass = orientations[currentIndex] === "portrait" 
-  //   ? "mx-auto w-3/4" 
-  //   : "w-full";
-  
-  //   const classForImage = orientations[currentIndex] === "portrait" 
-  //   ? "mx-auto w-3/4"
+  //   ? "h-full" 
   //   : "w-full";
 
   return (
@@ -116,7 +112,7 @@ export function UiScrollImg({
               alt={`Image ${index + 1}`}
               width={345}
               height={150}
-              className={clsx("object-cover rounded-2xl w-full h-full")}
+              className={clsx("object-cover rounded-2xl", "w-full")}
               priority={index === 0}
             />
           </div>
