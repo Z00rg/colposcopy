@@ -1,5 +1,5 @@
 import { Case } from "@/features/clinical-case/ui/case";
-import { UiHeader } from "@/shared/ui/ui-header";
+// import { UiHeader } from "@/shared/ui/ui-header";
 import Head from "next/head";
 
 export function CasePage() {
@@ -8,10 +8,10 @@ export function CasePage() {
       <Head>
         <title>Клинический кейс</title>
       </Head>
-      <UiHeader
+      {/* <UiHeader
         variant="withoutLogo"
         className="mt-6 [@media(max-height:930px)]:hidden"
-      />
+      /> */}
       <Case />
     </div>
   );
