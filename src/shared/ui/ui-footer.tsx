@@ -12,7 +12,7 @@ export function UiFooter({activeStatus, className}: UiFooterProps) {
     <footer
       className={clsx(
         className,
-        "flex justify-center items-center px-5 py-1.5 w-[324px] bg-[#F3F3F3] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px] gap-8 mt-auto"
+        "flex mx-auto justify-center items-center px-5 py-1.5 w-[324px] bg-[#F3F3F3] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px] gap-8 mt-auto"
       )}
     >
       <UiFooterButton variant="book" active={activeStatus === "atlas"} />
