@@ -104,7 +104,7 @@ export function UiScrollImg({
         {img.map((src, index) => (
           <div
             key={"img-" + index}
-            className="flex-shrink-0 items-center snap-center cursor-zoom-in w-[375px] min-h-[200px] max-h-[475px] rounded-2xl shadow-[0px_4px_4px_rgba(0,0,0,0.25)]"
+            className="flex-shrink-0 items-center snap-center cursor-zoom-in w-[375px] min-h-[200px] max-h-[475px]"
             onClick={() => openModal(index)} // ← клик по изображению → модалка
           >
             <Image
@@ -112,7 +112,7 @@ export function UiScrollImg({
               alt={`Image ${index + 1}`}
               width={375}
               height={200}
-              className={clsx("object-scale-down rounded-2xl w-full h-full" )}
+              className={clsx("object-scale-down rounded-2xl w-full h-full shadow-[0px_4px_4px_rgba(0,0,0,0.25)]" )}
               priority={index === 0}
             />
           </div>
