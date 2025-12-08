@@ -10,13 +10,13 @@ export function AtlasPage() {
       <Head>
         <title>Атлас</title>
       </Head>
-      <UiHeader variant="withoutLogo" className="mt-16" />
+      <UiHeader variant="withoutLogo" />
       <div className="flex flex-col justify-between w-full gap-5 flex-1 mb-4">
         <div className="px-5">
           <div className="font-medium text-[20px] font-[#4B4242] mt-7">
             Содержание атласа
           </div>
-          <AtlasList/>
+          <AtlasList />
         </div>
         <UiFooter activeStatus="atlas" />
       </div>

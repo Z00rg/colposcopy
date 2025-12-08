@@ -12,13 +12,13 @@ export function UiHeader({ className, variant }: UiHeaderProps) {
   return (
     <header
       className={clsx(
-        "flex items-center justify-center flex-col gap-16",
+        "flex items-center justify-center flex-col gap-16 mt-[2svh]",
         className
       )}
     >
       {variant === "logo" && (
         <Image
-          src="/logo.png" 
+          src="/logo.png"
           width={270}
           height={97}
           alt="Логотип приложения"

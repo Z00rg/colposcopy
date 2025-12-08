@@ -8,8 +8,8 @@ export function SignInPage() {
       <Head>
         <title>Авторизация</title>
       </Head>
-      <UiHeader variant="logo" className="mt-16" />
-      <SignInForm/>
+      <UiHeader variant="logo" />
+      <SignInForm />
     </div>
   );
 }

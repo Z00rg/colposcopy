@@ -9,7 +9,7 @@ export function SignUpPage() {
       <Head>
         <title>Регистрация</title>
       </Head>
-      <UiHeader variant="withoutLogo" className="mt-16" />
+      <UiHeader variant="withoutLogo" />
       <SignUpForm />
     </div>
   );
