@@ -133,7 +133,7 @@ export function SignUpForm() {
           </div>
         </UiList>
       </div>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center mt-[3svh]">
         {errorMessage && <div className="text-rose-500">{errorMessage}</div>}
         <UiButton
           className={clsx({

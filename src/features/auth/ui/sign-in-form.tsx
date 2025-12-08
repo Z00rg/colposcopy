@@ -40,7 +40,7 @@ export function SignInForm() {
         {errorMessage && <div className="text-rose-500">{errorMessage}</div>}
         {/* <UiLink href={ROUTES.SIGN_IN}>Забыли пароль?</UiLink> */}
       </div>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center mt-[6svh]">
         <UiButton disabled={isPending}>
           {isPending ? <UiSpinner /> : "Начать"}
         </UiButton>
