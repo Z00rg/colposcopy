@@ -20,7 +20,7 @@ export function UiTextArea({
       ref={textAreaRef}
       className={clsx(
         className,
-        "w-full h-[40vh]",
+        "w-full h-[40svh]",
         "text-[16px] font-normal bg-[#F1F1F1] pt-3 px-[17px]",
         "shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px]",
         "overflow-y-auto overflow-x-hidden scroll-smooth",
