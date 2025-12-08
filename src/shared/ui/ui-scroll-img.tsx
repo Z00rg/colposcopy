@@ -88,7 +88,6 @@ export function UiScrollImg({
               width={375}
               height={200}
               className={clsx("object-scale-down w-full h-full")}
-              // className={clsx("object-contain w-full h-full rounded-4xl" )}
               priority={index === 0}
             />
           </div>
