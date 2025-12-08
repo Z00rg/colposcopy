@@ -11,9 +11,12 @@ export function Instruction({ className }: { className?: string }) {
         "w-full border-b-1 border-[#BDBDBD] flex flex-col px-[9px]"
       )}
     >
-      <div className="h-[30px] flex justify-between font-bold text-[18px] text-[#4B4242] mb-1 gap-26">
+      <div
+        className="h-[30px] flex justify-between font-bold text-[18px] text-[#4B4242] mb-1 gap-26 cursor-pointer"
+        onClick={() => setActive(!active)}
+      >
         <div className="flex gap-2.5 w-full">Инструкция</div>
-        <button onClick={() => setActive(!active)}>
+        <button>
           <ArrowRight
             className={clsx(
               "transition-transform duration-300 ease-in-out",
@@ -32,7 +35,8 @@ export function Instruction({ className }: { className?: string }) {
           }
         )}
       >
-        Вам будут выданы тесты по выбранным паталогиям, выберите ответы на вопросы в соответствии с инструкцией в них и закончите попытку.
+        Вам будут выданы тесты по выбранным паталогиям, выберите ответы на
+        вопросы в соответствии с инструкцией в них и закончите попытку.
       </div>
     </div>
   );
