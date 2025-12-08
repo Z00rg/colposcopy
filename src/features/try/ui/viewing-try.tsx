@@ -63,7 +63,7 @@ export function ViewingTry() {
           <UiTextArea
             textAreaRef={textAreaRef}
             className="mt-5 gap-3 w-full text-[13px] items-start"
-            height="h-[40svh]"
+            height="h-[39svh]"
           >
             {/* Итерация по вопросам текущего задания */}
             {tasks[currentTaskIndex].testsQuestions.map(
