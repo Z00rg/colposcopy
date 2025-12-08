@@ -20,7 +20,7 @@ export function SignUpForm() {
 
   return (
     <form
-      className="flex flex-col justify-between mt-[3svh] h-[73svh]"
+      className="flex flex-col justify-between mt-[3svh] h-[70svh]"
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col justify-center items-center gap-5">
