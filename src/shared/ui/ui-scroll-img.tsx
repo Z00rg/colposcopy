@@ -73,7 +73,7 @@ export function UiScrollImg({
           className,
           "flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden",
           "scrollbar-hide scroll-smooth",
-          "mx-auto w-full min-h-[200px] max-h-[475px]",
+          "mx-auto w-full min-h-[200px] max-h-[475px]"
         )}
       >
         {img.map((src, index) => (
@@ -87,8 +87,8 @@ export function UiScrollImg({
               alt={`Image ${index + 1}`}
               width={375}
               height={200}
-              // className={clsx("object-scale-down w-full h-full" )}
-              className={clsx("object-contain w-full h-full rounded-4xl" )}
+              className={clsx("object-scale-down w-full h-full")}
+              // className={clsx("object-contain w-full h-full rounded-4xl" )}
               priority={index === 0}
             />
           </div>
