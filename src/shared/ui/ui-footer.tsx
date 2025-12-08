@@ -9,7 +9,8 @@ export type UiFooterProps = {
 
 export function UiFooter({activeStatus, className}: UiFooterProps) {
   return (
-    <div className="fixed bottom-0 left-0 w-full h-[9svh] z-10 lg:static lg:h-auto lg:w-auto backdrop-blur-md">
+    <div className="fixed bottom-0 left-0 w-full lg:w-1/4 lg:left-1/2 lg:transform lg:-translate-x-1/2 h-[9svh] z-10 backdrop-blur-md">
+      {/* <div className="fixed bottom-0 left-0 w-full h-[9svh] z-10 lg:static lg:h-auto lg:w-auto backdrop-blur-md"> */}
       <footer
         className={clsx(
           className,
