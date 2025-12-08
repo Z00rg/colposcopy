@@ -139,7 +139,7 @@ export function TestTasks() {
                             </div>
 
                             {/* Текст варианта ответа */}
-                            <div className="break-words whitespace-normal flex-1 text-gray-800">
+                            <div className="break-words whitespace-normal flex-1 text-gray-800 text-left">
                               {answer.text}
                             </div>
 
@@ -187,7 +187,7 @@ export function TestTasks() {
             <button
               className={clsx(
                 { hidden: currentTaskIndex === tasks.length - 1 },
-                "ml-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointer"
+                "ml-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointe"
               )}
               onClick={() => handleTaskChange(currentTaskIndex + 1)}
               disabled={currentTaskIndex === tasks.length - 1}
