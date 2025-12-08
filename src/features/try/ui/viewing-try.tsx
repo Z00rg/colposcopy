@@ -56,12 +56,14 @@ export function ViewingTry() {
           <UiScrollImg
             key={currentTaskIndex}
             img={tasks[currentTaskIndex].imageSrcs}
+            height="h-[28svh]"
           />
 
           {/* Компонент Блока для текста и вопросов */}
           <UiTextArea
             textAreaRef={textAreaRef}
             className="mt-5 gap-3 w-full text-[13px] items-start"
+            height="h-[34svh]"
           >
             {/* Итерация по вопросам текущего задания */}
             {tasks[currentTaskIndex].testsQuestions.map(

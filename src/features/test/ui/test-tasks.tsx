@@ -65,12 +65,14 @@ export function TestTasks() {
           <UiScrollImg
             key={currentTaskIndex}
             img={tasks[currentTaskIndex].imageSrcs}
+            height="h-[28svh]"
           />
 
           {/* Компонент Блока для текста и вопросов */}
           <UiTextArea
             textAreaRef={textAreaRef}
             className="mt-5 gap-3 w-full text-[13px] items-start"
+            height="h-[34svh]"
           >
             <div className="font-bold text-[15px]">
               Выполните следующие задания:
