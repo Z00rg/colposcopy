@@ -7,20 +7,24 @@ export type UiTextAreaProps = {
   className?: string;
   children?: ReactNode;
   textAreaRef?: React.Ref<HTMLDivElement>;
+  height?: string;
 };
 
 export function UiTextArea({
   className,
   children,
   textAreaRef,
+  height,
 }: UiTextAreaProps) {
+  const heightProps = height ? height : "h-[40svh]";
 
   return (
     <div
       ref={textAreaRef}
       className={clsx(
         className,
-        "w-full h-[40svh]",
+        heightProps,
+        "w-full",
         "text-[16px] font-normal bg-[#F1F1F1] pt-3 px-[17px]",
         "shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px]",
         "overflow-y-auto overflow-x-hidden scroll-smooth",

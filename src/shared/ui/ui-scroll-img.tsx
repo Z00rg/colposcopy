@@ -7,13 +7,16 @@ type UiScrollImgProps = {
   img: string[];
   className?: string;
   onIndexChange?: (index: number) => void;
+  height?: string;
 };
 
 export function UiScrollImg({
   img,
   className,
   onIndexChange,
+  height,
 }: UiScrollImgProps) {
+  const heightProps = height ? height : "h-[35svh]";
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [imageWidth, setImageWidth] = useState(375);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -73,14 +76,18 @@ export function UiScrollImg({
           className,
           "flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden",
           "scrollbar-hide scroll-smooth",
-          "mx-auto w-full h-[35svh]"
+          "mx-auto w-full",
+          heightProps
         )}
       >
         {img.map((src, index) => (
           <div
             key={"img-" + index}
-            className="flex-shrink-0 items-center snap-center cursor-zoom-in w-full h-[35svh]"
-            onClick={() => openModal(index)} // ← клик по изображению → модалка
+            className={clsx(
+              "flex-shrink-0 items-center snap-center cursor-zoom-in w-full",
+              heightProps
+            )}
+            onClick={() => openModal(index)}
           >
             <Image
               src={src}
