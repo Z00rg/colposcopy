@@ -10,12 +10,12 @@ export function SignInForm() {
 
   return (
     <form
-      className="flex flex-col justify-between mt-8 flex-1"
+      className="flex flex-col justify-between mt-[3svh] h-[60svh]"
       onSubmit={handleSubmit}
       action="/auth/login/"
       method="POST"
     >
-      <div className="flex flex-col justify-center items-center gap-5 mb-8">
+      <div className="flex flex-col justify-center items-center gap-5 mb-[3svh]">
         <div className="w-full ml-9 text-[20px] font-medium text-[#4B4242]">
           Авторизация
         </div>

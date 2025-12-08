@@ -12,7 +12,7 @@ export function UiHeader({ className, variant }: UiHeaderProps) {
   return (
     <header
       className={clsx(
-        "flex items-center justify-center flex-col gap-8 mt-[2svh]",
+        "flex items-center justify-center flex-col gap-[3svh] mt-[3svh]",
         className
       )}
     >
