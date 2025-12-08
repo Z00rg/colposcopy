@@ -45,8 +45,8 @@ export function Profile({ className }: { className?: string }) {
             Ошибка загрузки данных профиля.
           </div>
         )}
-        <div className="flex flex-col">
-          <div className="font-bold flex flex-wrap max-w-[280px] overflow-auto">
+        <div className="flex flex-col max-w-[250px] lg:max-w-[350px] overflow-auto">
+          <div className="font-bold flex flex-wrap ">
             {formData.surname} {formData.name} {formData.patronymic}
           </div>
           <div className="font-medium flex flex-wrap">{formData.email}</div>
