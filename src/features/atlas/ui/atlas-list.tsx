@@ -10,7 +10,7 @@ export function AtlasList({ className }: { className?: string }) {
   const isEmptyText = !isLoading && !isError && items.length === 0;
 
   return (
-    <UiList className={clsx(className, "mt-4 items-start max-h-[530px]")}>
+    <UiList className={clsx(className, "mt-4 items-start")}>
       {isLoading && <UiSpinner />}
       {isError && (
         <div className="font-bold text-rose-500">
@@ -18,8 +18,10 @@ export function AtlasList({ className }: { className?: string }) {
         </div>
       )}
       {isEmptyText && (
-          <div className="flex text-[18px] pb-4 font-medium">Нет доступных патологий</div>
-        )}
+        <div className="flex text-[18px] pb-4 font-medium">
+          Нет доступных патологий
+        </div>
+      )}
       {items &&
         items.map((item, index) => (
           <UiListButtonAtlas
