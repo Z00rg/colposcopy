@@ -20,10 +20,10 @@ export function SignUpForm() {
 
   return (
     <form
-      className="flex flex-col justify-between mt-[3svh] h-[70svh]"
+      className="flex flex-col justify-between mt-[3svh] h-[60svh]"
       onSubmit={handleSubmit}
     >
-      <div className="flex flex-col justify-center items-center gap-5">
+      <div className="flex flex-col justify-center items-center gap-4">
         <div className="w-full ml-9 text-[20px] font-medium text-[#4B4242]">
           Регистрация
         </div>
@@ -133,7 +133,7 @@ export function SignUpForm() {
           </div>
         </UiList>
       </div>
-      <div className="flex flex-col justify-center my-10 items-center">
+      <div className="flex flex-col justify-center items-center">
         {errorMessage && <div className="text-rose-500">{errorMessage}</div>}
         <UiButton
           className={clsx({

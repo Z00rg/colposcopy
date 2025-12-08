@@ -10,12 +10,12 @@ export function SignInForm() {
 
   return (
     <form
-      className="flex flex-col justify-between mt-[3svh] h-[60svh]"
+      className="flex flex-col justify-between mt-[3svh] h-[50svh]"
       onSubmit={handleSubmit}
       action="/auth/login/"
       method="POST"
     >
-      <div className="flex flex-col justify-center items-center gap-5 mb-[3svh]">
+      <div className="flex flex-col justify-center items-center gap-5">
         <div className="w-full ml-9 text-[20px] font-medium text-[#4B4242]">
           Авторизация
         </div>
@@ -40,7 +40,7 @@ export function SignInForm() {
         {errorMessage && <div className="text-rose-500">{errorMessage}</div>}
         {/* <UiLink href={ROUTES.SIGN_IN}>Забыли пароль?</UiLink> */}
       </div>
-      <div className="flex flex-col justify-center my-10 items-center">
+      <div className="flex flex-col justify-center items-center">
         <UiButton disabled={isPending}>
           {isPending ? <UiSpinner /> : "Начать"}
         </UiButton>
