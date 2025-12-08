@@ -33,7 +33,7 @@ export function Case({ className }: { className?: string }) {
       <div
         className={clsx(
           className,
-          "flex flex-col justify-center w-full gap-3 flex-1 mb-4 px-5 mt-5"
+          "flex flex-col w-full gap-3 flex-1 mb-4 px-5 mt-5"
         )}
       >
         {isLoading && <UiSpinner />}

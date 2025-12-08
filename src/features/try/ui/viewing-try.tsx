@@ -27,7 +27,7 @@ export function ViewingTry() {
   }, [currentTaskIndex]);
 
   return (
-    <div className="flex flex-col justify-center w-full gap-3 flex-1 mb-4 px-5 mt-5">
+    <div className="flex flex-col w-full gap-3 flex-1 mb-4 px-5 mt-5">
       {isLoading && (
         <div className="flex justify-center w-full h-full">
           <UiSpinner />
@@ -67,7 +67,7 @@ export function ViewingTry() {
             {tasks[currentTaskIndex].testsQuestions.map(
               (item: ITestQuestion, questionIndex: number) => {
                 const taskId = tasks[currentTaskIndex].id;
-                const isCorrect = item.isCorrect
+                const isCorrect = item.isCorrect;
 
                 return (
                   <div
@@ -77,10 +77,13 @@ export function ViewingTry() {
                     {/* Заголовок вопроса */}
                     <div className="flex w-full">
                       <span>
-                        <span className={clsx("font-bold",
-                          { "text-green-600": isCorrect === true },
-                          { "text-red-600": isCorrect === false }
-                        )}>
+                        <span
+                          className={clsx(
+                            "font-bold",
+                            { "text-green-600": isCorrect === true },
+                            { "text-red-600": isCorrect === false }
+                          )}
+                        >
                           Задание №{questionIndex + 1}:
                         </span>{" "}
                         {item.question}
@@ -96,45 +99,47 @@ export function ViewingTry() {
                     </div>
 
                     {/* Итерация по вариантам ответов текущего вопроса */}
-                    {item.answers.map((answer: IAnswers, answerIndex: number) => {
-                      const isChecked = answer.isSelected
-                      return (
-                        <div
-                          key={`${taskId}-${questionIndex}-${answerIndex}`}
-                          className={clsx(
-                            "flex items-center gap-3 select-none border-b border-[#E0E0E0] px-3 py-3 rounded-xl transition-all duration-200 ease-out",
-                            {
-                              "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md hover:scale-[1.01]":
-                                true,
-                              "bg-gradient-to-r from-blue-50 to-blue-100 border-blue-400 shadow-md":
-                                isChecked,
-                            }
-                          )}
-                        >
-                          {/* Номер варианта ответа */}
-                          <div className="text-gray-700 font-semibold">
-                            {answerIndex + 1}.
-                          </div>
-
-                          {/* Текст варианта ответа */}
-                          <div className="break-words whitespace-normal flex-1 text-gray-800 text-left">
-                            {answer.text}
-                          </div>
-
-                          {/* Чекбокс/Радиобаттон */}
+                    {item.answers.map(
+                      (answer: IAnswers, answerIndex: number) => {
+                        const isChecked = answer.isSelected;
+                        return (
                           <div
-                            className="ml-auto w-6 h-6 flex justify-center items-center"
-                            onClick={(e) => e.stopPropagation()}
+                            key={`${taskId}-${questionIndex}-${answerIndex}`}
+                            className={clsx(
+                              "flex items-center gap-3 select-none border-b border-[#E0E0E0] px-3 py-3 rounded-xl transition-all duration-200 ease-out",
+                              {
+                                "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md hover:scale-[1.01]":
+                                  true,
+                                "bg-gradient-to-r from-blue-50 to-blue-100 border-blue-400 shadow-md":
+                                  isChecked,
+                              }
+                            )}
                           >
-                            <UiCheckBox
-                              checked={isChecked}
-                              readOnly
-                              id={`chk-${taskId}-${questionIndex}-${answerIndex}`}
-                            />
+                            {/* Номер варианта ответа */}
+                            <div className="text-gray-700 font-semibold">
+                              {answerIndex + 1}.
+                            </div>
+
+                            {/* Текст варианта ответа */}
+                            <div className="break-words whitespace-normal flex-1 text-gray-800 text-left">
+                              {answer.text}
+                            </div>
+
+                            {/* Чекбокс/Радиобаттон */}
+                            <div
+                              className="ml-auto w-6 h-6 flex justify-center items-center"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <UiCheckBox
+                                checked={isChecked}
+                                readOnly
+                                id={`chk-${taskId}-${questionIndex}-${answerIndex}`}
+                              />
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      }
+                    )}
 
                     {isCorrect !== null && (
                       <div className="text-sm font-semibold">

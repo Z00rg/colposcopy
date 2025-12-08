@@ -20,7 +20,7 @@ export function UiTextArea({
       ref={textAreaRef}
       className={clsx(
         className,
-        "w-full h-[285px]",
+        "w-full h-[40vh]",
         "text-[16px] font-normal bg-[#F1F1F1] pt-3 px-[17px]",
         "shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px]",
         "overflow-y-auto overflow-x-hidden scroll-smooth",
@@ -49,7 +49,7 @@ export function UiTextArea({
 
             // Элемент списка: без отступа первой строки (по стандарту)
             li: ({ children }) => (
-              <li className="mb-2" style={{ textIndent: '0' }}>
+              <li className="mb-2" style={{ textIndent: "0" }}>
                 {children}
               </li>
             ),
