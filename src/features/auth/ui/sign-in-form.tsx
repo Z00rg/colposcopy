@@ -10,7 +10,7 @@ export function SignInForm() {
 
   return (
     <form
-      className="flex flex-col justify-between mt-14 flex-1"
+      className="flex flex-col justify-between mt-8 flex-1"
       onSubmit={handleSubmit}
       action="/auth/login/"
       method="POST"
