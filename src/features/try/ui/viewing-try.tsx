@@ -117,7 +117,7 @@ export function ViewingTry() {
                           </div>
 
                           {/* Текст варианта ответа */}
-                          <div className="break-words whitespace-normal flex-1 text-gray-800">
+                          <div className="break-words whitespace-normal flex-1 text-gray-800 text-left">
                             {answer.text}
                           </div>
 
