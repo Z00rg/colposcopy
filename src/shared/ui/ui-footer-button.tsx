@@ -16,17 +16,17 @@ export function UiFooterButton({
   ...props
 }: UiButtonProps) {
   const variantIcons = {
-    book: <Book />,
-    man: <Man />,
-    check: <Check />,
-    clinic: <Clinic />
+    book: <Book className="h-[4vh]" />,
+    man: <Man className="h-[4vh]" />,
+    check: <Check className="h-[4vh]" />,
+    clinic: <Clinic className="h-[4vh]" />,
   };
 
   const variantActiveIcons = {
-    book: <BookActive />,
-    man: <ManActive />,
-    check: <CheckActive />,
-    clinic: <ClinicActive />
+    book: <BookActive className="h-[4vh]" />,
+    man: <ManActive className="h-[4vh]" />,
+    check: <CheckActive className="h-[4vh]" />,
+    clinic: <ClinicActive className="h-[4vh]" />,
   };
 
   const variantTexts = {
