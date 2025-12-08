@@ -92,13 +92,15 @@ export function Case({ className }: { className?: string }) {
             {/* Изображение — fill + object-contain */}
             <div className="relative w-full h-full">
               {/* Изображение — через <img> с object-contain (без next/image fill) */}
-              <img
-                src={img[modalImageIndex]}
-                alt={`Fullscreen ${modalImageIndex + 1}`}
-                className="max-w-screen max-h-screen object-contain"
-                loading="eager"
-                draggable="false"
-              />
+              {caseDetails && (
+                <img
+                  src={caseDetails.imgSchema}
+                  alt={`Fullscreen ${caseDetails.imgSchema + 1}`}
+                  className="max-w-screen max-h-screen object-contain"
+                  loading="eager"
+                  draggable="false"
+                />
+              )}
             </div>
           </div>
         </div>
