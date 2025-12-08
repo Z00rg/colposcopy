@@ -13,7 +13,7 @@ export function TryList({ className }: { className?: string }) {
   const isItems = items.length > 0;
 
   return (
-    <UiList height="h-[42svh]" className={clsx(className, "mt-4")}>
+    <UiList height="h-[47svh]" className={clsx(className, "mt-4")}>
       {isLoader && <UiSpinner />}
       {isEmptyText && (
         <div className="flex text-[18px] pb-4 font-medium">

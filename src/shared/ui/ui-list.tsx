@@ -8,7 +8,7 @@ export type UiListProps = {
 };
 
 export function UiList({ className, children, height }: UiListProps) {
-  const heightProps = height ? height : "h-[55svh]";
+  const heightProps = height ? height : "h-[60svh]";
   return (
     <div
       className={clsx(
