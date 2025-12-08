@@ -42,7 +42,7 @@ export function Case({ className }: { className?: string }) {
               alt="Схематическое изображение"
               width={300}
               height={285}
-              className="rounded-xl object-contain mt-5 w-full"
+              className="rounded-xl object-scale-down mt-3 w-full h-[285px]"
             />
           ) : (
             <UiTextArea className="mt-5">
