@@ -24,7 +24,7 @@ export function UiFooterButton({
 
   const variantActiveIcons = {
     book: <BookActive className="h-[4svh]" />,
-    man: <ManActive className="h-[s4svh]" />,
+    man: <ManActive className="h-[4svh]" />,
     check: <CheckActive className="h-[4svh]" />,
     clinic: <ClinicActive className="h-[4svh]" />,
   };
