@@ -8,7 +8,7 @@ import { ROUTES } from "@/shared/constants/routes";
 import clsx from "clsx";
 import { useCase } from "../model/use-case";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function Case({ className }: { className?: string }) {
   const {
@@ -27,6 +27,13 @@ export function Case({ className }: { className?: string }) {
   };
 
   const closeModal = () => setIsModalOpen(false);
+
+  const textAreaRef = useRef<HTMLDivElement>(null);
+
+  // Скролл при смене задания
+  useEffect(() => {
+    textAreaRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentImageIndex]);
 
   return (
     <>
@@ -54,11 +61,11 @@ export function Case({ className }: { className?: string }) {
                 alt="Схематическое изображение"
                 width={300}
                 height={285}
-                className="rounded-xl object-scale-down mt-3 w-full h-[285px] cursor-zoom-in"
+                className="rounded-xl object-scale-down mt-3 w-full h-[40svh] cursor-zoom-in"
                 onClick={() => openModal()}
               />
             ) : (
-              <UiTextArea className="mt-5">
+              <UiTextArea className="mt-5" textAreaRef={textAreaRef}>
                 {caseDetails.descriptionContainer[currentImageIndex]}
               </UiTextArea>
             )}
