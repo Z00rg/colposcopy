@@ -11,6 +11,15 @@ export interface GetPathologyListInfoDto {
   items: PathologyInfo[];
 }
 
+interface LessonInfo {
+  id: number;
+  name: string;
+}
+
+export interface GetLessonsListInfoDto {
+  items: LessonInfo[];
+}
+
 export interface GetPathologyInfoDto {
   id: number;
   imgContainer: string[];
@@ -22,6 +31,12 @@ export interface GetPathologyInfoDto {
 export const getAtlasList = (options?: RequestOptions) =>
   createInstance<GetPathologyListInfoDto>(
     { url: `/atlas/atlas-list/`, method: "GET" },
+    options
+  );
+
+export const getLessonsList = (options?: RequestOptions) =>
+  createInstance<GetLessonsListInfoDto>(
+    { url: `/lessons/lessons-list/`, method: "GET" },
     options
   );
 //+
@@ -37,4 +52,5 @@ export const getPathologyInfo = (
 export const atlasApi = {
   getAtlasList,
   getPathologyInfo,
+  getLessonsList,
 };

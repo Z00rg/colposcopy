@@ -6,7 +6,7 @@ export function AtlasPage() {
     <UiPageLayout
       title="Атлас"
       activeStatus="atlas"
-      headerText="Содержание атласа"
+      headerText="Содержание"
     >
       <AtlasList />
     </UiPageLayout>
