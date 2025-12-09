@@ -5,13 +5,10 @@ import { ROUTES } from "@/shared/constants/routes";
 import clsx from "clsx";
 import { useTutorial } from "../model/use-tutorial";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
+import { UiVideoPlayer } from "@/shared/ui/ui-video-player";
 
 export function Tutorial({ className }: { className?: string }) {
-  const {
-    tutorialDetails,
-    isLoading,
-    isError,
-  } = useTutorial();
+  const { tutorialDetails, isLoading, isError } = useTutorial();
 
   return (
     <div
@@ -28,7 +25,14 @@ export function Tutorial({ className }: { className?: string }) {
       )}
       {tutorialDetails && (
         <>
-          Тут будет видос
+          {tutorialDetails.video && tutorialDetails.poster && (
+  
+              <UiVideoPlayer
+                src={tutorialDetails.video}
+                poster={tutorialDetails.poster}
+                title={tutorialDetails.name}
+              />
+          )}
           <UiTextArea className="mt-5">
             {tutorialDetails.description}
           </UiTextArea>

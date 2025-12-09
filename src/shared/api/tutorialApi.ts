@@ -11,7 +11,9 @@ export interface GetTutorialsListInfoDto {
 
 export interface GetTutorialInfoDto {
   id: number;
+  name: string;
   video?: string;
+  poster?: string;
   description: string;
 }
 

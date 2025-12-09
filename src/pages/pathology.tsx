@@ -8,10 +8,6 @@ export function PathologyDetailPage() {
       <Head>
         <title>Паталогия</title>
       </Head>
-      {/* <UiHeader
-        variant="withoutLogo"
-        className="mt-6 [@media(max-height:930px)]:hidden"
-      /> */}
       <Pathology />
     </div>
   );
