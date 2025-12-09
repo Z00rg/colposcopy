@@ -6,7 +6,6 @@ import clsx from "clsx";
 import { useTestTasks } from "../model/use-test-tasks";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
-import { useEffect, useRef } from "react";
 import { ITestQuestion, IAnswers } from "@/shared/api/testApi";
 import { UiErrorMessage } from "@/shared/ui/ui-errror-msg";
 
@@ -26,13 +25,6 @@ export function TestTasks() {
     completionByTask,
     isAllTasksComplete,
   } = useTestTasks();
-
-  const textAreaRef = useRef<HTMLDivElement>(null);
-
-  // Скролл при смене задания
-  useEffect(() => {
-    textAreaRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-  }, [currentTaskIndex]);
 
   return (
     <div className="flex flex-col w-full gap-3 flex-1 mb-4 px-5 mt-5">
@@ -70,7 +62,7 @@ export function TestTasks() {
 
           {/* Компонент Блока для текста и вопросов */}
           <UiTextArea
-            textAreaRef={textAreaRef}
+            contentKey={currentTaskIndex}
             className="mt-5 gap-3 w-full text-[13px] items-start"
             height="h-[34svh]"
           >
