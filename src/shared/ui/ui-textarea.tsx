@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -8,19 +8,32 @@ export type UiTextAreaProps = {
   children?: ReactNode;
   textAreaRef?: React.Ref<HTMLDivElement>;
   height?: string;
+  contentKey?: string | number;
 };
 
 export function UiTextArea({
   className,
   children,
-  textAreaRef,
   height,
+  contentKey,
 }: UiTextAreaProps) {
   const heightProps = height ? height : "h-[40svh]";
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (contentKey === undefined) return;
+    if (containerRef.current) {
+      const timer = setTimeout(() => {
+        containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+      }, 0);
+
+      return () => clearTimeout(timer);
+    }
+  }, [contentKey]);
 
   return (
     <div
-      ref={textAreaRef}
+      ref={containerRef}
       className={clsx(
         className,
         heightProps,
