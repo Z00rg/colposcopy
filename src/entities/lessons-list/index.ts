@@ -1,1 +1,0 @@
-export { useLessonsListQuery } from "./queries"

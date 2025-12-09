@@ -1,12 +1,12 @@
 import { atlasApi } from "@/shared/api/atlasApi";
 import { useQuery } from "@tanstack/react-query";
 
-const lessonsListKey = ["lessons-list"];
+const tutorialsListKey = ["tutorials-list"];
 
-export function useLessonsListQuery() {
+export function useTutorialsListQuery() {
   return useQuery({
-    queryKey: lessonsListKey,
-    queryFn: atlasApi.getLessonsList,
+    queryKey: tutorialsListKey,
+    queryFn: atlasApi.getTutorialsList,
     retry: 0,
     staleTime: 60 * 60 * 1000, // 60 минут
   });

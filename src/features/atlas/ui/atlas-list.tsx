@@ -3,11 +3,11 @@ import { useAtlasList } from "../model/use-atlas-list";
 import { UiListButtonAtlas } from "@/shared/ui/ui-list-button-atlas";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
 import clsx from "clsx";
-import { useLessonsList } from "../model/use-lessons-list";
+import { useTutorialsList } from "../model/use-tutorials-list";
 
 export function AtlasList({ className }: { className?: string }) {
   const { items, isLoading, isError, handleClick } = useAtlasList();
-  const { lessons, isLoadingLessons, isErrorLessons, handleLessonClick } = useLessonsList();
+  const { tutorials, isLoadingTutorials, isErrorTutorials, handleTutorialClick } = useTutorialsList();
 
   const isEmptyText = !isLoading && !isError && items.length === 0;
 
@@ -16,8 +16,8 @@ export function AtlasList({ className }: { className?: string }) {
       <div className="font-bold text-[18px]">
         Обучение
       </div>
-      {isLoadingLessons && <UiSpinner />}
-      {isErrorLessons && (
+      {isLoadingTutorials && <UiSpinner />}
+      {isErrorTutorials && (
         <div className="font-bold text-rose-500">
           Ошибка при загрузке списка уроков
         </div>
@@ -27,14 +27,14 @@ export function AtlasList({ className }: { className?: string }) {
           Нет доступных уроков
         </div>
       )}
-      {lessons &&
-        lessons.map((item, index) => (
+      {tutorials &&
+        tutorials.map((item, index) => (
           <UiListButtonAtlas
             className="w-full"
             key={item.id}
             index={index + 1}
             informationOfPathology={item}
-            onClick={() => handleLessonClick(item.id)}
+            onClick={() => handleTutorialClick(item.id)}
           />
         ))}
       <div className="font-bold text-[18px]">
