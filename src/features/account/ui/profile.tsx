@@ -20,6 +20,7 @@ export function Profile({ className }: { className?: string }) {
   return (
     <div
       className={clsx(
+        className,
         "flex bg-[#F3F3F3] w-full px-[17px] pb-2.5 flex-col",
         "shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px] flex-1",
         {
@@ -30,8 +31,7 @@ export function Profile({ className }: { className?: string }) {
     >
       <div
         className={clsx(
-          className,
-          "gap-4 text-[18px] flex items-center justify-start",
+          "gap-4 text-[18px] flex items-center justify-start mt-3",
           { "cursor-pointer": active }
         )}
         onClick={() => setActive(!active)}

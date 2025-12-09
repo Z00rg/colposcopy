@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { UiFooterButton } from "./ui-footer-button";
 
-type UiFooterActiveStatus = "atlas" | "main" | "test" | "clinic";
+export type UiFooterActiveStatus = "atlas" | "main" | "test" | "clinic";
 export type UiFooterProps = {
   activeStatus: UiFooterActiveStatus;
   className?: string;
