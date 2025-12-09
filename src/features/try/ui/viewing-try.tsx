@@ -21,7 +21,7 @@ export function ViewingTry() {
   return (
     <div className="flex flex-col w-full gap-3 flex-1 mb-4 px-5 mt-5">
       {isLoading && (
-        <div className="flex justify-center w-full h-full">
+        <div className="flex justify-center items-center w-full h-full">
           <UiSpinner />
         </div>
       )}
