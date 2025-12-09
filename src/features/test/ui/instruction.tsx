@@ -12,7 +12,7 @@ export function Instruction({ className }: { className?: string }) {
       )}
     >
       <div
-        className="h-[30px] flex justify-between font-bold text-[18px] text-[#4B4242] mb-1 gap-26 cursor-pointer"
+        className="h-[30px] flex justify-between font-bold text-[18px] mb-1 gap-26 cursor-pointer"
         onClick={() => setActive(!active)}
       >
         <div className="flex gap-2.5 w-full">Инструкция</div>

@@ -19,7 +19,7 @@ export function TestList() {
 
   return (
     <UiList className="mt-4 items-start">
-      <div className="font-bold text-[18px] text-[#4B4242]">
+      <div className="font-bold text-[18px]">
         Выберите параметры
       </div>
       {isLoading && <UiSpinner />}
