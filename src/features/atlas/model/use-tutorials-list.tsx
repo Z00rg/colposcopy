@@ -1,4 +1,4 @@
-import { useTutorialsListQuery } from "@/entities/tutorials-list";
+import { useTutorialsListQuery } from "@/entities/tutorials";
 import router from "next/router";
 
 export function useTutorialsList() {

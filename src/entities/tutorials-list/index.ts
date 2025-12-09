@@ -1,1 +1,0 @@
-export { useTutorialsListQuery } from "./queries"
