@@ -44,7 +44,6 @@ export function UiScrollImg({
     const scrollLeft = scrollContainerRef.current.scrollLeft;
     const newIndex = Math.round(scrollLeft / imageWidth);
     const clampedIndex = Math.min(Math.max(0, newIndex), img.length - 1);
-    // setCurrentIndex(clampedIndex);
     onIndexChange?.(clampedIndex);
   };
 

@@ -9,6 +9,8 @@ import clsx from "clsx";
 import { useCase } from "../model/use-case";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
 import { useEffect, useRef, useState } from "react";
+import { useModal } from "@/shared/lib/use-modal";
+import { UiImageModal } from "@/shared/ui/ui-image-modal";
 
 export function Case({ className }: { className?: string }) {
   const {
@@ -19,14 +21,7 @@ export function Case({ className }: { className?: string }) {
     handleImageChange,
   } = useCase();
 
-  //Управление модалкой
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => setIsModalOpen(false);
+  const { isOpen, open, close } = useModal();
 
   const textAreaRef = useRef<HTMLDivElement>(null);
 
@@ -62,7 +57,7 @@ export function Case({ className }: { className?: string }) {
                 width={300}
                 height={285}
                 className="rounded-xl object-scale-down mt-3 w-full h-[40svh] cursor-zoom-in"
-                onClick={() => openModal()}
+                onClick={open}
               />
             ) : (
               <UiTextArea className="mt-5" textAreaRef={textAreaRef}>
@@ -76,42 +71,17 @@ export function Case({ className }: { className?: string }) {
           </>
         )}
       </div>
-
-      {/* Модалка — универсальная для ЛЮБЫХ пропорций */}
-      {isModalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
-          onClick={closeModal}
-        >
-          <div
-            className="relative max-w-[95vw] max-h-[90vh] flex items-center justify-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Крестик */}
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 text-white text-3xl font-light hover:text-gray-300 z-10"
-              aria-label="Закрыть"
-            >
-              &times;
-            </button>
-
-            {/* Изображение — fill + object-contain */}
-            <div className="relative w-full h-full">
-              {/* Изображение — через <img> с object-contain (без next/image fill) */}
-              {caseDetails && (
-                <img
-                  src={caseDetails.imgSchema}
-                  alt={`Fullscreen ${caseDetails.imgSchema + 1}`}
-                  className="max-w-screen max-h-screen object-contain"
-                  loading="eager"
-                  draggable="false"
-                />
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      <UiImageModal isOpen={isOpen} onClose={close}>
+        {caseDetails && (
+          <img
+            src={caseDetails.imgSchema}
+            alt={caseDetails.imgSchema}
+            className="max-w-screen max-h-screen object-contain"
+            loading="eager"
+            draggable="false"
+          />
+        )}
+      </UiImageModal>
     </>
   );
 }
