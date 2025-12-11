@@ -17,7 +17,7 @@ export function Tutorial({ className }: { className?: string }) {
         "flex flex-col w-full gap-3 flex-1 mb-4 px-5 mt-5"
       )}
     >
-      {isLoading && <UiSpinner />}
+      {isLoading && <UiSpinner className="mx-auto" />}
       {isError && (
         <div className="font-bold text-rose-500">
           Ошибка при загрузке деталей патологии
@@ -26,14 +26,17 @@ export function Tutorial({ className }: { className?: string }) {
       {tutorialDetails && (
         <>
           {tutorialDetails.video && tutorialDetails.poster && (
-  
-              <UiVideoPlayer
-                src={tutorialDetails.video}
-                poster={tutorialDetails.poster}
-                title={tutorialDetails.name}
-              />
+            <UiVideoPlayer
+              src={tutorialDetails.video}
+              poster={tutorialDetails.poster}
+              title={tutorialDetails.name}
+              className="h-[35svh]"
+            />
           )}
-          <UiTextArea className="mt-5">
+          <UiTextArea
+            className="mt-5"
+            height={tutorialDetails.video ? "" : "h-[75svh]"}
+          >
             {tutorialDetails.description}
           </UiTextArea>
           <UiLink href={ROUTES.ATLAS} className="mr-auto">

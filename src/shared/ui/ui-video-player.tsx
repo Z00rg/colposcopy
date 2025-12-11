@@ -17,7 +17,7 @@ export function UiVideoPlayer({
         playsInline
         poster={poster}
         aria-label={title}
-        className="w-full rounded-xl"
+        className="w-full max-h-[35svh] rounded-xl"
       >
         <source src={src} type="video/mp4" />
         Ваш браузер не поддерживает видео.

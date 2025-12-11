@@ -10,19 +10,19 @@ export function AtlasList({ className }: { className?: string }) {
   const { tutorials, isLoadingTutorials, isErrorTutorials, handleTutorialClick } = useTutorialsList();
 
   const isEmptyText = !isLoading && !isError && items.length === 0;
+  const isEmptyTutorialText =
+    !isLoadingTutorials && !isErrorTutorials && tutorials.length === 0;
 
   return (
     <UiList className={clsx(className, "mt-4 items-start")}>
-      <div className="font-bold text-[18px]">
-        Обучение
-      </div>
+      <div className="font-bold text-[18px]">Обучение</div>
       {isLoadingTutorials && <UiSpinner />}
       {isErrorTutorials && (
         <div className="font-bold text-rose-500">
           Ошибка при загрузке списка уроков
         </div>
       )}
-      {isEmptyText && (
+      {isEmptyTutorialText && (
         <div className="flex text-[18px] pb-4 font-medium">
           Нет доступных уроков
         </div>
@@ -37,9 +37,7 @@ export function AtlasList({ className }: { className?: string }) {
             onClick={() => handleTutorialClick(item.id)}
           />
         ))}
-      <div className="font-bold text-[18px]">
-        Атлас
-      </div>
+      <div className="font-bold text-[18px]">Атлас</div>
       {isLoading && <UiSpinner />}
       {isError && (
         <div className="font-bold text-rose-500">
