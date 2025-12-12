@@ -1,7 +1,7 @@
 name: PUSH
 
 on: [push, pull_request]
-
+# Проверка на ошибки сборки
 jobs:
   build:
     runs-on: ubuntu-latest
