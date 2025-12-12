@@ -10,9 +10,14 @@ const AUTH_URLS = [
   "/auth/register/worker/",
 ];
 
+if (!process.env.NEXT_PUBLIC_API_BASE_URL) {
+  console.warn(
+    "⚠️ NEXT_PUBLIC_API_BASE_URL not set. Falling back to http://localhost:8000/api"
+  );
+}
+
 export const apiInstance = axios.create({
-  baseURL: "http://localhost:8000/api",
-  // baseURL: "https://atlascolposcopy.ru/api",
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api",
   headers: {
     "Content-Type": "application/json",
   },
