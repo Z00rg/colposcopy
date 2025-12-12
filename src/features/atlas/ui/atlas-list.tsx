@@ -15,10 +15,10 @@ export function AtlasList({ className }: { className?: string }) {
 
   return (
     <UiList className={clsx(className, "mt-4 items-start")}>
-      <div className="font-bold text-[18px]">Обучение</div>
-      {isLoadingTutorials && <UiSpinner />}
+      <div className="font-bold text-[18px] hidden">Обучение</div>
+      {isLoadingTutorials && <UiSpinner className="hidden"/>}
       {isErrorTutorials && (
-        <div className="font-bold text-rose-500">
+        <div className="font-bold text-rose-500 hidden">
           Ошибка при загрузке списка уроков
         </div>
       )}
