@@ -26,7 +26,7 @@ export function App({ Component, pageProps }: AppProps) {
                h-[338px] w-[754px] lg:h-[550px] lg:w-[900px] rounded-full bg-[#B8D3F9] blur-[100px]"
           />
         </div>
-        <div className="lg:w-[28svw] lg:shadow-xl lg:h-[100svh] lg:overflow-y-auto relative pb-[9svh]">
+        <div className="lg:w-[28svw] lg:shadow-xl lg:h-[100svh] lg:overflow-y-auto relative">
           <Component {...pageProps} />
         </div>
       </div>
