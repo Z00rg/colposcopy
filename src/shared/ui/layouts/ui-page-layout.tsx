@@ -23,7 +23,7 @@ export function UiPageLayout({
   return (
     <div
       className={clsx(
-        "flex flex-col w-full min-h-screen lg:min-h-[667px]",
+        "flex flex-col w-full min-h-svh",
         className
       )}
     >
