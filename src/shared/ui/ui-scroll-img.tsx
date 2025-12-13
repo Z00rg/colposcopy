@@ -88,13 +88,15 @@ export function UiScrollImg({
             )}
             onClick={() => openModal(index)}
           >
-            <Image
+            <img
               src={src}
               alt={`Image ${index + 1}`}
               width={375}
               height={200}
               className={clsx("object-scale-down w-full h-full")}
-              priority={index === 0}
+              loading="lazy"
+              fetchPriority="low"
+              decoding="async"
             />
           </div>
         ))}

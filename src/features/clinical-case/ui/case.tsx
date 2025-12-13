@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { UiScrollImg } from "@/shared/ui/ui-scroll-img";
-import Image from "next/image";
 import { UiTextArea } from "@/shared/ui/ui-textarea";
 import { UiLink } from "@/shared/ui/ui-link";
 import { UiFooter } from "@/shared/ui/ui-footer";
@@ -43,9 +42,12 @@ export function Case({ className }: { className?: string }) {
               onIndexChange={handleImageChange}
             />
             {currentImageIndex === caseDetails.imgContainer.length - 1 ? (
-              <Image
+              <img
                 src={caseDetails.imgSchema}
                 alt="Схематическое изображение"
+                loading="lazy"
+                fetchPriority="low"
+                decoding="async"
                 width={300}
                 height={285}
                 className="rounded-xl object-scale-down mt-3 w-full h-[40svh] cursor-zoom-in"
