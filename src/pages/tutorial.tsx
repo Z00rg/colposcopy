@@ -2,7 +2,7 @@ import { Tutorial } from "@/features/tutorial";
 import Head from "next/head";
 
 export function TutorialPage() {
-    return (<div className="flex flex-col w-full min-h-screen lg:min-h-[667px]">
+    return (<div className="flex flex-col w-full">
       <Head>
         <title>Обучение</title>
       </Head>

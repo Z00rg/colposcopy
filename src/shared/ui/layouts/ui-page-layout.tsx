@@ -23,7 +23,7 @@ export function UiPageLayout({
   return (
     <div
       className={clsx(
-        "flex flex-col w-full min-h-svh",
+        "flex flex-col w-full",
         className
       )}
     >

@@ -5,7 +5,7 @@ import Head from "next/head";
 export function SignUpPage() {
 
   return (
-    <div className="flex flex-col items-center min-h-svh">
+    <div className="flex flex-col items-center">
       <Head>
         <title>Регистрация</title>
       </Head>

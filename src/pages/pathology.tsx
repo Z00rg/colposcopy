@@ -4,7 +4,7 @@ import Head from "next/head";
 
 export function PathologyDetailPage() {
   return (
-    <div className="flex flex-col w-full min-h-svh">
+    <div className="flex flex-col w-full">
       <Head>
         <title>Паталогия</title>
       </Head>

@@ -4,7 +4,7 @@ import Head from "next/head";
 
 export function SignInPage() {
   return (
-    <div className="flex flex-col items-center min-h-svh">
+    <div className="flex flex-col items-center">
       <Head>
         <title>Авторизация</title>
       </Head>
