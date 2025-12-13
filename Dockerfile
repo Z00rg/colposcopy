@@ -3,6 +3,9 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+ARG NEXT_PUBLIC_API_BASE_URL=https://atlascolposcopy.ru/api
+ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
+
 # Копируем зависимости и устанавливаем их
 COPY package*.json ./
 RUN npm ci
@@ -15,6 +18,9 @@ RUN npm run build:prod
 FROM node:20-alpine
 
 WORKDIR /app
+
+ARG NEXT_PUBLIC_API_BASE_URL=https://atlascolposcopy.ru/api
+ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
 
 # Прод зависимости
 COPY package*.json ./
