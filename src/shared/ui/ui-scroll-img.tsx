@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import clsx from "clsx";
-import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 
 type UiScrollImgProps = {
