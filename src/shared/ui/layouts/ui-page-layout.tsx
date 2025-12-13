@@ -33,7 +33,7 @@ export function UiPageLayout({
 
       <UiHeader variant="withoutLogo" />
 
-      <div className="flex flex-col justify-between w-full gap-5 flex-1 mb-4">
+      <div className="flex flex-col w-full flex-1">
         <div className="px-5">
           <div className="font-medium text-[20px] mt-7">
             {headerText}
