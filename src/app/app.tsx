@@ -7,7 +7,7 @@ export function App({ Component, pageProps }: AppProps) {
   return (
     <AppProvider>
       <div
-        className={`relative min-h-svh overflow-hidden lg:flex lg:justify-center lg:items-center ${montserrat.className}`}
+        className={`relative overflow-hidden lg:flex lg:justify-center lg:items-center ${montserrat.className}`}
       >
         <div className="absolute inset-0 -z-10">
           {/* Верхний овал */}
