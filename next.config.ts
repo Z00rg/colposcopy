@@ -11,7 +11,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'atlascolposcopy.ru',
+        hostname: process.env.NEXT_PUBLIC_API_BASE_URL,
         pathname: '/media/**',
       },
     ],
