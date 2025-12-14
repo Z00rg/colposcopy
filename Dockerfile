@@ -12,7 +12,7 @@ RUN npm ci
 
 # Копируем исходники и собираем
 COPY . .
-RUN npm run build:prod
+RUN npm run build
 
 # Этап 2: легковесный образ для запуска
 FROM node:20-alpine
