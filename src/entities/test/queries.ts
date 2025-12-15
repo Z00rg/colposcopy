@@ -20,7 +20,7 @@ export function useTestTasksQuery(tasksId: string) {
     queryKey: testTasksKey,
     queryFn: () => testApi.getTestTasks(tasksId),
     retry: 0,
-    staleTime: 60 * 60 * 1000, // 60 минут
+    staleTime: 0,
   });
 }
 
