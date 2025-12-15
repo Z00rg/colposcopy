@@ -50,7 +50,7 @@ export function TestTasks() {
             numOfCurrentTask={currentTaskIndex}
             tasks={tasks}
             completionByTask={completionByTask}
-            changeCurrentTask={setCurrentTaskIndex}
+            changeCurrentTaskAction={setCurrentTaskIndex}
           />
 
           {/* Компонент Прокручиваемого Изображения (для текущего задания) */}

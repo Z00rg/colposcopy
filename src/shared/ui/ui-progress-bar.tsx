@@ -12,13 +12,13 @@ export function UiProgressBar({
   tasks,
   numOfCurrentTask,
   completionByTask,
-  changeCurrentTask,
+  changeCurrentTaskAction,
 }: {
   className?: string;
   tasks: CompatibleITestTask[];
   numOfCurrentTask: number;
   completionByTask?: { taskId: number; isComplete: boolean }[];
-  changeCurrentTask?: (index: number) => void;
+  changeCurrentTaskAction?: (index: number) => void;
 }) {
   return (
     <div className="relative mx-auto overflow-x-auto overflow-y-hidden custom-scrollbar max-w-[340px] border-[#DEDEDE] bg-[#FFFFFF] rounded-[20px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
@@ -52,7 +52,7 @@ export function UiProgressBar({
 
               {/* Кнопка номера шага */}
               <button
-                onClick={() => changeCurrentTask?.(index)}
+                onClick={() => changeCurrentTaskAction?.(index)}
                 className={clsx(
                   "relative flex w-9 h-9 flex-shrink-0 justify-center items-center cursor-pointer font-medium text-[15px] transition-all duration-200",
                   {

@@ -41,7 +41,7 @@ export function ViewingTry() {
           <UiProgressBar
             numOfCurrentTask={currentTaskIndex}
             tasks={tasks}
-            changeCurrentTask={setCurrentTaskIndex}
+            changeCurrentTaskAction={setCurrentTaskIndex}
           />
 
           {/* Компонент Прокручиваемого Изображения (для текущего задания) */}
