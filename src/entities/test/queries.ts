@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 const testListKey = ["test-list"];
 
-const testTasksKey = ["test-tasks"];
+const testTasksKey = (id: string) => ["test-tasks", id];
 
 export function useTestListQuery() {
   return useQuery({
@@ -17,10 +17,10 @@ export function useTestListQuery() {
 
 export function useTestTasksQuery(tasksId: string) {
   return useQuery({
-    queryKey: testTasksKey,
+    queryKey: testTasksKey(tasksId),
     queryFn: () => testApi.getTestTasks(tasksId),
     retry: 0,
-    staleTime: 0,
+    staleTime: 5 * 60 * 1000, // 5 минут
   });
 }
 
