@@ -27,7 +27,6 @@ export function useProfile() {
   const profileEditMutation = useMutation({
     mutationFn: accountApi.editProfile,
     onSuccess: () => {
-      console.log("Профиль успешно обновлён");
       queryClient.invalidateQueries({ queryKey: ["profile"] });
     },
   });
@@ -63,12 +62,10 @@ export function useProfile() {
     );
 
     if (Object.keys(changedFields).length === 0) {
-      console.log("Ничего не изменено или поля пустые");
       toggleEdit(index);
       return;
     }
 
-    console.log("Отправляем изменённые поля:", changedFields);
     profileEditMutation.mutate(changedFields);
     toggleEdit(index);
   };

@@ -120,8 +120,7 @@ export function useTestTasks() {
         duration: duration,
       });
 
-      console.log("Ответы успешно отправлены!");
-      router.push(ROUTES.HOME);
+      await router.push(ROUTES.HOME);
     } catch (error) {
       console.error("Ошибка при отправке ответов:", error);
     }
