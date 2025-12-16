@@ -1,4 +1,3 @@
-import { protectedPage } from "@/features/auth";
 import { AdminHomePage } from "@/pages/admin-home";
 
-export default protectedPage(AdminHomePage);
+export default AdminHomePage;
