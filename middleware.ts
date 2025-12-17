@@ -1,47 +1,60 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// Пути аутентификации
+// 1. Конфигурация путей
 const AUTH_ROUTES = ['/sign-in', '/sign-up'];
-
 const REFRESH_COOKIE_NAME = 'refresh';
+
+// 2. Заголовки безопасности
+const securityHeaders = {
+    'X-Frame-Options': 'DENY',
+    'X-Content-Type-Options': 'nosniff',
+    'Referrer-Policy': 'origin-when-cross-origin',
+    'X-XSS-Protection': '1; mode=block',
+};
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const refreshCookie = request.cookies.get(REFRESH_COOKIE_NAME);
     const isAuthPath = AUTH_ROUTES.some(route => pathname.startsWith(route));
 
-    // 1. Если пользователь залогинен
+    let response: NextResponse;
+
+    // --- ЛОГИКА АВТОРИЗАЦИИ ---
     if (refreshCookie) {
+        // Если залогинен — не пускаем на страницы логина/регистрации
         if (isAuthPath) {
-            return NextResponse.redirect(new URL('/', request.url));
+            response = NextResponse.redirect(new URL('/', request.url));
+        } else {
+            response = NextResponse.next();
         }
-        return NextResponse.next();
+    } else {
+        // Если НЕ залогинен — не пускаем никуда, кроме страниц логина
+        if (isAuthPath) {
+            response = NextResponse.next();
+        } else {
+            const signInUrl = new URL('/sign-in', request.url);
+            signInUrl.searchParams.set('redirect', pathname);
+            response = NextResponse.redirect(signInUrl);
+        }
     }
 
-    // 2. Если пользователь не залогинен
-    if (!refreshCookie) {
-        if (isAuthPath) {
-            return NextResponse.next();
-        }
+    // --- ДОБАВЛЕНИЕ SECURITY HEADERS ---
+    Object.entries(securityHeaders).forEach(([key, value]) => {
+        response.headers.set(key, value);
+    });
 
-        // Если он пытается попасть на ЛЮБОЙ другой путь (включая /), редиректим на /sign-in
-        const signInUrl = new URL('/sign-in', request.url);
-        signInUrl.searchParams.set('redirect', pathname);
-        return NextResponse.redirect(signInUrl);
-    }
-
-    // Fallback
-    return NextResponse.next();
+    return response;
 }
 
-// Конфигурация, указывающая, для каких путей запускать Middleware
 export const config = {
     matcher: [
-        // Исключаем:
-        // 1. _next/static, _next/image, api
-        // 2. Файлы с расширениями: .png, .jpg, .jpeg, .svg, .gif, .well-known, и т.д.
-        // 3. /favicon.ico
-        '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|svg|gif|webp)|\\.well-known).*)',
+        /*
+         * Исключаем все пути, которые не являются страницами:
+         * - api (запросы к бэкенду)
+         * - _next (статика и чанки Next.js)
+         * - статические файлы (картинки, шрифты и т.д.)
+         */
+        '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|pdf|well-known)).*)',
     ],
 };
