@@ -1,3 +1,5 @@
+"use client";
+
 import clsx from "clsx";
 import { ReactNode, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";

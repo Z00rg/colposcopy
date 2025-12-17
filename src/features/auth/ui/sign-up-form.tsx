@@ -1,3 +1,5 @@
+"use client";
+
 import clsx from "clsx";
 import { useSignUpForm } from "../model/use-sign-up-form";
 import { UiWhiteTextField } from "@/shared/ui/ui-white-text-field";

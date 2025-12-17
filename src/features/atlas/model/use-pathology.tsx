@@ -1,14 +1,17 @@
+"use client";
+
 import { usePathologyQuery } from "@/entities/pathology";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 
 export function usePathology() {
-  const router = useRouter();
+  const params = useParams();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const { pathologyId } = router.query;
-  const validPathologyId =
-    typeof pathologyId === "string" ? pathologyId : undefined;
+  const pathologyId = params?.pathologyId;
+
+  const validPathologyId = Array.isArray(pathologyId) ? pathologyId[0] : pathologyId;
+
   const pathologyQuery = usePathologyQuery(validPathologyId as string);
 
   const handleImageChange = (index: number) => {

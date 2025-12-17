@@ -1,35 +1,55 @@
+"use client"
+
 import { useProfileQuery } from "@/entities/profile";
-import { accountApi } from "@/shared/api/accountApi";
-import { GetProfileInfoDto } from "@/shared/api/accountApi";
+import { accountApi, GetProfileInfoDto } from "@/shared/api/accountApi";
 import { queryClient } from "@/shared/api/query-client";
 import { useMutation } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 
 export function useProfile() {
   const profileQuery = useProfileQuery();
+  const info = profileQuery.data;
+
   const [active, setActive] = useState(false);
   const [editState, setEditState] = useState<boolean[]>([false, false, false]);
 
-  const info = profileQuery.data;
+  const [formData, setFormData] = useState<Partial<GetProfileInfoDto>>({});
 
-  const initialData: Partial<GetProfileInfoDto> = info ?? {};
+  const displayData = useMemo(() => ({
+    ...info,
+    ...formData
+  }), [info, formData]);
 
-  // Стейт для редактирования
-  const [formData, setFormData] =
-    useState<Partial<GetProfileInfoDto>>(initialData);
 
-  // Обновление стейта при получении данных
-  useEffect(() => {
-    if (info) setFormData(info);
-  }, [info]);
-
-  // Мутация для отправки профиля
   const profileEditMutation = useMutation({
-    mutationFn: accountApi.editProfile,
+    mutationFn: (data: Partial<GetProfileInfoDto>) => accountApi.editProfile(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["profile"] });
+      setFormData({}); // Сбрасываем локальные изменения после успешного сохранения
     },
   });
+
+  const handleChange = (field: keyof GetProfileInfoDto, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSave = (index: number) => {
+    const changedFields = Object.entries(formData).reduce(
+        (acc, [key, value]) => {
+          const fieldKey = key as keyof GetProfileInfoDto;
+          if (value !== info?.[fieldKey] && value !== "") {
+            acc[fieldKey] = value as GetProfileInfoDto[keyof GetProfileInfoDto];
+          }
+          return acc;
+        },
+        {} as Partial<GetProfileInfoDto>
+    );
+
+    if (Object.keys(changedFields).length > 0) {
+      profileEditMutation.mutate(changedFields);
+    }
+    toggleEdit(index);
+  };
 
   const toggleEdit = (index: number) => {
     setEditState((prev) => {
@@ -39,39 +59,8 @@ export function useProfile() {
     });
   };
 
-  const handleChange = (field: keyof typeof formData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  // Сравнение и отправка изменений
-  const handleSave = (index: number) => {
-    const changedFields = Object.entries(formData).reduce(
-      (acc, [key, value]) => {
-        const oldValue = (initialData as Partial<GetProfileInfoDto>)[
-          key as keyof GetProfileInfoDto
-        ];
-
-        if (value === oldValue) return acc;
-
-        if (value === undefined || value === null || value === "") return acc;
-
-        acc[key as keyof GetProfileInfoDto] = value!;
-        return acc;
-      },
-      {} as Partial<GetProfileInfoDto>
-    );
-
-    if (Object.keys(changedFields).length === 0) {
-      toggleEdit(index);
-      return;
-    }
-
-    profileEditMutation.mutate(changedFields);
-    toggleEdit(index);
-  };
-
   return {
-    formData,
+    formData: displayData,
     active,
     setActive,
     editState,

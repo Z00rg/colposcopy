@@ -1,3 +1,5 @@
+"use client";
+
 import { UiScrollImg } from "@/shared/ui/ui-scroll-img";
 import { UiTextArea } from "@/shared/ui/ui-textarea";
 import { UiLink } from "@/shared/ui/ui-link";
@@ -32,7 +34,7 @@ export function Pathology({ className }: { className?: string }) {
         <>
           <UiScrollImg
             img={pathologyDetails.imgContainer}
-            onIndexChange={handleImageChange}
+            onIndexChangeAction={handleImageChange}
           />
           <UiTextArea className="mt-5">
             {pathologyDetails.description}

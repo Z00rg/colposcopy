@@ -1,6 +1,8 @@
+"use client";
+
 import { useTestListQuery } from "@/entities/test";
 import { ROUTES } from "@/shared/constants/routes";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function useTestList() {
@@ -33,10 +35,7 @@ export function useTestList() {
     const idsString = selectedIds.join(",");
 
     // Навигация с параметром запроса (Query Parameter)
-    router.push({
-      pathname: ROUTES.PASSING,
-      query: { testIds: idsString },
-    });
+    router.push(`${ROUTES.PASSING}?testIds=${idsString}`);
   };
 
   const testListQuery = useTestListQuery();

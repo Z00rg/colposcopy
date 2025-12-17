@@ -1,22 +1,23 @@
-/** @type {import('next').NextConfig} */
-const nextConfig: import('next').NextConfig = {
-  reactStrictMode: true,
-  output: 'standalone',
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '8000',
-        pathname: '/media/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'atlascolposcopy.ru',
-        pathname: '/media/**',
-      },
-    ],
-  },
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+    reactStrictMode: true,
+    output: 'standalone',
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'http', //Для разработки
+                hostname: 'localhost',
+                port: '8000',
+                pathname: '/media/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'atlascolposcopy.ru',
+                pathname: '/media/**',
+            },
+        ],
+    },
 };
 
-module.exports = nextConfig;
+export default nextConfig;

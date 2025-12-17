@@ -1,3 +1,5 @@
+"use client";
+
 import {
   useSubmitAnswersMutation,
   useTestTasksQuery,
@@ -7,8 +9,8 @@ import {
   ISelectedQuestion,
 } from "@/shared/api/testApi";
 import { ROUTES } from "@/shared/constants/routes";
-import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useMemo, useState } from "react";
 
 export function useTestTasks() {
   //Состояния
@@ -16,14 +18,14 @@ export function useTestTasks() {
   const [selectedAnswers, setSelectedAnswers] = useState<
     Record<number, Record<number, number[]>>
   >({});
-  const [startTime, setStartTime] = useState<number | null>(null);
 
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const submitAnswersMutation = useSubmitAnswersMutation();
 
   // URL параметры
-  const { testIds } = router.query;
+  const testIds = searchParams.get("testIds");
 
   // Преобразуем testIds из query в формат "1-2-3"
   const selectedPathologyIds: string = useMemo(() => {
@@ -45,12 +47,7 @@ export function useTestTasks() {
     [testTasksQuery]
   );
 
-  // Время начала попытки
-  useEffect(() => {
-    if (tasks.length > 0 && !startTime) {
-      setStartTime(Date.now());
-    }
-  }, [tasks, startTime]);
+  const startTime = testTasksQuery.dataUpdatedAt;
 
   // Преобразует ответы из формата Record<taskId, Record<questionIndex, answerIndex[]>> в формат SubmitTestAnswersBodyDto.
   const transformAnswersToDto = () => {

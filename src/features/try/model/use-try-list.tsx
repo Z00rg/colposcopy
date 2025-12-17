@@ -1,8 +1,11 @@
+"use client"
+
 import { useTryListQuery } from "@/entities/try-list";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 
 export function useTryList() {
     const tryListQuery = useTryListQuery();
+    const router = useRouter();
 
     const items = tryListQuery.data?.items ?? [];
 

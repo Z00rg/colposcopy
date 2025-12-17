@@ -1,3 +1,5 @@
+"use client";
+
 import { UiList } from "@/shared/ui/ui-list";
 import { useTryList } from "../model/use-try-list";
 import { UiListButtonTry } from "@/shared/ui/ui-list-button-try";
@@ -30,7 +32,7 @@ export function TryList({ className }: { className?: string }) {
           <UiListButtonTry
             key={item.id}
             informationOfTry={item}
-            handleClick={handleTryClick}
+            handleClickAction={handleTryClick}
           />
         ))}
     </UiList>

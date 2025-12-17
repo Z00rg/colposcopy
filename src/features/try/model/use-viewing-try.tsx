@@ -1,15 +1,18 @@
+"use client"
+
 import { useTryQuery } from "@/entities/try-list";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
 export function useViewingTry() {
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
 
-  const router = useRouter();
+  const params = useParams();
 
-  const { tryId } = router.query;
+  const tryId = params?.tryId;
+  const validTryId = Array.isArray(tryId) ? tryId[0] : tryId;
 
-  const tryQuery = useTryQuery(tryId as string);
+  const tryQuery = useTryQuery(validTryId as string);
   const tasks = useMemo(
     () => tryQuery.data?.items ?? [],
     [tryQuery]

@@ -1,7 +1,9 @@
-import { authApi } from "@/shared/api/authApi";
+"use client"
+
+import {authApi, SignUpBodyDto} from "@/shared/api/authApi";
 import { ROUTES } from "@/shared/constants/routes";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -31,7 +33,7 @@ export function useSignUpForm() {
   });
 
   const signInMutation = useMutation({
-    mutationFn: authApi.signUp,
+    mutationFn: (data: SignUpBodyDto) => authApi.signUp(data),
     onSuccess: () => {
       router.push(ROUTES.SIGN_IN);
     },

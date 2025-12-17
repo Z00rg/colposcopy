@@ -1,12 +1,13 @@
+"use client";
+
 import { useTutorialQuery } from "@/entities/tutorials";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 
 export function useTutorial() {
-  const router = useRouter();
+  const params = useParams();
 
-  const { tutorialId } = router.query;
-  const validTutorialId =
-    typeof tutorialId === "string" ? tutorialId : undefined;
+  const tutorialId = params?.tutorialId;
+  const validTutorialId = Array.isArray(tutorialId) ? tutorialId[0] : tutorialId;
   const tutorialQuery = useTutorialQuery(validTutorialId as string);
 
   return {

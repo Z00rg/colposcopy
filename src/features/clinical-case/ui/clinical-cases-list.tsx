@@ -1,3 +1,5 @@
+"use client";
+
 import { UiList } from "@/shared/ui/ui-list";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
 import clsx from "clsx";

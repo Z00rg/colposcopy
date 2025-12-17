@@ -1,3 +1,5 @@
+"use client";
+
 import clsx from "clsx";
 import { useProfile } from "../model/use-profile";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
@@ -80,7 +82,7 @@ export function Profile({ className }: { className?: string }) {
             label="Ваша фамилия"
             inputProps={{
               disabled: !editState[0],
-              value: formData.surname,
+              value: formData.surname ?? "",
               onChange: (e) => handleChange("surname", e.target.value),
             }}
           />
@@ -88,7 +90,7 @@ export function Profile({ className }: { className?: string }) {
             label="Ваше имя"
             inputProps={{
               disabled: !editState[0],
-              value: formData.name,
+              value: formData.name ?? "",
               onChange: (e) => handleChange("name", e.target.value),
             }}
           />
@@ -96,7 +98,7 @@ export function Profile({ className }: { className?: string }) {
             label="Ваше отчество"
             inputProps={{
               disabled: !editState[0],
-              value: formData.patronymic,
+              value: formData.patronymic ?? "",
               onChange: (e) => handleChange("patronymic", e.target.value),
             }}
           />
@@ -111,7 +113,7 @@ export function Profile({ className }: { className?: string }) {
             label="Ваше место работы/учебы"
             inputProps={{
               disabled: !editState[1],
-              value: formData.work,
+              value: formData.work ?? "",
               onChange: (e) => handleChange("work", e.target.value),
             }}
           />
@@ -119,7 +121,7 @@ export function Profile({ className }: { className?: string }) {
             label="Ваша должность"
             inputProps={{
               disabled: !editState[1],
-              value: formData.position,
+              value: formData.position ?? "",
               onChange: (e) => handleChange("position", e.target.value),
             }}
           />
@@ -134,7 +136,7 @@ export function Profile({ className }: { className?: string }) {
             label="Ваш Email"
             inputProps={{
               disabled: !editState[2],
-              value: formData.email,
+              value: formData.email ?? "",
               onChange: (e) => handleChange("email", e.target.value),
             }}
           />
@@ -143,7 +145,7 @@ export function Profile({ className }: { className?: string }) {
             inputProps={{
               type: "password",
               disabled: !editState[2],
-              value: formData.password,
+              value: formData.password ?? "",
               onChange: (e) => handleChange("password", e.target.value),
             }}
           />

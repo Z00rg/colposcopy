@@ -1,3 +1,5 @@
+"use client";
+
 import { UiCheckBox } from "@/shared/ui/ui-checkbox";
 import { UiProgressBar } from "@/shared/ui/ui-progress-bar";
 import { UiScrollImg } from "@/shared/ui/ui-scroll-img";
@@ -74,8 +76,8 @@ export function ViewingTry() {
                         <span
                           className={clsx(
                             "font-bold",
-                            { "text-green-600": isCorrect === true },
-                            { "text-red-600": isCorrect === false }
+                            { "text-green-600": isCorrect },
+                            { "text-red-600": !isCorrect }
                           )}
                         >
                           Задание №{questionIndex + 1}:

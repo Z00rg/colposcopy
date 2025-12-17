@@ -1,3 +1,5 @@
+"use client";
+
 import { UiCheckBox } from "@/shared/ui/ui-checkbox";
 import { UiProgressBar } from "@/shared/ui/ui-progress-bar";
 import { UiScrollImg } from "@/shared/ui/ui-scroll-img";

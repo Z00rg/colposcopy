@@ -1,8 +1,10 @@
+"use client"
+
 import { useResetSession } from "@/entities/session";
 import { authApi } from "@/shared/api/authApi";
 import { ROUTES } from "@/shared/constants/routes";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export function useSignOut() {
   const resetSession = useResetSession();

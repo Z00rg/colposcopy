@@ -1,14 +1,15 @@
+"use client";
+
 import { useCaseQuery } from "@/entities/clinical-cases/queries";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 
 export function useCase() {
-  const router = useRouter();
+  const params = useParams();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const { caseId } = router.query;
-  const validCaseId =
-    typeof caseId === "string" ? caseId : undefined;
+  const caseId = params?.caseId;
+  const validCaseId = Array.isArray(caseId) ? caseId[0] : caseId;
   const caseQuery = useCaseQuery(validCaseId as string);
 
   const handleImageChange = (index: number) => {

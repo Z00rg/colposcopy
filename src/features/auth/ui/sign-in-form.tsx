@@ -1,3 +1,5 @@
+"use client";
+
 import { UiLink } from "@/shared/ui/ui-link";
 import { useSignInForm } from "../model/use-sign-in-form";
 import { UiButton } from "@/shared/ui/ui-button";

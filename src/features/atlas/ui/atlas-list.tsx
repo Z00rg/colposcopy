@@ -1,3 +1,5 @@
+"use client";
+
 import { UiList } from "@/shared/ui/ui-list";
 import { useAtlasList } from "../model/use-atlas-list";
 import { UiListButtonAtlas } from "@/shared/ui/ui-list-button-atlas";

@@ -1,3 +1,5 @@
+"use client";
+
 import { UiList } from "@/shared/ui/ui-list";
 import { UiListButtonTest } from "@/shared/ui/ui-list-button-test";
 import { Instruction } from "./instruction";

@@ -1,3 +1,5 @@
+"use client";
+
 import clsx from "clsx";
 import { useState } from "react";
 
@@ -11,13 +13,13 @@ type TryInformation = {
 export type UiListButtonTryProps = {
   className?: string;
   informationOfTry: TryInformation;
-  handleClick: (id: number) => void;
+  handleClickAction: (id: number) => void;
 };
 
 export function UiListButtonTry({
   className,
   informationOfTry,
-  handleClick,
+  handleClickAction,
 }: UiListButtonTryProps) {
   const [active, setActive] = useState(false);
 
@@ -67,7 +69,7 @@ export function UiListButtonTry({
             className="ml-auto mt-1 text-[#639EDD] hover:text-[#26628A] text-[17px] font-semibold"
             onClick={(e) => {
               e.stopPropagation();
-              handleClick(informationOfTry.id);
+              handleClickAction(informationOfTry.id);
             }}
           >
             Просмотр попытки

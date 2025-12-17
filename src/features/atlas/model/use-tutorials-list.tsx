@@ -1,7 +1,10 @@
+"use client";
+
 import { useTutorialsListQuery } from "@/entities/tutorials";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 
 export function useTutorialsList() {
+  const router = useRouter();
   const tutorialsListQuery = useTutorialsListQuery();
 
   const tutorials = tutorialsListQuery.data?.items ?? [];

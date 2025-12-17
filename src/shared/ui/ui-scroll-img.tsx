@@ -1,18 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
+"use client"
+
 import clsx from "clsx";
 import { useRef, useState, useEffect } from "react";
 
 type UiScrollImgProps = {
   img: string[];
   className?: string;
-  onIndexChange?: (index: number) => void;
+  onIndexChangeAction?: (index: number) => void;
   height?: string;
 };
 
 export function UiScrollImg({
   img,
   className,
-  onIndexChange,
+  onIndexChangeAction,
   height,
 }: UiScrollImgProps) {
   const heightProps = height ? height : "h-[35svh]";
@@ -43,7 +45,7 @@ export function UiScrollImg({
     const scrollLeft = scrollContainerRef.current.scrollLeft;
     const newIndex = Math.round(scrollLeft / imageWidth);
     const clampedIndex = Math.min(Math.max(0, newIndex), img.length - 1);
-    onIndexChange?.(clampedIndex);
+    onIndexChangeAction?.(clampedIndex);
   };
 
   // ——— 3. Управление модалкой ———

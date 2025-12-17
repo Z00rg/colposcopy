@@ -1,12 +1,9 @@
-// src/shared/ui/layouts/ui-page-layout/ui-page-layout.tsx
 import { ReactNode } from "react";
-import Head from "next/head";
 import { UiHeader } from "@/shared/ui/ui-header";
 import { UiFooter, UiFooterActiveStatus } from "@/shared/ui/ui-footer";
 import clsx from "clsx";
 
 export interface UiPageLayoutProps {
-  title: string;
   activeStatus: UiFooterActiveStatus;
   headerText: string;
   children: ReactNode;
@@ -14,7 +11,6 @@ export interface UiPageLayoutProps {
 }
 
 export function UiPageLayout({
-  title,
   activeStatus,
   headerText,
   children,
@@ -27,9 +23,6 @@ export function UiPageLayout({
         className
       )}
     >
-      <Head>
-        <title>{title}</title>
-      </Head>
 
       <UiHeader variant="withoutLogo" />
 

@@ -1,5 +1,7 @@
+"use client";
+
 import clsx from "clsx";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type PathologyInformation = {
@@ -21,6 +23,7 @@ export function UiListButtonClinic({
   cases,
 }: UiListButtonClinicProps) {
   const [active, setActive] = useState(false);
+  const router = useRouter();
 
   const handleCaseClick = (id: number) => {
     router.push(`/case/${id}`);

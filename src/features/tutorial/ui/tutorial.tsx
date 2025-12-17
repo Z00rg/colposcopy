@@ -1,3 +1,5 @@
+"use client";
+
 import { UiTextArea } from "@/shared/ui/ui-textarea";
 import { UiLink } from "@/shared/ui/ui-link";
 import { UiFooter } from "@/shared/ui/ui-footer";

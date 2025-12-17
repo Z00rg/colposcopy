@@ -1,4 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
+"use client";
+
 import { UiScrollImg } from "@/shared/ui/ui-scroll-img";
 import { UiTextArea } from "@/shared/ui/ui-textarea";
 import { UiLink } from "@/shared/ui/ui-link";
@@ -39,7 +41,7 @@ export function Case({ className }: { className?: string }) {
           <>
             <UiScrollImg
               img={caseDetails.imgContainer}
-              onIndexChange={handleImageChange}
+              onIndexChangeAction={handleImageChange}
             />
             {currentImageIndex === caseDetails.imgContainer.length - 1 ? (
               <img
