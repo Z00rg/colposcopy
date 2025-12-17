@@ -1,37 +1,42 @@
-# Этап 1: сборка
-FROM node:20-alpine AS builder
-
+# --- Этап 1: Установка зависимостей ---
+FROM node:20-alpine AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
-
-ARG NEXT_PUBLIC_API_BASE_URL=https://atlascolposcopy.ru/api
-ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
-
-# Копируем зависимости и устанавливаем их
 COPY package*.json ./
 RUN npm ci
 
-# Копируем исходники и собираем
-COPY . .
-RUN npm run build
-
-# Этап 2: легковесный образ для запуска
-FROM node:20-alpine
-
+# --- Этап 2: Сборка ---
+FROM node:20-alpine AS builder
 WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 
-ARG NEXT_PUBLIC_API_BASE_URL=https://atlascolposcopy.ru/api
+# Прокидываем ARG для вшивания в JS при билде
+ARG NEXT_PUBLIC_API_BASE_URL
 ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
 
-# Прод зависимости
-COPY package*.json ./
-RUN npm ci --only=production
+RUN npm run build
 
-# Копируем готовую сборку
-COPY --from=builder /app/.next ./.next
+# --- Этап 3: Запуск (Финальный образ) ---
+FROM node:20-alpine AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Создаем пользователя для безопасности
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# Копируем только то, что реально нужно для работы
 COPY --from=builder /app/public ./public
+# Standalone режим копирует только необходимые node_modules внутрь .next/standalone
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Порт, который слушает Next.js
+USER nextjs
+
 EXPOSE 3000
-
-# Запуск
-CMD ["npm", "start"]
+ENV PORT=3000
+# Запускаем через node, а не через npm (быстрее старт)
+CMD ["node", "server.js"]
