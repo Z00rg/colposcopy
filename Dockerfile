@@ -28,10 +28,14 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Копируем только то, что реально нужно для работы
+# 1. Копируем статику из public
 COPY --from=builder /app/public ./public
-# Standalone режим копирует только необходимые node_modules внутрь .next/standalone
+
+# 2. Копируем standalone файлы (они копируются в корень /app)
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+
+# 3. ВАЖНО: Принудительно создаем структуру для статики .next
+# Мы берем статику из билдера и кладем её ВНУТРЬ .next/static
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
