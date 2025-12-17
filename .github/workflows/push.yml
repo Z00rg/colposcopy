@@ -34,5 +34,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}  # SSH ключ (добавляется в Settings -> Secrets)
           script: |
             cd colposcopy         # Путь к папке с проектом на сервере
-            git pull origin master             # Стягиваем новый код
+            git pull origin main            # Стягиваем новый код
             sudo docker compose up --build -d  # Пересобираем и запускаем
