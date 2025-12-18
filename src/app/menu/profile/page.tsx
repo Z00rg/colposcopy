@@ -8,6 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
+    throw new Error("Тестовая ошибка");
   return (
       <>
           <div className="font-medium text-[20px] mt-7">
