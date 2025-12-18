@@ -1,6 +1,6 @@
 import { AtlasList } from "@/features/atlas";
-import { UiPageLayout } from "@/shared/ui/layouts/ui-page-layout";
 import { Metadata } from "next";
+import {UiFooter} from "@/shared/ui/ui-footer";
 
 export const metadata: Metadata = {
   title: "Атлас",
@@ -8,11 +8,12 @@ export const metadata: Metadata = {
 
 export default function AtlasPage() {
   return (
-    <UiPageLayout
-      activeStatus="atlas"
-      headerText="Содержание"
-    >
+      <>
+        <div className="font-medium text-[20px] mt-7">
+          Содержание
+        </div>
       <AtlasList />
-    </UiPageLayout>
+      <UiFooter activeStatus="atlas" />
+      </>
   );
 }

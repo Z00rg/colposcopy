@@ -1,12 +1,12 @@
 export const ROUTES = {
-  HOME: "/",
+  HOME: "/menu/profile",
   TRY: "/test-try",
   SIGN_UP: "/sign-up",
   SIGN_IN: "/sign-in",
-  ATLAS: "/atlas",
+  ATLAS: "/menu/atlas",
   PATHOLOGY: "/pathology",
-  CLINIC: "/clinical-cases",
-  TEST: "/choice-test",
+  CLINIC: "/menu/clinical-cases",
+  TEST: "/menu/choice-test",
   PASSING: "/passing-test",
   ADMIN: "/admin-home"
 };

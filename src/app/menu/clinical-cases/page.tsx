@@ -1,6 +1,6 @@
 import { ClinicalCasesList } from "@/features/clinical-case/ui/clinical-cases-list";
-import { UiPageLayout } from "@/shared/ui/layouts/ui-page-layout";
 import { Metadata } from "next";
+import {UiFooter} from "@/shared/ui/ui-footer";
 
 export const metadata: Metadata = {
   title: "Клинические случаи",
@@ -8,11 +8,12 @@ export const metadata: Metadata = {
 
 export default function ClinicalCasesPage() {
   return (
-    <UiPageLayout
-      activeStatus="clinic"
-      headerText="Клинические случаи"
-    >
+      <>
+      <div className="font-medium text-[20px] mt-7">
+        Клинические случаи
+      </div>
       <ClinicalCasesList />
-    </UiPageLayout>
+      <UiFooter activeStatus="clinic" />
+      </>
   );
 }

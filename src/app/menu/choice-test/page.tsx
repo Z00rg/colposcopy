@@ -1,6 +1,6 @@
 import { TestList } from "@/features/test";
-import { UiPageLayout } from "@/shared/ui/layouts/ui-page-layout";
 import { Metadata } from "next";
+import {UiFooter} from "@/shared/ui/ui-footer";
 
 export const metadata: Metadata = {
   title: "Настройки тестирования",
@@ -8,11 +8,12 @@ export const metadata: Metadata = {
 
 export default function ChoiceTestPage() {
   return (
-    <UiPageLayout
-      activeStatus="test"
-      headerText="Настройки тестирования"
-    >
+      <>
+      <div className="font-medium text-[20px] mt-7">
+        Настройки тестирования
+      </div>
       <TestList />
-    </UiPageLayout>
+      <UiFooter activeStatus="test" />
+      </>
   );
 }
