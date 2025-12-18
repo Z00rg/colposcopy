@@ -1,21 +1,20 @@
 "use client";
 
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
-import { ButtonHTMLAttributes } from "react";
 import { ROUTES } from "../constants/routes";
+import Link from "next/link";
 
 type UiFooterButtonVariants = "book" | "man" | "check" | "clinic";
 export type UiButtonProps = {
+  className?: string;
   variant: UiFooterButtonVariants;
   active?: boolean;
-} & ButtonHTMLAttributes<HTMLButtonElement>;
+};
 
 export function UiFooterButton({
   className,
   variant,
   active,
-  ...props
 }: UiButtonProps) {
   const variantIcons = {
     book: <Book className="h-[4svh]" />,
@@ -45,21 +44,18 @@ export function UiFooterButton({
     clinic: ROUTES.CLINIC,
   };
 
-  const router = useRouter();
-
   return (
-    <button
-      {...props}
+    <Link
+      href={variantRoute[variant]}
       className={clsx(
         className,
         "mt-auto cursor-pointer flex flex-col gap-2 pt-1 items-center justify-center text-[11px] hover:text-[#7BAEE4]",
         active && "text-[#7BAEE4]"
       )}
-      onClick={() => router.push(variantRoute[variant])}
     >
       {active ? variantActiveIcons[variant] : variantIcons[variant]}
       <div className="whitespace-nowrap w-12 text-center justify-center flex">{variantTexts[variant]}</div>
-    </button>
+    </Link>
   );
 }
 
