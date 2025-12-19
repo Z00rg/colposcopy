@@ -1,4 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import {queryClient} from "@/shared/api/query-client";
+import {authApi} from "@/shared/api/authApi";
 
 const CSRF_TOKEN_KEY = "csrftoken";
 const AUTH_URLS = [
@@ -45,38 +47,56 @@ apiInstance.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
-// Интерцептор ответов: логика обновления токена и обработка ошибок 401
+// Интерцептор ответов: логика обновления токена и обработка ошибок 401, 403
 apiInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
         const requestUrl = originalRequest.url || "";
-        if (
-            error.response?.status === 401 &&
-            !originalRequest._isRetry &&
-            !isAuthUrl(requestUrl)
-        ) {
-            originalRequest._isRetry = true;
 
+        // Обработка и 401 и 403
+        const isAuthError = error.response?.status === 401 || error.response?.status === 403;
+        const isNotRetry = !originalRequest?._isRetry;
+        const isAuthEndpoint = isAuthUrl(requestUrl);
+
+        // Первая auth-ошибка — refresh
+        if ( isAuthError && isNotRetry && !isAuthEndpoint ) {
+            originalRequest._isRetry = true;
             try {
                 await apiInstance.post("/auth/refresh_token/");
-
                 return apiInstance(originalRequest);
-            } catch (refreshError) {
-
-                console.error("Token refresh failed. Session expired, redirecting to login:", refreshError);
-
-                // Принудительный логаут/редирект
-                if (typeof window !== 'undefined') {
-                    window.location.replace("/sign-in");
-
-                }
-                return Promise.resolve(null);
+            } catch {
+                return handleAuthFailure();
             }
         }
+
+        // Повторная auth-ошибка — logout
+        if (isAuthError && originalRequest?._isRetry && !isAuthEndpoint) {
+            return handleAuthFailure();
+        }
+
+        // Всё остальное проброс далее
         return Promise.reject(error);
     }
 );
+
+async function handleAuthFailure() {
+    console.error("Token refresh failed. Session expired, redirecting to login");
+    queryClient.removeQueries();
+    try {
+        await authApi.signOut();
+    } catch (logoutError) {
+        console.error(logoutError);
+    } finally {
+        // Принудительный редирект
+        if (typeof window !== 'undefined') {
+            window.location.replace("/sign-in");
+
+        }
+    }
+
+    return Promise.reject(new Error('AUTH_EXPIRED'));
+}
 
 export const createInstance = <T>(
   config: AxiosRequestConfig,

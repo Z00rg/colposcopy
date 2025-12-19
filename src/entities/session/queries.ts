@@ -1,7 +1,7 @@
-import { useQueryClient } from "@tanstack/react-query";
+import {queryClient} from "@/shared/api/query-client";
+
 
 export function useResetSession() {
-  const queryClient = useQueryClient();
   return () => {
     queryClient.removeQueries();
   };
