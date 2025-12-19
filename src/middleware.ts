@@ -13,10 +13,11 @@ const securityHeaders = {
     'X-XSS-Protection': '1; mode=block',
 };
 
-export function proxy(request: NextRequest) {
+export default function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const refreshCookie = request.cookies.get(REFRESH_COOKIE_NAME);
     const isAuthPath = AUTH_ROUTES.some(route => pathname.startsWith(route));
+    console.log("Работаем по пути:", pathname);
 
     let response: NextResponse;
 
