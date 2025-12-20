@@ -25,7 +25,7 @@ export function useProfile() {
     mutationFn: (data: Partial<GetProfileInfoDto>) => accountApi.editProfile(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["profile"] });
-      setFormData({}); // Сбрасываем локальные изменения после успешного сохранения
+      setFormData({});
     },
   });
 
@@ -52,11 +52,13 @@ export function useProfile() {
   };
 
   const toggleEdit = (index: number) => {
-    setEditState((prev) => {
-      const newState = [...prev];
-      newState[index] = !newState[index];
-      return newState;
-    });
+    if( !profileQuery.isError) {
+      setEditState((prev) => {
+        const newState = [...prev];
+        newState[index] = !newState[index];
+        return newState;
+      });
+    }
   };
 
   return {
