@@ -35,6 +35,24 @@ export function TestList() {
           Нет доступных тем для тестирования
         </div>
       )}
+        {isLoading && (
+            <>
+                {[...Array(4)].map((_, index) => (
+                    <UiListButtonTest
+                        key={`skeleton-${index}`}
+                        className="w-full"
+                        index={index + 1}
+                        informationOfPathology={{
+                            id: 0,
+                            name: "",
+                        }}
+                        isChecked={false}
+                        onToggle={() => {}}
+                        isLoading={true}
+                    />
+                ))}
+            </>
+        )}
       {items &&
         items.map((item, index) => (
           <UiListButtonTest

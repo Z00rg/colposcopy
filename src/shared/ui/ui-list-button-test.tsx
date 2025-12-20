@@ -12,6 +12,7 @@ export type UiListButtonAtlasProps = {
   informationOfPathology: PathologyInformation;
   isChecked: boolean;
   onToggle: (id: number) => void;
+  isLoading?: boolean;
 };
 
 export function UiListButtonTest({
@@ -20,10 +21,26 @@ export function UiListButtonTest({
   informationOfPathology,
   isChecked,
   onToggle,
+  isLoading,
 }: UiListButtonAtlasProps) {
   const handleClick = () => {
     onToggle(informationOfPathology.id);
   };
+
+  if (isLoading) {
+    return (
+        <div
+            className={clsx(
+                className,
+                "flex items-center text-[18px] font-medium gap-3 border-b border-[#E0E0E0] px-3 py-3 rounded-xl animate-pulse"
+            )}
+        >
+          <div className="w-4 h-6 bg-gray-300 rounded"></div>
+          <div className="flex-1 h-6 bg-gray-300 rounded"></div>
+          <div className="w-6 h-6 bg-gray-300 rounded"></div>
+        </div>
+    );
+  }
 
   return (
     <div
