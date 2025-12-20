@@ -39,7 +39,7 @@ export function TryList({ className }: { className?: string }) {
             ))}
           </>
       )}
-      {items && items.length > 0 &&
+      {!isLoading && items && items.length > 0 &&
         items.map((item) => (
           <UiListButtonTry
             key={item.id}

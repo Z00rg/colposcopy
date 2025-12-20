@@ -1,7 +1,6 @@
 "use client";
 
 import { UiList } from "@/shared/ui/ui-list";
-import { UiSpinner } from "@/shared/ui/ui-spinner";
 import clsx from "clsx";
 import { UiListButtonClinic } from "@/shared/ui/ui-list-button-clinic";
 import { useClinicalCases } from "../model/use-clinical-cases";
@@ -12,7 +11,6 @@ export function ClinicalCasesList({ className }: { className?: string }) {
 
   return (
     <UiList className={clsx(className, "mt-4 items-start")}>
-      {isLoading && <UiSpinner />}
       {isError && (
         <div className="font-bold text-rose-500">
           Ошибка при загрузке списка патологий
@@ -23,7 +21,24 @@ export function ClinicalCasesList({ className }: { className?: string }) {
           Нет доступных клинических случаев
         </div>
       )}
-      {items &&
+      {isLoading && (
+          <>
+            {[...Array(4)].map((_, index) => (
+                <UiListButtonClinic
+                    key={`skeleton-${index}`}
+                    className="w-full"
+                    index={index + 1}
+                    informationOfPathology={{
+                      id: 0,
+                      name: "",
+                    }}
+                    cases={[]}
+                    isLoading={true}
+                />
+            ))}
+          </>
+      )}
+      {!isLoading && items &&
         items.map((item, index) => (
           <UiListButtonClinic
             className="w-full"

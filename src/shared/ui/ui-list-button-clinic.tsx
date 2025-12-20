@@ -14,6 +14,7 @@ export type UiListButtonClinicProps = {
   index: number;
   informationOfPathology: PathologyInformation;
   cases: { id: number }[];
+  isLoading?: boolean;
 };
 
 export function UiListButtonClinic({
@@ -21,6 +22,7 @@ export function UiListButtonClinic({
   index,
   informationOfPathology,
   cases,
+  isLoading,
 }: UiListButtonClinicProps) {
   const [active, setActive] = useState(false);
   const router = useRouter();
@@ -28,6 +30,23 @@ export function UiListButtonClinic({
   const handleCaseClick = (id: number) => {
     router.push(`/case/${id}`);
   };
+
+  if (isLoading) {
+    return (
+        <div
+            className={clsx(
+                className,
+                "flex w-full flex-col border-b border-[#E0E0E0] rounded-xl px-3 py-3 animate-pulse"
+            )}
+        >
+          <div className="flex items-center text-[18px] font-medium gap-3 px-1 py-1">
+            <div className="w-4 h-6 bg-gray-300 rounded"></div>
+            <div className="flex-1 h-6 bg-gray-300 rounded"></div>
+            <div className="w-[11px] h-[18px] bg-gray-300 rounded"></div>
+          </div>
+        </div>
+    );
+  }
 
   return (
     <div

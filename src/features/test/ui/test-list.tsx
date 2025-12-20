@@ -53,7 +53,7 @@ export function TestList() {
                 ))}
             </>
         )}
-      {items &&
+      {!isLoading && items &&
         items.map((item, index) => (
           <UiListButtonTest
             className="w-full"
