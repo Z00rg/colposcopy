@@ -14,14 +14,39 @@ export type UiListButtonTryProps = {
   className?: string;
   informationOfTry: TryInformation;
   handleClickAction: (id: number) => void;
+  isLoading?: boolean;
 };
 
 export function UiListButtonTry({
   className,
   informationOfTry,
   handleClickAction,
+  isLoading,
+
 }: UiListButtonTryProps) {
   const [active, setActive] = useState(false);
+
+  if (isLoading) {
+    return (
+        <div
+            className={clsx(
+                className,
+                "flex w-full flex-col select-none border-b border-[#E0E0E0] rounded-xl px-3 py-3 animate-pulse"
+            )}
+        >
+          <div className="flex justify-between items-center gap-3">
+            <div className="flex items-center gap-3 flex-1">
+              <div className="w-[28px] h-[28px] bg-gray-300 rounded-full"></div>
+              <div className="flex flex-col gap-2">
+                <div className="h-5 bg-gray-300 rounded w-32"></div>
+                <div className="h-4 bg-gray-300 rounded w-24"></div>
+              </div>
+            </div>
+            <div className="w-[11px] h-[18px] bg-gray-300 rounded"></div>
+          </div>
+        </div>
+    );
+  }
 
   return (
     <div

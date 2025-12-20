@@ -3,31 +3,43 @@
 import { UiList } from "@/shared/ui/ui-list";
 import { useTryList } from "../model/use-try-list";
 import { UiListButtonTry } from "@/shared/ui/ui-list-button-try";
-import { UiSpinner } from "@/shared/ui/ui-spinner";
 import clsx from "clsx";
 
 export function TryList({ className }: { className?: string }) {
   const { isLoading, items, isError, handleTryClick } = useTryList();
 
-  const isLoader = isLoading;
   const isEmptyText = !isLoading && !isError && items.length === 0;
-  const isErrorText = isError;
-  const isItems = items.length > 0;
 
   return (
     <UiList height="h-[47svh]" className={clsx(className, "mt-4")}>
-      {isLoader && <UiSpinner />}
       {isEmptyText && (
         <div className="flex text-[18px] pb-4 font-medium">
           Пока не было начато ни одной попытки
         </div>
       )}
-      {isErrorText && (
+      {isError && (
         <div className="flex text-[18px] text-center text-red-600 pb-4 font-medium">
           Ошибка загрузки попыток с сервера. Попробуйте перезагрузить страницу.
         </div>
       )}
-      {isItems &&
+      {isLoading && (
+          <>
+            {[...Array(4)].map((_, index) => (
+                <UiListButtonTry
+                    key={`skeleton-${index}`}
+                    informationOfTry={{
+                      id: 0,
+                      date: "",
+                      mark: "",
+                      time: "",
+                    }}
+                    handleClickAction={() => {}}
+                    isLoading={true}
+                />
+            ))}
+          </>
+      )}
+      {items && items.length > 0 &&
         items.map((item) => (
           <UiListButtonTry
             key={item.id}
