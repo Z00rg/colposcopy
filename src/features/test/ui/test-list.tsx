@@ -6,6 +6,7 @@ import { Instruction } from "./instruction";
 import clsx from "clsx";
 import { useTestList } from "../model/use-test-list";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
+import {UiError} from "@/shared/ui/ui-error";
 
 export function TestList() {
   const {
@@ -26,9 +27,9 @@ export function TestList() {
       </div>
       {isLoading && <UiSpinner />}
       {isError && (
-        <div className="font-bold text-rose-500">
-          Ошибка при загрузке списка патологий
-        </div>
+          <UiError>
+              Не удалось загрузить список тестов
+          </UiError>
       )}
       {isEmptyText && (
         <div className="flex text-[18px] pb-4 font-medium">

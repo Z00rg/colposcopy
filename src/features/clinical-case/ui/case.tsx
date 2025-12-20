@@ -10,6 +10,7 @@ import clsx from "clsx";
 import { useCase } from "../model/use-case";
 import { useModal } from "@/shared/lib/use-modal";
 import { UiImageModal } from "@/shared/ui/ui-image-modal";
+import {UiError} from "@/shared/ui/ui-error";
 
 export function Case({ className }: { className?: string }) {
   const {
@@ -31,9 +32,9 @@ export function Case({ className }: { className?: string }) {
         )}
       >
         {isError && (
-          <div className="font-bold text-rose-500">
-            Ошибка при загрузке деталей патологии
-          </div>
+            <UiError>
+                Не удалось загрузить детали клинического случая
+            </UiError>
         )}
           {isLoading ? (
               <>
@@ -72,10 +73,10 @@ export function Case({ className }: { className?: string }) {
                       <UiLink href={ROUTES.CLINIC} className="mr-auto">
                           Назад
                       </UiLink>
-                      <UiFooter activeStatus="clinic" />
                   </>
               )
           )}
+          <UiFooter activeStatus="clinic" />
       </div>
       <UiImageModal isOpen={isOpen} onClose={close}>
         {caseDetails && (

@@ -41,7 +41,7 @@ export function Profile({ className }: { className?: string }) {
           <Man />
         </div>
         {isError && (
-          <div className="font-bold text-red-500">
+          <div className="font-bold text-sm text-red-600">
             Ошибка загрузки данных профиля.
           </div>
         )}

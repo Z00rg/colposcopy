@@ -5,6 +5,7 @@ import { useAtlasList } from "../model/use-atlas-list";
 import { UiListButtonAtlas } from "@/shared/ui/ui-list-button-atlas";
 import clsx from "clsx";
 import { useTutorialsList } from "../model/use-tutorials-list";
+import {UiError} from "@/shared/ui/ui-error";
 
 export function AtlasList({ className }: { className?: string }) {
   const { items, isLoading, isError, handleClick } = useAtlasList();
@@ -18,9 +19,9 @@ export function AtlasList({ className }: { className?: string }) {
     <UiList className={clsx(className, "mt-4 items-start")}>
       <div className="font-bold text-[18px]">Обучение</div>
       {isErrorTutorials && (
-        <div className="font-bold text-rose-500">
-          Ошибка при загрузке списка уроков
-        </div>
+          <UiError>
+              Не удалось загрузить список уроков
+          </UiError>
       )}
       {isEmptyTutorialText && (
         <div className="flex text-[18px] pb-4 font-medium">
@@ -56,9 +57,9 @@ export function AtlasList({ className }: { className?: string }) {
         ))}
       <div className="font-bold text-[18px]">Атлас</div>
       {isError && (
-        <div className="font-bold text-rose-500">
-          Ошибка при загрузке списка патологий
-        </div>
+          <UiError>
+              Не удалось загрузить список паталогий
+          </UiError>
       )}
       {isEmptyText && (
         <div className="flex text-[18px] pb-4 font-medium">

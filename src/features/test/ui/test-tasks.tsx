@@ -10,6 +10,7 @@ import { UiFooter } from "@/shared/ui/ui-footer";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
 import { ITestQuestion, IAnswers } from "@/shared/api/testApi";
 import { UiErrorMessage } from "@/shared/ui/ui-errror-msg";
+import {UiError} from "@/shared/ui/ui-error";
 
 export function TestTasks() {
   const {
@@ -31,9 +32,9 @@ export function TestTasks() {
   return (
     <div className="flex flex-col w-full gap-3 flex-1 mb-4 px-5 mt-5">
       {isError && (
-        <div className="font-bold text-red-500">
-          Ошибка загрузки заданий. Пожалуйста, попробуйте позже.
-        </div>
+          <UiError>
+            Не удалось загрузить тестирование
+          </UiError>
       )}
       {!isLoading && !isError && tasks.length === 0 && (
         <div className="font-bold text-gray-700">

@@ -7,6 +7,7 @@ import { UiFooter } from "@/shared/ui/ui-footer";
 import { ROUTES } from "@/shared/constants/routes";
 import clsx from "clsx";
 import { usePathology } from "../model/use-pathology";
+import {UiError} from "@/shared/ui/ui-error";
 
 export function Pathology({ className }: { className?: string }) {
   const {
@@ -24,9 +25,9 @@ export function Pathology({ className }: { className?: string }) {
       )}
     >
       {isError && (
-        <div className="font-bold text-rose-500">
-          Ошибка при загрузке деталей патологии
-        </div>
+          <UiError>
+            Не удалось загрузить детали патологии
+          </UiError>
       )}
       {isLoading ? (
           <>

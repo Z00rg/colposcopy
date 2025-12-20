@@ -4,6 +4,7 @@ import { UiList } from "@/shared/ui/ui-list";
 import clsx from "clsx";
 import { UiListButtonClinic } from "@/shared/ui/ui-list-button-clinic";
 import { useClinicalCases } from "../model/use-clinical-cases";
+import {UiError} from "@/shared/ui/ui-error";
 
 export function ClinicalCasesList({ className }: { className?: string }) {
   const { items, isLoading, isError } = useClinicalCases();
@@ -12,9 +13,9 @@ export function ClinicalCasesList({ className }: { className?: string }) {
   return (
     <UiList className={clsx(className, "mt-4 items-start")}>
       {isError && (
-        <div className="font-bold text-rose-500">
-          Ошибка при загрузке списка патологий
-        </div>
+          <UiError>
+            Не удалось загрузить список клинических случаев
+          </UiError>
       )}
       {isEmptyText && (
         <div className="flex text-[18px] pb-4 font-medium">

@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { useViewingTry } from "../model/use-viewing-try";
 import { UiFooter } from "@/shared/ui/ui-footer";
 import { IAnswers, ITestQuestion } from "@/shared/api/tryApi";
+import {UiError} from "@/shared/ui/ui-error";
 
 export function ViewingTry() {
   const {
@@ -22,9 +23,9 @@ export function ViewingTry() {
   return (
     <div className="flex flex-col w-full gap-3 flex-1 mb-4 px-5 mt-5">
       {isError && (
-        <div className="font-bold text-red-500">
-          Ошибка загрузки заданий. Пожалуйста, попробуйте позже.
-        </div>
+          <UiError>
+            Не удалось загрузить детали попытки
+          </UiError>
       )}
       {!isLoading && !isError && tasks.length === 0 && (
         <div className="font-bold text-gray-700">

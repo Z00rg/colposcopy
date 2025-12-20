@@ -4,6 +4,7 @@ import { UiList } from "@/shared/ui/ui-list";
 import { useTryList } from "../model/use-try-list";
 import { UiListButtonTry } from "@/shared/ui/ui-list-button-try";
 import clsx from "clsx";
+import {UiError} from "@/shared/ui/ui-error";
 
 export function TryList({ className }: { className?: string }) {
   const { isLoading, items, isError, handleTryClick } = useTryList();
@@ -18,9 +19,9 @@ export function TryList({ className }: { className?: string }) {
         </div>
       )}
       {isError && (
-        <div className="flex text-[18px] text-center text-red-600 pb-4 font-medium">
-          Ошибка загрузки попыток с сервера. Попробуйте перезагрузить страницу.
-        </div>
+          <UiError>
+            Не удалось загрузить список попыток
+          </UiError>
       )}
       {isLoading && (
           <>

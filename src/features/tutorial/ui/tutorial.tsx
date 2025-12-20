@@ -7,6 +7,7 @@ import { ROUTES } from "@/shared/constants/routes";
 import clsx from "clsx";
 import { useTutorial } from "../model/use-tutorial";
 import { UiVideoPlayer } from "@/shared/ui/ui-video-player";
+import {UiError} from "@/shared/ui/ui-error";
 
 export function Tutorial({ className }: { className?: string }) {
   const { tutorialDetails, isLoading, isError } = useTutorial();
@@ -19,9 +20,9 @@ export function Tutorial({ className }: { className?: string }) {
       )}
     >
       {isError && (
-        <div className="font-bold text-rose-500">
-          Ошибка при загрузке урока
-        </div>
+          <UiError>
+            Не удалось загрузить детали урока
+          </UiError>
       )}
       {isLoading && (
               <>
