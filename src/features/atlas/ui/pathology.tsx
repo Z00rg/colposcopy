@@ -52,10 +52,10 @@ export function Pathology({ className }: { className?: string }) {
                 <UiLink href={ROUTES.ATLAS} className="mr-auto">
                   Назад
                 </UiLink>
-                <UiFooter activeStatus="atlas" />
               </>
           )
       )}
+      <UiFooter activeStatus="atlas" />
     </div>
   );
 }
