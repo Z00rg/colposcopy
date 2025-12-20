@@ -6,7 +6,6 @@ import { UiFooter } from "@/shared/ui/ui-footer";
 import { ROUTES } from "@/shared/constants/routes";
 import clsx from "clsx";
 import { useTutorial } from "../model/use-tutorial";
-import { UiSpinner } from "@/shared/ui/ui-spinner";
 import { UiVideoPlayer } from "@/shared/ui/ui-video-player";
 
 export function Tutorial({ className }: { className?: string }) {

@@ -7,7 +7,6 @@ import { UiTextArea } from "@/shared/ui/ui-textarea";
 import clsx from "clsx";
 import { useViewingTry } from "../model/use-viewing-try";
 import { UiFooter } from "@/shared/ui/ui-footer";
-import { UiSpinner } from "@/shared/ui/ui-spinner";
 import { IAnswers, ITestQuestion } from "@/shared/api/tryApi";
 
 export function ViewingTry() {
