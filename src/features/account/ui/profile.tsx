@@ -2,7 +2,6 @@
 
 import clsx from "clsx";
 import { useProfile } from "../model/use-profile";
-import { UiSpinner } from "@/shared/ui/ui-spinner";
 import { UiWhiteTextField } from "@/shared/ui/ui-white-text-field";
 import { SignOutButton } from "@/features/auth";
 
@@ -41,18 +40,28 @@ export function Profile({ className }: { className?: string }) {
         <div className="flex justify-center items-center">
           <Man />
         </div>
-        {isLoading && <UiSpinner />}
         {isError && (
           <div className="font-bold text-red-500">
             Ошибка загрузки данных профиля.
           </div>
         )}
-        <div className="flex flex-col max-w-[250px] lg:max-w-[350px] overflow-auto">
-          <div className="font-bold flex flex-wrap ">
-            {formData.surname} {formData.name} {formData.patronymic}
-          </div>
-          <div className="font-medium flex flex-wrap">{formData.email}</div>
-        </div>
+          {isLoading ? (
+              <div className="flex flex-col max-w-[250px] lg:max-w-[350px] overflow-auto animate-pulse">
+                  <div className="font-bold flex flex-wrap">
+                      <div className="h-5 bg-gray-300 rounded w-48 mb-2"></div>
+                  </div>
+                  <div className="font-medium flex flex-wrap">
+                      <div className="h-4 bg-gray-300 rounded w-36"></div>
+                  </div>
+              </div>
+          ) : (
+              <div className="flex flex-col max-w-[250px] lg:max-w-[350px] overflow-auto">
+                  <div className="font-bold flex flex-wrap">
+                      {formData.surname} {formData.name} {formData.patronymic}
+                  </div>
+                  <div className="font-medium flex flex-wrap">{formData.email}</div>
+              </div>
+          )}
         <button className="ml-auto mr-2">
           <ArrowRight
             className={clsx(
