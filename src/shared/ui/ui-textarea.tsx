@@ -11,6 +11,7 @@ export type UiTextAreaProps = {
   textAreaRef?: React.Ref<HTMLDivElement>;
   height?: string;
   contentKey?: string | number;
+  isLoading?: boolean;
 };
 
 export function UiTextArea({
@@ -18,6 +19,7 @@ export function UiTextArea({
   children,
   height,
   contentKey,
+  isLoading,
 }: UiTextAreaProps) {
   const heightProps = height ? height : "h-[40svh]";
   const containerRef = useRef<HTMLDivElement>(null);
@@ -32,6 +34,29 @@ export function UiTextArea({
       return () => clearTimeout(timer);
     }
   }, [contentKey]);
+
+  if (isLoading) {
+    return (
+        <div
+            className={clsx(
+                className,
+                heightProps,
+                "w-full",
+                "bg-[#F1F1F1] pt-3 px-[17px]",
+                "shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px]",
+                "flex flex-col gap-3 animate-pulse"
+            )}
+        >
+          <div className="h-4 bg-gray-300 rounded w-full"></div>
+          <div className="h-4 bg-gray-300 rounded w-5/6"></div>
+          <div className="h-4 bg-gray-300 rounded w-4/5"></div>
+          <div className="h-4 bg-gray-300 rounded w-full"></div>
+          <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+          <div className="h-4 bg-gray-300 rounded w-5/6"></div>
+          <div className="h-4 bg-gray-300 rounded w-2/3"></div>
+        </div>
+    );
+  }
 
   return (
     <div

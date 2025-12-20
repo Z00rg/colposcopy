@@ -9,6 +9,7 @@ type UiScrollImgProps = {
   className?: string;
   onIndexChangeAction?: (index: number) => void;
   height?: string;
+  isLoading?: boolean;
 };
 
 export function UiScrollImg({
@@ -16,6 +17,7 @@ export function UiScrollImg({
   className,
   onIndexChangeAction,
   height,
+  isLoading,
 }: UiScrollImgProps) {
   const heightProps = height ? height : "h-[35svh]";
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -65,6 +67,20 @@ export function UiScrollImg({
       return () => window.removeEventListener("keydown", handleKeyDown);
     }
   }, [isModalOpen]);
+
+  if (isLoading) {
+    return (
+        <div
+            className={clsx(
+                className,
+                "flex items-center justify-center mx-auto w-full bg-gray-300 rounded-xl animate-pulse",
+                heightProps
+            )}
+        >
+          <div className="w-16 h-16 border-4 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+    );
+  }
 
   return (
     <>
