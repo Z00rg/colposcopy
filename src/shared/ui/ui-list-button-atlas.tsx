@@ -10,6 +10,7 @@ export type UiListButtonAtlasProps = {
   index: number;
   informationOfPathology: PathologyInformation;
   onClick: () => void;
+  isLoading?: boolean;
 };
 
 export function UiListButtonAtlas({
@@ -17,7 +18,23 @@ export function UiListButtonAtlas({
   index,
   informationOfPathology,
   onClick,
+  isLoading,
 }: UiListButtonAtlasProps) {
+
+  if (isLoading) {
+    return (
+        <div
+            className={clsx(
+                className,
+                "flex items-center text-[18px] font-medium gap-3 border-b border-[#E0E0E0] px-3 py-3 rounded-xl animate-pulse"
+            )}
+        >
+          <div className="w-4 h-6 bg-gray-300 rounded"></div>
+          <div className="flex-1 h-6 bg-gray-300 rounded"></div>
+        </div>
+    );
+  }
+
   return (
     <div
       className={clsx(

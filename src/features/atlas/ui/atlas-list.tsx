@@ -3,7 +3,6 @@
 import { UiList } from "@/shared/ui/ui-list";
 import { useAtlasList } from "../model/use-atlas-list";
 import { UiListButtonAtlas } from "@/shared/ui/ui-list-button-atlas";
-import { UiSpinner } from "@/shared/ui/ui-spinner";
 import clsx from "clsx";
 import { useTutorialsList } from "../model/use-tutorials-list";
 
@@ -18,7 +17,6 @@ export function AtlasList({ className }: { className?: string }) {
   return (
     <UiList className={clsx(className, "mt-4 items-start")}>
       <div className="font-bold text-[18px]">Обучение</div>
-      {isLoadingTutorials && <UiSpinner />}
       {isErrorTutorials && (
         <div className="font-bold text-rose-500">
           Ошибка при загрузке списка уроков
@@ -29,7 +27,24 @@ export function AtlasList({ className }: { className?: string }) {
           Нет доступных уроков
         </div>
       )}
-      {tutorials &&
+        {isLoadingTutorials && (
+            <>
+                {[...Array(2)].map((_, index) => (
+                    <UiListButtonAtlas
+                        key={`skeleton-tutorial-${index}`}
+                        className="w-full"
+                        index={index + 1}
+                        informationOfPathology={{
+                            id: 0,
+                            name: "",
+                        }}
+                        onClick={() => {}}
+                        isLoading={true}
+                    />
+                ))}
+            </>
+        )}
+      {!isLoadingTutorials && tutorials &&
         tutorials.map((item, index) => (
           <UiListButtonAtlas
             className="w-full"
@@ -40,7 +55,6 @@ export function AtlasList({ className }: { className?: string }) {
           />
         ))}
       <div className="font-bold text-[18px]">Атлас</div>
-      {isLoading && <UiSpinner />}
       {isError && (
         <div className="font-bold text-rose-500">
           Ошибка при загрузке списка патологий
@@ -51,7 +65,24 @@ export function AtlasList({ className }: { className?: string }) {
           Нет доступных патологий
         </div>
       )}
-      {items &&
+        {isLoading && (
+            <>
+                {[...Array(3)].map((_, index) => (
+                    <UiListButtonAtlas
+                        key={`skeleton-atlas-${index}`}
+                        className="w-full"
+                        index={index + 1}
+                        informationOfPathology={{
+                            id: 0,
+                            name: "",
+                        }}
+                        onClick={() => {}}
+                        isLoading={true}
+                    />
+                ))}
+            </>
+        )}
+      {!isLoading && items &&
         items.map((item, index) => (
           <UiListButtonAtlas
             className="w-full"
