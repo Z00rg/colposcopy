@@ -45,22 +45,23 @@ export function Profile({ className }: { className?: string }) {
             Ошибка загрузки данных профиля.
           </div>
         )}
-          <div className="flex flex-col max-w-[250px] lg:max-w-[350px] overflow-auto">
-              <div className={clsx("font-bold flex flex-wrap", isLoading && "animate-pulse")}>
-                  {isLoading ? (
+          {isLoading ? (
+              <div className="flex flex-col max-w-[250px] lg:max-w-[350px] overflow-auto animate-pulse">
+                  <div className="font-bold flex flex-wrap">
                       <div className="h-6 bg-gray-300 rounded w-48 mb-2"></div>
-                  ) : (
-                      `${formData.surname} ${formData.name} ${formData.patronymic}`
-                  )}
-              </div>
-              <div className={clsx("font-medium flex flex-wrap", isLoading && "animate-pulse")}>
-                  {isLoading ? (
+                  </div>
+                  <div className="font-medium flex flex-wrap">
                       <div className="h-5 bg-gray-300 rounded w-36"></div>
-                  ) : (
-                      formData.email
-                  )}
+                  </div>
               </div>
-          </div>
+          ) : (
+              <div className="flex flex-col max-w-[250px] lg:max-w-[350px] overflow-auto">
+                  <div className="font-bold flex flex-wrap">
+                      {formData.surname} {formData.name} {formData.patronymic}
+                  </div>
+                  <div className="font-medium flex flex-wrap">{formData.email}</div>
+              </div>
+          )}
         <button className="ml-auto mr-2">
           <ArrowRight
             className={clsx(
