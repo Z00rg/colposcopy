@@ -53,7 +53,7 @@ export function UiListButtonClinic({
       className={clsx(
         className,
         "flex w-full flex-col select-none border-b border-[#E0E0E0] rounded-xl px-3 py-3 transition-all duration-200 ease-out",
-        "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md hover:scale-[1.01] cursor-pointer"
+        "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md cursor-pointer"
       )}
     >
       {/* Верхняя строка */}

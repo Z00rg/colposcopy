@@ -10,11 +10,11 @@ export function Instruction({ className }: { className?: string }) {
     <div
       className={clsx(
         className,
-        "w-full border-b-1 border-[#BDBDBD] flex flex-col px-[9px]"
+        "w-full border-b border-gray-200 flex flex-col px-2.25"
       )}
     >
       <div
-        className="h-[30px] flex justify-between font-bold text-[18px] mb-1 gap-26 cursor-pointer"
+        className="h-7.5 flex justify-between font-bold text-[18px] mb-1 gap-26 cursor-pointer"
         onClick={() => setActive(!active)}
       >
         <div className="flex gap-2.5 w-full">Инструкция</div>
@@ -29,11 +29,11 @@ export function Instruction({ className }: { className?: string }) {
       </div>
       <div
         className={clsx(
-          "flex flex-col gap-[9px] text-[18px] my-2 text-[#4B4242]",
+          "flex flex-col gap-2.25 text-[18px] my-2 text-[#4B4242]",
           "transition-all duration-300 ease-in-out overflow-hidden",
           {
             "max-h-0": !active,
-            "max-h-[500px]": active,
+            "max-h-125": active,
           }
         )}
       >

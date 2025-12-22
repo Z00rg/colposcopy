@@ -22,7 +22,7 @@ export function TestList() {
     return (
         <UiList className="mt-4 items-start relative">
             {/* Прокручиваемый контент */}
-            <div className="overflow-y-auto pb-20 w-full">
+            <div className="overflow-y-auto overflow-x-hidden pb-20 w-full">
                 <div className="font-bold text-[18px]">
                     Выберите параметры
                 </div>
@@ -58,7 +58,7 @@ export function TestList() {
                 {!isLoading && items &&
                     items.map((item, index) => (
                         <UiListButtonTest
-                            className="w-full"
+                            className="w-full mt-4"
                             key={item.id}
                             index={index + 1}
                             informationOfPathology={item}
@@ -66,7 +66,7 @@ export function TestList() {
                             onToggle={handleTogglePathology}
                         />
                     ))}
-                <div className="flex w-full border border-b-1 border-[#BDBDBD] my-4"></div>
+                <div className="flex w-full border-b border-gray-200 my-4"></div>
                 <Instruction/>
             </div>
             <div className="absolute bottom-0 left-0 right-0 backdrop-blur-sm px-5 py-3">
