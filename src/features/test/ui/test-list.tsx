@@ -5,7 +5,6 @@ import { UiListButtonTest } from "@/shared/ui/ui-list-button-test";
 import { Instruction } from "./instruction";
 import clsx from "clsx";
 import { useTestList } from "../model/use-test-list";
-import { UiSpinner } from "@/shared/ui/ui-spinner";
 import {UiError} from "@/shared/ui/ui-error";
 
 export function TestList() {
@@ -21,11 +20,12 @@ export function TestList() {
   const isEmptyText = !isLoading && !isError && items.length === 0;
 
   return (
-    <UiList className="mt-4 items-start">
+    <UiList className="mt-4 items-start relative">
+        {/* Прокручиваемый контент */}
+        <div className="overflow-y-auto pb-20 w-full">
       <div className="font-bold text-[18px]">
         Выберите параметры
       </div>
-      {isLoading && <UiSpinner />}
       {isError && (
           <UiError>
               Не удалось загрузить список тестов
@@ -67,6 +67,8 @@ export function TestList() {
         ))}
       <div className="flex w-full border border-b-1 border-[#BDBDBD]"></div>
       <Instruction />
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg px-5 py-3">
       <button
         onClick={handleStartAttempt}
         disabled={selectedIds.length === 0}
@@ -79,6 +81,7 @@ export function TestList() {
       >
         Начать попытку
       </button>
+        </div>
     </UiList>
   );
 }
