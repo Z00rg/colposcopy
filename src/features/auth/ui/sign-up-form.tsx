@@ -3,7 +3,6 @@
 import clsx from "clsx";
 import { useSignUpForm } from "../model/use-sign-up-form";
 import { UiWhiteTextField } from "@/shared/ui/ui-white-text-field";
-import { UiList } from "@/shared/ui/ui-list";
 import { UiButton } from "@/shared/ui/ui-button";
 import { UiSpinner } from "@/shared/ui/ui-spinner";
 import { UiLink } from "@/shared/ui/ui-link";
@@ -21,134 +20,169 @@ export function SignUpForm() {
   } = useSignUpForm();
 
   return (
-    <form
-      className="flex flex-col justify-between mt-[3svh] h-[60svh]"
-      onSubmit={handleSubmit}
-    >
-      <div className="flex flex-col justify-center items-center gap-4">
-        <div className="w-full ml-9 text-[20px] font-medium text-[#4B4242]">
-          Регистрация
-        </div>
-        <UiList className="items-start min-h-[310px] max-h-[320px]">
-          <div className="flex justify-between w-full">
-            <div className="font-semibold text-[18px] text-[#4B4242]">
-              {currentStageIndex === 1 && "Личные данные"}
-              {currentStageIndex === 2 && "Профессиональные данные"}
-              {currentStageIndex === 3 && "Данные для входа"}
-            </div>
-            <div className="font-bold text-[18px]">{currentStageIndex}/3</div>
+      <form
+          className="flex flex-col w-full max-w-md mx-auto px-5 py-6 gap-6"
+          onSubmit={handleSubmit}
+      >
+        {/* Заголовок и индикатор этапа */}
+        <div className="flex flex-col gap-2">
+          <h1 className="text-2xl font-bold text-gray-800">Регистрация</h1>
+          <div className="flex items-center justify-between">
+          <span className="text-base font-medium text-gray-700">
+            {currentStageIndex === 1 && "Личные данные"}
+            {currentStageIndex === 2 && "Профессиональные данные"}
+            {currentStageIndex === 3 && "Данные для входа"}
+          </span>
+            <span className="text-sm font-semibold text-gray-500">
+            Шаг {currentStageIndex}/3
+          </span>
           </div>
-          <div
-            className={clsx("flex flex-col gap-2 mb-2", {
-              hidden: currentStageIndex !== 1,
-            })}
-          >
-            <UiWhiteTextField
-              className="w-[323px]"
-              label="Ваша фамилия"
-              inputProps={{ ...register("surname", { required: true }) }}
-            />
-            <UiWhiteTextField
-              className="w-[323px]"
-              label="Ваше имя"
-              inputProps={{ ...register("name", { required: true }) }}
-            />
-            <UiWhiteTextField
-              className="w-[323px]"
-              label="Ваше отчество"
-              inputProps={{ ...register("patronymic", { required: true }) }}
-            />
-          </div>
-          <div
-            className={clsx("flex flex-col gap-2 mb-2", {
-              hidden: currentStageIndex !== 2,
-            })}
-          >
-            <UiWhiteTextField
-              className="w-[323px]"
-              label="Ваше место работы/учебы"
-              inputProps={{ ...register("work", { required: true }) }}
-            />
-            <UiWhiteTextField
-              className="w-[323px]"
-              label="Ваша должность"
-              inputProps={{ ...register("position", { required: true }) }}
-            />
-          </div>
-          <div
-            className={clsx("flex flex-col gap-2 mb-2", {
-              hidden: currentStageIndex !== 3,
-            })}
-          >
-            <UiWhiteTextField
-              className="w-[323px]"
-              label="Ваш Email"
-              inputProps={{
-                ...register("email", { required: true }),
-                type: "email",
-              }}
-            />
-            <UiWhiteTextField
-              className="w-[323px]"
-              label="Ваш пароль"
-              inputProps={{
-                type: "password",
-                ...register("password", { required: true }),
-              }}
-            />
-            <UiWhiteTextField
-              className="w-[323px]"
-              label="Подтвердите пароль"
-              inputProps={{
-                type: "password",
-                ...register("password2", { required: true }),
-              }}
-            />
-          </div>
-          <div className="mt-auto flex flex-col w-full gap-2">
-            <div className="bg-[#A8A8A8] h-[1px] flex w-full"></div>
-            <div className="flex w-full">
-              <button
-                type="button"
-                className={clsx(
-                  { hidden: currentStageIndex === 1 },
-                  "mr-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointer"
-                )}
-                onClick={() => handleStageChange(currentStageIndex - 1)}
-                disabled={currentStageIndex === 1}
-              >
-                Назад
-              </button>
 
-              <button
-                type="button"
-                className={clsx(
-                  { hidden: currentStageIndex === 3 },
-                  "ml-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointer"
-                )}
-                onClick={() => handleStageChange(currentStageIndex + 1)}
-                disabled={currentStageIndex === 3}
-              >
-                Далее
-              </button>
-            </div>
+          {/* Прогресс-бар */}
+          <div className="flex gap-2 mt-2">
+            {[1, 2, 3].map((step) => (
+                <div
+                    key={step}
+                    className={clsx(
+                        "h-1 flex-1 rounded-full transition-colors duration-300",
+                        step <= currentStageIndex ? "bg-[#2E76AA]" : "bg-gray-300"
+                    )}
+                />
+            ))}
           </div>
-        </UiList>
-      </div>
-      <div className="flex flex-col justify-center items-center mt-[3svh]">
-        {errorMessage && <div className="text-rose-500">{errorMessage}</div>}
+        </div>
+
+        {/* Поля формы */}
+        <div className="flex flex-col gap-4 min-h-[280px]">
+          {/* Этап 1: Личные данные */}
+          <div
+              className={clsx("flex flex-col gap-3", {
+                hidden: currentStageIndex !== 1,
+              })}
+          >
+            <UiWhiteTextField
+                label="Фамилия"
+                placeholder="Введите фамилию"
+                inputProps={{ ...register("surname", { required: true }) }}
+            />
+            <UiWhiteTextField
+                label="Имя"
+                placeholder="Введите имя"
+                inputProps={{ ...register("name", { required: true }) }}
+            />
+            <UiWhiteTextField
+                label="Отчество"
+                placeholder="Введите отчество"
+                inputProps={{ ...register("patronymic", { required: true }) }}
+            />
+          </div>
+
+          {/* Этап 2: Профессиональные данные */}
+          <div
+              className={clsx("flex flex-col gap-3", {
+                hidden: currentStageIndex !== 2,
+              })}
+          >
+            <UiWhiteTextField
+                label="Место работы/учебы"
+                placeholder="Например, СОКБ"
+                inputProps={{ ...register("work", { required: true }) }}
+            />
+            <UiWhiteTextField
+                label="Должность"
+                placeholder="Например, врач-гинеколог"
+                inputProps={{ ...register("position", { required: true }) }}
+            />
+          </div>
+
+          {/* Этап 3: Данные для входа */}
+          <div
+              className={clsx("flex flex-col gap-3", {
+                hidden: currentStageIndex !== 3,
+              })}
+          >
+            <UiWhiteTextField
+                label="Email"
+                placeholder="example@mail.com"
+                inputProps={{
+                  ...register("email", { required: true }),
+                  type: "email",
+                }}
+            />
+            <UiWhiteTextField
+                label="Пароль"
+                placeholder="Минимум 6 символов"
+                inputProps={{
+                  type: "password",
+                  ...register("password", { required: true }),
+                }}
+            />
+            <UiWhiteTextField
+                label="Подтвердите пароль"
+                placeholder="Повторите пароль"
+                inputProps={{
+                  type: "password",
+                  ...register("password2", { required: true }),
+                }}
+            />
+          </div>
+        </div>
+
+        {/* Навигация между этапами */}
+        <div className="flex justify-between items-center pt-4 border-t border-gray-200">
+          <button
+              type="button"
+              className={clsx(
+                  "text-[#2E76AA] hover:text-[#26628A] text-lg font-medium transition-colors cursor-pointer",
+                  currentStageIndex === 1 && "invisible"
+              )}
+              onClick={() => handleStageChange(currentStageIndex - 1)}
+              disabled={currentStageIndex === 1}
+          >
+            ← Назад
+          </button>
+
+          <button
+              type="button"
+              className={clsx(
+                  "text-[#2E76AA] hover:text-[#26628A] text-lg font-medium transition-colors cursor-pointer",
+                  currentStageIndex === 3 && "invisible"
+              )}
+              onClick={() => handleStageChange(currentStageIndex + 1)}
+              disabled={currentStageIndex === 3}
+          >
+            Далее →
+          </button>
+        </div>
+
+        {/* Сообщение об ошибке */}
+        {errorMessage && (
+            <div className="flex items-center gap-2 p-3 bg-red-50 border-l-4 border-red-500 rounded text-sm text-red-600">
+              <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+              {errorMessage}
+            </div>
+        )}
+
+        {/* Кнопка регистрации */}
         <UiButton
-          className={clsx({
-            "bg-[#BAC0C6] hover:bg-[#BAC0C6]": !isAllFieldsFilled,
-          })}
-          disabled={!isAllFieldsFilled || isPending}
+            className={clsx(
+                "w-full",
+                !isAllFieldsFilled && "opacity-50 cursor-not-allowed"
+            )}
+            disabled={!isAllFieldsFilled || isPending}
         >
           {isPending ? <UiSpinner /> : "Регистрация"}
         </UiButton>
-        <div className="text-[20px] text-white mt-8">
-          Есть аккаунт? <UiLink href={ROUTES.SIGN_IN}>Авторизируйтесь</UiLink>
+
+        {/* Ссылка на авторизацию */}
+        <div className="text-center text-base text-gray-600">
+          Уже есть аккаунт?{" "}
+          <UiLink href={ROUTES.SIGN_IN} className="text-[#2E76AA] hover:text-[#26628A] font-medium">
+            Войти
+          </UiLink>
         </div>
-      </div>
-    </form>
+      </form>
   );
 }

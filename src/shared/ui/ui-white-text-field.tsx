@@ -12,35 +12,43 @@ export type UiTextFieldProps = {
 };
 
 export function UiWhiteTextField({
-  className,
-  error,
-  label,
-  placeholder,
-  inputProps,
-}: UiTextFieldProps) {
+                                   className,
+                                   error,
+                                   label,
+                                   placeholder,
+                                   inputProps,
+                                 }: UiTextFieldProps) {
   const id = useId();
-  const isActive = !inputProps?.disabled;
 
   return (
-    <div className={clsx(className, "flex flex-col gap-1")}>
-      {label && (
-        <label htmlFor={id} className="block text-[#717171] font-medium text-[15px]">
-          {label}
-        </label>
-      )}
-      <input
-        {...inputProps}
-        id={id}
-        placeholder={placeholder}
-        suppressHydrationWarning
-        className={clsx(
-          inputProps?.className,
-          "w-full h-[30px] rounded-[8px] border border-[#C0C7CF] text-[16px] text-zinc-600 px-2 bg-white transition-all duration-300 ease-in-out shadow-[0px_4px_4px_rgba(0,0,0,0.15)] focus:outline-none focus:ring-2 focus:ring-[#A9C9E6]",
-          isActive &&
-            "border-[#639EDD] ring-1 ring-[#639EDD]/60 bg-[#F9FCFF] animate-[pulse_2s_ease-in-out_infinite]"
+      <div className={clsx(className, "flex flex-col gap-1.5")}>
+        {label && (
+            <label htmlFor={id} className="text-sm font-medium text-gray-700">
+              {label}
+            </label>
         )}
-      />
-      {error && <div className="text-rose-400 text-sm">{error}</div>}
-    </div>
+        <input
+            {...inputProps}
+            id={id}
+            placeholder={placeholder}
+            suppressHydrationWarning
+            className={clsx(
+                inputProps?.className,
+                "w-full h-11 rounded-lg border border-gray-300 text-base text-gray-700 px-3 bg-white",
+                "transition-all duration-200",
+                "placeholder:text-gray-400",
+                "focus:outline-none focus:ring-2 focus:ring-[#2E76AA] focus:border-transparent",
+                "disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
+            )}
+        />
+        {error && (
+            <div className="text-red-500 text-sm flex items-center gap-1">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+              {error}
+            </div>
+        )}
+      </div>
   );
 }
