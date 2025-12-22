@@ -50,7 +50,7 @@ export function TestTasks() {
                 <UiScrollImg img={[]} height="h-[28svh]" isLoading={true} />
 
                 {/* Скелетон текстовой области с вопросами */}
-                <div className="mt-5 w-full h-[34svh] bg-[#F1F1F1] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px] pt-3 px-[17px] flex flex-col gap-3 animate-pulse">
+                <div className="mt-5 w-full h-[34svh] bg-[#F1F1F1] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px] pt-3 px-4.25 flex flex-col gap-3 animate-pulse">
                   <div className="h-5 bg-gray-300 rounded w-3/4"></div>
                   <div className="h-4 bg-gray-300 rounded w-full mt-3"></div>
                   <div className="h-4 bg-gray-300 rounded w-5/6"></div>
@@ -109,7 +109,7 @@ export function TestTasks() {
 
                 return (
                   <div
-                    className="flex flex-col gap-2 w-full text-[13px] pb-5 border-b-2 border-[#BDBDBD]"
+                    className="flex flex-col gap-2 w-full text-[13px] pb-5 border-b border-gray-200"
                     key={`${taskId}-${questionIndex}`}
                   >
                     {/* Заголовок вопроса */}
@@ -143,7 +143,7 @@ export function TestTasks() {
                               {
                                 "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md hover:scale-[1.01]":
                                   true,
-                                "bg-gradient-to-r from-blue-50 to-blue-100 border-blue-400 shadow-md":
+                                "bg-linear-to-r from-blue-50 to-blue-100 border-blue-400 shadow-md":
                                   isChecked,
                               }
                             )}
@@ -162,7 +162,7 @@ export function TestTasks() {
                             </div>
 
                             {/* Текст варианта ответа */}
-                            <div className="break-words whitespace-normal flex-1 text-gray-800 text-left">
+                            <div className="wrap-break-word whitespace-normal flex-1 text-gray-800 text-left">
                               {answer.text}
                             </div>
 

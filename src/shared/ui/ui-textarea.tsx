@@ -42,7 +42,7 @@ export function UiTextArea({
                 className,
                 heightProps,
                 "w-full",
-                "bg-[#F1F1F1] pt-3 px-[17px]",
+                "bg-[#F1F1F1] pt-3 px-4.25",
                 "shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px]",
                 "flex flex-col gap-3 animate-pulse"
             )}
@@ -65,8 +65,8 @@ export function UiTextArea({
         className,
         heightProps,
         "w-full",
-        "text-[16px] font-normal bg-[#F1F1F1] pt-3 px-[17px]",
-        "shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px]",
+        "text-[16px] font-normal bg-white border border-gray-200 pt-3 px-4.25",
+        "shadow-md rounded-[20px]",
         "overflow-y-auto overflow-x-hidden scroll-smooth",
         "flex flex-col",
         "text-justify hyphens-auto"

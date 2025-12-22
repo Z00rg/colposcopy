@@ -1,12 +1,12 @@
 "use client";
 
 import clsx from "clsx";
-import { useProfile } from "../model/use-profile";
-import { UiWhiteTextField } from "@/shared/ui/ui-white-text-field";
-import { SignOutButton } from "@/features/auth";
-import { UiError } from "@/shared/ui/ui-error";
+import {useProfile} from "../model/use-profile";
+import {UiWhiteTextField} from "@/shared/ui/ui-white-text-field";
+import {SignOutButton} from "@/features/auth";
+import {UiError} from "@/shared/ui/ui-error";
 
-export function Profile({ className }: { className?: string }) {
+export function Profile({className}: { className?: string }) {
     const {
         formData,
         active,
@@ -23,21 +23,22 @@ export function Profile({ className }: { className?: string }) {
         <div
             className={clsx(
                 className,
-                "flex bg-white border border-gray-200 w-full px-5 py-4 flex-col rounded-xl shadow-sm flex-1 transition-all duration-200",
-                !active && "hover:shadow-md hover:border-gray-300 cursor-pointer"
+                "flex bg-white border border-gray-200 w-full px-5 py-4 flex-col rounded-xl shadow-sm flex-1 transition-all duration-200 ",
+                !active && "hover:shadow-md hover:border-gray-300"
             )}
         >
             {/* Верхняя часть - заголовок профиля */}
             <div
                 className={clsx(
-                    "flex items-center gap-4 pb-4",
-                    active && "border-b border-gray-200"
+                    "flex items-center gap-4 cursor-pointer",
+                    active && "border-b border-gray-200 pb-4"
                 )}
-                onClick={() => !active && setActive(true)}
+                onClick={() => setActive(!active)}
             >
                 {/* Иконка пользователя */}
-                <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
-                    <Man className="w-6 h-6" />
+                <div
+                    className="shrink-0 w-12 h-12 bg-linear-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                    <Man className="w-6 h-6"/>
                 </div>
 
                 {/* Информация о пользователе */}
@@ -66,7 +67,7 @@ export function Profile({ className }: { className?: string }) {
 
                 {/* Кнопка раскрытия */}
                 <button
-                    className="flex-shrink-0 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    className="shrink-0 p-2 hover:bg-gray-100 rounded-lg transition-colors"
                     onClick={(e) => {
                         e.stopPropagation();
                         setActive(!active);
@@ -85,7 +86,7 @@ export function Profile({ className }: { className?: string }) {
             <div
                 className={clsx(
                     "flex flex-col gap-4 transition-all duration-300 ease-in-out overflow-hidden",
-                    active ? "max-h-[2000px] opacity-100 mt-4" : "max-h-0 opacity-0"
+                    active ? "max-h-500 opacity-100 mt-4" : "max-h-0 opacity-0"
                 )}
             >
                 <Section
@@ -171,9 +172,7 @@ export function Profile({ className }: { className?: string }) {
                     />
                 </Section>
 
-                <div className="border-t border-gray-200 pt-4 mt-2">
-                    <SignOutButton />
-                </div>
+                <SignOutButton className="ml-auto"/>
             </div>
         </div>
     );
@@ -201,7 +200,7 @@ const Section = ({
                     className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                     aria-label="Редактировать"
                 >
-                    <Pencil className="w-4 h-4" />
+                    <Pencil className="w-4 h-4"/>
                 </button>
             ) : (
                 <button
@@ -216,7 +215,7 @@ const Section = ({
     </div>
 );
 
-export const Man = ({ className }: { className?: string }) => (
+export const Man = ({className}: { className?: string }) => (
     <svg
         className={className}
         width="26"
@@ -236,7 +235,7 @@ export const Man = ({ className }: { className?: string }) => (
     </svg>
 );
 
-export const ArrowRight = ({ className }: { className?: string }) => (
+export const ArrowRight = ({className}: { className?: string }) => (
     <svg
         className={className}
         width="9"
@@ -252,7 +251,7 @@ export const ArrowRight = ({ className }: { className?: string }) => (
     </svg>
 );
 
-export const Pencil = ({ className }: { className?: string }) => (
+export const Pencil = ({className}: { className?: string }) => (
     <svg
         className={className}
         width="18"

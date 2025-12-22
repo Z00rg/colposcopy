@@ -1,11 +1,12 @@
 import { useSignOut } from "../model/use-sign-out";
+import clsx from "clsx";
 
-export function SignOutButton() {
+export function SignOutButton( { className } : { className?: string }   ) {
   const { signOut } = useSignOut();
 
   return (
     <button
-      className="ml-auto text-rose-500 hover:text-rose-700 text-[20px] cursor-pointer"
+      className={clsx(className, "ml-auto text-rose-500 hover:text-rose-700 text-[20px] cursor-pointer")}
       onClick={() => signOut({})}
     >
       Выйти из аккаунта
