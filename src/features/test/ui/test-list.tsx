@@ -69,7 +69,7 @@ export function TestList() {
                 <div className="flex w-full border border-b-1 border-[#BDBDBD] my-4"></div>
                 <Instruction/>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 backdrop-blur-md px-5 py-3">
+            <div className="absolute bottom-0 left-0 right-0 backdrop-blur-sm px-5 py-3">
                 <div className="flex justify-end">
                     <button
                         onClick={handleStartAttempt}
