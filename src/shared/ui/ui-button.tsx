@@ -1,9 +1,9 @@
 import clsx from "clsx";
-import { ButtonHTMLAttributes } from "react";
+import {ButtonHTMLAttributes} from "react";
 
 export type UiButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-export function UiButton({ className, ...props }: UiButtonProps) {
+export function UiButton({className, ...props}: UiButtonProps) {
     return (
         <button
             {...props}

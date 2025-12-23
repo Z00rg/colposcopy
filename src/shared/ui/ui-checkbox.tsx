@@ -3,14 +3,14 @@ import clsx from "clsx";
 
 export type UiCheckBoxProps = React.ComponentPropsWithoutRef<"input">;
 
-export function UiCheckBox({ className, ...props }: UiCheckBoxProps) {
-  return (
-    <input
-      {...props}
-      type="checkbox"
-      className={clsx(
-        className,
-        `
+export function UiCheckBox({className, ...props}: UiCheckBoxProps) {
+    return (
+        <input
+            {...props}
+            type="checkbox"
+            className={clsx(
+                className,
+                `
             w-5 h-5 
             appearance-none 
             border border-gray-400 rounded 
@@ -26,7 +26,7 @@ export function UiCheckBox({ className, ...props }: UiCheckBoxProps) {
             checked:[&:after]:items-center 
             checked:[&:after]:justify-center
           `
-      )}
-    />
-  );
+            )}
+        />
+    );
 }
