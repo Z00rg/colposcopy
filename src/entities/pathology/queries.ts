@@ -1,14 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
-import { atlasApi } from "@/shared/api/atlasApi";
+import {useQuery} from "@tanstack/react-query";
+import {atlasApi} from "@/shared/api/atlasApi";
 
 const pathologyKey = (id: string) => ["pathology", id];
 
+// Запрос определенной патологии
 export function usePathologyQuery(pathologyId: string) {
-  return useQuery({
-    queryKey: pathologyKey(pathologyId),
-    queryFn: () => atlasApi.getPathologyInfo(pathologyId),
-    enabled: !!pathologyId,
-    staleTime: 60 * 60 * 1000, // 60 минут
-    retry: 0,
-  });
+
+    return useQuery({
+        queryKey: pathologyKey(pathologyId),
+        queryFn: () => atlasApi.getPathologyInfo(pathologyId),
+        enabled: !!pathologyId,
+        staleTime: 60 * 60 * 1000, // 60 минут
+        retry: 0,
+    });
 }
