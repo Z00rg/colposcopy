@@ -7,25 +7,29 @@ export type UiFooterProps = {
   className?: string;
 };
 
-export function UiFooter({activeStatus, className}: UiFooterProps) {
+export function UiFooter({ activeStatus, className }: UiFooterProps) {
   return (
-    <>
-    {/* Область, чтобы футер не перекрывал контент */}
-    <div className="h-[9svh] w-full invisible" />
+      <>
+        {/* Область, чтобы футер не перекрывал контент */}
+        <div className="h-[9svh] w-full" />
 
-    <div className="fixed bottom-0 left-0 w-full lg:w-[28svw] lg:left-1/2 lg:transform lg:-translate-x-1/2 h-[9svh] z-10 backdrop-blur-md">
-      <footer
-        className={clsx(
-          className,
-          "flex mx-auto my-auto justify-center items-center px-5 py-1.5 w-full h-full backdrop-blur-md gap-8"
-        )}
-      >
-        <UiFooterButton variant="book" active={activeStatus === "atlas"} />
-        <UiFooterButton variant="clinic" active={activeStatus === "clinic"} />
-        <UiFooterButton variant="check" active={activeStatus === "test"} />
-        <UiFooterButton variant="man" active={activeStatus === "main"} />
-      </footer>
-    </div>
-    </>
+        <div className="fixed bottom-0 left-0 w-full lg:w-[28svw] lg:left-1/2 lg:transform lg:-translate-x-1/2 z-50">
+          <footer
+              className={clsx(
+                  className,
+                  "flex mx-auto justify-around items-center",
+                  "h-[9svh] px-4",
+                  "bg-white/25 backdrop-blur-md",
+                  "border-t border-white/20",
+                  "shadow-[0_-2px_16px_rgba(0,0,0,0.06)]"
+              )}
+          >
+            <UiFooterButton variant="book" active={activeStatus === "atlas"} />
+            <UiFooterButton variant="clinic" active={activeStatus === "clinic"} />
+            <UiFooterButton variant="check" active={activeStatus === "test"} />
+            <UiFooterButton variant="man" active={activeStatus === "main"} />
+          </footer>
+        </div>
+      </>
   );
 }
