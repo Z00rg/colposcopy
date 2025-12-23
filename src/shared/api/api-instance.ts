@@ -7,6 +7,7 @@ const AUTH_URLS = [
     "/auth/login/",
     "/auth/refresh_token/",
     "/auth/register/worker/",
+    "/auth/logout/",
 ];
 
 export function getCookie(name: string): string | null {
