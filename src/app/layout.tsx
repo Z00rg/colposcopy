@@ -20,20 +20,20 @@ export default function RootLayout({
                     {/* Верхний овал */}
                     <div
                         className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2
-               h-[338px] w-[754px] lg:h-[550px] lg:w-[900px] rounded-full bg-[#B8D3F9] blur-[100px]"
+               h-84.5 w-188.5 lg:h-137.5 lg:w-225 rounded-full bg-[#B8D3F9] blur-[100px]"
                     />
                     {/* Средний овал */}
                     <div
                         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-               h-[620px] w-[754px] rounded-full bg-[#E4E4E4] blur-[100px]"
+               h-155 w-188.5 rounded-full bg-[#E4E4E4] blur-[100px]"
                     />
                     {/* Нижний овал */}
                     <div
                         className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2
-               h-[338px] w-[754px] lg:h-[550px] lg:w-[900px] rounded-full bg-[#B8D3F9] blur-[100px]"
+               h-84.5 w-188.5 lg:h-137.5 lg:w-225 rounded-full bg-[#B8D3F9] blur-[100px]"
                     />
                 </div>
-                <div className="lg:w-[28svw] lg:shadow-xl lg:h-[100svh] lg:overflow-y-auto relative min-h-svh">
+                <div className="lg:w-[28svw] lg:shadow-xl lg:h-svh lg:overflow-y-auto relative min-h-svh">
                     {children}
                 </div>
             </div>
