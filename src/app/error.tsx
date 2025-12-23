@@ -27,7 +27,7 @@ export default function Error({
                 </p>
 
                 {/* Сообщение об ошибке (для разработчика) */}
-                <pre className="text-xs text-gray-400 break-words bg-gray-100 p-3 rounded-lg w-full max-h-32 overflow-auto">
+                <pre className="text-xs text-gray-400 wrap-break-word bg-gray-100 p-3 rounded-lg w-full max-h-32 overflow-auto">
           {error.message}
         </pre>
 
@@ -36,7 +36,7 @@ export default function Error({
                     onClick={reset}
                     className={clsx(
                         "mt-3 w-full py-3 rounded-xl font-medium text-white cursor-pointer",
-                        "bg-gradient-to-r from-blue-500 to-blue-600",
+                        "bg-linear-to-r from-blue-500 to-blue-600",
                         "hover:from-blue-600 hover:to-blue-700 active:from-blue-700 active:to-blue-800",
                         "transition-all duration-200"
                     )}

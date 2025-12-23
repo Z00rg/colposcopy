@@ -1,5 +1,5 @@
-import { Pathology } from "@/features/atlas";
-import { Metadata } from "next";
+import {Pathology} from "@/features/atlas";
+import {Metadata} from "next";
 
 export const metadata: Metadata = {
     title: "Паталогия",
@@ -8,7 +8,8 @@ export const metadata: Metadata = {
 export default function PathologyDetailPage() {
     return (
         <div className="flex flex-col w-full">
-            <Pathology />
+            {/* Отображение выбранной паталогии */}
+            <Pathology/>
         </div>
     );
 }

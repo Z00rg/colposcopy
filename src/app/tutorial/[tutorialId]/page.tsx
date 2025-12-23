@@ -7,6 +7,7 @@ export const metadata: Metadata = {
 
 export default function TutorialPage() {
     return (<div className="flex flex-col w-full">
+        {/* Отображение выбранного урока */}
         <Tutorial/>
     </div>)
 }

@@ -1,16 +1,19 @@
-import { SignInForm } from "@/features/auth";
-import { UiHeader } from "@/shared/ui/ui-header";
-import { Metadata } from "next";
+import {SignInForm} from "@/features/auth";
+import {UiHeader} from "@/shared/ui/ui-header";
+import {Metadata} from "next";
 
 export const metadata: Metadata = {
     title: "Авторизация",
 };
 
 export default function SignInPage() {
-  return (
-    <div className="flex flex-col items-center">
-      <UiHeader variant="logo" />
-      <SignInForm />
-    </div>
-  );
+    return (
+        <div className="flex flex-col items-center">
+            {/* Хедр */}
+            <UiHeader variant="logo"/>
+
+            {/* Формочка авторизации */}
+            <SignInForm/>
+        </div>
+    );
 }

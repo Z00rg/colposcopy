@@ -8,6 +8,7 @@ export const metadata: Metadata = {
 export default function TryDetailPage() {
     return (
         <div className="flex flex-col w-full">
+            {/* Отображение выбранной попытки */}
             <ViewingTry />
         </div>
     );

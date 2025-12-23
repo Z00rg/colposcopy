@@ -10,8 +10,10 @@ export default function MenuLayout({
             className=
                 "flex flex-col w-full"
         >
+            {/* Хедр */}
             <UiHeader variant="withoutLogo" />
 
+            {/* Layout */}
             <div className="flex flex-col w-full flex-1">
                 <div className="px-5">
                     {children}

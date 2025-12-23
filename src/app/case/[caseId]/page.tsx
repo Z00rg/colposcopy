@@ -1,5 +1,5 @@
-import { Case } from "@/features/clinical-case/ui/case";
-import { Metadata } from "next";
+import {Case} from "@/features/clinical-case/ui/case";
+import {Metadata} from "next";
 
 export const metadata: Metadata = {
     title: "Клинический кейс",
@@ -8,7 +8,8 @@ export const metadata: Metadata = {
 export default function CasePage() {
     return (
         <div className="flex flex-col w-full">
-            <Case />
+            {/* Отображение клинического случая */}
+            <Case/>
         </div>
     );
 }
