@@ -1,70 +1,72 @@
-import { createInstance, RequestOptions } from "./api-instance";
+import {createInstance, RequestOptions} from "./api-instance";
 
 // DTO
 
 interface TryInfo {
-  id: number;
-  date: string;
-  status: boolean;
-  mark: string;
-  time: string;
+    id: number;
+    date: string;
+    status: boolean;
+    mark: string;
+    time: string;
 }
 
 export interface GetTryListInfoDto {
-  items: TryInfo[];
+    items: TryInfo[];
 }
 
 export type QuestionType = 0 | 1; // 0: Один ответ , 1: Множественный ответ
 
 export interface IAnswers {
-  id: number;
+    id: number;
 
-  text: string;
+    text: string;
 
-  isSelected: boolean;
+    isSelected: boolean;
 }
 
 export interface ITestQuestion {
-  id: number;
+    id: number;
 
-  question: string;
+    question: string;
 
-  isCorrect: boolean;
+    isCorrect: boolean;
 
-  typeQuestion: QuestionType;
+    typeQuestion: QuestionType;
 
-  instructions: string;
+    instructions: string;
 
-  answers: IAnswers[];
+    answers: IAnswers[];
 }
 
 export interface ITestTask {
-  id: number;
+    id: number;
 
-  imageSrcs: string[];
+    imageSrcs: string[];
 
-  testsQuestions: ITestQuestion[];
+    testsQuestions: ITestQuestion[];
 }
 
 export interface GetTryInfoDto {
-  items: ITestTask[];
+    items: ITestTask[];
 }
 
 // API
 
+// Список попыток
 export const getTryList = (options?: RequestOptions) =>
-  createInstance<GetTryListInfoDto>(
-    { url: `/account/try-list/`, method: "GET" },
-    options
-  );
+    createInstance<GetTryListInfoDto>(
+        {url: `/account/try-list/`, method: "GET"},
+        options
+    );
 
+// Определенная попытка
 export const getTryInfo = (tryId: string, options?: RequestOptions) =>
-  createInstance<GetTryInfoDto>(
-    { url: `/account/attempt/${tryId}/`, method: "GET" },
-    options
-  );
+    createInstance<GetTryInfoDto>(
+        {url: `/account/attempt/${tryId}/`, method: "GET"},
+        options
+    );
 
 export const tryApi = {
-  getTryList,
-  getTryInfo,
+    getTryList,
+    getTryInfo,
 };

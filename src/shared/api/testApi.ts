@@ -1,112 +1,104 @@
-import { createInstance, RequestOptions } from "./api-instance";
+import {createInstance, RequestOptions} from "./api-instance";
 
 // DTO
 
 export interface GetInstructionInfoDto {
-  text: string;
+    text: string;
 }
 
 interface PathologyInfo {
-  id: number;
-  name: string;
+    id: number;
+    name: string;
 }
 
 export interface GetPathologyListInfoDto {
-  items: PathologyInfo[];
+    items: PathologyInfo[];
 }
 
-export type QuestionType = 0 | 1; // 0: Один ответ , 1: Множественный ответ
+export type QuestionType = 0 | 1; // 0: Один ответ, 1: Множественный ответ
 
 export interface IAnswers {
-  id: number;
+    id: number;
 
-  text: string;
+    text: string;
 }
 
 export interface ITestQuestion {
-  id: number;
+    id: number;
 
-  question: string;
+    question: string;
 
-  typeQuestion: QuestionType;
+    typeQuestion: QuestionType;
 
-  instructions: string;
+    instructions: string;
 
-  answers: IAnswers[];
+    answers: IAnswers[];
 }
 
 export interface ITestTask {
-  id: number;
+    id: number;
 
-  imageSrcs: string[];
+    imageSrcs: string[];
 
-  testsQuestions: ITestQuestion[];
+    testsQuestions: ITestQuestion[];
 }
 
 export interface GetTestTasksDataDto {
-  items: ITestTask[];
+    items: ITestTask[];
 }
 
-// export type SubmitTestAnswersBodyDto = {
-//   answers: Record<number, Record<number, number[]>>;
-// };
-
 export interface ISelectedAnswer {
-  id: number;
+    id: number;
 }
 
 export interface ISelectedQuestion {
-  questionId: number,
-  selectedAnswers: number[]
+    questionId: number,
+    selectedAnswers: number[]
 }
 
 export interface ISelectedCase {
-  caseId: number,
-  answers: ISelectedQuestion[]
+    caseId: number,
+    answers: ISelectedQuestion[]
 }
 
 export interface SubmitTestAnswersBodyDto {
-  items: ISelectedCase[],
-  duration: number,
-};
+    items: ISelectedCase[],
+    duration: number,
+}
 
 
 // API
 
-export const getInstructionInfo = (options?: RequestOptions) =>
-  createInstance<GetInstructionInfoDto>(
-    { url: `/test/instruction`, method: "GET" },
-    options
-  );
-//+
+// Список тестов
 export const getTestListInfo = (options?: RequestOptions) =>
-  createInstance<GetPathologyListInfoDto>(
-    { url: `/atlas/atlas-list/`, method: "GET" },
-    options
-  );
-//+
+    createInstance<GetPathologyListInfoDto>(
+        {url: `/atlas/atlas-list/`, method: "GET"},
+        options
+    );
+
+// Определенный набор тестов
 export const getTestTasks = (tasksId: string, options?: RequestOptions) =>
-  createInstance<GetTestTasksDataDto>(
-    { url: `/test/test-tasks/${tasksId}`, method: "GET" },
-    options
-  );
-//+
+    createInstance<GetTestTasksDataDto>(
+        {url: `/test/test-tasks/${tasksId}`, method: "GET"},
+        options
+    );
+
+// Отправки ответов на тесты
 export const submitTestAnswers = (
-  body: SubmitTestAnswersBodyDto,
-  options?: RequestOptions
+    body: SubmitTestAnswersBodyDto,
+    options?: RequestOptions
 ) =>
-  createInstance<void>(
-    {
-      url: `/test/submit-answers/`,
-      method: "POST",
-      data: body,
-    },
-    options
-  );
+    createInstance<void>(
+        {
+            url: `/test/submit-answers/`,
+            method: "POST",
+            data: body,
+        },
+        options
+    );
 
 export const testApi = {
-  getInstructionInfo,
-  getTestListInfo,
-  getTestTasks,
-  submitTestAnswers,
+    getTestListInfo,
+    getTestTasks,
+    submitTestAnswers,
 };
