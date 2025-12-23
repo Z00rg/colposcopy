@@ -53,7 +53,7 @@ export function SignUpForm() {
         </div>
 
         {/* Поля формы */}
-        <div className="flex flex-col gap-4 min-h-[280px]">
+        <div className="flex flex-col gap-4 ">
           {/* Этап 1: Личные данные */}
           <div
               className={clsx("flex flex-col gap-3", {
