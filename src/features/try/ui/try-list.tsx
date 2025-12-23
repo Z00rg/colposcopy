@@ -1,53 +1,61 @@
 "use client";
 
-import { UiList } from "@/shared/ui/ui-list";
-import { useTryList } from "../model/use-try-list";
-import { UiListButtonTry } from "@/shared/ui/ui-list-button-try";
+import {UiList} from "@/shared/ui/ui-list";
+import {useTryList} from "../model/use-try-list";
+import {UiListButtonTry} from "@/shared/ui/ui-list-button-try";
 import clsx from "clsx";
 import {UiError} from "@/shared/ui/ui-error";
 
-export function TryList({ className }: { className?: string }) {
-  const { isLoading, items, isError, handleTryClick } = useTryList();
+export function TryList({className}: { className?: string }) {
+    const {isLoading, items, isError, handleTryClick} = useTryList();
 
-  const isEmptyText = !isLoading && !isError && items.length === 0;
+    const isEmptyText = !isLoading && !isError && items.length === 0;
 
-  return (
-    <UiList height="h-[47svh]" className={clsx(className, "mt-4")}>
-      {isEmptyText && (
-        <div className="flex text-[18px] pb-4 font-medium">
-          Пока не было начато ни одной попытки
-        </div>
-      )}
-      {isError && (
-          <UiError>
-            Не удалось загрузить список попыток
-          </UiError>
-      )}
-      {isLoading && (
-          <>
-            {[...Array(4)].map((_, index) => (
-                <UiListButtonTry
-                    key={`skeleton-${index}`}
-                    informationOfTry={{
-                      id: 0,
-                      date: "",
-                      mark: "",
-                      time: "",
-                    }}
-                    handleClickAction={() => {}}
-                    isLoading={true}
-                />
-            ))}
-          </>
-      )}
-      {!isLoading && items && items.length > 0 &&
-        items.map((item) => (
-          <UiListButtonTry
-            key={item.id}
-            informationOfTry={item}
-            handleClickAction={handleTryClick}
-          />
-        ))}
-    </UiList>
-  );
+    return (
+        <UiList height="h-[47svh]" className={clsx(className, "mt-4")}>
+            {/* Отображения без попыток */}
+            {isEmptyText && (
+                <div className="flex text-[18px] pb-4 font-medium">
+                    Пока не было начато ни одной попытки
+                </div>
+            )}
+
+            {/* Ошибка */}
+            {isError && (
+                <UiError>
+                    Не удалось загрузить список попыток
+                </UiError>
+            )}
+
+            {/* Скелетон лоадер списка попыток */}
+            {isLoading && (
+                <>
+                    {[...Array(4)].map((_, index) => (
+                        <UiListButtonTry
+                            key={`skeleton-${index}`}
+                            informationOfTry={{
+                                id: 0,
+                                date: "",
+                                mark: "",
+                                time: "",
+                            }}
+                            handleClickAction={() => {
+                            }}
+                            isLoading={true}
+                        />
+                    ))}
+                </>
+            )}
+
+            {/* Отображение списка попыток */}
+            {!isLoading && items && items.length > 0 &&
+                items.map((item) => (
+                    <UiListButtonTry
+                        key={item.id}
+                        informationOfTry={item}
+                        handleClickAction={handleTryClick}
+                    />
+                ))}
+        </UiList>
+    );
 }

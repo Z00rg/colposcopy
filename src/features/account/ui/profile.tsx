@@ -89,6 +89,7 @@ export function Profile({className}: { className?: string }) {
                     active ? "max-h-500 opacity-100 mt-4" : "max-h-0 opacity-0"
                 )}
             >
+                {/* Секция личные данные */}
                 <Section
                     title="Личные данные"
                     isEditing={editState[0]}
@@ -121,6 +122,7 @@ export function Profile({className}: { className?: string }) {
                     />
                 </Section>
 
+                {/* Секция профессиональные данные */}
                 <Section
                     title="Профессиональные данные"
                     isEditing={editState[1]}
@@ -145,6 +147,7 @@ export function Profile({className}: { className?: string }) {
                     />
                 </Section>
 
+                {/* Секция данные для входа */}
                 <Section
                     title="Данные для входа"
                     isEditing={editState[2]}
@@ -172,6 +175,7 @@ export function Profile({className}: { className?: string }) {
                     />
                 </Section>
 
+                {/* Выход из аккаунта */}
                 <SignOutButton className="ml-auto"/>
             </div>
         </div>

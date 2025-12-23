@@ -23,19 +23,26 @@ export function TestList() {
         <UiList className="mt-4 items-start relative">
             {/* Прокручиваемый контент */}
             <div className="overflow-y-auto overflow-x-hidden pb-20 w-full">
+                {/* Название блока */}
                 <div className="font-bold text-[18px]">
                     Выберите параметры
                 </div>
+
+                {/* Ошибка загрузки списка тестов */}
                 {isError && (
                     <UiError>
                         Не удалось загрузить список тестов
                     </UiError>
                 )}
+
+                {/* Ошибка не заполненных тестов */}
                 {isEmptyText && (
                     <div className="flex text-[18px] pb-4 font-medium">
                         Нет доступных тем для тестирования
                     </div>
                 )}
+
+                {/* Скелетон лоадер */}
                 {isLoading && (
                     <>
                         {[...Array(4)].map((_, index) => (
@@ -55,6 +62,8 @@ export function TestList() {
                         ))}
                     </>
                 )}
+
+                {/* Отображение списка тестов */}
                 {!isLoading && items &&
                     items.map((item, index) => (
                         <UiListButtonTest
@@ -66,9 +75,15 @@ export function TestList() {
                             onToggle={handleTogglePathology}
                         />
                     ))}
+
+                {/* Разделитель */}
                 <div className="flex w-full border-b border-gray-200 my-4"></div>
+
+                {/* Блок инструкции */}
                 <Instruction/>
             </div>
+
+            {/* Фиксированный блок с переходом к тесту по выбранным темам */}
             <div className="absolute bottom-0 left-0 right-0 bg-white/70 backdrop-blur-md px-5 py-3">
                 <div className="flex justify-end">
                     <button
