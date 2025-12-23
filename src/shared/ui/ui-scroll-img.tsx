@@ -123,7 +123,7 @@ export function UiScrollImg({
             {/* Модалка */}
             {isModalOpen && (
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
+                    className="fixed inset-0 z-100 flex items-center justify-center bg-black/90"
                     onClick={closeModal}
                 >
                     <div
@@ -144,7 +144,7 @@ export function UiScrollImg({
                             <img
                                 src={img[modalImageIndex]}
                                 alt={`Fullscreen ${modalImageIndex + 1}`}
-                                className="max-w-full max-h-full object-contain"
+                                className="max-w-full max-h-[95svh] object-contain"
                                 loading="eager"
                                 draggable="false"
                             />

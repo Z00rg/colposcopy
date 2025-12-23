@@ -93,7 +93,7 @@ export function Case({className}: { className?: string }) {
                     <img
                         src={caseDetails.imgSchema}
                         alt={caseDetails.imgSchema}
-                        className="max-w-full max-h-full object-contain"
+                        className="max-w-full max-h-[95svh] object-contain"
                         loading="eager"
                         draggable="false"
                     />
