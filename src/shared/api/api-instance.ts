@@ -114,9 +114,3 @@ export type RequestOptions = Parameters<typeof createInstance>[1];
 export type BodyType<Data> = Data;
 
 export type ErrorType<Error> = AxiosError<Error>;
-
-/*
- * Этот модуль создаёт и экспортирует универсальную обёртку для работы с API с помощью Axios.
- * * apiInstance: Экземпляр Axios с централизованными настройками, такими как базовый URL ("/api")
- * и заголовки по умолчанию ("Content-Type": "application/json"), интерцепторы.
- */

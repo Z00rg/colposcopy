@@ -103,7 +103,7 @@ export function SignUpForm() {
                 >
                     <UiWhiteTextField
                         label="Email"
-                        placeholder="example@mail.com"
+                        placeholder="example@mail.ru"
                         inputProps={{
                             ...register("email", {required: true}),
                             type: "email",
