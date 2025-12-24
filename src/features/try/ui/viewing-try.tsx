@@ -40,14 +40,13 @@ export function ViewingTry() {
             {isLoading && (
                 <>
                     {/* Скелетон прогресс-бара */}
-                    <div className="w-1/2 mx-auto h-12 bg-gray-300 rounded-2xl animate-pulse"></div>
+                    <div className="w-1/2 mx-auto h-12 bg-gray-300 rounded-xl animate-pulse"></div>
 
                     {/* Скелетон изображения */}
-                    <UiScrollImg img={[]} height="h-[28svh]" isLoading={true}/>
+                    <UiScrollImg img={[]} height="h-[28svh]" isLoading={true} />
 
                     {/* Скелетон текстовой области с вопросами */}
-                    <div
-                        className="mt-5 w-full h-[34svh] bg-[#F1F1F1] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-[20px] pt-3 px-4.25 flex flex-col gap-3 animate-pulse">
+                    <div className="mt-5 w-full h-[34svh] bg-white border border-gray-200 shadow-sm rounded-xl pt-3 px-4.25 flex flex-col gap-3 animate-pulse">
                         <div className="h-5 bg-gray-300 rounded w-3/4"></div>
                         <div className="h-4 bg-gray-300 rounded w-full mt-3"></div>
                         <div className="h-4 bg-gray-300 rounded w-5/6"></div>
@@ -136,23 +135,20 @@ export function ViewingTry() {
                                                     <div
                                                         key={`${taskId}-${questionIndex}-${answerIndex}`}
                                                         className={clsx(
-                                                            "flex items-center gap-3 select-none border-b border-[#E0E0E0] px-3 py-3 rounded-xl transition-all duration-200 ease-out",
-                                                            {
-                                                                "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md hover:scale-[1.01]":
-                                                                    true,
-                                                                "bg-linear-to-r from-blue-50 to-blue-100 border-blue-400 shadow-md":
-                                                                isChecked,
-                                                            }
+                                                            "flex items-center gap-3 cursor-pointer select-none border-b border-gray-200 px-3 py-3 rounded-lg transition-all duration-200 ease-out",
+                                                            isChecked
+                                                                ? "bg-gradient-to-r from-blue-50 to-blue-100 border-blue-300 shadow-sm"
+                                                                : "hover:bg-blue-50 hover:border-blue-300 hover:shadow-sm"
                                                         )}
                                                     >
                                                         {/* Номер варианта ответа */}
-                                                        <div className="text-gray-700 font-semibold">
+                                                        <div className="text-gray-600 font-semibold">
                                                             {answerIndex + 1}.
                                                         </div>
 
                                                         {/* Текст варианта ответа */}
                                                         <div
-                                                            className="wrap-break-word whitespace-normal flex-1 text-gray-800 text-left">
+                                                            className="break-words whitespace-normal flex-1 text-gray-800 text-left">
                                                             {answer.text}
                                                         </div>
 
@@ -172,14 +168,23 @@ export function ViewingTry() {
                                             }
                                         )}
 
+                                        {/* Индикатор правильности ответа */}
                                         {isCorrect !== null && (
-                                            <div className="text-sm font-semibold">
+                                            <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold">
                                                 {isCorrect ? (
-                                                    <span className="text-green-600">
-                            ✔ Ответ верный
-                          </span>
+                                                    <div className="flex items-center gap-2 text-green-600 bg-green-50 px-3 py-1.5 rounded-lg">
+                                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                        </svg>
+                                                        Ответ верный
+                                                    </div>
                                                 ) : (
-                                                    <span className="text-red-600">✘ Ответ неверный</span>
+                                                    <div className="flex items-center gap-2 text-red-600 bg-red-50 px-3 py-1.5 rounded-lg">
+                                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                        </svg>
+                                                        Ответ неверный
+                                                    </div>
                                                 )}
                                             </div>
                                         )}
