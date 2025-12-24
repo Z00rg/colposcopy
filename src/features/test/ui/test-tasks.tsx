@@ -215,7 +215,7 @@ export function TestTasks() {
                         <button
                             className={clsx(
                                 {hidden: currentTaskIndex === tasks.length - 1},
-                                "ml-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointe"
+                                "ml-auto text-[#2E76AA] hover:text-[#26628A] text-[20px] font-normal cursor-pointer"
                             )}
                             onClick={() => handleTaskChange(currentTaskIndex + 1)}
                             disabled={currentTaskIndex === tasks.length - 1}

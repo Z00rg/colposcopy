@@ -10,158 +10,310 @@ import {
 } from "@/shared/api/testApi";
 import { ROUTES } from "@/shared/constants/routes";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useForm, useWatch } from "react-hook-form"; // Добавили useWatch
 
+// ========== Типы ==========
+
+/**
+ * Структура формы для хранения ответов теста
+ * Ключ: `${taskId}_${questionIndex}` (например, "1_0", "1_1", "2_0")
+ * Значение: массив индексов выбранных ответов
+ */
+type TestFormData = Record<string, number[]>;
+
+// Ключи для localStorage
+const TEST_ANSWERS_STORAGE_KEY = "test_answers_progress";
+const TEST_START_TIME_KEY = "test_start_time";
+const TEST_IDS_KEY = "test_ids";
+
+// ========== Утилиты ==========
+
+/**
+ * Генерирует уникальный ключ для поля формы
+ */
+const getFieldKey = (taskId: number, questionIndex: number): string => {
+  return `${taskId}_${questionIndex}`;
+};
+
+/**
+ * Парсит ключ поля обратно в taskId и questionIndex
+ */
+const parseFieldKey = (key: string): { taskId: number; questionIndex: number } | null => {
+  const parts = key.split("_");
+  if (parts.length === 2) {
+    const taskId = parseInt(parts[0], 10);
+    const questionIndex = parseInt(parts[1], 10);
+    if (!isNaN(taskId) && !isNaN(questionIndex)) {
+      return { taskId, questionIndex };
+    }
+  }
+  return null;
+};
+
+/**
+ * Хук для прохождения теста
+ *
+ * Функциональность:
+ * - Загрузка заданий теста по ID патологий из URL
+ * - Управление ответами через react-hook-form
+ * - Автосохранение прогресса в localStorage
+ * - Отслеживание заполненности заданий
+ * - Отправка результатов на сервер
+ */
 export function useTestTasks() {
-  //Состояния
-  const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<
-    Record<number, Record<number, number[]>>
-  >({});
-
+  // ========== Навигация и параметры ==========
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  const submitAnswersMutation = useSubmitAnswersMutation();
-
-  // URL параметры
   const testIds = searchParams.get("testIds");
 
-  // Преобразуем testIds из query в формат "1-2-3"
+  // ========== Состояние ==========
+  const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
+  const [startTime] = useState<number>(() => {
+    // Инициализируем время начала теста
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem(TEST_START_TIME_KEY);
+      if (saved) return parseInt(saved, 10);
+    }
+    const now = Date.now();
+    if (typeof window !== "undefined") {
+      localStorage.setItem(TEST_START_TIME_KEY, now.toString());
+    }
+    return now;
+  });
+
+  // ========== Преобразование ID патологий ==========
+  // Формат URL: "1,2,3" → Формат API: "1-2-3"
   const selectedPathologyIds: string = useMemo(() => {
     if (typeof testIds === "string" && testIds.length > 0) {
       const ids = testIds
-        .split(",")
-        .map((id) => Number(id))
-        .filter((id) => !isNaN(id) && id > 0);
+          .split(",")
+          .map((id) => Number(id))
+          .filter((id) => !isNaN(id) && id > 0);
       return ids.join("-");
     }
     return "";
   }, [testIds]);
 
-  // Работа с запросами
+  // ========== Запросы ==========
   const testTasksQuery = useTestTasksQuery(selectedPathologyIds);
+  const submitAnswersMutation = useSubmitAnswersMutation();
 
   const tasks = useMemo(
-    () => testTasksQuery.data?.items ?? [],
-    [testTasksQuery]
+      () => testTasksQuery.data?.items ?? [],
+      [testTasksQuery.data]
   );
 
-  const startTime = testTasksQuery.dataUpdatedAt;
+  // ========== React Hook Form ==========
+  const {
+    control,
+    setValue,
+    getValues,
+  } = useForm<TestFormData>({
+    mode: "onChange",
+    defaultValues: {},
+  });
 
-  // Преобразует ответы из формата Record<taskId, Record<questionIndex, answerIndex[]>> в формат SubmitTestAnswersBodyDto.
-  const transformAnswersToDto = () => {
-    const selectedCases: ISelectedCase[] = tasks
-      .map((task) => {
-        const answersForTask = selectedAnswers[task.id];
-        if (!answersForTask) {
-          return null; // Если для таска нет ответов, пропускаем его
-        }
+  // Получаем все значения формы для отслеживания изменений
+  // useWatch безопасен для React Compiler
+  const formData = useWatch({ control }) as TestFormData;
 
-        const selectedQuestions: ISelectedQuestion[] = task.testsQuestions
-          .map((question, questionIndex) => {
-            const selectedAnswersForQuestion = answersForTask[questionIndex];
-            const selectedAnswersIdForQuestion: number[] = [];
-            question.answers.map((answer, answerIndex) => {
-              if (selectedAnswersForQuestion.includes(answerIndex)) {
-                selectedAnswersIdForQuestion.push(answer.id);
-              }
-            });
+  // ========== Восстановление прогресса из localStorage ==========
+  useEffect(() => {
+    if (typeof window === "undefined" || tasks.length === 0) return;
 
-            // Проверяем, есть ли ответы для этого вопроса по его индексу
-            if (
-              selectedAnswersForQuestion &&
-              selectedAnswersForQuestion.length > 0
-            ) {
-              return {
-                questionId: question.id, // ID вопроса
-                selectedAnswers: selectedAnswersIdForQuestion, // Массив ID ответов
-              };
-            }
-            return null;
-          })
-          .filter((q): q is ISelectedQuestion => q !== null); // Фильтр вопросов без ответов
+    try {
+      const savedAnswers = localStorage.getItem(TEST_ANSWERS_STORAGE_KEY);
+      const savedTestIds = localStorage.getItem(TEST_IDS_KEY);
 
-        // Возвращаем объект кейса, если есть хоть один отвеченный вопрос
-        if (selectedQuestions.length > 0) {
-          return {
-            caseId: task.id,
-            answers: selectedQuestions,
-          };
-        }
-        return null;
-      })
-      .filter((c): c is ISelectedCase => c !== null); // Отфильтровываем кейсы без ответов
+      // Проверяем, что сохраненные данные относятся к текущему тесту
+      if (savedAnswers && savedTestIds === testIds) {
+        const parsed = JSON.parse(savedAnswers) as TestFormData;
 
-    return { items: selectedCases };
-  };
+        // Восстанавливаем ответы
+        Object.entries(parsed).forEach(([key, value]) => {
+          if (Array.isArray(value)) {
+            setValue(key, value);
+          }
+        });
+      } else {
+        // Если это новый тест, очищаем старые данные
+        localStorage.setItem(TEST_IDS_KEY, testIds || "");
+      }
+    } catch (error) {
+      console.error("Ошибка восстановления прогресса теста:", error);
+    }
+  }, [tasks, testIds, setValue]);
 
-  // Обработчики на батоны
+  // ========== Автосохранение в localStorage ==========
+  useEffect(() => {
+    if (typeof window === "undefined" || !formData) return;
+
+    try {
+      localStorage.setItem(TEST_ANSWERS_STORAGE_KEY, JSON.stringify(formData));
+    } catch (error) {
+      console.error("Ошибка сохранения прогресса теста:", error);
+    }
+  }, [formData]);
+
+  // ========== Обработчики ==========
+
+  /**
+   * Переключение задания
+   */
   const handleTaskChange = (index: number) => {
     if (index < 0 || index >= tasks.length) return;
     setCurrentTaskIndex(index);
   };
 
-  const handleFinishAttempt = async () => {
-    const selectedAnswersForSubmit = transformAnswersToDto();
-    // Длительность теста в секундах
-    const duration = startTime
-      ? Math.round((Date.now() - startTime) / 1000)
-      : 0;
+  /**
+   * Получает выбранные ответы для конкретного вопроса
+   */
+  const getSelectedFor = (taskId: number, questionIndex: number): number[] => {
+    const key = getFieldKey(taskId, questionIndex);
+    return formData?.[key] || [];
+  };
 
-    if (!selectedPathologyIds) return;
+  /**
+   * Переключает выбор ответа
+   */
+  const toggleAnswer = (
+      taskId: number,
+      questionIndex: number,
+      answerIndex: number,
+      typeQuestion: number // 0: один ответ, 1: множественный
+  ) => {
+    const key = getFieldKey(taskId, questionIndex);
+    const current = getValues(key) || [];
 
-    try {
-      await submitAnswersMutation.mutateAsync({
-        items: selectedAnswersForSubmit.items,
-        duration: duration,
+    if (typeQuestion === 0) {
+      // Один ответ - заменяем
+      setValue(key, [answerIndex], { shouldValidate: true });
+    } else {
+      // Множественный выбор - добавляем/удаляем
+      if (current.includes(answerIndex)) {
+        setValue(
+            key,
+            current.filter((i) => i !== answerIndex),
+            { shouldValidate: true }
+        );
+      } else {
+        setValue(key, [...current, answerIndex], { shouldValidate: true });
+      }
+    }
+  };
+
+  /**
+   * Преобразует ответы из формы в DTO для отправки на сервер
+   */
+  const transformAnswersToDto = (): { items: ISelectedCase[] } => {
+    const currentFormData = getValues();
+    const taskMap = new Map<number, Map<number, number[]>>();
+
+    // Группируем ответы по taskId и questionIndex
+    Object.entries(currentFormData).forEach(([key, answerIndices]) => {
+      const parsed = parseFieldKey(key);
+      if (!parsed || !Array.isArray(answerIndices) || answerIndices.length === 0) {
+        return;
+      }
+
+      const { taskId, questionIndex } = parsed;
+
+      if (!taskMap.has(taskId)) {
+        taskMap.set(taskId, new Map());
+      }
+      taskMap.get(taskId)!.set(questionIndex, answerIndices);
+    });
+
+    // Преобразуем в формат DTO
+    const selectedCases: ISelectedCase[] = [];
+
+    taskMap.forEach((questionsMap, taskId) => {
+      const task = tasks.find((t) => t.id === taskId);
+      if (!task) return;
+
+      const selectedQuestions: ISelectedQuestion[] = [];
+
+      questionsMap.forEach((answerIndices, questionIndex) => {
+        const question = task.testsQuestions[questionIndex];
+        if (!question) return;
+
+        // Преобразуем индексы ответов в ID
+        const selectedAnswerIds = answerIndices
+            .map((idx) => question.answers[idx]?.id)
+            .filter((id): id is number => id !== undefined);
+
+        if (selectedAnswerIds.length > 0) {
+          selectedQuestions.push({
+            questionId: question.id,
+            selectedAnswers: selectedAnswerIds,
+          });
+        }
       });
 
-      await router.push(ROUTES.HOME);
+      if (selectedQuestions.length > 0) {
+        selectedCases.push({
+          caseId: taskId,
+          answers: selectedQuestions,
+        });
+      }
+    });
+
+    return { items: selectedCases };
+  };
+
+  /**
+   * Завершает тест и отправляет результаты
+   */
+  const handleFinishAttempt = async () => {
+    if (!selectedPathologyIds) return;
+
+    const selectedAnswersForSubmit = transformAnswersToDto();
+
+    // Вычисляем длительность теста в секундах
+    const duration = Math.round((Date.now() - startTime) / 1000);
+
+    try {
+      submitAnswersMutation.mutateAsync({
+        items: selectedAnswersForSubmit.items,
+        duration: duration,
+      }).then(() => {
+        // Очищаем сохраненный прогресс после успешной отправки
+        if (typeof window !== "undefined") {
+          localStorage.removeItem(TEST_ANSWERS_STORAGE_KEY);
+          localStorage.removeItem(TEST_START_TIME_KEY);
+          localStorage.removeItem(TEST_IDS_KEY);
+        }
+
+        router.push(ROUTES.HOME);
+      }).catch((error) => {
+        console.error("Ошибка при отправке ответов:", error);
+      });
     } catch (error) {
       console.error("Ошибка при отправке ответов:", error);
     }
   };
 
-  const getSelectedFor = (taskId: number, questionIndex: number): number[] =>
-    selectedAnswers[taskId]?.[questionIndex] ?? [];
+  // ========== Статус заполненности ==========
 
-  const toggleAnswer = (
-    taskId: number,
-    questionIndex: number,
-    answerIndex: number,
-    typeQuestion: number
-  ) => {
-    setSelectedAnswers((prev) => {
-      const taskAnswers = { ...(prev[taskId] || {}) };
-      const current = taskAnswers[questionIndex]
-        ? [...taskAnswers[questionIndex]]
-        : [];
+  /**
+   * Вычисляет статус заполненности для каждого задания
+   */
+  const completionByTask = useMemo(() => {
+    if (!formData) return [];
 
-      if (typeQuestion === 0) {
-        taskAnswers[questionIndex] = [answerIndex];
-      } else {
-        if (current.includes(answerIndex)) {
-          taskAnswers[questionIndex] = current.filter((i) => i !== answerIndex);
-        } else {
-          taskAnswers[questionIndex] = [...current, answerIndex];
+    return tasks.map((task) => {
+      const totalQuestions = task.testsQuestions.length;
+      let answeredCount = 0;
+
+      // Подсчитываем количество отвеченных вопросов
+      for (let questionIndex = 0; questionIndex < totalQuestions; questionIndex++) {
+        const key = getFieldKey(task.id, questionIndex);
+        const answers = formData[key];
+        if (answers && answers.length > 0) {
+          answeredCount++;
         }
       }
-
-      return { ...prev, [taskId]: taskAnswers };
-    });
-  };
-
-  // Статус заполнения
-  const completionByTask = useMemo(() => {
-    return tasks.map((task) => {
-      const answersForTask = selectedAnswers[task.id] || {};
-      const totalQuestions = task.testsQuestions.length;
-
-      // количество отвеченных вопросов (где есть хотя бы 1 выбранный ответ)
-      const answeredCount = Object.values(answersForTask).filter(
-        (arr) => arr.length > 0
-      ).length;
 
       return {
         taskId: task.id,
@@ -170,26 +322,30 @@ export function useTestTasks() {
         isComplete: answeredCount === totalQuestions,
       };
     });
-  }, [selectedAnswers, tasks]);
+  }, [tasks, formData]);
 
+  /**
+   * Проверяет, все ли задания выполнены
+   */
   const isAllTasksComplete = useMemo(
-    () => completionByTask.every((t) => t.isComplete),
-    [completionByTask]
+      () => completionByTask.every((t) => t.isComplete),
+      [completionByTask]
   );
 
+  // ========== Возвращаемые значения ==========
   return {
-    tasks,
-    setCurrentTaskIndex,
-    isLoading: testTasksQuery.isPending,
-    isError: testTasksQuery.isError,
-    isLoadingSubmit: submitAnswersMutation.isPending,
-    isErrorSubmit: submitAnswersMutation.isError,
-    currentTaskIndex,
-    handleTaskChange,
-    handleFinishAttempt,
-    getSelectedFor,
-    toggleAnswer,
-    completionByTask,
-    isAllTasksComplete,
+    tasks,                                      // Массив заданий теста
+    setCurrentTaskIndex,                        // Функция установки текущего задания
+    isLoading: testTasksQuery.isPending,        // Загрузка заданий
+    isError: testTasksQuery.isError,            // Ошибка загрузки заданий
+    isLoadingSubmit: submitAnswersMutation.isPending, // Отправка ответов
+    isErrorSubmit: submitAnswersMutation.isError,     // Ошибка отправки
+    currentTaskIndex,                           // Индекс текущего задания
+    handleTaskChange,                           // Переключение заданий
+    handleFinishAttempt,                        // Завершение теста
+    getSelectedFor,                             // Получение выбранных ответов
+    toggleAnswer,                               // Переключение ответа
+    completionByTask,                           // Статус заполненности заданий
+    isAllTasksComplete,                         // Все задания выполнены
   };
 }
