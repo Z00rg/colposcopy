@@ -3,20 +3,38 @@
 import { useAtlasListQuery } from "@/entities/atlas-list";
 import { useRouter } from "next/navigation";
 
+/**
+ * Хук для работы со списком патологий в атласе
+ *
+ * Предоставляет:
+ * - Список всех патологий
+ * - Навигацию к деталям патологии
+ * - Состояния загрузки и ошибок
+ */
 export function useAtlasList() {
+  // ========== Навигация ==========
   const router = useRouter();
+
+  // ========== Запрос данных ==========
   const atlasListQuery = useAtlasListQuery();
 
+  // Извлекаем список патологий (с fallback на пустой массив)
   const items = atlasListQuery.data?.items ?? [];
 
+  // ========== Обработчики ==========
+  /**
+   * Навигация к странице детальной информации о патологии
+   * @param id - ID патологии
+   */
   const handleItemClick = (id: number) => {
     router.push(`/pathology/${id}`);
   };
 
+  // ========== Возвращаемые значения ==========
   return {
-    items,
-    isLoading: atlasListQuery.isPending,
-    isError: atlasListQuery.isError,
-    handleClick: handleItemClick,
+    items,                                 // Список патологий
+    isLoading: atlasListQuery.isPending,   // Загрузка данных
+    isError: atlasListQuery.isError,       // Ошибка загрузки
+    handleClick: handleItemClick,          // Обработчик клика по элементу
   };
 }
