@@ -31,7 +31,7 @@ export function UiListButtonTry({
             <div
                 className={clsx(
                     className,
-                    "flex w-full flex-col select-none border-b border-[#E0E0E0] rounded-xl px-3 py-3 animate-pulse"
+                    "flex w-full flex-col select-none border-b border-gray-200 rounded-lg px-3 py-3 animate-pulse"
                 )}
             >
                 <div className="flex justify-between items-center gap-3">
@@ -52,8 +52,8 @@ export function UiListButtonTry({
         <div
             className={clsx(
                 className,
-                "flex w-full flex-col select-none cursor-pointer border-b border-[#E0E0E0] rounded-xl px-3 py-3 transition-all duration-200 ease-out",
-                "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md"
+                "flex w-full flex-col select-none cursor-pointer border-b border-gray-200 rounded-lg px-3 py-3 transition-all duration-200 ease-out",
+                "hover:bg-blue-50 hover:border-blue-300 hover:shadow-sm"
             )}
         >
             {/* Верхняя строка */}

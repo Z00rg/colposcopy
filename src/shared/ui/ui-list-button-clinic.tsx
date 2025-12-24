@@ -36,7 +36,7 @@ export function UiListButtonClinic({
             <div
                 className={clsx(
                     className,
-                    "flex w-full flex-col border-b border-[#E0E0E0] rounded-xl px-3 py-3 animate-pulse"
+                    "flex w-full flex-col border-b border-gray-200 rounded-lg px-3 py-3 animate-pulse"
                 )}
             >
                 <div className="flex items-center text-[18px] font-medium gap-3 px-1 py-1">
@@ -52,8 +52,8 @@ export function UiListButtonClinic({
         <div
             className={clsx(
                 className,
-                "flex w-full flex-col select-none border-b border-[#E0E0E0] rounded-xl px-3 py-3 transition-all duration-200 ease-out",
-                "hover:bg-blue-50 hover:border-blue-400 hover:shadow-md cursor-pointer"
+                "flex w-full flex-col select-none border-b border-gray-200 rounded-lg px-3 py-3 transition-all duration-200 ease-out",
+                "hover:bg-blue-50 hover:border-blue-300 hover:shadow-sm cursor-pointer"
             )}
         >
             {/* Верхняя строка */}
@@ -61,7 +61,7 @@ export function UiListButtonClinic({
                 className="flex items-center text-[18px] font-medium gap-3 px-1 py-1"
                 onClick={() => setActive(!active)}
             >
-                <div className="text-gray-700 font-semibold">{index}.</div>
+                <div className="text-gray-600 font-semibold">{index}.</div>
 
                 <div className="wrap-break-word whitespace-normal flex-1 text-gray-800">
                     {informationOfPathology.name}
