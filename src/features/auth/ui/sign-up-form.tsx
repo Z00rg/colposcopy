@@ -12,6 +12,7 @@ export function SignUpForm() {
     const {
         register,
         errorMessage,
+        errors,
         handleSubmit,
         isPending,
         currentStageIndex,
@@ -63,17 +64,17 @@ export function SignUpForm() {
                     <UiWhiteTextField
                         label="Фамилия"
                         placeholder="Введите фамилию"
-                        inputProps={{...register("surname", {required: true})}}
+                        inputProps={{...register("surname")}}
                     />
                     <UiWhiteTextField
                         label="Имя"
                         placeholder="Введите имя"
-                        inputProps={{...register("name", {required: true})}}
+                        inputProps={{...register("name")}}
                     />
                     <UiWhiteTextField
                         label="Отчество"
                         placeholder="Введите отчество"
-                        inputProps={{...register("patronymic", {required: true})}}
+                        inputProps={{...register("patronymic")}}
                     />
                 </div>
 
@@ -86,12 +87,12 @@ export function SignUpForm() {
                     <UiWhiteTextField
                         label="Место работы/учебы"
                         placeholder="Например, СОКБ"
-                        inputProps={{...register("work", {required: true})}}
+                        inputProps={{...register("work")}}
                     />
                     <UiWhiteTextField
                         label="Должность"
                         placeholder="Например, врач-гинеколог"
-                        inputProps={{...register("position", {required: true})}}
+                        inputProps={{...register("position")}}
                     />
                 </div>
 
@@ -105,25 +106,28 @@ export function SignUpForm() {
                         label="Email"
                         placeholder="example@mail.ru"
                         inputProps={{
-                            ...register("email", {required: true}),
+                            ...register("email"),
                             type: "email",
                         }}
+                        error={errors.email?.message}
                     />
                     <UiWhiteTextField
                         label="Пароль"
                         placeholder="Минимум 6 символов"
                         inputProps={{
                             type: "password",
-                            ...register("password", {required: true}),
+                            ...register("password"),
                         }}
+                        error={errors.password?.message}
                     />
                     <UiWhiteTextField
                         label="Подтвердите пароль"
                         placeholder="Повторите пароль"
                         inputProps={{
                             type: "password",
-                            ...register("password2", {required: true}),
+                            ...register("password2"),
                         }}
+                        error={errors.password2?.message}
                     />
                 </div>
             </div>
