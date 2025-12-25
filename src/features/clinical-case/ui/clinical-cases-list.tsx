@@ -48,7 +48,7 @@ export function ClinicalCasesList({className}: { className?: string }) {
             {/* Отображение списка клинических случаев */}
             {!isLoading && items &&
                 items.map((item, index) => (
-                    item.cases && <UiListButtonClinic
+                    item.cases.length > 0 && <UiListButtonClinic
                         className="w-full"
                         key={item.id}
                         index={index + 1}
