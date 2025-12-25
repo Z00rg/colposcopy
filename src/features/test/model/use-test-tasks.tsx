@@ -11,7 +11,7 @@ import {
 import { ROUTES } from "@/shared/constants/routes";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { useForm, useWatch } from "react-hook-form"; // Добавили useWatch
+import { useForm, useWatch } from "react-hook-form";
 
 // ========== Типы ==========
 
@@ -49,6 +49,27 @@ const parseFieldKey = (key: string): { taskId: number; questionIndex: number } |
     }
   }
   return null;
+};
+
+/**
+ * Загружает сохраненные ответы из localStorage
+ */
+const loadSavedAnswers = (testIds: string | null): TestFormData => {
+  if (typeof window === "undefined") return {};
+
+  try {
+    const savedAnswers = localStorage.getItem(TEST_ANSWERS_STORAGE_KEY);
+    const savedTestIds = localStorage.getItem(TEST_IDS_KEY);
+
+    // Проверяем, что сохраненные данные относятся к текущему тесту
+    if (savedAnswers && savedTestIds === testIds) {
+      return JSON.parse(savedAnswers) as TestFormData;
+    }
+  } catch (error) {
+    console.error("Ошибка загрузки прогресса теста:", error);
+  }
+
+  return {};
 };
 
 /**
@@ -104,46 +125,29 @@ export function useTestTasks() {
       [testTasksQuery.data]
   );
 
-  // ========== React Hook Form ==========
+  // ========== React Hook Form с загрузкой из localStorage ==========
   const {
     control,
     setValue,
     getValues,
   } = useForm<TestFormData>({
     mode: "onChange",
-    defaultValues: {},
+    defaultValues: loadSavedAnswers(testIds), // Загружаем данные сразу
   });
 
   // Получаем все значения формы для отслеживания изменений
-  // useWatch безопасен для React Compiler
   const formData = useWatch({ control }) as TestFormData;
 
-  // ========== Восстановление прогресса из localStorage ==========
+  // ========== Сохраняем testIds при первой загрузке ==========
   useEffect(() => {
-    if (typeof window === "undefined" || tasks.length === 0) return;
-
-    try {
-      const savedAnswers = localStorage.getItem(TEST_ANSWERS_STORAGE_KEY);
+    if (typeof window !== "undefined" && testIds) {
       const savedTestIds = localStorage.getItem(TEST_IDS_KEY);
-
-      // Проверяем, что сохраненные данные относятся к текущему тесту
-      if (savedAnswers && savedTestIds === testIds) {
-        const parsed = JSON.parse(savedAnswers) as TestFormData;
-
-        // Восстанавливаем ответы
-        Object.entries(parsed).forEach(([key, value]) => {
-          if (Array.isArray(value)) {
-            setValue(key, value);
-          }
-        });
-      } else {
-        // Если это новый тест, очищаем старые данные
-        localStorage.setItem(TEST_IDS_KEY, testIds || "");
+      if (savedTestIds !== testIds) {
+        // Новый тест - сохраняем его ID
+        localStorage.setItem(TEST_IDS_KEY, testIds);
       }
-    } catch (error) {
-      console.error("Ошибка восстановления прогресса теста:", error);
     }
-  }, [tasks, testIds, setValue]);
+  }, [testIds]);
 
   // ========== Автосохранение в localStorage ==========
   useEffect(() => {
@@ -306,7 +310,6 @@ export function useTestTasks() {
       const totalQuestions = task.testsQuestions.length;
       let answeredCount = 0;
 
-      // Подсчитываем количество отвеченных вопросов
       for (let questionIndex = 0; questionIndex < totalQuestions; questionIndex++) {
         const key = getFieldKey(task.id, questionIndex);
         const answers = formData[key];
