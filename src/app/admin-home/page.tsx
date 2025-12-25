@@ -6,8 +6,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiInstance } from "@/shared/api/api-instance";
 import { atlasApi } from "@/shared/api/atlasApi";
 import { casesApi as clinicalCasesApi } from "@/shared/api/casesApi";
-import { layout1 } from "@/shared/constants/layoutsJSON";
-import { layout2 } from "@/shared/constants/layoutsJSON";
+import { tests } from "@/shared/constants/layoutsJSON";
 import Head from "next/head";
 
 // Типы данных
@@ -395,6 +394,7 @@ const ClinicalCaseForm = () => {
             answers: [{ text: "", is_correct: false }],
         };
 
+        // eslint-disable-next-line react-hooks/incompatible-library
         const currentQuestions = watch("questions") || [];
         setValue("questions", [...currentQuestions, newQuestion]);
     };
@@ -493,16 +493,18 @@ const ClinicalCaseForm = () => {
                                 onChange={(e) => setSelectedLayout(e.target.value)}
                             >
                                 <option value="">Выберите макет</option>
-                                <option value="layout1">Макет на 11 вопросов</option>
-                                <option value="layout2">Макет на 19 вопросов</option>
+                                {Object.keys(tests).map(key => (
+                                <option key={key} value={key}>{key}</option>
+                                ))}
                             </select>
                             <button
                                 type="button"
                                 onClick={() => {
-                                    if (selectedLayout === "layout1") {
-                                        setValue("questions", layout1.questions);
-                                    } else if (selectedLayout === "layout2") {
-                                        setValue("questions", layout2.questions);
+                                    if (selectedLayout && selectedLayout in tests) {
+                                        setValue("questions", tests[selectedLayout as keyof typeof tests].questions.map(q => ({
+                                            ...q,
+                                            qtype: q.qtype as "single" | "multiple"
+                                        })));
                                     }
                                 }}
                                 className="bg-purple-500 text-white px-3 py-1 rounded text-sm"
