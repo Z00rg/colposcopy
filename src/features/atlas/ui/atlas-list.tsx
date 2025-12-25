@@ -9,7 +9,7 @@ import {UiError} from "@/shared/ui/ui-error";
 
 export function AtlasList({className}: { className?: string }) {
     const {items, isLoading, isError, handleClick} = useAtlasList();
-    const {tutorials, isLoadingTutorials, isErrorTutorials, handleTutorialClick} = useTutorialsList();
+    const {tutorials, isLoadingTutorials, isErrorTutorials, handleTutorialClick, handleDownloadNomenclature  } = useTutorialsList();
 
     const isEmptyText = !isLoading && !isError && items.length === 0;
     const isEmptyTutorialText =
@@ -55,15 +55,32 @@ export function AtlasList({className}: { className?: string }) {
 
             {/* Отображение списка уроков */}
             {!isLoadingTutorials && tutorials &&
-                tutorials.map((item, index) => (
+                <>
+                    <div
+                        className={clsx(
+                            className,
+                            "flex items-center text-[18px] font-medium gap-3 cursor-pointer select-none border-b border-gray-200 px-3 py-3 rounded-lg transition-all duration-200 ease-out",
+                            "hover:bg-blue-50 hover:border-blue-300 hover:shadow-sm"
+                        )}
+                        onClick={() => handleDownloadNomenclature }
+                    >
+                        <div className="text-gray-600 font-semibold">1.</div>
+
+                        <div className="break-words whitespace-normal flex-1 text-gray-800">
+                            Кольпоскопическая номенклатура
+                        </div>
+                    </div>
+                    {tutorials.map((item, index) => (
                     <UiListButtonAtlas
                         className="w-full"
                         key={item.id}
-                        index={index + 1}
+                        index={index + 2}
                         informationOfPathology={item}
                         onClick={() => handleTutorialClick(item.id)}
                     />
-                ))}
+                    ))}
+                </>
+            }
 
             {/* Список патологий */}
             <div className="font-bold text-[18px]">Атлас</div>

@@ -30,11 +30,20 @@ export function useTutorialsList() {
     router.push(`/tutorials/tutorial/${id}`);
   };
 
+  const handleDownloadNomenclature = () => {
+    const a = document.createElement("a");
+    a.href = "/nomenclature.pdf";
+    a.download = "nomenclature.pdf";
+    a.click();
+  };
+
+
   // ========== Возвращаемые значения ==========
   return {
     tutorials,                                      // Список туториалов
     isLoadingTutorials: tutorialsListQuery.isPending, // Загрузка
     isErrorTutorials: tutorialsListQuery.isError,     // Ошибка
     handleTutorialClick: handleItemClick,             // Обработчик клика
+    handleDownloadNomenclature,                       // Обработчик загрузки номенклатуры
   };
 }
