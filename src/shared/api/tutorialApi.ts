@@ -19,6 +19,15 @@ export interface GetTutorialInfoDto {
     description: string;
 }
 
+interface TutorialFileInfo {
+    name: string;
+    tutorial_file: string;
+}
+
+export interface GetTutorialsFilesListInfoDto {
+    items: TutorialFileInfo[];
+}
+
 // API
 
 // Список уроков
@@ -38,7 +47,15 @@ export const getTutorialInfo = (
         options
     );
 
+// Список файлов
+export const getTutorialFilesList = (options?: RequestOptions) =>
+    createInstance<GetTutorialsFilesListInfoDto>(
+        {url: `api/tutorialfiles/tutorials-list`, method: "GET"},
+        options
+    );
+
 export const tutorialApi = {
     getTutorialsList,
     getTutorialInfo,
+    getTutorialFilesList,
 };
