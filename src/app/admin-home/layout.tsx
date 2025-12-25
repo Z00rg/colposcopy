@@ -9,7 +9,7 @@ export default function MenuLayout({
                                    }: Readonly<{
     children: React.ReactNode;
 }>) {
-    return (
+    return <>
         {children}
-    );
+    </>;
 }
