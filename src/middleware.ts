@@ -54,12 +54,8 @@ export default function middleware(request: NextRequest) {
         }
         // Проверка доступа для админов
         else if (isAdmin) {
-            // Админ может быть только на /admin-home
-            if (isAdminPath) {
-                response = NextResponse.next();
-            } else {
-                response = NextResponse.redirect(new URL(ADMIN_ROUTE, request.url));
-            }
+            // Админ имеет доступ ко всем страницам
+            response = NextResponse.next();
         }
         // Проверка доступа для обычных пользователей (workers)
         else if (isWorker) {
