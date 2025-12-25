@@ -26,13 +26,6 @@ export function Tutorial({className}: { className?: string }) {
                 </UiError>
             )}
 
-            {/* Ошибка отображения урока при пустых данных */}
-            {!isLoading && !isError && tutorialDetails && (
-                <div className="font-bold text-gray-700">
-                    Нет данных об уроке
-                </div>
-            )}
-
             {/* Скелетон лоадер */}
             {isLoading && (
                 <>

@@ -14,19 +14,6 @@ export function useTutorialsListQuery() {
     });
 }
 
-const tutorialFilesListKey = ["tutorial-files-list"];
-
-// Запрос списка уроков
-export function useTutorialFilesListQuery() {
-
-    return useQuery({
-        queryKey: tutorialFilesListKey,
-        queryFn: tutorialApi.getTutorialFilesList,
-        retry: 0,
-        staleTime: 60 * 60 * 1000, // 60 минут
-    });
-}
-
 const tutorialKey = (id: string) => ["tutorial", id];
 
 // Запрос определенного урока
