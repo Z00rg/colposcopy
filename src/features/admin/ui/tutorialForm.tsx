@@ -1,8 +1,9 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiInstance } from "@/shared/api/api-instance";
+import {useTutorialsListQuery} from "@/entities/tutorials";
 
 // Типы
 interface TutorialFormData {
@@ -19,15 +20,6 @@ interface TutorialCreatePayload {
     video?: File;
     poster?: File;
     tutorial_file?: File;
-}
-
-interface Tutorial {
-    id: number;
-    name: string;
-    description: string;
-    video?: string;
-    poster?: string;
-    tutorial_file?: string;
 }
 
 // API функции
@@ -58,12 +50,6 @@ const createTutorial = async (data: TutorialCreatePayload) => {
         .then((response) => response.data);
 };
 
-const getTutorials = async () => {
-    return apiInstance
-        .get("tutorial/")
-        .then((response) => response.data);
-};
-
 const deleteTutorial = async (id: number) => {
     return apiInstance
         .delete(`tutorial/${id}/`)
@@ -87,10 +73,7 @@ export const TutorialForm = () => {
     const tutorialFile = watch("tutorial_file");
 
     // Загружаем список туториалов
-    const tutorialsQuery = useQuery({
-        queryKey: ["tutorials"],
-        queryFn: getTutorials,
-    });
+    const tutorialsQuery = useTutorialsListQuery();
 
     const createMutation = useMutation({
         mutationFn: createTutorial,
@@ -319,43 +302,19 @@ export const TutorialForm = () => {
                 )}
 
                 <div className="space-y-3">
-                    {tutorials.map((tutorial: Tutorial) => (
-                        <div
-                            key={tutorial.id}
-                            className="flex items-center justify-between border border-gray-200 rounded-lg p-4 hover:bg-gray-50"
-                        >
-                            <div className="flex-1 min-w-0 mr-4">
-                                <h4 className="font-semibold text-gray-900 truncate">
-                                    {tutorial.name}
-                                </h4>
-                                <p className="text-sm text-gray-600 truncate mt-1">
-                                    {tutorial.description}
-                                </p>
-                                <div className="flex gap-3 mt-2 text-xs text-gray-500">
-                                    {tutorial.video && (
-                                        <span className="flex items-center gap-1">
-                                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
-                                            </svg>
-                                            Видео
-                                        </span>
-                                    )}
-                                    {tutorial.poster && (
-                                        <span className="flex items-center gap-1">
-                                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                                            </svg>
-                                            Постер
-                                        </span>
-                                    )}
-                                    {tutorial.tutorial_file && (
-                                        <span className="flex items-center gap-1">
-                                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
-                                            </svg>
-                                            Файл
-                                        </span>
-                                    )}
+                    {tutorials.map((tutorial) => (
+                        <>
+                            <div
+                                key={tutorial.id}
+                                className="flex items-center justify-between border border-gray-200 rounded-lg p-4 hover:bg-gray-50"
+                            >
+                                <div className="flex-1 min-w-0 mr-4">
+                                    <h4 className="font-semibold text-gray-900 truncate">
+                                        {tutorial.id}
+                                    </h4>
+                                    <p className="text-sm text-gray-600 truncate mt-1">
+                                        {tutorial.name}
+                                    </p>
                                 </div>
                             </div>
                             <button
@@ -365,7 +324,7 @@ export const TutorialForm = () => {
                             >
                                 Удалить
                             </button>
-                        </div>
+                        </>
                     ))}
                 </div>
             </div>
