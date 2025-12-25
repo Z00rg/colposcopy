@@ -26,10 +26,39 @@ export function useTutorial() {
   // ========== Запрос данных туториала ==========
   const tutorialQuery = useTutorialQuery(validTutorialId as string);
 
+  /**
+   * Извлекает имя файла из URL
+   */
+  const getFileNameFromUrl = (url: string): string => {
+    try {
+      const urlObj = new URL(url);
+      const pathname = urlObj.pathname;
+      const fileName = pathname.substring(pathname.lastIndexOf('/') + 1);
+      return decodeURIComponent(fileName);
+    } catch {
+      return 'Скачать файл';
+    }
+  };
+
+  /**
+   * Скачивает файл по URL
+   */
+  const handleFileDownload = (url: string) => {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = getFileNameFromUrl(url);
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   // ========== Возвращаемые значения ==========
   return {
     tutorialDetails: tutorialQuery.data, // Детальная информация о туториале
     isLoading: tutorialQuery.isPending,  // Состояние загрузки данных
     isError: tutorialQuery.isError,      // Состояние ошибки загрузки
+    handleFileDownload,                  // Загрузка файла
+    getFileNameFromUrl,                 // Получение названия файла
   };
 }
