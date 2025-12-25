@@ -8,6 +8,7 @@ import { atlasApi } from "@/shared/api/atlasApi";
 import { casesApi as clinicalCasesApi } from "@/shared/api/casesApi";
 import { tests } from "@/shared/constants/layoutsJSON";
 import Head from "next/head";
+import {TutorialForm} from "@/features/admin";
 
 // Типы данных
 interface Pathology {
@@ -1049,6 +1050,7 @@ export default function AdminHomePage() {
                 <SchemeForm />
                 <EditPathologyForm />
                 <EditClinicalCaseForm />
+                <TutorialForm/>
             </div>
         </div>
     );
