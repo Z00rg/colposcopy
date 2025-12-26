@@ -5,7 +5,7 @@ import {createInstance, RequestOptions} from "./api-instance";
 interface ClinicalCaseInfo {
     id: number;
     name: string;
-    cases: { id: number }[];
+    cases: { id: number, name: string }[];
 }
 
 export interface GetClinicalCasesInfoDto {

@@ -210,10 +210,10 @@ const ClinicalCaseSelector = ({
             >
                 <option value="">Выберите клинический случай</option>
                 {clinicalCaseList?.map((clinicalCase) =>
-                    clinicalCase.cases.map((item, index) => (
+                    clinicalCase.cases.map((item) => (
                         <option key={item.id} value={item.id}>
                             {clinicalCase.name} (ID паталогии: {clinicalCase.id}) Случай{" "}
-                            {index + 1}
+                            {item.name}
                         </option>
                     ))
                 )}
