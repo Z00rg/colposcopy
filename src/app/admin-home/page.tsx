@@ -494,9 +494,12 @@ const ClinicalCaseForm = () => {
                                 onChange={(e) => setSelectedLayout(e.target.value)}
                             >
                                 <option value="">Выберите макет</option>
-                                {Object.keys(tests).map(key => (
-                                <option key={key} value={key}>{key}</option>
-                                ))}
+                                {Object.keys(tests)
+                                    .sort((a, b) => a.localeCompare(b, 'ru'))
+                                    .map(key => (
+                                        <option key={key} value={key}>{key}</option>
+                                    ))
+                                }
                             </select>
                             <button
                                 type="button"
