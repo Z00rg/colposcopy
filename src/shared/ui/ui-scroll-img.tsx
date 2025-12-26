@@ -21,34 +21,39 @@ export function UiScrollImg({
                             }: UiScrollImgProps) {
     const heightProps = height ? height : "h-[35svh]";
     const scrollContainerRef = useRef<HTMLDivElement>(null);
-    const [imageWidth, setImageWidth] = useState(375);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalImageIndex, setModalImageIndex] = useState(0);
 
-    // Измерение ширины контейнера
+    // Обработка скролла с использованием Intersection Observer
     useEffect(() => {
-        const updateWidth = () => {
-            if (scrollContainerRef.current) {
-                setImageWidth(scrollContainerRef.current.clientWidth);
-            }
-        };
-        updateWidth();
-        const id = setTimeout(updateWidth, 50);
-        window.addEventListener("resize", updateWidth);
-        return () => {
-            clearTimeout(id);
-            window.removeEventListener("resize", updateWidth);
-        };
-    }, []);
-
-    // Обработка скролла
-    const handleScroll = () => {
         if (!scrollContainerRef.current) return;
-        const scrollLeft = scrollContainerRef.current.scrollLeft;
-        const newIndex = Math.round(scrollLeft / imageWidth);
-        const clampedIndex = Math.min(Math.max(0, newIndex), img.length - 1);
-        onIndexChangeAction?.(clampedIndex);
-    };
+
+        const container = scrollContainerRef.current;
+        const items = container.querySelectorAll('[data-scroll-item]');
+
+        if (items.length === 0) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    // Проверяем, что элемент пересекает центр экрана
+                    if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                        const index = parseInt(entry.target.getAttribute('data-index') || '0', 10);
+                        onIndexChangeAction?.(index);
+                    }
+                });
+            },
+            {
+                root: container,
+                threshold: [0, 0.25, 0.5, 0.75, 1], // Множественные пороги для точности
+                rootMargin: '0px',
+            }
+        );
+
+        items.forEach((item) => observer.observe(item));
+
+        return () => observer.disconnect();
+    }, [img.length, onIndexChangeAction]);
 
     // Открытие модалки
     const openModal = (index: number) => {
@@ -88,7 +93,6 @@ export function UiScrollImg({
             {/* Скролл-контейнер */}
             <div
                 ref={scrollContainerRef}
-                onScroll={handleScroll}
                 className={clsx(
                     className,
                     "flex snap-x snap-mandatory overflow-x-auto overflow-y-hidden",
@@ -100,6 +104,8 @@ export function UiScrollImg({
                 {img.map((src, index) => (
                     <div
                         key={"img-" + index}
+                        data-scroll-item
+                        data-index={index}
                         className={clsx(
                             "shrink-0 items-center snap-center cursor-zoom-in w-full",
                             heightProps

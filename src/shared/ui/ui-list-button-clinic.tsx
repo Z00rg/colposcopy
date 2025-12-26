@@ -79,7 +79,7 @@ export function UiListButtonClinic({
             <div
                 className={clsx(
                     "transition-all duration-300 ease-in-out overflow-hidden",
-                    active ? "max-h-125 opacity-100 mt-2" : "max-h-0 opacity-0"
+                    active ? "max-h-500 opacity-100 mt-2" : "max-h-0 opacity-0"
                 )}
             >
                 <div className="flex flex-col gap-2 pl-9 pr-2 pb-2">
