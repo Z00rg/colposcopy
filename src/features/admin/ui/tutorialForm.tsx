@@ -52,7 +52,7 @@ const createTutorial = async (data: TutorialCreatePayload) => {
 
 const deleteTutorial = async (id: number) => {
     return apiInstance
-        .delete(`tutorial/${id}/`)
+        .delete(`tutorial/delete/${id}/`)
         .then((response) => response.data);
 };
 
