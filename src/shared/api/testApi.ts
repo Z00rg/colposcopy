@@ -6,13 +6,13 @@ export interface GetInstructionInfoDto {
     text: string;
 }
 
-interface PathologyInfo {
+interface TestInfo {
     id: number;
     name: string;
 }
 
-export interface GetPathologyListInfoDto {
-    items: PathologyInfo[];
+export interface GetTestListInfoDto {
+    items: TestInfo[];
 }
 
 export type QuestionType = 0 | 1; // 0: Один ответ, 1: Множественный ответ
@@ -71,8 +71,8 @@ export interface SubmitTestAnswersBodyDto {
 
 // Список тестов
 export const getTestListInfo = (options?: RequestOptions) =>
-    createInstance<GetPathologyListInfoDto>(
-        {url: `/atlas/atlas-list/`, method: "GET"},
+    createInstance<GetTestListInfoDto>(
+        {url: `/test/test-list/`, method: "GET"},
         options
     );
 
