@@ -4,11 +4,11 @@ import {useQuery} from "@tanstack/react-query";
 const atlasListKey = ["atlas-list"];
 
 // Запрос списка патологий
-export function useAtlasListQuery() {
+export function useAtlasListQuery(adminList?: boolean) {
 
     return useQuery({
         queryKey: atlasListKey,
-        queryFn: atlasApi.getAtlasList,
+        queryFn: !adminList ? atlasApi.getAtlasList : atlasApi.getAdminAtlasList,
         retry: 0,
         staleTime: 60 * 60 * 1000, // 60 минут
     });

@@ -11,12 +11,12 @@ import { useRouter } from "next/navigation";
  * - Навигацию к деталям патологии
  * - Состояния загрузки и ошибок
  */
-export function useAtlasList() {
+export function useAtlasList( adminList?: boolean ) {
   // ========== Навигация ==========
   const router = useRouter();
 
   // ========== Запрос данных ==========
-  const atlasListQuery = useAtlasListQuery();
+  const atlasListQuery = useAtlasListQuery(adminList);
 
   // Извлекаем список патологий (с fallback на пустой массив)
   const items = atlasListQuery.data?.items ?? [];

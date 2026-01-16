@@ -1,0 +1,1 @@
+export { useDeleteMutationQuery } from "./queries"

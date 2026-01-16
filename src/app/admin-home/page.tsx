@@ -1,17 +1,18 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { useForm } from "react-hook-form";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { apiInstance } from "@/shared/api/api-instance";
+import {useState, useRef} from "react";
+import {useForm} from "react-hook-form";
+import {useMutation, useQuery} from "@tanstack/react-query";
+import {apiInstance} from "@/shared/api/api-instance";
 import {atlasApi} from "@/shared/api/atlasApi";
-import { casesApi as clinicalCasesApi } from "@/shared/api/casesApi";
-import { tests } from "@/shared/constants/layoutsJSON";
+import {casesApi as clinicalCasesApi} from "@/shared/api/casesApi";
+import {tests} from "@/shared/constants/layoutsJSON";
 import Head from "next/head";
 import {TutorialForm} from "@/features/admin";
-import {Tabs, TabList, Tab, TabPanels, TabPanel} from "@/shared/ui/ui-tabs";
+import {Tabs, TabList, Tab, TabPanels, TabPanel} from "@/shared/ui/Tabs";
 import {AtlasList} from "@/features/atlas";
 import {ClinicalCasesList} from "@/features/clinical-case/ui/clinical-cases-list";
+import {queryClient} from "@/shared/api/query-client";
 
 // Типы данных
 interface Pathology {
@@ -231,13 +232,14 @@ const PathologyForm = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
         reset,
     } = useForm<Omit<Pathology, "id">>();
 
     const mutation = useMutation({
         mutationFn: createPathology,
         onSuccess: () => {
+            queryClient.invalidateQueries();
             alert("Патология успешно добавлена");
             reset();
         },
@@ -260,7 +262,7 @@ const PathologyForm = () => {
                         Название патологии
                     </label>
                     <input
-                        {...register("name", { required: "Название обязательно" })}
+                        {...register("name", {required: "Название обязательно"})}
                         className="w-full border border-gray-300 rounded px-3 py-2"
                         placeholder="Введите название патологии"
                     />
@@ -274,7 +276,7 @@ const PathologyForm = () => {
                         Описание патологии
                     </label>
                     <textarea
-                        {...register("description", { required: "Описание обязательно" })}
+                        {...register("description", {required: "Описание обязательно"})}
                         className="w-full border border-gray-300 rounded px-3 py-2"
                         placeholder="Введите описание патологии"
                         rows={4}
@@ -370,7 +372,7 @@ const ClinicalCaseForm = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
         watch,
         setValue,
         reset,
@@ -395,7 +397,7 @@ const ClinicalCaseForm = () => {
             name: "",
             instruction: "",
             qtype: "single",
-            answers: [{ text: "", is_correct: false }],
+            answers: [{text: "", is_correct: false}],
         };
 
         // eslint-disable-next-line react-hooks/incompatible-library
@@ -460,7 +462,7 @@ const ClinicalCaseForm = () => {
                         Название клинического случая
                     </label>
                     <input
-                        {...register("name", { required: "Название обязательно" })}
+                        {...register("name", {required: "Название обязательно"})}
                         className="w-full border border-gray-300 rounded px-3 py-2"
                         placeholder="Введите название клинического случая"
                     />
@@ -833,7 +835,7 @@ const EditPathologyForm = () => {
     const [newDescription, setNewDescription] = useState("");
 
     const updateMutation = useMutation({
-        mutationFn: ({ id, data }: { id: number; data: { description: string } }) =>
+        mutationFn: ({id, data}: { id: number; data: { description: string } }) =>
             updatePathology(id, data),
         onSuccess: () => {
             alert("Патология успешно обновлена");
@@ -868,7 +870,7 @@ const EditPathologyForm = () => {
 
         updateMutation.mutate({
             id: parseInt(pathologyId),
-            data: { description: newDescription },
+            data: {description: newDescription},
         });
     };
 
@@ -938,7 +940,7 @@ const EditClinicalCaseForm = () => {
     const [newName, setNewName] = useState("");
 
     const updateMutation = useMutation({
-        mutationFn: ({ id, data }: { id: number; data: { name: string } }) =>
+        mutationFn: ({id, data}: { id: number; data: { name: string } }) =>
             updateClinicalCase(id, data),
         onSuccess: () => {
             alert("Клинический случай успешно обновлен");
@@ -971,7 +973,7 @@ const EditClinicalCaseForm = () => {
             return;
         }
 
-        updateMutation.mutate({ id: parseInt(caseId), data: { name: newName } });
+        updateMutation.mutate({id: parseInt(caseId), data: {name: newName}});
     };
 
     const handleDelete = () => {
@@ -1047,37 +1049,32 @@ export default function AdminHomePage() {
                 <title>Админ-панель</title>
             </Head>
             <h1 className="text-3xl font-bold mb-8 text-center">Админ-панель</h1>
-                <Tabs>
-                    <TabList aria-label="Tabs">
-                        <Tab id="pathhology">Атлас</Tab>
-                        <Tab id="cases">Клинические кейсы</Tab>
-                    </TabList>
-                    <TabPanels>
-                        <TabPanel id="pathhology" className="flex items-center justify-center">
-                            <div className="w-full flex flex-col">
-                                <AtlasList className="mb-6" />
-                                <PathologyForm />
-                                <PathologyImageForm />
-                                <EditPathologyForm />
-                                <TutorialForm/>
-                            </div>
-                        </TabPanel>
-                        <TabPanel id="cases" className="flex items-center justify-center">
-                            <div className="w-full flex flex-col">
-                                <ClinicalCasesList className="mb-6" />
-                                <ClinicalCaseForm />
-                                <LayerForm />
-                                <SchemeForm />
-                                <EditClinicalCaseForm />
-                            </div>
-                        </TabPanel>
-                    </TabPanels>
-                </Tabs>
-
-
-
-
-
+            <Tabs>
+                <TabList aria-label="Tabs">
+                    <Tab id="pathhology">Атлас</Tab>
+                    <Tab id="cases">Клинические кейсы</Tab>
+                </TabList>
+                <TabPanels>
+                    <TabPanel id="pathhology" className="flex items-center justify-center">
+                        <div className="w-full flex flex-col">
+                            <AtlasList className="mb-6" adminList/>
+                            <PathologyForm/>
+                            <PathologyImageForm/>
+                            <EditPathologyForm/>
+                            <TutorialForm/>
+                        </div>
+                    </TabPanel>
+                    <TabPanel id="cases" className="flex items-center justify-center">
+                        <div className="w-full flex flex-col">
+                            <ClinicalCasesList className="mb-6"/>
+                            <ClinicalCaseForm/>
+                            <LayerForm/>
+                            <SchemeForm/>
+                            <EditClinicalCaseForm/>
+                        </div>
+                    </TabPanel>
+                </TabPanels>
+            </Tabs>
         </div>
     );
 }

@@ -1,4 +1,7 @@
 import clsx from "clsx";
+import {MenuTrigger, Menu, MenuItem } from './Menu';
+import {Button} from './Button';
+import {MoreHorizontal} from 'lucide-react';
 
 type PathologyInformation = {
     id: number;
@@ -10,8 +13,9 @@ export type UiListButtonAtlasProps = {
     index: number;
     informationOfPathology: PathologyInformation;
     onClick: () => void;
+    onClickAdmin?: () => void;
     isLoading?: boolean;
-    adminList?: string;
+    adminList?: boolean;
 };
 
 export function UiListButtonAtlas({
@@ -19,6 +23,7 @@ export function UiListButtonAtlas({
                                       index,
                                       informationOfPathology,
                                       onClick,
+                                      onClickAdmin,
                                       isLoading,
                                       adminList,
                                   }: UiListButtonAtlasProps) {
@@ -51,7 +56,15 @@ export function UiListButtonAtlas({
                 {informationOfPathology.name}
             </div>
 
-            {adminList && <div>Тут будут кнопочки админа</div>}
+            {adminList && <MenuTrigger>
+                <Button aria-label="Actions" variant="option">
+                    <MoreHorizontal className="w-5 h-5" />
+                </Button>
+                <Menu>
+                    <MenuItem onAction={() => alert('Редактируем')}>Редактировать</MenuItem>
+                    <MenuItem onAction={onClickAdmin}>Удалить</MenuItem>
+                </Menu>
+            </MenuTrigger>}
         </div>
     );
 }
