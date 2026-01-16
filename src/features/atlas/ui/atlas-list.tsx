@@ -6,8 +6,9 @@ import {UiListButtonAtlas} from "@/shared/ui/ui-list-button-atlas";
 import clsx from "clsx";
 import {useTutorialsList} from "../model/use-tutorials-list";
 import {UiError} from "@/shared/ui/ui-error";
+import React from "react";
 
-export function AtlasList({className}: { className?: string }) {
+export function AtlasList({className, adminList }: { className?: string, adminList?: string }) {
     const {items, isLoading, isError, handleClick} = useAtlasList();
     const {tutorials, isLoadingTutorials, isErrorTutorials, handleTutorialClick } = useTutorialsList();
 
@@ -63,7 +64,7 @@ export function AtlasList({className}: { className?: string }) {
                             key={item.id}
                             index={index + 1} // Продолжаем нумерацию после файлов
                             informationOfPathology={item}
-                            onClick={() => handleTutorialClick(item.id)}
+                            onClick={!adminList ? () => handleTutorialClick(item.id) : () => {}}
                         />
                     ))}
                 </>
@@ -114,7 +115,7 @@ export function AtlasList({className}: { className?: string }) {
                         key={item.id}
                         index={index + 1}
                         informationOfPathology={item}
-                        onClick={() => handleClick(item.id)}
+                        onClick={!adminList ? () => handleClick(item.id): () => {} }
                     />
                 ))}
         </UiList>

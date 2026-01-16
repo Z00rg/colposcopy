@@ -26,6 +26,13 @@ export const getAtlasList = (options?: RequestOptions) =>
         options
     );
 
+// Список патологий для админа
+export const getAdminAtlasList = (options?: RequestOptions) =>
+    createInstance<GetPathologyListInfoDto>(
+        {url: `/atlas/admin-atlas-list/`, method: "GET"},
+        options
+    );
+
 // Определенная патология
 export const getPathologyInfo = (
     pathologyId: number | string,
@@ -38,5 +45,6 @@ export const getPathologyInfo = (
 
 export const atlasApi = {
     getAtlasList,
+    getAdminAtlasList,
     getPathologyInfo,
 };

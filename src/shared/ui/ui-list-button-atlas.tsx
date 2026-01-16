@@ -11,6 +11,7 @@ export type UiListButtonAtlasProps = {
     informationOfPathology: PathologyInformation;
     onClick: () => void;
     isLoading?: boolean;
+    adminList?: string;
 };
 
 export function UiListButtonAtlas({
@@ -19,6 +20,7 @@ export function UiListButtonAtlas({
                                       informationOfPathology,
                                       onClick,
                                       isLoading,
+                                      adminList,
                                   }: UiListButtonAtlasProps) {
     if (isLoading) {
         return (
@@ -48,6 +50,8 @@ export function UiListButtonAtlas({
             <div className="break-words whitespace-normal flex-1 text-gray-800">
                 {informationOfPathology.name}
             </div>
+
+            {adminList && <div>Тут будут кнопочки админа</div>}
         </div>
     );
 }

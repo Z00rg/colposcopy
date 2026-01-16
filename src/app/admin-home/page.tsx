@@ -4,11 +4,14 @@ import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiInstance } from "@/shared/api/api-instance";
-import { atlasApi } from "@/shared/api/atlasApi";
+import {atlasApi} from "@/shared/api/atlasApi";
 import { casesApi as clinicalCasesApi } from "@/shared/api/casesApi";
 import { tests } from "@/shared/constants/layoutsJSON";
 import Head from "next/head";
 import {TutorialForm} from "@/features/admin";
+import {Tabs, TabList, Tab, TabPanels, TabPanel} from "@/shared/ui/ui-tabs";
+import {AtlasList} from "@/features/atlas";
+import {ClinicalCasesList} from "@/features/clinical-case/ui/clinical-cases-list";
 
 // Типы данных
 interface Pathology {
@@ -129,8 +132,8 @@ const PathologySelector = ({
         isLoading,
         error: fetchError,
     } = useQuery({
-        queryKey: ["pathology-list"],
-        queryFn: () => atlasApi.getAtlasList().then((res) => res.items),
+        queryKey: ["admin-pathology-list"],
+        queryFn: () => atlasApi.getAdminAtlasList().then((res) => res.items),
         retry: 1,
         staleTime: 5 * 60 * 1000, // 5 минут
     });
@@ -249,7 +252,7 @@ const PathologyForm = () => {
     };
 
     return (
-        <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+        <div className="bg-white p-6 rounded-lg shadow-md mb-6 w-full">
             <h3 className="text-xl font-bold mb-4">Добавить патологию</h3>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div>
@@ -1044,17 +1047,37 @@ export default function AdminHomePage() {
                 <title>Админ-панель</title>
             </Head>
             <h1 className="text-3xl font-bold mb-8 text-center">Админ-панель</h1>
+                <Tabs>
+                    <TabList aria-label="Tabs">
+                        <Tab id="pathhology">Атлас</Tab>
+                        <Tab id="cases">Клинические кейсы</Tab>
+                    </TabList>
+                    <TabPanels>
+                        <TabPanel id="pathhology" className="flex items-center justify-center">
+                            <div className="w-full flex flex-col">
+                                <AtlasList className="mb-6" />
+                                <PathologyForm />
+                                <PathologyImageForm />
+                                <EditPathologyForm />
+                                <TutorialForm/>
+                            </div>
+                        </TabPanel>
+                        <TabPanel id="cases" className="flex items-center justify-center">
+                            <div className="w-full flex flex-col">
+                                <ClinicalCasesList className="mb-6" />
+                                <ClinicalCaseForm />
+                                <LayerForm />
+                                <SchemeForm />
+                                <EditClinicalCaseForm />
+                            </div>
+                        </TabPanel>
+                    </TabPanels>
+                </Tabs>
 
-            <div className="space-y-8">
-                <PathologyForm />
-                <PathologyImageForm />
-                <ClinicalCaseForm />
-                <LayerForm />
-                <SchemeForm />
-                <EditPathologyForm />
-                <EditClinicalCaseForm />
-                <TutorialForm/>
-            </div>
+
+
+
+
         </div>
     );
 }
