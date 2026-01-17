@@ -1,1 +1,1 @@
-export { useDeleteMutationQuery } from "./queries"
+export { useDeletePathologyMutationQuery } from "./queries"

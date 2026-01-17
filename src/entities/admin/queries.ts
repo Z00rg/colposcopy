@@ -1,17 +1,11 @@
 import {useMutation} from "@tanstack/react-query";
-import {apiInstance} from "@/shared/api/api-instance";
 import {queryClient} from "@/shared/api/query-client";
-
-const deletePathology = async (id: number) => {
-    const response = await apiInstance
-        .delete(`/pathologies/${id}/`);
-    return response.data;
-};
+import {adminApi} from "@/shared/api/adminApi";
 
 
-export function useDeleteMutationQuery() {
+export function useDeletePathologyMutationQuery() {
     return useMutation({
-        mutationFn: (id: number) => deletePathology(id),
+        mutationFn: (id: number) => adminApi.deletePathology(id),
         onSuccess: () => {
             queryClient.invalidateQueries();
             alert("Патология успешно удалена");

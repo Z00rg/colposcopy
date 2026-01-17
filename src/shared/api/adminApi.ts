@@ -7,6 +7,7 @@ export interface PathologyCreateDto {
 }
 
 // API
+// Добавление патологии
 export const createPathology = (
     body: PathologyCreateDto,
     options?: RequestOptions
@@ -20,6 +21,20 @@ export const createPathology = (
         options
     );
 
+// Удаление патологии
+export const deletePathology = (
+    id: number,
+    options?: RequestOptions
+) =>
+    createInstance<void>(
+        {
+            url: `/pathologies/${id}/`,
+            method: "DELETE",
+        },
+        options
+    );
+
 export const adminApi = {
     createPathology,
+    deletePathology,
 };
