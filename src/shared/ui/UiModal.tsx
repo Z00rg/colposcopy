@@ -1,21 +1,20 @@
 import {DialogTrigger, ModalOverlayProps} from 'react-aria-components';
 import {Modal} from './Modal';
 import {Dialog} from './Dialog';
-import {Button} from './Button';
 import {JSX, ReactNode} from "react";
 
-export type UiListButtonAtlasProps = {
+export type UiModalProps = {
     props?: JSX.IntrinsicAttributes & ModalOverlayProps;
     className?: string;
     children: ({ close }: { close: () => void }) => ReactNode;
-    nameButton: string;
+    button?: ReactNode | string;
 };
 
-export function UiModal({props, className, children, nameButton, } : UiListButtonAtlasProps) {
+export function UiModal({props, className, children, button, } : UiModalProps) {
     return (
         <div className={className}>
             <DialogTrigger>
-                <Button variant="secondary">{nameButton}</Button>
+                {button}
                 <Modal {...props}>
                     <Dialog>
                         {({ close }) => children({ close })}

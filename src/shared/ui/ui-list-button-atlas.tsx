@@ -1,8 +1,12 @@
 "use client";
 import clsx from "clsx";
-import {MenuTrigger, Menu, MenuItem } from './Menu';
+import {MenuTrigger, Menu, MenuItem} from './Menu';
 import {Button} from './Button';
 import {MoreHorizontal} from 'lucide-react';
+import {EditPathologyForm} from "@/features/admin";
+import React, {useState} from "react";
+import {Modal} from "@/shared/ui/Modal";
+import {Dialog} from "@/shared/ui/Dialog";
 
 type PathologyInformation = {
     id: number;
@@ -13,9 +17,9 @@ export type UiListButtonAtlasProps = {
     className?: string;
     index: number;
     informationOfPathology: PathologyInformation;
-    onClick: () => void;
+    onClick?: () => void;
     onClickAdminDelete?: () => void;
-    onClickAdminEditText?: () => void;
+    pathologyOrTutorialId?: number;
     isLoading?: boolean;
     adminList?: boolean;
 };
@@ -26,10 +30,12 @@ export function UiListButtonAtlas({
                                       informationOfPathology,
                                       onClick,
                                       onClickAdminDelete,
-                                      onClickAdminEditText,
+                                      pathologyOrTutorialId,
                                       isLoading,
                                       adminList,
                                   }: UiListButtonAtlasProps) {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     if (isLoading) {
         return (
@@ -60,13 +66,24 @@ export function UiListButtonAtlas({
                 {informationOfPathology.name}
             </div>
 
+            {/* Модалка редактирования */}
+            <Modal isOpen={isModalOpen}>
+                <Dialog>
+                    <EditPathologyForm
+                        pathologyId={pathologyOrTutorialId}
+                        closeModal={() => setIsModalOpen(!isModalOpen)}
+                    />
+                </Dialog>
+            </Modal>
+
             {adminList && <MenuTrigger>
                 <Button aria-label="Actions" variant="secondary">
-                    <MoreHorizontal className="w-5 h-5" />
+                    <MoreHorizontal className="w-5 h-5"/>
                 </Button>
                 <Menu>
-                    <MenuItem onAction={onClickAdminEditText} isDisabled>Редактировать текст (скоро)</MenuItem>
-                    <MenuItem onAction={() => alert('Редактируем')} isDisabled>Редактировать изображения (скоро)</MenuItem>
+                    <MenuItem onAction={() => setIsModalOpen(!isModalOpen)}>Редактировать текст</MenuItem>
+                    <MenuItem onAction={() => alert('Редактируем')} isDisabled>Редактировать изображения
+                        (скоро)</MenuItem>
                     <MenuItem onAction={onClickAdminDelete}>Удалить</MenuItem>
                 </Menu>
             </MenuTrigger>}

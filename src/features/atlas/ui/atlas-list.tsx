@@ -10,6 +10,7 @@ import React from "react";
 import {useAdminAtlasList} from "@/features/atlas/model/use-admin-atlas-list";
 import {UiModal} from "@/shared/ui/UiModal";
 import {AddPathologyForm, AddTutorialForm} from "@/features/admin";
+import {Button} from "@/shared/ui/Button";
 
 export function AtlasList({className, adminList}: { className?: string, adminList?: boolean }) {
     const {items, isLoading, isError, handleClick} = useAtlasList(adminList);
@@ -25,7 +26,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
         <UiList className={clsx(className, "mt-4 items-start")}>
             <div className="w-full flex flex-row justify-between">
                 <div className="font-bold text-[18px]">Обучение</div>
-                {adminList && <UiModal className="mr-3" nameButton="+">{({close}) => (
+                {adminList && <UiModal className="mr-3" button={<Button variant="secondary">+</Button>}>{({close}) => (
                     <AddTutorialForm closeModal={close}/>
                 )}</UiModal>}
             </div>
@@ -75,8 +76,9 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
                             key={item.id}
                             index={index + 1} // Продолжаем нумерацию после файлов
                             informationOfPathology={item}
-                            onClick={() => handleTutorialClick(item.id)}
+                            onClick={adminList ? () => {} : () => handleTutorialClick(item.id)}
                             onClickAdminDelete={() => handleDeleteTutorial(item.id)}
+                            pathologyOrTutorialId={item.id}
                             adminList={adminList}
                         />
                     ))}
@@ -86,7 +88,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
             {/* Список патологий */}
             <div className="w-full flex flex-row justify-between">
                 <div className="font-bold text-[18px]">Атлас</div>
-                {adminList && <UiModal className="mr-3" nameButton="+">
+                {adminList && <UiModal className="mr-3" button={<Button variant="secondary">+</Button>}>
                     {({close}) => (
                         <AddPathologyForm closeModal={close}/>
                     )}
@@ -135,8 +137,9 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
                         key={item.id}
                         index={index + 1}
                         informationOfPathology={item}
-                        onClick={() => handleClick(item.id)}
+                        onClick={adminList ? () => {} : () => handleClick(item.id)}
                         onClickAdminDelete={() => handleDeletePathology(item.id)}
+                        pathologyOrTutorialId={item.id}
                         adminList={adminList}
                     />
                 ))}

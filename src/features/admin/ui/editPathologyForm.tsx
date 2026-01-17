@@ -1,22 +1,38 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {apiInstance} from "@/shared/api/api-instance";
+import {Button} from "@/shared/ui/Button";
+import {usePathologyQuery} from "@/entities/pathology";
 
-const updatePathology = (id: number, data: { description: string }) => {
+const updatePathology = (id: string, data: { description: string }) => {
     return apiInstance
         .patch(`/pathologies/${id}/`, data)
         .then((response) => response.data);
 };
 
-export function EditPathologyForm (pathologyId: number) {
+export type UiModalProps = {
+    pathologyId?: string,
+    closeModal: () => void,
+};
+
+export function EditPathologyForm ({ pathologyId, closeModal }: UiModalProps) {
+    const pathologyQuery = usePathologyQuery(pathologyId as string);
+
     const [newDescription, setNewDescription] = useState("");
 
+    useEffect(() => {
+        if (pathologyQuery.data?.description) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setNewDescription(pathologyQuery.data.description);
+        }
+    }, [pathologyQuery.data]);
+
     const updateMutation = useMutation({
-        mutationFn: ({id, data}: { id: number; data: { description: string } }) =>
+        mutationFn: ({id, data}: { id: string; data: { description: string } }) =>
             updatePathology(id, data),
         onSuccess: () => {
-            alert("Патология успешно обновлена");
             setNewDescription("");
+            closeModal();
         },
         onError: (error) => {
             console.error("Ошибка при обновлении патологии:", error);
@@ -39,7 +55,7 @@ export function EditPathologyForm (pathologyId: number) {
     };
 
     return (
-        <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+        <div>
             <h3 className="text-xl font-bold mb-4">
                 Редактировать/удалить патологию
             </h3>
@@ -47,7 +63,7 @@ export function EditPathologyForm (pathologyId: number) {
 
                 <div>
                     <label className="block text-sm font-medium mb-1">
-                        Новое описание
+                        Описание
                     </label>
                     <textarea
                         value={newDescription}
@@ -58,16 +74,24 @@ export function EditPathologyForm (pathologyId: number) {
                     />
                 </div>
 
-                <div className="flex gap-3">
-                    <button
-                        type="submit"
-                        disabled={updateMutation.isPending}
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
+                <div className="flex w-full justify-end gap-3">
+                    <Button
+                        onClick={closeModal}
+                        variant="secondary"
+                        isDisabled={updateMutation.isPending}
                     >
-                        {updateMutation.isPending ? "Обновление..." : "Обновить патологию"}
-                    </button>
+                        Отмена
+                    </Button>
+
+                    <Button
+                        type="submit"
+                        isPending={updateMutation.isPending}
+                        isDisabled={updateMutation.isPending}
+                    >
+                        {updateMutation.isPending ? "" : "Обновить патологию"}
+                    </Button>
                 </div>
             </form>
         </div>
     );
-};
+}
