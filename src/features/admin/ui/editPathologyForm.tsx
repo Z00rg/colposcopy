@@ -3,20 +3,21 @@ import {useMutation} from "@tanstack/react-query";
 import {apiInstance} from "@/shared/api/api-instance";
 import {Button} from "@/shared/ui/Button";
 import {usePathologyQuery} from "@/entities/pathology";
+import {queryClient} from "@/shared/api/query-client";
 
-const updatePathology = (id: string, data: { description: string }) => {
+const updatePathology = (id: number, data: { description: string }) => {
     return apiInstance
         .patch(`/pathologies/${id}/`, data)
         .then((response) => response.data);
 };
 
 export type UiModalProps = {
-    pathologyId?: string,
+    pathologyId: number,
     closeModal: () => void,
 };
 
 export function EditPathologyForm ({ pathologyId, closeModal }: UiModalProps) {
-    const pathologyQuery = usePathologyQuery(pathologyId as string);
+    const pathologyQuery = usePathologyQuery(pathologyId);
 
     const [newDescription, setNewDescription] = useState("");
 
@@ -28,10 +29,11 @@ export function EditPathologyForm ({ pathologyId, closeModal }: UiModalProps) {
     }, [pathologyQuery.data]);
 
     const updateMutation = useMutation({
-        mutationFn: ({id, data}: { id: string; data: { description: string } }) =>
+        mutationFn: ({id, data}: { id: number; data: { description: string } }) =>
             updatePathology(id, data),
         onSuccess: () => {
             setNewDescription("");
+            queryClient.invalidateQueries();
             closeModal();
         },
         onError: (error) => {

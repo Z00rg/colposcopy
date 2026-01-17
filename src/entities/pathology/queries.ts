@@ -1,10 +1,10 @@
 import {useQuery} from "@tanstack/react-query";
 import {atlasApi} from "@/shared/api/atlasApi";
 
-const pathologyKey = (id: string) => ["pathology", id];
+const pathologyKey = (id: number) => ["pathology", id];
 
 // Запрос определенной патологии
-export function usePathologyQuery(pathologyId: string) {
+export function usePathologyQuery(pathologyId: number) {
 
     return useQuery({
         queryKey: pathologyKey(pathologyId),

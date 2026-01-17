@@ -35,7 +35,7 @@ export const getAdminAtlasList = (options?: RequestOptions) =>
 
 // Определенная патология
 export const getPathologyInfo = (
-    pathologyId: number | string,
+    pathologyId: number,
     options?: RequestOptions
 ) =>
     createInstance<GetPathologyInfoDto>(

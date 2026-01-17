@@ -26,7 +26,7 @@ export function usePathology() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // ========== Запрос данных патологии ==========
-  const pathologyQuery = usePathologyQuery(validPathologyId as string);
+  const pathologyQuery = usePathologyQuery(Number(validPathologyId));
 
   // ========== Обработчики ==========
   /**

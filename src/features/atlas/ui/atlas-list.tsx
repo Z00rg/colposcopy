@@ -58,6 +58,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
                                 id: 0,
                                 name: "",
                             }}
+                            pathologyOrTutorialId ={index}
                             onClick={() => {
                             }}
                             isLoading={true}
@@ -121,6 +122,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
                                 id: 0,
                                 name: "",
                             }}
+                            pathologyOrTutorialId ={index}
                             onClick={() => {
                             }}
                             isLoading={true}

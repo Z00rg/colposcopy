@@ -19,7 +19,7 @@ export type UiListButtonAtlasProps = {
     informationOfPathology: PathologyInformation;
     onClick?: () => void;
     onClickAdminDelete?: () => void;
-    pathologyOrTutorialId?: number;
+    pathologyOrTutorialId: number;
     isLoading?: boolean;
     adminList?: boolean;
 };
@@ -50,6 +50,7 @@ export function UiListButtonAtlas({
             </div>
         );
     }
+
 
     return (
         <div
