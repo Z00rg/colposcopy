@@ -1,19 +1,13 @@
 import {useForm} from "react-hook-form";
 import {useMutation} from "@tanstack/react-query";
 import {queryClient} from "@/shared/api/query-client";
-import {apiInstance} from "@/shared/api/api-instance";
+import {adminApi, PathologyCreateDto} from "@/shared/api/adminApi";
 
 interface Pathology {
     id: number
     name: string
     description: string
 }
-
-const createPathology = (data: Omit<Pathology, "id">) => {
-    return apiInstance
-        .post("/pathologies/", data)
-        .then((response) => response.data);
-};
 
 export function useAddPathologyForm({ closeModal }: { closeModal: () => void }) {
     const {
@@ -24,10 +18,9 @@ export function useAddPathologyForm({ closeModal }: { closeModal: () => void }) 
     } = useForm<Omit<Pathology, "id">>();
 
     const mutation = useMutation({
-        mutationFn: createPathology,
+        mutationFn: (data: PathologyCreateDto) => adminApi.createPathology(data),
         onSuccess: () => {
             queryClient.invalidateQueries();
-            alert("Патология успешно добавлена");
             reset();
             closeModal();
         },
