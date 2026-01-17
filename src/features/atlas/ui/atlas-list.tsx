@@ -7,19 +7,13 @@ import clsx from "clsx";
 import {useTutorialsList} from "../model/use-tutorials-list";
 import {UiError} from "@/shared/ui/ui-error";
 import React from "react";
-import {useDeleteMutationQuery} from "@/entities/admin";
+import {useAdminAtlasList} from "@/features/atlas/model/use-admin-atlas-list";
 
 export function AtlasList({className, adminList }: { className?: string, adminList?: boolean }) {
     const {items, isLoading, isError, handleClick} = useAtlasList(adminList);
     const {tutorials, isLoadingTutorials, isErrorTutorials, handleTutorialClick } = useTutorialsList();
 
-    const useDeleteMutation = useDeleteMutationQuery();
-
-    const handleDelete = (id: number) => {
-        if (window.confirm("Вы уверены, что хотите удалить эту патологию?")) {
-            useDeleteMutation.mutate(id);
-        }
-    };
+    const { handleDeletePathology } = useAdminAtlasList();
 
     const isEmptyText = !isLoading && !isError && items.length === 0;
     const isEmptyTutorials = !isLoadingTutorials &&
@@ -126,7 +120,7 @@ export function AtlasList({className, adminList }: { className?: string, adminLi
                         index={index + 1}
                         informationOfPathology={item}
                         onClick={!adminList ? () => handleClick(item.id): () => {} }
-                        onClickAdmin={() => handleDelete(item.id)}
+                        onClickAdmin={() => handleDeletePathology(item.id)}
                         adminList={adminList}
                     />
                 ))}
