@@ -6,7 +6,7 @@ export interface PathologyCreateDto {
     description: string;
 }
 
-// API
+// API Патологий
 // Добавление патологии
 export const createPathology = (
     body: PathologyCreateDto,
@@ -34,7 +34,22 @@ export const deletePathology = (
         options
     );
 
+// API Туториалов
+// Удаление туториала
+export const deleteTutorial = (
+    id: number,
+    options?: RequestOptions
+) =>
+    createInstance<void>(
+        {
+            url: `tutorial/delete/${id}/`,
+            method: "DELETE",
+        },
+        options
+    );
+
 export const adminApi = {
     createPathology,
     deletePathology,
+    deleteTutorial,
 };

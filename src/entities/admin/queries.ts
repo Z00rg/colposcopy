@@ -3,6 +3,7 @@ import {queryClient} from "@/shared/api/query-client";
 import {adminApi} from "@/shared/api/adminApi";
 
 
+// Удаление патологии
 export function useDeletePathologyMutationQuery() {
     return useMutation({
         mutationFn: (id: number) => adminApi.deletePathology(id),
@@ -13,6 +14,21 @@ export function useDeletePathologyMutationQuery() {
         onError: (error) => {
             console.error("Ошибка при удалении патологии:", error);
             alert("Ошибка при удалении патологии");
+        },
+    });
+}
+
+// Удаление туториала
+export function useDeleteTutorialMutationQuery() {
+    return useMutation({
+        mutationFn: (id: number) => adminApi.deleteTutorial(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries();
+            alert("Туториал успешно удален");
+        },
+        onError: (error) => {
+            console.error("Ошибка при удалении туториала:", error);
+            alert("Ошибка при удалении туториала");
         },
     });
 }
