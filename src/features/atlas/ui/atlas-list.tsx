@@ -25,9 +25,9 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
         <UiList className={clsx(className, "mt-4 items-start")}>
             <div className="w-full flex flex-row justify-between">
                 <div className="font-bold text-[18px]">Обучение</div>
-                <UiModal className="mr-3">{({close}) => (
+                {adminList && <UiModal className="mr-3">{({close}) => (
                     <AddTutorialForm closeModal={close}/>
-                )}</UiModal>
+                )}</UiModal>}
             </div>
 
             {/* Ошибка загрузки */}
@@ -75,8 +75,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
                             key={item.id}
                             index={index + 1} // Продолжаем нумерацию после файлов
                             informationOfPathology={item}
-                            onClick={!adminList ? () => handleTutorialClick(item.id) : () => {
-                            }}
+                            onClick={() => handleTutorialClick(item.id)}
                             onClickAdmin={() => handleDeleteTutorial(item.id)}
                             adminList={adminList}
                         />
@@ -87,11 +86,11 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
             {/* Список патологий */}
             <div className="w-full flex flex-row justify-between">
                 <div className="font-bold text-[18px]">Атлас</div>
-                <UiModal className="mr-3">
+                {adminList && <UiModal className="mr-3">
                     {({close}) => (
                         <AddPathologyForm closeModal={close}/>
                     )}
-                </UiModal>
+                </UiModal>}
             </div>
 
             {/* Ошибка загрузки списка патологий */}
@@ -136,8 +135,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
                         key={item.id}
                         index={index + 1}
                         informationOfPathology={item}
-                        onClick={!adminList ? () => handleClick(item.id) : () => {
-                        }}
+                        onClick={() => handleClick(item.id)}
                         onClickAdmin={() => handleDeletePathology(item.id)}
                         adminList={adminList}
                     />

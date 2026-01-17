@@ -1,109 +1,15 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiInstance } from "@/shared/api/api-instance";
 import {Button} from "@/shared/ui/Button";
-
-// Типы
-interface TutorialFormData {
-    name: string;
-    description: string;
-    video?: FileList;
-    poster?: FileList;
-    tutorial_file?: FileList;
-}
-
-interface TutorialCreatePayload {
-    name: string;
-    description: string;
-    video?: File;
-    poster?: File;
-    tutorial_file?: File;
-}
-
-// API функции
-const createTutorial = async (data: TutorialCreatePayload) => {
-    const formData = new FormData();
-
-    formData.append("name", data.name);
-    formData.append("description", data.description);
-
-    if (data.video) {
-        formData.append("video", data.video);
-    }
-
-    if (data.poster) {
-        formData.append("poster", data.poster);
-    }
-
-    if (data.tutorial_file) {
-        formData.append("tutorial_file", data.tutorial_file);
-    }
-
-    return apiInstance
-        .post("tutorial/create/", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        })
-        .then((response) => response.data);
-};
+import {useAddTutorialForm} from "@/features/admin/model/useAddTutorialForm";
 
 export function AddTutorialForm ({ closeModal }: { closeModal: () => void }) {
-    const queryClient = useQueryClient();
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        reset,
-        watch,
-    } = useForm<TutorialFormData>();
-
-    // Отслеживаем выбранные файлы для превью
-    // eslint-disable-next-line react-hooks/incompatible-library
-    const videoFile = watch("video");
-    const posterFile = watch("poster");
-    const tutorialFile = watch("tutorial_file");
-
-    const createMutation = useMutation({
-        mutationFn: createTutorial,
-        onSuccess: () => {
-            queryClient.invalidateQueries();
-            reset();
-            closeModal();
-        },
-        onError: (error) => {
-            console.error("Ошибка при добавлении туториала:", error);
-            alert("Ошибка при добавлении туториала");
-        },
-    });
-
-    const onSubmit = (data: TutorialFormData) => {
-        const payload: TutorialCreatePayload = {
-            name: data.name,
-            description: data.description,
-        };
-
-        if (data.video?.[0]) {
-            payload.video = data.video[0];
-        }
-
-        if (data.poster?.[0]) {
-            payload.poster = data.poster[0];
-        }
-
-        if (data.tutorial_file?.[0]) {
-            payload.tutorial_file = data.tutorial_file[0];
-        }
-
-        createMutation.mutate(payload);
-    };
+    const { mutation, register, handleSubmit, errors, tutorialFile, videoFile, posterFile } = useAddTutorialForm({ closeModal });
 
     return (
             <div>
                 <h3 className="text-xl font-bold mb-4">Добавить туториал</h3>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                     {/* Название */}
                     <div>
                         <label className="block text-sm font-medium mb-1">
@@ -247,17 +153,17 @@ export function AddTutorialForm ({ closeModal }: { closeModal: () => void }) {
                         <Button
                             slot="close"
                             variant="secondary"
-                            isDisabled={createMutation.isPending}
+                            isDisabled={mutation.isPending}
                         >
                             Отмена
                         </Button>
 
                         <Button
                             type="submit"
-                            isPending={createMutation.isPending}
-                            isDisabled={createMutation.isPending}
+                            isPending={mutation.isPending}
+                            isDisabled={mutation.isPending}
                         >
-                            {createMutation.isPending ? "" : "Добавить туториал"}
+                            {mutation.isPending ? "" : "Добавить туториал"}
                         </Button>
                     </div>
                 </form>
