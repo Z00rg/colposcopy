@@ -1,3 +1,4 @@
+"use client";
 import clsx from "clsx";
 import {MenuTrigger, Menu, MenuItem } from './Menu';
 import {Button} from './Button';
@@ -13,7 +14,8 @@ export type UiListButtonAtlasProps = {
     index: number;
     informationOfPathology: PathologyInformation;
     onClick: () => void;
-    onClickAdmin?: () => void;
+    onClickAdminDelete?: () => void;
+    onClickAdminEditText?: () => void;
     isLoading?: boolean;
     adminList?: boolean;
 };
@@ -23,10 +25,12 @@ export function UiListButtonAtlas({
                                       index,
                                       informationOfPathology,
                                       onClick,
-                                      onClickAdmin,
+                                      onClickAdminDelete,
+                                      onClickAdminEditText,
                                       isLoading,
                                       adminList,
                                   }: UiListButtonAtlasProps) {
+
     if (isLoading) {
         return (
             <div
@@ -61,9 +65,9 @@ export function UiListButtonAtlas({
                     <MoreHorizontal className="w-5 h-5" />
                 </Button>
                 <Menu>
-                    <MenuItem onAction={() => alert('Редактируем')} isDisabled>Редактировать текст (скоро)</MenuItem>
+                    <MenuItem onAction={onClickAdminEditText} isDisabled>Редактировать текст (скоро)</MenuItem>
                     <MenuItem onAction={() => alert('Редактируем')} isDisabled>Редактировать изображения (скоро)</MenuItem>
-                    <MenuItem onAction={onClickAdmin}>Удалить</MenuItem>
+                    <MenuItem onAction={onClickAdminDelete}>Удалить</MenuItem>
                 </Menu>
             </MenuTrigger>}
         </div>

@@ -32,22 +32,11 @@ interface ClinicalCase {
     questions: Question[];
 }
 
-// interface PathologyImage {
-//   pathology: number;
-//   image: File;
-// }
-
 
 // API функции для редактирования/удаления патологии
 const updatePathology = (id: number, data: { description: string }) => {
     return apiInstance
         .patch(`/pathologies/${id}/`, data)
-        .then((response) => response.data);
-};
-
-const deletePathology = (id: number) => {
-    return apiInstance
-        .delete(`/pathologies/${id}/`)
         .then((response) => response.data);
 };
 
@@ -762,18 +751,6 @@ const EditPathologyForm = () => {
         },
     });
 
-    const deleteMutation = useMutation({
-        mutationFn: (id: number) => deletePathology(id),
-        onSuccess: () => {
-            alert("Патология успешно удалена");
-            setPathologyId("");
-        },
-        onError: (error) => {
-            console.error("Ошибка при удалении патологии:", error);
-            alert("Ошибка при удалении патологии");
-        },
-    });
-
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -786,17 +763,6 @@ const EditPathologyForm = () => {
             id: parseInt(pathologyId),
             data: {description: newDescription},
         });
-    };
-
-    const handleDelete = () => {
-        if (!pathologyId) {
-            alert("Пожалуйста, выберите патологию для удаления");
-            return;
-        }
-
-        if (window.confirm("Вы уверены, что хотите удалить эту патологию?")) {
-            deleteMutation.mutate(parseInt(pathologyId));
-        }
     };
 
     return (
@@ -832,15 +798,6 @@ const EditPathologyForm = () => {
                         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
                     >
                         {updateMutation.isPending ? "Обновление..." : "Обновить патологию"}
-                    </button>
-
-                    <button
-                        type="button"
-                        onClick={handleDelete}
-                        disabled={deleteMutation.isPending}
-                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 disabled:opacity-50"
-                    >
-                        {deleteMutation.isPending ? "Удаление..." : "Удалить патологию"}
                     </button>
                 </div>
             </form>

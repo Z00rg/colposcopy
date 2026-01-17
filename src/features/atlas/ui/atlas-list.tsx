@@ -25,7 +25,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
         <UiList className={clsx(className, "mt-4 items-start")}>
             <div className="w-full flex flex-row justify-between">
                 <div className="font-bold text-[18px]">Обучение</div>
-                {adminList && <UiModal className="mr-3">{({close}) => (
+                {adminList && <UiModal className="mr-3" nameButton="+">{({close}) => (
                     <AddTutorialForm closeModal={close}/>
                 )}</UiModal>}
             </div>
@@ -76,7 +76,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
                             index={index + 1} // Продолжаем нумерацию после файлов
                             informationOfPathology={item}
                             onClick={() => handleTutorialClick(item.id)}
-                            onClickAdmin={() => handleDeleteTutorial(item.id)}
+                            onClickAdminDelete={() => handleDeleteTutorial(item.id)}
                             adminList={adminList}
                         />
                     ))}
@@ -86,7 +86,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
             {/* Список патологий */}
             <div className="w-full flex flex-row justify-between">
                 <div className="font-bold text-[18px]">Атлас</div>
-                {adminList && <UiModal className="mr-3">
+                {adminList && <UiModal className="mr-3" nameButton="+">
                     {({close}) => (
                         <AddPathologyForm closeModal={close}/>
                     )}
@@ -136,7 +136,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
                         index={index + 1}
                         informationOfPathology={item}
                         onClick={() => handleClick(item.id)}
-                        onClickAdmin={() => handleDeletePathology(item.id)}
+                        onClickAdminDelete={() => handleDeletePathology(item.id)}
                         adminList={adminList}
                     />
                 ))}

@@ -8,13 +8,14 @@ export type UiListButtonAtlasProps = {
     props?: JSX.IntrinsicAttributes & ModalOverlayProps;
     className?: string;
     children: ({ close }: { close: () => void }) => ReactNode;
+    nameButton: string;
 };
 
-export function UiModal({props, className, children} : UiListButtonAtlasProps) {
+export function UiModal({props, className, children, nameButton, } : UiListButtonAtlasProps) {
     return (
         <div className={className}>
             <DialogTrigger>
-                <Button variant="secondary">+</Button>
+                <Button variant="secondary">{nameButton}</Button>
                 <Modal {...props}>
                     <Dialog>
                         {({ close }) => children({ close })}
