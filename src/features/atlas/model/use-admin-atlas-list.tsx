@@ -1,9 +1,10 @@
-import {useDeletePathologyMutationQuery} from "@/entities/admin";
+import {useDeletePathologyMutationQuery, useDeleteTutorialMutationQuery} from "@/entities/admin";
 
 export function useAdminAtlasList() {
 
     // ========== Запрос данных ==========
     const useDeletePathologyMutation = useDeletePathologyMutationQuery();
+    const useDeleteTutorialMutation = useDeleteTutorialMutationQuery();
 
     // ========== Обработчики ==========
     /**
@@ -16,7 +17,19 @@ export function useAdminAtlasList() {
         }
     };
 
+    /**
+     * Мутация удаления туториала
+     * @param id - ID туториала
+     */
+    const handleDeleteTutorial = (id: number) => {
+        if (window.confirm("Вы уверены, что хотите удалить этот туториал?")) {
+            useDeleteTutorialMutation.mutate(id);
+        }
+    }
+
+
     return {
         handleDeletePathology,
+        handleDeleteTutorial,
     };
 }

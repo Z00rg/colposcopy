@@ -15,7 +15,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
     const {items, isLoading, isError, handleClick} = useAtlasList(adminList);
     const {tutorials, isLoadingTutorials, isErrorTutorials, handleTutorialClick} = useTutorialsList();
 
-    const {handleDeletePathology} = useAdminAtlasList();
+    const {handleDeletePathology, handleDeleteTutorial} = useAdminAtlasList();
 
     const isEmptyText = !isLoading && !isError && items.length === 0;
     const isEmptyTutorials = !isLoadingTutorials &&
@@ -25,8 +25,8 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
         <UiList className={clsx(className, "mt-4 items-start")}>
             <div className="w-full flex flex-row justify-between">
                 <div className="font-bold text-[18px]">Обучение</div>
-                <UiModal className="mr-3">{({ close }) => (
-                    <AddPathologyForm closeModal={close} />
+                <UiModal className="mr-3">{({close}) => (
+                    <AddPathologyForm closeModal={close}/>
                 )}</UiModal>
             </div>
 
@@ -77,6 +77,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
                             informationOfPathology={item}
                             onClick={!adminList ? () => handleTutorialClick(item.id) : () => {
                             }}
+                            onClickAdmin={() => handleDeleteTutorial(item.id)}
                             adminList={adminList}
                         />
                     ))}
@@ -87,8 +88,8 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
             <div className="w-full flex flex-row justify-between">
                 <div className="font-bold text-[18px]">Атлас</div>
                 <UiModal className="mr-3">
-                    {({ close }) => (
-                        <AddPathologyForm closeModal={close} />
+                    {({close}) => (
+                        <AddPathologyForm closeModal={close}/>
                     )}
                 </UiModal>
             </div>
