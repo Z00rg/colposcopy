@@ -57,11 +57,12 @@ export function UiListButtonAtlas({
             </div>
 
             {adminList && <MenuTrigger>
-                <Button aria-label="Actions" variant="option">
+                <Button aria-label="Actions" variant="secondary">
                     <MoreHorizontal className="w-5 h-5" />
                 </Button>
                 <Menu>
-                    <MenuItem onAction={() => alert('Редактируем')}>Редактировать</MenuItem>
+                    <MenuItem onAction={() => alert('Редактируем')} isDisabled>Редактировать текст (скоро)</MenuItem>
+                    <MenuItem onAction={() => alert('Редактируем')} isDisabled>Редактировать изображения (скоро)</MenuItem>
                     <MenuItem onAction={onClickAdmin}>Удалить</MenuItem>
                 </Menu>
             </MenuTrigger>}

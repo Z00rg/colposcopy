@@ -8,12 +8,14 @@ import {useTutorialsList} from "../model/use-tutorials-list";
 import {UiError} from "@/shared/ui/ui-error";
 import React from "react";
 import {useAdminAtlasList} from "@/features/atlas/model/use-admin-atlas-list";
+import {UiModal} from "@/shared/ui/UiModal";
+import {AddPathologyForm} from "@/features/admin";
 
-export function AtlasList({className, adminList }: { className?: string, adminList?: boolean }) {
+export function AtlasList({className, adminList}: { className?: string, adminList?: boolean }) {
     const {items, isLoading, isError, handleClick} = useAtlasList(adminList);
-    const {tutorials, isLoadingTutorials, isErrorTutorials, handleTutorialClick } = useTutorialsList();
+    const {tutorials, isLoadingTutorials, isErrorTutorials, handleTutorialClick} = useTutorialsList();
 
-    const { handleDeletePathology } = useAdminAtlasList();
+    const {handleDeletePathology} = useAdminAtlasList();
 
     const isEmptyText = !isLoading && !isError && items.length === 0;
     const isEmptyTutorials = !isLoadingTutorials &&
@@ -21,10 +23,15 @@ export function AtlasList({className, adminList }: { className?: string, adminLi
 
     return (
         <UiList className={clsx(className, "mt-4 items-start")}>
-            <div className="font-bold text-[18px]">Обучение</div>
+            <div className="w-full flex flex-row justify-between">
+                <div className="font-bold text-[18px]">Обучение</div>
+                <UiModal className="mr-3">{({ close }) => (
+                    <AddPathologyForm closeModal={close} />
+                )}</UiModal>
+            </div>
 
             {/* Ошибка загрузки */}
-            {(isErrorTutorials ) && (
+            {(isErrorTutorials) && (
                 <UiError>
                     Не удалось загрузить обучающие материалы
                 </UiError>
@@ -50,7 +57,8 @@ export function AtlasList({className, adminList }: { className?: string, adminLi
                                 id: 0,
                                 name: "",
                             }}
-                            onClick={() => {}}
+                            onClick={() => {
+                            }}
                             isLoading={true}
                         />
                     ))}
@@ -67,7 +75,8 @@ export function AtlasList({className, adminList }: { className?: string, adminLi
                             key={item.id}
                             index={index + 1} // Продолжаем нумерацию после файлов
                             informationOfPathology={item}
-                            onClick={!adminList ? () => handleTutorialClick(item.id) : () => {}}
+                            onClick={!adminList ? () => handleTutorialClick(item.id) : () => {
+                            }}
                             adminList={adminList}
                         />
                     ))}
@@ -75,7 +84,14 @@ export function AtlasList({className, adminList }: { className?: string, adminLi
             )}
 
             {/* Список патологий */}
-            <div className="font-bold text-[18px]">Атлас</div>
+            <div className="w-full flex flex-row justify-between">
+                <div className="font-bold text-[18px]">Атлас</div>
+                <UiModal className="mr-3">
+                    {({ close }) => (
+                        <AddPathologyForm closeModal={close} />
+                    )}
+                </UiModal>
+            </div>
 
             {/* Ошибка загрузки списка патологий */}
             {isError && (
@@ -119,7 +135,8 @@ export function AtlasList({className, adminList }: { className?: string, adminLi
                         key={item.id}
                         index={index + 1}
                         informationOfPathology={item}
-                        onClick={!adminList ? () => handleClick(item.id): () => {} }
+                        onClick={!adminList ? () => handleClick(item.id) : () => {
+                        }}
                         onClickAdmin={() => handleDeletePathology(item.id)}
                         adminList={adminList}
                     />

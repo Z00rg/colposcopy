@@ -12,14 +12,8 @@ import {TutorialForm} from "@/features/admin";
 import {Tabs, TabList, Tab, TabPanels, TabPanel} from "@/shared/ui/Tabs";
 import {AtlasList} from "@/features/atlas";
 import {ClinicalCasesList} from "@/features/clinical-case/ui/clinical-cases-list";
-import {queryClient} from "@/shared/api/query-client";
 
-// Типы данных
-interface Pathology {
-    id: number;
-    name: string;
-    description: string;
-}
+
 
 interface Answer {
     text: string;
@@ -44,12 +38,6 @@ interface ClinicalCase {
 //   image: File;
 // }
 
-// API функции
-const createPathology = (data: Omit<Pathology, "id">) => {
-    return apiInstance
-        .post("/pathologies/", data)
-        .then((response) => response.data);
-};
 
 // API функции для редактирования/удаления патологии
 const updatePathology = (id: number, data: { description: string }) => {
@@ -223,79 +211,6 @@ const ClinicalCaseSelector = ({
                 )}
             </select>
             {error && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
-        </div>
-    );
-};
-
-// Компоненты форм
-const PathologyForm = () => {
-    const {
-        register,
-        handleSubmit,
-        formState: {errors},
-        reset,
-    } = useForm<Omit<Pathology, "id">>();
-
-    const mutation = useMutation({
-        mutationFn: createPathology,
-        onSuccess: () => {
-            queryClient.invalidateQueries();
-            alert("Патология успешно добавлена");
-            reset();
-        },
-        onError: (error) => {
-            console.error("Ошибка при добавлении патологии:", error);
-            alert("Ошибка при добавлении патологии");
-        },
-    });
-
-    const onSubmit = (data: Omit<Pathology, "id">) => {
-        mutation.mutate(data);
-    };
-
-    return (
-        <div className="bg-white p-6 rounded-lg shadow-md mb-6 w-full">
-            <h3 className="text-xl font-bold mb-4">Добавить патологию</h3>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                <div>
-                    <label className="block text-sm font-medium mb-1">
-                        Название патологии
-                    </label>
-                    <input
-                        {...register("name", {required: "Название обязательно"})}
-                        className="w-full border border-gray-300 rounded px-3 py-2"
-                        placeholder="Введите название патологии"
-                    />
-                    {errors.name && (
-                        <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-                    )}
-                </div>
-
-                <div>
-                    <label className="block text-sm font-medium mb-1">
-                        Описание патологии
-                    </label>
-                    <textarea
-                        {...register("description", {required: "Описание обязательно"})}
-                        className="w-full border border-gray-300 rounded px-3 py-2"
-                        placeholder="Введите описание патологии"
-                        rows={4}
-                    />
-                    {errors.description && (
-                        <p className="text-red-500 text-sm mt-1">
-                            {errors.description.message}
-                        </p>
-                    )}
-                </div>
-
-                <button
-                    type="submit"
-                    disabled={mutation.isPending}
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
-                >
-                    {mutation.isPending ? "Отправка..." : "Добавить патологию"}
-                </button>
-            </form>
         </div>
     );
 };
@@ -1058,7 +973,6 @@ export default function AdminHomePage() {
                     <TabPanel id="pathhology" className="flex items-center justify-center">
                         <div className="w-full flex flex-col">
                             <AtlasList className="mb-6" adminList/>
-                            <PathologyForm/>
                             <PathologyImageForm/>
                             <EditPathologyForm/>
                             <TutorialForm/>
