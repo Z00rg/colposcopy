@@ -9,7 +9,7 @@ import {UiError} from "@/shared/ui/ui-error";
 import React from "react";
 import {useAdminAtlasList} from "@/features/atlas/model/use-admin-atlas-list";
 import {UiModal} from "@/shared/ui/UiModal";
-import {AddPathologyForm} from "@/features/admin";
+import {AddPathologyForm, AddTutorialForm} from "@/features/admin";
 
 export function AtlasList({className, adminList}: { className?: string, adminList?: boolean }) {
     const {items, isLoading, isError, handleClick} = useAtlasList(adminList);
@@ -26,7 +26,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
             <div className="w-full flex flex-row justify-between">
                 <div className="font-bold text-[18px]">Обучение</div>
                 <UiModal className="mr-3">{({close}) => (
-                    <AddPathologyForm closeModal={close}/>
+                    <AddTutorialForm closeModal={close}/>
                 )}</UiModal>
             </div>
 

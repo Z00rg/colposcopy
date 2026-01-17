@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiInstance } from "@/shared/api/api-instance";
-import {useTutorialsListQuery} from "@/entities/tutorials";
+import {Button} from "@/shared/ui/Button";
 
 // Типы
 interface TutorialFormData {
@@ -50,13 +50,7 @@ const createTutorial = async (data: TutorialCreatePayload) => {
         .then((response) => response.data);
 };
 
-const deleteTutorial = async (id: number) => {
-    return apiInstance
-        .delete(`tutorial/delete/${id}/`)
-        .then((response) => response.data);
-};
-
-export const TutorialForm = () => {
+export function AddTutorialForm ({ closeModal }: { closeModal: () => void }) {
     const queryClient = useQueryClient();
     const {
         register,
@@ -72,31 +66,16 @@ export const TutorialForm = () => {
     const posterFile = watch("poster");
     const tutorialFile = watch("tutorial_file");
 
-    // Загружаем список туториалов
-    const tutorialsQuery = useTutorialsListQuery();
-
     const createMutation = useMutation({
         mutationFn: createTutorial,
         onSuccess: () => {
-            alert("Туториал успешно добавлен");
+            queryClient.invalidateQueries();
             reset();
-            queryClient.invalidateQueries({ queryKey: ["tutorials"] });
+            closeModal();
         },
         onError: (error) => {
             console.error("Ошибка при добавлении туториала:", error);
             alert("Ошибка при добавлении туториала");
-        },
-    });
-
-    const deleteMutation = useMutation({
-        mutationFn: deleteTutorial,
-        onSuccess: () => {
-            alert("Туториал успешно удален");
-            queryClient.invalidateQueries({ queryKey: ["tutorials"] });
-        },
-        onError: (error) => {
-            console.error("Ошибка при удалении туториала:", error);
-            alert("Ошибка при удалении туториала");
         },
     });
 
@@ -121,18 +100,8 @@ export const TutorialForm = () => {
         createMutation.mutate(payload);
     };
 
-    const handleDelete = (id: number, name: string) => {
-        if (confirm(`Вы уверены, что хотите удалить туториал "${name}"?`)) {
-            deleteMutation.mutate(id);
-        }
-    };
-
-    const tutorials = tutorialsQuery.data?.items ?? [];
-
     return (
-        <div className="space-y-6">
-            {/* Форма добавления */}
-            <div className="bg-white p-6 rounded-lg shadow-md">
+            <div>
                 <h3 className="text-xl font-bold mb-4">Добавить туториал</h3>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     {/* Название */}
@@ -274,60 +243,24 @@ export const TutorialForm = () => {
                         )}
                     </div>
 
-                    {/* Кнопка отправки */}
-                    <button
-                        type="submit"
-                        disabled={createMutation.isPending}
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                        {createMutation.isPending ? "Отправка..." : "Добавить туториал"}
-                    </button>
+                    <div className="flex w-full justify-end gap-3">
+                        <Button
+                            slot="close"
+                            variant="secondary"
+                            isDisabled={createMutation.isPending}
+                        >
+                            Отмена
+                        </Button>
+
+                        <Button
+                            type="submit"
+                            isPending={createMutation.isPending}
+                            isDisabled={createMutation.isPending}
+                        >
+                            {createMutation.isPending ? "" : "Добавить туториал"}
+                        </Button>
+                    </div>
                 </form>
             </div>
-
-            {/* Список туториалов для удаления */}
-            <div className="bg-white p-6 rounded-lg shadow-md">
-                <h3 className="text-xl font-bold mb-4">Список туториалов</h3>
-
-                {tutorialsQuery.isPending && (
-                    <div className="text-gray-500">Загрузка...</div>
-                )}
-
-                {tutorialsQuery.isError && (
-                    <div className="text-red-500">Ошибка загрузки туториалов</div>
-                )}
-
-                {tutorials.length === 0 && !tutorialsQuery.isPending && (
-                    <div className="text-gray-500">Нет туториалов</div>
-                )}
-
-                <div className="space-y-3">
-                    {tutorials.map((tutorial) => (
-                        <>
-                            <div
-                                key={tutorial.id}
-                                className="flex items-center justify-between border border-gray-200 rounded-lg p-4 hover:bg-gray-50"
-                            >
-                                <div className="flex-1 min-w-0 mr-4">
-                                    <h4 className="font-semibold text-gray-900 truncate">
-                                        {tutorial.id}
-                                    </h4>
-                                    <p className="text-sm text-gray-600 truncate mt-1">
-                                        {tutorial.name}
-                                    </p>
-                                </div>
-                            </div>
-                            <button
-                                onClick={() => handleDelete(tutorial.id, tutorial.name)}
-                                disabled={deleteMutation.isPending}
-                                className="flex-shrink-0 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                Удалить
-                            </button>
-                        </>
-                    ))}
-                </div>
-            </div>
-        </div>
     );
-};
+}

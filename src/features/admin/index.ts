@@ -1,2 +1,2 @@
-export { TutorialForm } from "./ui/tutorialForm";
+export { AddTutorialForm } from "./ui/ addTutorialForm";
 export { AddPathologyForm } from "./ui/addPathologyForm";

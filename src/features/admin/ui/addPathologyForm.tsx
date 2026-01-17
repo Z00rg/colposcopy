@@ -42,7 +42,6 @@ export function AddPathologyForm ({ closeModal }: { closeModal: () => void }) {
                 </div>
 
                 <div className="flex w-full justify-end gap-3">
-                    {/* react-aria cancel */}
                     <Button
                         slot="close"
                         variant="secondary"
@@ -51,13 +50,12 @@ export function AddPathologyForm ({ closeModal }: { closeModal: () => void }) {
                         Отмена
                     </Button>
 
-                    {/* submit НЕ закрывает */}
                     <Button
                         type="submit"
                         isPending={mutation.isPending}
                         isDisabled={mutation.isPending}
                     >
-                        Добавить патологию
+                        {mutation.isPending ? "" : "Добавить патологию"}
                     </Button>
                 </div>
 

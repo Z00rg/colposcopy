@@ -8,7 +8,6 @@ import {atlasApi} from "@/shared/api/atlasApi";
 import {casesApi as clinicalCasesApi} from "@/shared/api/casesApi";
 import {tests} from "@/shared/constants/layoutsJSON";
 import Head from "next/head";
-import {TutorialForm} from "@/features/admin";
 import {Tabs, TabList, Tab, TabPanels, TabPanel} from "@/shared/ui/Tabs";
 import {AtlasList} from "@/features/atlas";
 import {ClinicalCasesList} from "@/features/clinical-case/ui/clinical-cases-list";
@@ -975,7 +974,6 @@ export default function AdminHomePage() {
                             <AtlasList className="mb-6" adminList/>
                             <PathologyImageForm/>
                             <EditPathologyForm/>
-                            <TutorialForm/>
                         </div>
                     </TabPanel>
                     <TabPanel id="cases" className="flex items-center justify-center">
