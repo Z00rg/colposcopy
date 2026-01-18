@@ -6,7 +6,7 @@ import {UiListButtonClinic} from "@/shared/ui/ui-list-button-clinic";
 import {useClinicalCases} from "../model/use-clinical-cases";
 import {UiError} from "@/shared/ui/ui-error";
 
-export function ClinicalCasesList({className}: { className?: string }) {
+export function ClinicalCasesList({className, adminList}: { className?: string, adminList?: boolean }) {
     const {items, isLoading, isError} = useClinicalCases();
     const isEmptyText = !isLoading && !isError && items.length === 0;
 
@@ -44,7 +44,7 @@ export function ClinicalCasesList({className}: { className?: string }) {
                     ))}
                 </>
             )}
-
+            {adminList && "Это лист админа"}
             {/* Отображение списка клинических случаев */}
             {!isLoading && items &&
                 items.map((item, index) => (
@@ -54,6 +54,7 @@ export function ClinicalCasesList({className}: { className?: string }) {
                         index={index + 1}
                         informationOfPathology={item}
                         cases={item.cases}
+                        adminList={adminList}
                     />
                 ))}
         </UiList>

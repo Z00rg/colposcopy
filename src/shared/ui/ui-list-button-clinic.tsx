@@ -13,8 +13,9 @@ export type UiListButtonClinicProps = {
     className?: string;
     index: number;
     informationOfPathology: PathologyInformation;
-    cases: { id: number }[];
+    cases: { id: number, name: string }[];
     isLoading?: boolean;
+    adminList?: boolean;
 };
 
 export function UiListButtonClinic({
@@ -23,6 +24,7 @@ export function UiListButtonClinic({
                                        informationOfPathology,
                                        cases,
                                        isLoading,
+                                       adminList,
                                    }: UiListButtonClinicProps) {
     const [active, setActive] = useState(false);
     const router = useRouter();
@@ -95,7 +97,7 @@ export function UiListButtonClinic({
                             {/* Точка-маркер */}
                             <div className="w-2 h-2 rounded-full bg-blue-400 shrink-0"></div>
 
-                            <span>Случай {idx + 1}</span>
+                            {adminList ? <div>{caseItem.name}</div> : <span>Случай {idx + 1}</span>}
                         </div>
                     ))}
                 </div>

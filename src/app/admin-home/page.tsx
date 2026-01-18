@@ -777,7 +777,7 @@ export default function AdminHomePage() {
                     </TabPanel>
                     <TabPanel id="cases" className="flex items-center justify-center">
                         <div className="w-full flex flex-col">
-                            <ClinicalCasesList className="mb-6"/>
+                            <ClinicalCasesList adminList className="mb-6"/>
                             <ClinicalCaseForm/>
                             <LayerForm/>
                             <SchemeForm/>
