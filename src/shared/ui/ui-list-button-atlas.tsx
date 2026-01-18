@@ -20,6 +20,7 @@ export type UiListButtonAtlasProps = {
     onClick?: () => void;
     onClickAdminDelete?: () => void;
     pathologyOrTutorialId: number;
+    type: "pathology" | "tutorial";
     isLoading?: boolean;
     adminList?: boolean;
 };
@@ -31,6 +32,7 @@ export function UiListButtonAtlas({
                                       onClick,
                                       onClickAdminDelete,
                                       pathologyOrTutorialId,
+                                      type,
                                       isLoading,
                                       adminList,
                                   }: UiListButtonAtlasProps) {
@@ -70,10 +72,11 @@ export function UiListButtonAtlas({
             {/* Модалка редактирования */}
             <Modal isOpen={isModalOpen}>
                 <Dialog>
-                    <EditPathologyForm
+                    {type === "pathology" && <EditPathologyForm
                         pathologyId={pathologyOrTutorialId}
                         closeModal={() => setIsModalOpen(!isModalOpen)}
-                    />
+                    />}
+                    {type === "tutorial" && <div className="flex flex-col">Тут будет модалка изменения туториала</div>}
                 </Dialog>
             </Modal>
 
@@ -82,7 +85,8 @@ export function UiListButtonAtlas({
                     <MoreHorizontal className="w-5 h-5"/>
                 </Button>
                 <Menu>
-                    <MenuItem onAction={() => setIsModalOpen(!isModalOpen)}>Редактировать текст</MenuItem>
+                    <MenuItem onAction={() => setIsModalOpen(!isModalOpen)} isDisabled={type === "tutorial"}>Редактировать
+                        текст</MenuItem>
                     <MenuItem onAction={() => alert('Редактируем')} isDisabled>Редактировать изображения
                         (скоро)</MenuItem>
                     <MenuItem onAction={onClickAdminDelete}>Удалить</MenuItem>
