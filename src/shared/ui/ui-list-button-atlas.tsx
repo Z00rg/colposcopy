@@ -7,6 +7,7 @@ import {EditPathologyForm} from "@/features/admin";
 import React, {useState} from "react";
 import {Modal} from "@/shared/ui/Modal";
 import {Dialog} from "@/shared/ui/Dialog";
+import {AddPathologyImageForm} from "@/features/admin/ui/addImagePathologyForm";
 
 type PathologyInformation = {
     id: number;
@@ -38,6 +39,7 @@ export function UiListButtonAtlas({
                                   }: UiListButtonAtlasProps) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAddImageModalOpen, setIsAddImageModalOpen] = useState(false);
 
     if (isLoading) {
         return (
@@ -80,6 +82,15 @@ export function UiListButtonAtlas({
                 </Dialog>
             </Modal>
 
+            <Modal isOpen={isAddImageModalOpen}>
+                <Dialog>
+                    {type === "pathology" && <AddPathologyImageForm
+                        pathologyId={pathologyOrTutorialId}
+                        closeModal={() => setIsAddImageModalOpen(!isAddImageModalOpen)}
+                    />}
+                </Dialog>
+            </Modal>
+
             {adminList && <MenuTrigger>
                 <Button aria-label="Actions" variant="secondary">
                     <MoreHorizontal className="w-5 h-5"/>
@@ -87,8 +98,8 @@ export function UiListButtonAtlas({
                 <Menu>
                     <MenuItem onAction={() => setIsModalOpen(!isModalOpen)} isDisabled={type === "tutorial"}>Редактировать
                         текст</MenuItem>
-                    <MenuItem onAction={() => alert('Редактируем')} isDisabled>Редактировать изображения
-                        (скоро)</MenuItem>
+                    {type === "pathology" && <MenuItem onAction={() => setIsAddImageModalOpen(!isAddImageModalOpen)}>Добавить
+                        изображение</MenuItem>}
                     <MenuItem onAction={onClickAdminDelete}>Удалить</MenuItem>
                 </Menu>
             </MenuTrigger>}

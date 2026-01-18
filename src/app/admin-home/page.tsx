@@ -35,16 +35,6 @@ interface ClinicalCase {
 
 // API функции для редактирования/удаления патологии
 
-const uploadPathologyImage = (data: FormData) => {
-    return apiInstance
-        .post("/pathology-images/", data, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        })
-        .then((response) => response.data);
-};
-
 const createClinicalCase = (data: ClinicalCase) => {
     return apiInstance
         .post("/case_submit/", data)
@@ -194,74 +184,6 @@ const ClinicalCaseSelector = ({
                 )}
             </select>
             {error && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
-        </div>
-    );
-};
-
-const PathologyImageForm = () => {
-    const [pathologyId, setPathologyId] = useState("");
-    const [image, setImage] = useState<File | null>(null);
-    const fileInputRef = useRef<HTMLInputElement>(null);
-
-    const mutation = useMutation({
-        mutationFn: uploadPathologyImage,
-        onSuccess: () => {
-            alert("Изображение патологии успешно добавлено");
-            setPathologyId("");
-            setImage(null);
-            if (fileInputRef.current) fileInputRef.current.value = "";
-        },
-        onError: (error) => {
-            console.error("Ошибка при добавлении изображения патологии:", error);
-            alert("Ошибка при добавлении изображения патологии");
-        },
-    });
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (!pathologyId || !image) {
-            alert("Пожалуйста, заполните все поля");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("pathology", pathologyId);
-        formData.append("image", image);
-
-        mutation.mutate(formData);
-    };
-
-    return (
-        <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-            <h3 className="text-xl font-bold mb-4">Добавить изображение патологии</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <PathologySelector
-                    value={pathologyId}
-                    onChange={setPathologyId}
-                    label="Патология"
-                    required={true}
-                />
-
-                <div>
-                    <label className="block text-sm font-medium mb-1">Изображение</label>
-                    <input
-                        type="file"
-                        ref={fileInputRef}
-                        onChange={(e) => setImage(e.target.files?.[0] || null)}
-                        accept="image/*"
-                        className="w-full border border-gray-300 rounded px-3 py-2"
-                    />
-                </div>
-
-                <button
-                    type="submit"
-                    disabled={mutation.isPending}
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
-                >
-                    {mutation.isPending ? "Отправка..." : "Добавить изображение"}
-                </button>
-            </form>
         </div>
     );
 };
@@ -851,7 +773,6 @@ export default function AdminHomePage() {
                     <TabPanel id="pathhology" className="flex items-center justify-center">
                         <div className="w-full flex flex-col">
                             <AtlasList className="mb-6" adminList/>
-                            <PathologyImageForm/>
                         </div>
                     </TabPanel>
                     <TabPanel id="cases" className="flex items-center justify-center">
