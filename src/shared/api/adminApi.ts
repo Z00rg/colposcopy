@@ -36,6 +36,24 @@ export const createPathology = (
         options
     );
 
+// Добавление картинки к патологии
+export const uploadPathologyImage = (
+    data: FormData,
+    options?: RequestOptions
+) =>
+    createInstance<void>(
+        {
+            url: "/pathology-images/",
+            method: "POST",
+            data: data,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        },
+        options
+    );
+
+
 // Редактирование патологии
 export const updatePathologyText = (
     id: number,
@@ -115,6 +133,7 @@ export const deleteTutorial = (
 
 export const adminApi = {
     createPathology,
+    uploadPathologyImage,
     updatePathologyText,
     deletePathology,
     createTutorial,

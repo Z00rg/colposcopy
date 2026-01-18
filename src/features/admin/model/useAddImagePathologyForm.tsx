@@ -1,17 +1,7 @@
-import {apiInstance} from "@/shared/api/api-instance";
 import {useRef, useState} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {queryClient} from "@/shared/api/query-client";
-
-const uploadPathologyImage = (data: FormData) => {
-    return apiInstance
-        .post("/pathology-images/", data, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        })
-        .then((response) => response.data);
-};
+import {adminApi} from "@/shared/api/adminApi";
 
 export type UseAddImagePathologyFormProps = {
     pathologyId: number,
@@ -23,7 +13,7 @@ export function useAddImagePathologyForm({ pathologyId, closeModal }: UseAddImag
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const mutation = useMutation({
-        mutationFn: uploadPathologyImage,
+        mutationFn: (formData: FormData) => adminApi.uploadPathologyImage(formData),
         onSuccess: () => {
             queryClient.invalidateQueries();
             closeModal();
