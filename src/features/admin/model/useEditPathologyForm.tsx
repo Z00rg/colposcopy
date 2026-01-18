@@ -1,14 +1,8 @@
-import {apiInstance} from "@/shared/api/api-instance";
 import {usePathologyQuery} from "@/entities/pathology";
 import {useEffect, useState} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {queryClient} from "@/shared/api/query-client";
-
-const updatePathology = (id: number, data: { description: string }) => {
-    return apiInstance
-        .patch(`/pathologies/${id}/`, data)
-        .then((response) => response.data);
-};
+import {adminApi} from "@/shared/api/adminApi";
 
 export type UseEditPathologyFormProps = {
     pathologyId: number,
@@ -29,7 +23,7 @@ export function useEditPathologyForm ({ pathologyId, closeModal }: UseEditPathol
 
     const updateMutation = useMutation({
         mutationFn: ({id, data}: { id: number; data: { description: string } }) =>
-            updatePathology(id, data),
+            adminApi.updatePathologyText(id, data),
         onSuccess: () => {
             setNewDescription("");
             queryClient.invalidateQueries();

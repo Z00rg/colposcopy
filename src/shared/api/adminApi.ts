@@ -1,13 +1,17 @@
 import {createInstance, RequestOptions} from "./api-instance";
 
-// DTO
+// DTO Патологий
 
 export interface PathologyCreateDto {
     name: string;
     description: string;
 }
 
-// DTO
+export interface PathologyEditTextDto {
+    description: string;
+}
+
+// DTO Туториалов
 export interface TutorialCreateDto {
     name: string;
     description: string;
@@ -27,6 +31,21 @@ export const createPathology = (
         {
             url: "/pathologies/",
             method: "POST",
+            data: body,
+        },
+        options
+    );
+
+// Редактирование патологии
+export const updatePathologyText = (
+    id: number,
+    body: PathologyEditTextDto,
+    options?: RequestOptions
+) =>
+    createInstance<void>(
+        {
+            url: `/pathologies/${id}/`,
+            method: "PATCH",
             data: body,
         },
         options
@@ -96,6 +115,7 @@ export const deleteTutorial = (
 
 export const adminApi = {
     createPathology,
+    updatePathologyText,
     deletePathology,
     createTutorial,
     deleteTutorial,

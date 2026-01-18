@@ -2,7 +2,6 @@ import {useMutation} from "@tanstack/react-query";
 import {queryClient} from "@/shared/api/query-client";
 import {adminApi} from "@/shared/api/adminApi";
 
-
 // Удаление патологии
 export function useDeletePathologyMutationQuery() {
     return useMutation({
