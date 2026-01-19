@@ -1,4 +1,5 @@
-import {createInstance, RequestOptions} from "./api-instance";
+import {apiInstance, createInstance, RequestOptions} from "./api-instance";
+import {SignUpBodyDto} from "@/shared/api/authApi";
 
 // DTO Патологий
 
@@ -18,6 +19,24 @@ export interface TutorialCreateDto {
     video?: File;
     poster?: File;
     tutorial_file?: File;
+}
+
+// DTO Клинических кейсов
+interface Answer {
+    text: string;
+    is_correct: boolean;
+}
+
+interface Question {
+    name: string;
+    instruction: string;
+    qtype: "single" | "multiple";
+    answers: Answer[];
+}
+interface ClinicalCase {
+    name: string;
+    pathology: number;
+    questions: Question[];
 }
 
 
@@ -131,6 +150,17 @@ export const deleteTutorial = (
         options
     );
 
+//API Клинических случаев
+const createClinicalCase = (body: ClinicalCase, options?: RequestOptions) =>
+    createInstance<void>(
+        {
+            url: "/case_submit/",
+            method: "POST",
+            data: body,
+        },
+        options
+    );
+
 export const adminApi = {
     createPathology,
     uploadPathologyImage,
@@ -138,4 +168,5 @@ export const adminApi = {
     deletePathology,
     createTutorial,
     deleteTutorial,
+    createClinicalCase,
 };

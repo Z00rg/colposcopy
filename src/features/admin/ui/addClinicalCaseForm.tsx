@@ -1,133 +1,34 @@
-import {useForm} from "react-hook-form";
-import {useState} from "react";
-import {useMutation} from "@tanstack/react-query";
 import {tests} from "@/shared/constants/layoutsJSON";
-import {apiInstance} from "@/shared/api/api-instance";
-import {queryClient} from "@/shared/api/query-client";
 import {Button} from "@/shared/ui/Button";
-
-interface Answer {
-    text: string;
-    is_correct: boolean;
-}
-
-interface Question {
-    name: string;
-    instruction: string;
-    qtype: "single" | "multiple";
-    answers: Answer[];
-}
-interface ClinicalCase {
-    name: string;
-    pathology: number;
-    questions: Question[];
-}
+import {useAddClinicalCaseForm} from "@/features/admin/model/useAddClinicalCaseForm";
 
 export type AddClinicalCaseFormProps = {
     pathology: number,
     closeModal: () => void,
 };
 
-const createClinicalCase = (data: ClinicalCase) => {
-    return apiInstance
-        .post("/case_submit/", data)
-        .then((response) => response.data);
-};
-
-export function AddClinicalCaseForm({ pathology, closeModal }: AddClinicalCaseFormProps) {
+export function AddClinicalCaseForm({pathology, closeModal}: AddClinicalCaseFormProps) {
     const {
-        register,
         handleSubmit,
-        formState: {errors},
-        watch,
+        register,
+        errors,
+        addQuestion,
+        addAnswer,
+        selectedLayout,
+        setSelectedLayout,
         setValue,
-        reset,
-    } = useForm<ClinicalCase>();
-    const [selectedLayout, setSelectedLayout] = useState("");
-    const questions = watch("questions") || [];
-
-    const mutation = useMutation({
-        mutationFn: createClinicalCase,
-        onSuccess: () => {
-            queryClient.invalidateQueries();
-            closeModal();
-            reset();
-        },
-        onError: (error) => {
-            console.error("Ошибка при добавлении клинического случая:", error);
-            alert("Ошибка при добавлении клинического случая");
-        },
-    });
-
-    const addQuestion = () => {
-        const newQuestion: Question = {
-            name: "",
-            instruction: "",
-            qtype: "single",
-            answers: [{text: "", is_correct: false}],
-        };
-
-        // eslint-disable-next-line react-hooks/incompatible-library
-        const currentQuestions = watch("questions") || [];
-        setValue("questions", [...currentQuestions, newQuestion]);
-    };
-
-    const removeQuestion = (index: number) => {
-        const currentQuestions = watch("questions") || [];
-        const updatedQuestions = currentQuestions.filter((_, i) => i !== index);
-        setValue("questions", updatedQuestions);
-    };
-
-    const addAnswer = (questionIndex: number) => {
-        const currentQuestions = watch("questions") || [];
-        const updatedQuestions = [...currentQuestions];
-        updatedQuestions[questionIndex].answers.push({
-            text: "",
-            is_correct: false,
-        });
-        setValue("questions", updatedQuestions);
-    };
-
-    const removeAnswer = (questionIndex: number, answerIndex: number) => {
-        const currentQuestions = watch("questions") || [];
-        const updatedQuestions = [...currentQuestions];
-        updatedQuestions[questionIndex].answers = updatedQuestions[
-            questionIndex
-            ].answers.filter((_, i) => i !== answerIndex);
-        setValue("questions", updatedQuestions);
-    };
-
-    const updateAnswerText = (
-        questionIndex: number,
-        answerIndex: number,
-        text: string
-    ) => {
-        const currentQuestions = watch("questions") || [];
-        const updatedQuestions = [...currentQuestions];
-        updatedQuestions[questionIndex].answers[answerIndex].text = text;
-        setValue("questions", updatedQuestions);
-    };
-
-    const toggleAnswerCorrect = (questionIndex: number, answerIndex: number) => {
-        const currentQuestions = watch("questions") || [];
-        const updatedQuestions = [...currentQuestions];
-        updatedQuestions[questionIndex].answers[answerIndex].is_correct =
-            !updatedQuestions[questionIndex].answers[answerIndex].is_correct;
-        setValue("questions", updatedQuestions);
-    };
-
-    const onSubmit = (data: ClinicalCase) => {
-        const payload = {
-            ...data,
-            pathology: pathology,
-        };
-        mutation.mutate(payload);
-    };
+        questions,
+        removeAnswer,
+        removeQuestion,
+        updateAnswerText,
+        toggleAnswerCorrect,
+        mutation
+    } = useAddClinicalCaseForm({pathology, closeModal});
 
     return (
         <div>
             <h3 className="text-xl font-bold mb-4">Добавить клинический случай</h3>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label className="block text-sm font-medium mb-1">
                         Название клинического случая
