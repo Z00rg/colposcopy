@@ -2,7 +2,10 @@
 
 import clsx from "clsx";
 import {useRouter} from "next/navigation";
-import {useState} from "react";
+import React, {useState} from "react";
+import {Dialog} from "@/shared/ui/Dialog";
+import {Modal} from "@/shared/ui/Modal";
+import {AddClinicalCaseForm} from "@/features/admin/ui/addClinicalCaseForm";
 
 type PathologyInformation = {
     id: number;
@@ -16,6 +19,7 @@ export type UiListButtonClinicProps = {
     cases: { id: number, name: string }[];
     isLoading?: boolean;
     adminList?: boolean;
+    pathologyId: number;
 };
 
 export function UiListButtonClinic({
@@ -25,9 +29,11 @@ export function UiListButtonClinic({
                                        cases,
                                        isLoading,
                                        adminList,
+                                       pathologyId,
                                    }: UiListButtonClinicProps) {
     const [active, setActive] = useState(false);
     const router = useRouter();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleCaseClick = (id: number) => {
         router.push(`/case/${id}`);
@@ -58,6 +64,16 @@ export function UiListButtonClinic({
                 "hover:bg-blue-50 hover:border-blue-300 hover:shadow-sm cursor-pointer"
             )}
         >
+            {/* Модалка добавления случая */}
+            <Modal isOpen={isModalOpen}>
+                <Dialog>
+                   <AddClinicalCaseForm
+                        pathology={pathologyId}
+                        closeModal={() => setIsModalOpen(!isModalOpen)}
+                    />
+                </Dialog>
+            </Modal>
+
             {/* Верхняя строка */}
             <div
                 className="flex items-center text-[18px] font-medium gap-3 px-1 py-1"
@@ -100,6 +116,30 @@ export function UiListButtonClinic({
                             {adminList ? <div>{caseItem.name}</div> : <span>Случай {idx + 1}</span>}
                         </div>
                     ))}
+                    {adminList && <div
+                        className="flex items-center gap-3 text-[16px] text-gray-700 bg-blue-100/35 leading-tight py-1.5 px-1.5 rounded-lg cursor-pointer transition-all duration-150 hover:bg-blue-100 hover:text-blue-800"
+                        onClick={() => {
+                            setIsModalOpen(!isModalOpen);
+                        }}
+                    >
+                        {/* Точка-маркер */}
+                        <div className="w-5 h-5 flex items-center justify-center text-blue-400">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                        </div>
+
+                        <span>Добавить клинический случай</span>
+                    </div>}
                 </div>
             </div>
         </div>

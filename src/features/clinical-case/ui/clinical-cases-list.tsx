@@ -40,6 +40,7 @@ export function ClinicalCasesList({className, adminList}: { className?: string, 
                             }}
                             cases={[]}
                             isLoading={true}
+                            pathologyId={index}
                         />
                     ))}
                 </>
@@ -55,6 +56,7 @@ export function ClinicalCasesList({className, adminList}: { className?: string, 
                         informationOfPathology={item}
                         cases={item.cases}
                         adminList={adminList}
+                        pathologyId={item.id}
                     />
                 ))}
         </UiList>

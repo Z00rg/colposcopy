@@ -1,7 +1,7 @@
 import {Metadata} from "next";
 
 export const metadata: Metadata = {
-    title: "Клинический кейс",
+    title: "Админ-панель",
 };
 
 export default function MenuLayout({

@@ -10,7 +10,7 @@ export function AddPathologyImageForm({ pathologyId, closeModal }: AddPathologyI
     const { mutation, fileInputRef, setImage, handleSubmit } = useAddImagePathologyForm({ pathologyId, closeModal });
 
     return (
-        <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+        <div>
             <h3 className="text-xl font-bold mb-4">Добавить изображение патологии</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
