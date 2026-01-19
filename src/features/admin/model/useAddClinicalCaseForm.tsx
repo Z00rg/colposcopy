@@ -2,7 +2,6 @@ import {useForm} from "react-hook-form";
 import {useState} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {queryClient} from "@/shared/api/query-client";
-import {apiInstance} from "@/shared/api/api-instance";
 import {adminApi} from "@/shared/api/adminApi";
 
 interface Answer {
