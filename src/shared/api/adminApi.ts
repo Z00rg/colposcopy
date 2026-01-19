@@ -32,6 +32,7 @@ interface Question {
     qtype: "single" | "multiple";
     answers: Answer[];
 }
+
 interface ClinicalCase {
     name: string;
     pathology: number;
@@ -150,12 +151,23 @@ export const deleteTutorial = (
     );
 
 //API Клинических случаев
+//Добавление клинического случая
 const createClinicalCase = (body: ClinicalCase, options?: RequestOptions) =>
     createInstance<void>(
         {
             url: "/case_submit/",
             method: "POST",
             data: body,
+        },
+        options
+    );
+
+//Удаление клинического случая
+const deleteClinicalCase = (id: number, options?: RequestOptions) =>
+    createInstance<void>(
+        {
+            url: `/case_submit/${id}/`,
+            method: "DELETE",
         },
         options
     );
@@ -168,4 +180,5 @@ export const adminApi = {
     createTutorial,
     deleteTutorial,
     createClinicalCase,
+    deleteClinicalCase,
 };

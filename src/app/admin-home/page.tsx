@@ -9,19 +9,6 @@ import {Tabs, TabList, Tab, TabPanels, TabPanel} from "@/shared/ui/Tabs";
 import {AtlasList} from "@/features/atlas";
 import {ClinicalCasesList} from "@/features/clinical-case/ui/clinical-cases-list";
 
-// API функции для редактирования/удаления клинических случаев
-const updateClinicalCase = (id: number, data: { name: string }) => {
-    return apiInstance
-        .patch(`/case_submit/${id}/`, data)
-        .then((response) => response.data);
-};
-
-const deleteClinicalCase = (id: number) => {
-    return apiInstance
-        .delete(`/case_submit/${id}/`)
-        .then((response) => response.data);
-};
-
 const uploadLayer = (data: FormData) => {
     return apiInstance
         .post("/layers/", data, {
@@ -294,114 +281,6 @@ const SchemeForm = () => {
     );
 };
 
-// Компонент для редактирования и удаления клинического случая
-const EditClinicalCaseForm = () => {
-    const [caseId, setCaseId] = useState("");
-    const [newName, setNewName] = useState("");
-
-    const updateMutation = useMutation({
-        mutationFn: ({id, data}: { id: number; data: { name: string } }) =>
-            updateClinicalCase(id, data),
-        onSuccess: () => {
-            alert("Клинический случай успешно обновлен");
-            setCaseId("");
-            setNewName("");
-        },
-        onError: (error) => {
-            console.error("Ошибка при обновлении клинического случая:", error);
-            alert("Ошибка при обновлении клинического случая");
-        },
-    });
-
-    const deleteMutation = useMutation({
-        mutationFn: (id: number) => deleteClinicalCase(id),
-        onSuccess: () => {
-            alert("Клинический случай успешно удален");
-            setCaseId("");
-        },
-        onError: (error) => {
-            console.error("Ошибка при удалении клинического случая:", error);
-            alert("Ошибка при удалении клинического случая");
-        },
-    });
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (!caseId || !newName) {
-            alert("Пожалуйста, заполните все поля");
-            return;
-        }
-
-        updateMutation.mutate({id: parseInt(caseId), data: {name: newName}});
-    };
-
-    const handleDelete = () => {
-        if (!caseId) {
-            alert("Пожалуйста, выберите клинический случай для удаления");
-            return;
-        }
-
-        if (
-            window.confirm("Вы уверены, что хотите удалить этот клинический случай?")
-        ) {
-            deleteMutation.mutate(parseInt(caseId));
-        }
-    };
-
-    return (
-        <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-            <h3 className="text-xl font-bold mb-4">
-                Редактировать/удалить клинический случай
-            </h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <ClinicalCaseSelector
-                    value={caseId}
-                    onChange={setCaseId}
-                    label="Клинический случай для редактирования"
-                    required={true}
-                />
-
-                <div>
-                    <label className="block text-sm font-medium mb-1">
-                        Новое название
-                    </label>
-                    <input
-                        type="text"
-                        value={newName}
-                        onChange={(e) => setNewName(e.target.value)}
-                        className="w-full border border-gray-300 rounded px-3 py-2"
-                        placeholder="Введите новое название клинического случая"
-                    />
-                </div>
-
-                <div className="flex gap-3">
-                    <button
-                        type="submit"
-                        disabled={updateMutation.isPending}
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
-                    >
-                        {updateMutation.isPending
-                            ? "Обновление..."
-                            : "Обновить клинический случай"}
-                    </button>
-
-                    <button
-                        type="button"
-                        onClick={handleDelete}
-                        disabled={deleteMutation.isPending}
-                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 disabled:opacity-50"
-                    >
-                        {deleteMutation.isPending
-                            ? "Удаление..."
-                            : "Удалить клинический случай"}
-                    </button>
-                </div>
-            </form>
-        </div>
-    );
-};
-
 export default function AdminHomePage() {
     return (
         <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -425,7 +304,6 @@ export default function AdminHomePage() {
                             <ClinicalCasesList adminList className="mb-6"/>
                             <LayerForm/>
                             <SchemeForm/>
-                            <EditClinicalCaseForm/>
                         </div>
                     </TabPanel>
                 </TabPanels>

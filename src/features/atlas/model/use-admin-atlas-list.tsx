@@ -1,8 +1,6 @@
 import {useDeletePathologyMutationQuery, useDeleteTutorialMutationQuery} from "@/entities/admin";
 
 export function useAdminAtlasList() {
-    // ========== Состояние модалок редактирования ==========
-
 
     // ========== Запрос данных ==========
     const useDeletePathologyMutation = useDeletePathologyMutationQuery();
