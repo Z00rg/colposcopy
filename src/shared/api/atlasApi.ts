@@ -11,9 +11,14 @@ export interface GetPathologyListInfoDto {
     items: PathologyInfo[];
 }
 
+export interface  GetPathologyImgInfoDto {
+    id: number;
+    image: string;
+}
+
 export interface GetPathologyInfoDto {
     id: number;
-    imgContainer: string[];
+    imgContainer: string[] | GetPathologyImgInfoDto[];
     description: string;
 }
 

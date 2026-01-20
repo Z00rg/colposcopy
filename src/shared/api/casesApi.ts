@@ -12,10 +12,15 @@ export interface GetClinicalCasesInfoDto {
     items: ClinicalCaseInfo[];
 }
 
+export interface  GetCaseImgInfoDto {
+    id: number;
+    image: string;
+}
+
 export interface GetCaseInfoDto {
     id: number;
-    imgContainer: string[];
-    imgSchema: string;
+    imgContainer: string[] | GetCaseImgInfoDto[];
+    imgSchema: string | GetCaseImgInfoDto;
     descriptionContainer: string[];
 }
 

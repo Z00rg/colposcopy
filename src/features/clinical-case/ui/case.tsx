@@ -61,7 +61,7 @@ export function Case({className}: { className?: string }) {
                             {/* Отображения текста описания + на последнем слое схема картинкой */}
                             {currentImageIndex === caseDetails.imgContainer.length - 1 ? (
                                 <img
-                                    src={caseDetails.imgSchema}
+                                    src={typeof caseDetails.imgSchema === "string" ? caseDetails.imgSchema : caseDetails.imgSchema.image}
                                     alt="Схематическое изображение"
                                     loading="lazy"
                                     fetchPriority="low"
@@ -98,8 +98,8 @@ export function Case({className}: { className?: string }) {
             <UiImageModal isOpen={isOpen} onClose={close}>
                 {caseDetails && (
                     <img
-                        src={caseDetails.imgSchema}
-                        alt={caseDetails.imgSchema}
+                        src={typeof caseDetails.imgSchema === "string" ? caseDetails.imgSchema : caseDetails.imgSchema.image}
+                        alt={"Модальное окно для картинки"}
                         className="max-w-full max-h-[95svh] object-contain"
                         loading="eager"
                         draggable="false"

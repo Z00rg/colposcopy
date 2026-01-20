@@ -3,9 +3,10 @@
 
 import clsx from "clsx";
 import {useRef, useState, useEffect} from "react";
+import {GetPathologyImgInfoDto} from "@/shared/api/atlasApi";
 
 type UiScrollImgProps = {
-    img: string[];
+    img: string[] | GetPathologyImgInfoDto[];
     className?: string;
     onIndexChangeAction?: (index: number) => void;
     height?: string;
@@ -113,7 +114,7 @@ export function UiScrollImg({
                         onClick={() => openModal(index)}
                     >
                         <img
-                            src={src}
+                            src={typeof src === "string" ? src : src.image}
                             alt={`Image ${index + 1}`}
                             width={375}
                             height={200}
@@ -148,7 +149,7 @@ export function UiScrollImg({
                         {/* Изображение */}
                         <div className="relative w-full h-full">
                             <img
-                                src={img[modalImageIndex]}
+                                src={typeof img[modalImageIndex] === "string" ? img[modalImageIndex] : img[modalImageIndex].image}
                                 alt={`Fullscreen ${modalImageIndex + 1}`}
                                 className="max-w-full max-h-[95svh] object-contain"
                                 loading="eager"
