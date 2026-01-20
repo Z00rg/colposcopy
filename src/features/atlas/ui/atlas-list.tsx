@@ -79,7 +79,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
                             index={index + 1} // Продолжаем нумерацию после файлов
                             informationOfPathology={item}
                             type="tutorial"
-                            onClick={adminList ? () => {} : () => handleTutorialClick(item.id)}
+                            onClick={() => handleTutorialClick(item.id)}
                             onClickAdminDelete={() => handleDeleteTutorial(item.id)}
                             pathologyOrTutorialId={item.id}
                             adminList={adminList}
@@ -143,7 +143,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
                         index={index + 1}
                         type="pathology"
                         informationOfPathology={item}
-                        onClick={adminList ? () => {} : () => handleClick(item.id)}
+                        onClick={() => handleClick(item.id)}
                         onClickAdminDelete={() => handleDeletePathology(item.id)}
                         pathologyOrTutorialId={item.id}
                         adminList={adminList}

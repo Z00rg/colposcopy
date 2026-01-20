@@ -45,7 +45,7 @@ export function ClinicalCasesList({className, adminList}: { className?: string, 
                     ))}
                 </>
             )}
-            {adminList && "Это лист админа"}
+
             {/* Отображение списка клинических случаев */}
             {!isLoading && items &&
                 items.map((item, index) => (
