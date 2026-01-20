@@ -3,7 +3,6 @@
 import {UiTextArea} from "@/shared/ui/ui-textarea";
 import {UiLink} from "@/shared/ui/ui-link";
 import {UiFooter} from "@/shared/ui/ui-footer";
-import {ROUTES} from "@/shared/constants/routes";
 import clsx from "clsx";
 import {useTutorial} from "../model/use-tutorial";
 import {UiVideoPlayer} from "@/shared/ui/ui-video-player";

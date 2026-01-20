@@ -5,7 +5,6 @@ import {UiScrollImg} from "@/shared/ui/ui-scroll-img";
 import {UiTextArea} from "@/shared/ui/ui-textarea";
 import {UiLink} from "@/shared/ui/ui-link";
 import {UiFooter} from "@/shared/ui/ui-footer";
-import {ROUTES} from "@/shared/constants/routes";
 import clsx from "clsx";
 import {useCase} from "../model/use-case";
 import {useModal} from "@/shared/lib/use-modal";
