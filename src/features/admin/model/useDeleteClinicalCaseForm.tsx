@@ -21,7 +21,7 @@ export function useDeleteClinicalCase() {
      * @param id - ID кейса
      */
     const handleDeleteClinicalCase = (id: number) => {
-        if (window.confirm("Вы уверены, что хотите удалить эту патологию?")) {
+        if (window.confirm("Вы уверены, что хотите удалить этот клинический случай?")) {
             deleteMutation.mutate(id);
         }
     };

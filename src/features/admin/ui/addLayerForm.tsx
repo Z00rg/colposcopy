@@ -1,60 +1,22 @@
 import {Button} from "@/shared/ui/Button";
-import {useMutation} from "@tanstack/react-query";
-import {useRef, useState} from "react";
-import {apiInstance} from "@/shared/api/api-instance";
-
-const uploadLayer = (data: FormData) => {
-    return apiInstance
-        .post("/layers/", data, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        })
-        .then((response) => response.data);
-};
+import {useAddLayerForm} from "@/features/admin/model/useAddLayerForm";
 
 export type AddLayerFormProps = {
     caseId: number,
     closeModal: () => void,
 };
 
-export function AddLayerForm({ caseId, closeModal }: AddLayerFormProps) {
-    const [number, setNumber] = useState("");
-    const [layerImage, setLayerImage] = useState<File | null>(null);
-    const [layerDescription, setLayerDescription] = useState("");
-    const fileInputRef = useRef<HTMLInputElement>(null);
-
-    const mutation = useMutation({
-        mutationFn: uploadLayer,
-        onSuccess: () => {
-            setNumber("");
-            setLayerImage(null);
-            setLayerDescription("");
-            closeModal();
-            if (fileInputRef.current) fileInputRef.current.value = "";
-        },
-        onError: (error) => {
-            console.error("Ошибка при добавлении слоя:", error);
-            alert("Ошибка при добавлении слоя");
-        },
-    });
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (!caseId || !number || !layerImage) {
-            alert("Пожалуйста, заполните все обязательные поля");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("case", caseId.toString());
-        formData.append("number", number);
-        formData.append("layer_img", layerImage);
-        formData.append("layer_description", layerDescription);
-
-        mutation.mutate(formData);
-    };
+export function AddLayerForm({caseId, closeModal}: AddLayerFormProps) {
+    const {
+        handleSubmit,
+        number,
+        fileInputRef,
+        setNumber,
+        setLayerImage,
+        layerDescription,
+        setLayerDescription,
+        mutation,
+    } = useAddLayerForm({caseId, closeModal});
 
     return (
         <div>
