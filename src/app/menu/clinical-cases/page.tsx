@@ -1,19 +1,14 @@
 import {ClinicalCasesList} from "@/features/clinical-case/ui/clinical-cases-list";
 import {Metadata} from "next";
 import {UiFooter} from "@/shared/ui/ui-footer";
-import {cookies} from "next/dist/server/request/cookies";
+import {isAdmin} from "@/shared/lib/auth";
 
 export const metadata: Metadata = {
     title: "Клинические случаи",
 };
 
 export default async function ClinicalCasesPage() {
-    // Куки до рендера на сервере
-    const cookieStore = await cookies();
-    const userRole = cookieStore.get("user_role")?.value;
-
-    // Проверка роли
-    const isAdmin = userRole === "admin";
+    const adminMode = await isAdmin();
 
     return (
         <>
@@ -22,7 +17,7 @@ export default async function ClinicalCasesPage() {
             </div>
 
             {/* Список патологий + клинических кейсов */}
-            <ClinicalCasesList adminList={isAdmin}/>
+            <ClinicalCasesList adminList={adminMode}/>
 
             {/* Футер */}
             <UiFooter activeStatus="clinic"/>

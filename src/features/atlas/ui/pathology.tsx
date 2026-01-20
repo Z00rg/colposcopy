@@ -8,7 +8,12 @@ import {usePathology} from "../model/use-pathology";
 import {UiError} from "@/shared/ui/ui-error";
 import {UiLink} from "@/shared/ui/ui-link";
 
-export function Pathology({className}: { className?: string }) {
+export interface PathologyProps {
+    className?: string;
+    isAdmin?: boolean;
+}
+
+export function Pathology({className, isAdmin}: PathologyProps) {
     const {
         pathologyDetails,
         isLoading,
@@ -30,7 +35,7 @@ export function Pathology({className}: { className?: string }) {
                     Не удалось загрузить детали патологии
                 </UiError>
             )}
-
+            {isAdmin && <div>Мы в админе</div>}
             {/* Скелетон лоадер + отображение патологии */}
             {isLoading ? (
                 <>

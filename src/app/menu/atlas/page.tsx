@@ -1,19 +1,14 @@
 import {AtlasList} from "@/features/atlas";
 import {Metadata} from "next";
 import {UiFooter} from "@/shared/ui/ui-footer";
-import {cookies} from "next/dist/server/request/cookies";
+import {isAdmin} from "@/shared/lib/auth";
 
 export const metadata: Metadata = {
     title: "Атлас",
 };
 
 export default async function AtlasPage() {
-    // Куки до рендера на сервере
-    const cookieStore = await cookies();
-    const userRole = cookieStore.get("user_role")?.value;
-
-    // Проверка роли
-    const isAdmin = userRole === "admin";
+    const adminMode = await isAdmin();
 
     return (
         <>
@@ -22,7 +17,7 @@ export default async function AtlasPage() {
             </div>
 
             {/* Список патологий */}
-            <AtlasList adminList={isAdmin}/>
+            <AtlasList adminList={adminMode}/>
 
             {/* Футер */}
             <UiFooter activeStatus="atlas"/>
