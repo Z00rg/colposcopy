@@ -11,6 +11,8 @@ type UiScrollImgProps = {
     onIndexChangeAction?: (index: number) => void;
     height?: string;
     isLoading?: boolean;
+    isAdmin?: boolean;
+    onAddImage?: () => void;
 };
 
 export function UiScrollImg({
@@ -19,6 +21,8 @@ export function UiScrollImg({
                                 onIndexChangeAction,
                                 height,
                                 isLoading,
+                                isAdmin = false,
+                                onAddImage,
                             }: UiScrollImgProps) {
     const heightProps = height ? height : "h-[35svh]";
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -37,7 +41,6 @@ export function UiScrollImg({
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    // Проверяем, что элемент пересекает центр экрана
                     if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
                         const index = parseInt(entry.target.getAttribute('data-index') || '0', 10);
                         onIndexChangeAction?.(index);
@@ -46,7 +49,7 @@ export function UiScrollImg({
             },
             {
                 root: container,
-                threshold: [0, 0.25, 0.5, 0.75, 1], // Множественные пороги для точности
+                threshold: [0, 0.25, 0.5, 0.75, 1],
                 rootMargin: '0px',
             }
         );
@@ -56,7 +59,6 @@ export function UiScrollImg({
         return () => observer.disconnect();
     }, [img.length, onIndexChangeAction]);
 
-    // Открытие модалки
     const openModal = (index: number) => {
         setModalImageIndex(index);
         setIsModalOpen(true);
@@ -83,8 +85,7 @@ export function UiScrollImg({
                     heightProps
                 )}
             >
-                <div
-                    className="w-16 h-16 border-4 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-16 h-16 border-4 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
             </div>
         );
     }
@@ -125,6 +126,42 @@ export function UiScrollImg({
                         />
                     </div>
                 ))}
+
+                {/* Карточка добавления изображения для админа */}
+                {isAdmin && onAddImage && (
+                    <div
+                        data-scroll-item
+                        data-index={img.length}
+                        className={clsx(
+                            "shrink-0 flex items-center justify-center snap-center cursor-pointer w-full",
+                            "bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl",
+                            "hover:bg-gray-200 hover:border-gray-400 transition-colors",
+                            heightProps
+                        )}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onAddImage();
+                        }}
+                    >
+                        <div className="flex flex-col items-center gap-2 text-gray-500">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-16 h-16"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth={2}
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M12 4v16m8-8H4"
+                                />
+                            </svg>
+                            <span className="text-sm font-medium">Добавить изображение</span>
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Модалка */}
@@ -137,7 +174,6 @@ export function UiScrollImg({
                         className="relative max-w-[95vw] max-h-[90vh] flex items-center justify-center"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Закрытие */}
                         <button
                             onClick={closeModal}
                             className="absolute top-4 right-4 text-white text-3xl font-light hover:text-gray-300 z-10"
@@ -146,7 +182,6 @@ export function UiScrollImg({
                             &times;
                         </button>
 
-                        {/* Изображение */}
                         <div className="relative w-full h-full">
                             <img
                                 src={typeof img[modalImageIndex] === "string" ? img[modalImageIndex] : img[modalImageIndex].image}

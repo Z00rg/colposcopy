@@ -1,39 +1,45 @@
 import {Button} from "@/shared/ui/Button";
 import {useEditPathologyForm} from "@/features/admin/model/useEditPathologyForm";
+import clsx from "clsx";
+import React from "react";
 
 export type EditPathologyFormProps = {
     pathologyId: number,
     closeModal: () => void,
+    className?: string,
 };
 
-export function EditPathologyForm ({ pathologyId, closeModal }: EditPathologyFormProps) {
+export function EditPathologyForm ({ pathologyId, closeModal, className }: EditPathologyFormProps) {
 
     const { handleSubmit, newDescription, setNewDescription, updateMutation } = useEditPathologyForm({ pathologyId, closeModal });
 
     return (
-        <div>
-            <h3 className="text-xl font-bold mb-4">
-                Редактировать текст
-            </h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
+        <div className={clsx(className, "flex flex-col")}>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-1">
 
+                {/* Textarea в стиле UiTextArea */}
                 <div>
-                    <label className="block text-sm font-medium mb-1">
-                        Описание
-                    </label>
                     <textarea
                         value={newDescription}
                         onChange={(e) => setNewDescription(e.target.value)}
-                        className="w-full border border-gray-300 rounded px-3 py-2"
-                        placeholder="Введите новое описание патологии"
+                        className="w-full h-[40svh]
+                                   text-[16px] font-normal bg-white border border-gray-200 pt-3 px-4
+                                   shadow-sm rounded-xl
+                                   overflow-y-auto overflow-x-hidden scroll-smooth
+                                   text-justify resize-none
+                                   focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent
+                                   placeholder:text-gray-400"
+                        placeholder="Введите описание патологии..."
                         rows={16}
+                        disabled={updateMutation.isPending}
                     />
                 </div>
 
+                {/* Кнопки */}
                 <div className="flex w-full justify-end gap-3">
                     <Button
                         onClick={closeModal}
-                        variant="secondary"
+                        variant="custom"
                         isDisabled={updateMutation.isPending}
                     >
                         Отмена
@@ -41,10 +47,11 @@ export function EditPathologyForm ({ pathologyId, closeModal }: EditPathologyFor
 
                     <Button
                         type="submit"
+                        variant="custom"
                         isPending={updateMutation.isPending}
-                        isDisabled={updateMutation.isPending}
+                        isDisabled={updateMutation.isPending || !newDescription.trim()}
                     >
-                        {updateMutation.isPending ? "" : "Обновить патологию"}
+                        {updateMutation.isPending ? "Сохранение..." : "Сохранить"}
                     </Button>
                 </div>
             </form>
