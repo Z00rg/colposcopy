@@ -25,13 +25,16 @@ export function AddLayerForm({caseId, closeModal}: AddLayerFormProps) {
 
                 <div>
                     <label className="block text-sm font-medium mb-1">Номер слоя</label>
-                    <input
-                        type="number"
+                    <select
                         value={number}
                         onChange={(e) => setNumber(e.target.value)}
                         className="w-full border border-gray-300 rounded px-3 py-2"
-                        placeholder="Введите номер слоя"
-                    />
+                    >
+                        <option value="">Выберите номер слоя</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
                 </div>
 
                 <div>
