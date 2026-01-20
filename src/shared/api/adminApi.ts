@@ -1,4 +1,4 @@
-import {apiInstance, createInstance, RequestOptions} from "./api-instance";
+import {createInstance, RequestOptions} from "./api-instance";
 
 // DTO Патологий
 
