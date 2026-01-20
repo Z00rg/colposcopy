@@ -1,7 +1,7 @@
 "use client";
 
 import { useCaseQuery } from "@/entities/clinical-cases/queries";
-import { useParams } from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
 import { useState } from "react";
 
 /**
@@ -16,6 +16,7 @@ export function useCase() {
   // ========== Получение параметров из URL ==========
   const params = useParams();
   const caseId = params?.caseId;
+  const router = useRouter();
 
   // Нормализация ID (может быть массивом в dynamic routes Next.js)
   const validCaseId = Array.isArray(caseId) ? caseId[0] : caseId;
@@ -43,5 +44,6 @@ export function useCase() {
     isError: caseQuery.isError,        // Ошибка при загрузке данных
     currentImageIndex,                 // Текущий индекс изображения в галерее
     handleImageChange,                 // Функция для смены изображения
+    router,                                 // Рутер для перехода назад
   };
 }

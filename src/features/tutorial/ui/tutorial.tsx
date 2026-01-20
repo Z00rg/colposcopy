@@ -10,7 +10,7 @@ import {UiVideoPlayer} from "@/shared/ui/ui-video-player";
 import {UiError} from "@/shared/ui/ui-error";
 
 export function Tutorial({className}: { className?: string }) {
-    const {tutorialDetails, isLoading, isError, handleFileDownload, getFileNameFromUrl} = useTutorial();
+    const {tutorialDetails, isLoading, isError, handleFileDownload, getFileNameFromUrl, router} = useTutorial();
 
     return (
         <div
@@ -119,8 +119,15 @@ export function Tutorial({className}: { className?: string }) {
                         {tutorialDetails.description}
                     </UiTextArea>
 
-                    {/* Ссылка на возврат в меню */}
-                    <UiLink href={ROUTES.ATLAS} className="mr-auto">
+                    {/* Ссылка на возврат */}
+                    <UiLink
+                        href="#"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            router.back();
+                        }}
+                        className="mr-auto"
+                    >
                         Назад
                     </UiLink>
                 </>

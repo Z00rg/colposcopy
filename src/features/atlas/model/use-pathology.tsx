@@ -3,6 +3,7 @@
 import { usePathologyQuery } from "@/entities/pathology";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 /**
  * Хук для отображения детальной информации о патологии
@@ -15,6 +16,7 @@ export function usePathology() {
   // ========== Получение параметров из URL ==========
   const params = useParams();
   const pathologyId = params?.pathologyId;
+  const router = useRouter();
 
   // Нормализация ID (может быть массивом в dynamic routes)
   const validPathologyId = Array.isArray(pathologyId)
@@ -44,5 +46,6 @@ export function usePathology() {
     isError: pathologyQuery.isError,        // Ошибка
     currentImageIndex,                      // Текущее изображение
     handleImageChange,                      // Обработчик смены изображения
+    router,                                 // Рутер для перехода назад
   };
 }

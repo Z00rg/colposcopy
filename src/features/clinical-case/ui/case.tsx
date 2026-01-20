@@ -19,6 +19,7 @@ export function Case({className}: { className?: string }) {
         isError,
         currentImageIndex,
         handleImageChange,
+        router,
     } = useCase();
 
     const {isOpen, open, close} = useModal();
@@ -77,8 +78,15 @@ export function Case({className}: { className?: string }) {
                                 </UiTextArea>
                             )}
 
-                            {/* Ссылка на выход в меню */}
-                            <UiLink href={ROUTES.CLINIC} className="mr-auto">
+                            {/* Ссылка на выход назад */}
+                            <UiLink
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    router.back();
+                                }}
+                                className="mr-auto"
+                            >
                                 Назад
                             </UiLink>
                         </>

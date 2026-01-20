@@ -2,6 +2,7 @@
 
 import { useTutorialQuery } from "@/entities/tutorials";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 /**
  * Хук для отображения детальной информации об обучающем материале (туториале)
@@ -16,6 +17,7 @@ export function useTutorial() {
   // ========== Получение параметров из URL ==========
   const params = useParams();
   const tutorialId = params?.tutorialId;
+  const router = useRouter();
 
   // ========== Нормализация ID ==========
   // Обработка случая, когда ID может быть массивом (dynamic routes в Next.js)
@@ -60,5 +62,6 @@ export function useTutorial() {
     isError: tutorialQuery.isError,      // Состояние ошибки загрузки
     handleFileDownload,                  // Загрузка файла
     getFileNameFromUrl,                 // Получение названия файла
+    router,                             // Рутер для перехода назад
   };
 }

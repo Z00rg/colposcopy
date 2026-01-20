@@ -2,12 +2,11 @@
 
 import {UiScrollImg} from "@/shared/ui/ui-scroll-img";
 import {UiTextArea} from "@/shared/ui/ui-textarea";
-import {UiLink} from "@/shared/ui/ui-link";
 import {UiFooter} from "@/shared/ui/ui-footer";
-import {ROUTES} from "@/shared/constants/routes";
 import clsx from "clsx";
 import {usePathology} from "../model/use-pathology";
 import {UiError} from "@/shared/ui/ui-error";
+import {UiLink} from "@/shared/ui/ui-link";
 
 export function Pathology({className}: { className?: string }) {
     const {
@@ -15,6 +14,7 @@ export function Pathology({className}: { className?: string }) {
         isLoading,
         isError,
         handleImageChange,
+        router
     } = usePathology();
 
     return (
@@ -52,7 +52,14 @@ export function Pathology({className}: { className?: string }) {
                         <UiTextArea className="mt-5">
                             {pathologyDetails.description}
                         </UiTextArea>
-                        <UiLink href={ROUTES.ATLAS} className="mr-auto">
+                        <UiLink
+                            href="#"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                router.back();
+                            }}
+                            className="mr-auto"
+                        >
                             Назад
                         </UiLink>
                     </>
