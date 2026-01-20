@@ -19,7 +19,7 @@ export type AddSchemeFormProps = {
     closeModal: () => void,
 };
 
-export function AddSchemeForm ({ caseId, closeModal } : AddSchemeFormProps) {
+export function AddSchemeForm({caseId, closeModal}: AddSchemeFormProps) {
     const [schemeImage, setSchemeImage] = useState<File | null>(null);
     const [schemeDescriptionImage, setSchemeDescriptionImage] =
         useState<File | null>(null);
@@ -112,4 +112,4 @@ export function AddSchemeForm ({ caseId, closeModal } : AddSchemeFormProps) {
             </form>
         </div>
     );
-};
+}
