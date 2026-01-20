@@ -1,4 +1,4 @@
 export { AddTutorialForm } from "./ui/ addTutorialForm";
 export { AddPathologyForm } from "./ui/addPathologyForm";
 export { EditPathologyForm } from "./ui/editPathologyForm";
-export { AddPathologyImageForm } from "./ui/addImagePathologyForm"
+export { PathologyImageForm } from "./ui/imagePathologyForm"

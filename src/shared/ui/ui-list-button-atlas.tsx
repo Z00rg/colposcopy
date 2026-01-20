@@ -7,7 +7,7 @@ import {EditPathologyForm} from "@/features/admin";
 import React, {useState} from "react";
 import {Modal} from "@/shared/ui/Modal";
 import {Dialog} from "@/shared/ui/Dialog";
-import {AddPathologyImageForm} from "@/features/admin/ui/addImagePathologyForm";
+import {PathologyImageForm} from "@/features/admin/";
 
 type PathologyInformation = {
     id: number;
@@ -84,9 +84,10 @@ export function UiListButtonAtlas({
 
             <Modal isOpen={isAddImageModalOpen}>
                 <Dialog>
-                    {type === "pathology" && <AddPathologyImageForm
-                        pathologyId={pathologyOrTutorialId}
+                    {type === "pathology" && <PathologyImageForm
+                        pathologyOrImageId={pathologyOrTutorialId}
                         closeModal={() => setIsAddImageModalOpen(!isAddImageModalOpen)}
+                        typeOfMethod="post"
                     />}
                 </Dialog>
             </Modal>

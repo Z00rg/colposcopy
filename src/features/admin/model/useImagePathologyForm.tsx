@@ -3,17 +3,28 @@ import {useMutation} from "@tanstack/react-query";
 import {queryClient} from "@/shared/api/query-client";
 import {adminApi} from "@/shared/api/adminApi";
 
-export type UseAddImagePathologyFormProps = {
-    pathologyId: number,
+export type UseImagePathologyFormProps = {
+    pathologyOrImageId: number,
     closeModal: () => void,
+    typeOfMethod: "post" | "patch",
 };
 
-export function useAddImagePathologyForm({ pathologyId, closeModal }: UseAddImagePathologyFormProps) {
+export function useImagePathologyForm({
+                                             pathologyOrImageId,
+                                             closeModal,
+                                             typeOfMethod
+                                         }: UseImagePathologyFormProps) {
     const [image, setImage] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const mutation = useMutation({
-        mutationFn: (formData: FormData) => adminApi.uploadPathologyImage(formData),
+        mutationFn: (formData: FormData) => {
+            {
+                return typeOfMethod === "post"
+                    ? adminApi.uploadPathologyImage(formData)
+                    : adminApi.editPathologyImage(pathologyOrImageId, formData);
+            }
+        },
         onSuccess: () => {
             queryClient.invalidateQueries();
             closeModal();
@@ -29,13 +40,13 @@ export function useAddImagePathologyForm({ pathologyId, closeModal }: UseAddImag
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!pathologyId || !image) {
+        if (!pathologyOrImageId || !image) {
             alert("Пожалуйста, заполните все поля");
             return;
         }
 
         const formData = new FormData();
-        formData.append("pathology", pathologyId.toString());
+        formData.append("pathology", pathologyOrImageId.toString());
         formData.append("image", image);
 
         mutation.mutate(formData);

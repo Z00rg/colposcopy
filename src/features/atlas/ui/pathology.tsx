@@ -8,7 +8,7 @@ import {usePathology} from "../model/use-pathology";
 import {UiError} from "@/shared/ui/ui-error";
 import {UiLink} from "@/shared/ui/ui-link";
 import React, {useState} from "react";
-import {AddPathologyImageForm, EditPathologyForm} from "@/features/admin";
+import {PathologyImageForm, EditPathologyForm} from "@/features/admin";
 import {Button} from "@/shared/ui/Button";
 import {UiModal} from "@/shared/ui/UiModal";
 
@@ -60,6 +60,7 @@ export function Pathology({className, isAdmin}: PathologyProps) {
                         <UiScrollImg
                             img={pathologyDetails.imgContainer}
                             onIndexChangeAction={handleImageChange}
+                            isAdmin={isAdmin}
                         />
 
                         {!isEditText && <UiTextArea className="mt-5">
@@ -91,9 +92,10 @@ export function Pathology({className, isAdmin}: PathologyProps) {
                                     </Button>}>
 
                                     {({close}) => (
-                                        <AddPathologyImageForm
-                                            pathologyId={pathologyDetails.id}
+                                        <PathologyImageForm
+                                            pathologyOrImageId={pathologyDetails.id}
                                             closeModal={close}
+                                            typeOfMethod="post"
                                         />
                                     )}
 

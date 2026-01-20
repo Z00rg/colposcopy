@@ -72,8 +72,42 @@ export const uploadPathologyImage = (
         options
     );
 
+// Удаление картинки патологии
+export const deletePathologyImage = (
+    id: number,
+    options?: RequestOptions
+) =>
+    createInstance<void>(
+        {
+            url: `/pathology-images/${id}/`,
+            method: "DELETE",
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        },
+        options
+    );
 
-// Редактирование патологии
+// Редактирование картинки к патологии
+export const editPathologyImage = (
+    id: number,
+    data: FormData,
+    options?: RequestOptions
+) =>
+    createInstance<void>(
+        {
+            url: `/pathology-images/${id}/`,
+            method: "PATCH",
+            data: data,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        },
+        options
+    );
+
+
+// Редактирование текста патологии
 export const updatePathologyText = (
     id: number,
     body: PathologyEditTextDto,
@@ -209,6 +243,8 @@ export const uploadScheme = (
 export const adminApi = {
     createPathology,
     uploadPathologyImage,
+    deletePathologyImage,
+    editPathologyImage,
     updatePathologyText,
     deletePathology,
     createTutorial,

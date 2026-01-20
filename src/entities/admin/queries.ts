@@ -31,3 +31,18 @@ export function useDeleteTutorialMutationQuery() {
         },
     });
 }
+
+// Удаление картинки патологии
+export function useDeletePathologyImageMutationQuery() {
+    return useMutation({
+        mutationFn: (id: number) => adminApi.deletePathologyImage(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries();
+            alert("Картинка успешно удалена");
+        },
+        onError: (error) => {
+            console.error("Ошибка при удалении:", error);
+            alert("Ошибка при удалении");
+        },
+    });
+}
