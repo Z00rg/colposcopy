@@ -8,7 +8,7 @@ import {usePathology} from "../model/use-pathology";
 import {UiError} from "@/shared/ui/ui-error";
 import {UiLink} from "@/shared/ui/ui-link";
 import React, {useState} from "react";
-import {AddPathologyForm, AddPathologyImageForm, EditPathologyForm} from "@/features/admin";
+import {AddPathologyImageForm, EditPathologyForm} from "@/features/admin";
 import {Button} from "@/shared/ui/Button";
 import {UiModal} from "@/shared/ui/UiModal";
 
