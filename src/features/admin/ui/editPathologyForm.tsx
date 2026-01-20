@@ -39,7 +39,7 @@ export function EditPathologyForm ({ pathologyId, closeModal, className }: EditP
                 <div className="flex w-full justify-end gap-3">
                     <Button
                         onClick={closeModal}
-                        variant="custom"
+                        variant="secondary"
                         isDisabled={updateMutation.isPending}
                     >
                         Отмена
@@ -47,7 +47,7 @@ export function EditPathologyForm ({ pathologyId, closeModal, className }: EditP
 
                     <Button
                         type="submit"
-                        variant="custom"
+                        variant="secondary"
                         isPending={updateMutation.isPending}
                         isDisabled={updateMutation.isPending || !newDescription.trim()}
                     >

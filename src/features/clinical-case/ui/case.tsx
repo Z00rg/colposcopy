@@ -100,7 +100,7 @@ export function Case({className}: { className?: string }) {
                     <img
                         src={typeof caseDetails.imgSchema === "string" ? caseDetails.imgSchema : caseDetails.imgSchema.image}
                         alt={"Модальное окно для картинки"}
-                        className="max-w-full max-h-[95svh] object-contain"
+                        className="max-w-full min-h-[65vh] max-h-[95svh] object-contain"
                         loading="eager"
                         draggable="false"
                     />

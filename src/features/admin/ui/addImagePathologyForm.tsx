@@ -35,6 +35,7 @@ export function AddPathologyImageForm({ pathologyId, closeModal }: AddPathologyI
 
                     <Button
                         type="submit"
+                        variant="secondary"
                         isPending={mutation.isPending}
                         isDisabled={mutation.isPending}
                     >

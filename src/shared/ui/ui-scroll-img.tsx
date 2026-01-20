@@ -21,8 +21,6 @@ export function UiScrollImg({
                                 onIndexChangeAction,
                                 height,
                                 isLoading,
-                                isAdmin = false,
-                                onAddImage,
                             }: UiScrollImgProps) {
     const heightProps = height ? height : "h-[35svh]";
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -126,42 +124,6 @@ export function UiScrollImg({
                         />
                     </div>
                 ))}
-
-                {/* Карточка добавления изображения для админа */}
-                {isAdmin && onAddImage && (
-                    <div
-                        data-scroll-item
-                        data-index={img.length}
-                        className={clsx(
-                            "shrink-0 flex items-center justify-center snap-center cursor-pointer w-full",
-                            "bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl",
-                            "hover:bg-gray-200 hover:border-gray-400 transition-colors",
-                            heightProps
-                        )}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onAddImage();
-                        }}
-                    >
-                        <div className="flex flex-col items-center gap-2 text-gray-500">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="w-16 h-16"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth={2}
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M12 4v16m8-8H4"
-                                />
-                            </svg>
-                            <span className="text-sm font-medium">Добавить изображение</span>
-                        </div>
-                    </div>
-                )}
             </div>
 
             {/* Модалка */}
@@ -186,7 +148,7 @@ export function UiScrollImg({
                             <img
                                 src={typeof img[modalImageIndex] === "string" ? img[modalImageIndex] : img[modalImageIndex].image}
                                 alt={`Fullscreen ${modalImageIndex + 1}`}
-                                className="max-w-full max-h-[95svh] object-contain"
+                                className="max-w-full min-h-[65vh] max-h-[95svh] object-contain"
                                 loading="eager"
                                 draggable="false"
                             />

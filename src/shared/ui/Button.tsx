@@ -5,7 +5,7 @@ import { focusRing } from './utils';
 
 export interface ButtonProps extends RACButtonProps {
     /** @default 'primary' */
-    variant?: 'primary' | 'secondary' | 'destructive' | 'quiet' | 'custom'
+    variant?: 'primary' | 'secondary' | 'destructive' | 'quiet' | 'edit'
 }
 
 const button = tv({
@@ -17,7 +17,7 @@ const button = tv({
             secondary: 'border-black/10 bg-neutral-50 hover:bg-neutral-100 pressed:bg-neutral-200 text-neutral-800',
             destructive: 'bg-red-700 hover:bg-red-800 pressed:bg-red-900 text-white',
             quiet: 'border-0 bg-transparent hover:bg-neutral-200 pressed:bg-neutral-300 text-neutral-800 ',
-            custom: 'flex p-5 bg-white rounded-lg shadow-md hover:bg-gray-100 transition-colors',
+            edit: 'w-max p-2.5 gap-1 bg-white shadow-md hover:bg-gray-100 pressed:bg-gray-200 text-gray-600 border-0',
         },
         isDisabled: {
             true: 'border-transparent bg-neutral-100 text-neutral-300 forced-colors:text-[GrayText]'
@@ -34,6 +34,11 @@ const button = tv({
             variant: 'quiet',
             isDisabled: true,
             class: 'bg-transparent'
+        },
+        {
+            variant: 'edit',
+            isDisabled: true,
+            class: 'bg-gray-50 text-gray-300 shadow-sm'
         }
     ]
 });
@@ -52,7 +57,7 @@ export function Button(props: ButtonProps) {
                     {children}
                     {isPending && (
                         <span aria-hidden className="flex absolute inset-0 justify-center items-center">
-              <svg className="w-4 h-4 text-white animate-spin" viewBox="0 0 24 24" stroke={props.variant === 'secondary' || props.variant === 'quiet' ? 'light-dark(black, white)' : 'white'}>
+              <svg className="w-4 h-4 text-white animate-spin" viewBox="0 0 24 24" stroke={props.variant === 'secondary' || props.variant === 'quiet' || props.variant === 'edit' ? 'light-dark(black, white)' : 'white'}>
                 <circle cx="12" cy="12" r="10" strokeWidth="4" fill="none" className="opacity-25" />
                 <circle cx="12" cy="12" r="10" strokeWidth="4" strokeLinecap="round" fill="none" pathLength="100" strokeDasharray="60 140" strokeDashoffset="0" />
               </svg>

@@ -8,7 +8,9 @@ import {usePathology} from "../model/use-pathology";
 import {UiError} from "@/shared/ui/ui-error";
 import {UiLink} from "@/shared/ui/ui-link";
 import React, {useState} from "react";
-import {EditPathologyForm} from "@/features/admin";
+import {AddPathologyForm, AddPathologyImageForm, EditPathologyForm} from "@/features/admin";
+import {Button} from "@/shared/ui/Button";
+import {UiModal} from "@/shared/ui/UiModal";
 
 export interface PathologyProps {
     className?: string;
@@ -81,27 +83,28 @@ export function Pathology({className, isAdmin}: PathologyProps) {
                             >
                                 Назад
                             </UiLink>
-                            {isAdmin && !isEditText &&  <button
-                                className="flex w-max p-2.5 ml-auto gap-1 bg-white rounded-lg shadow-md hover:bg-gray-100 transition-colors"
-                                aria-label="Редактировать текст"
-                                onClick={() => setIsEditText(true)}
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="w-5 h-5 text-gray-600"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth={2}
+                            {isAdmin && !isEditText && <div className="flex gap-2 ml-auto max-w-[65vw]">
+
+                                <UiModal className="mr-3" button={
+                                    <Button variant="secondary" className="h-full">
+                                        Добавить картинку
+                                    </Button>}>
+
+                                    {({close}) => (
+                                        <AddPathologyImageForm
+                                            pathologyId={pathologyDetails.id}
+                                            closeModal={close}
+                                        />
+                                    )}
+
+                                </UiModal>
+                                <Button
+                                    variant="secondary" className="h-full"
+                                    onClick={() => setIsEditText(true)}
                                 >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                                    />
-                                </svg>
-                                Редактировать текст
-                            </button>}
+                                    Редактировать текст
+                                </Button>
+                            </div>}
                         </div>
 
                     </>
