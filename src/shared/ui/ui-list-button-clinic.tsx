@@ -10,6 +10,7 @@ import {Button} from "@/shared/ui/Button";
 import {useDeleteClinicalCase} from "@/features/admin/model/useDeleteClinicalCaseForm";
 import {Menu, MenuItem, MenuTrigger} from "@/shared/ui/Menu";
 import {MoreHorizontal} from "lucide-react";
+import {AddLayerForm} from "@/features/admin/ui/addLayerForm";
 
 type PathologyInformation = {
     id: number;
@@ -38,6 +39,7 @@ export function UiListButtonClinic({
     const [active, setActive] = useState(false);
     const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAddLayerModalOpen, setIsAddLayerModalOpen] = useState<number | null>(null);
 
     const {handleDeleteClinicalCase} = useDeleteClinicalCase();
 
@@ -77,6 +79,18 @@ export function UiListButtonClinic({
                         pathology={pathologyId}
                         closeModal={() => setIsModalOpen(!isModalOpen)}
                     />
+                </Dialog>
+            </Modal>
+
+            {/* Модалка добавления слоя - ВЫНЕСЕНА ЗА ПРЕДЕЛЫ MAP */}
+            <Modal isOpen={isAddLayerModalOpen !== null}>
+                <Dialog>
+                    {isAddLayerModalOpen !== null && (
+                        <AddLayerForm
+                            caseId={isAddLayerModalOpen}
+                            closeModal={() => setIsAddLayerModalOpen(null)}
+                        />
+                    )}
                 </Dialog>
             </Modal>
 
@@ -127,8 +141,10 @@ export function UiListButtonClinic({
                                     </Button>
                                     <Menu>
                                         <MenuItem onAction={() => {
-                                            alert("Добавляем слой")
-                                        }}>Добавить слой</MenuItem>
+                                            setIsAddLayerModalOpen(caseItem.id);
+                                        }}>
+                                            Добавить слой
+                                        </MenuItem>
                                         <MenuItem onAction={() => {
                                             alert("Добавляем схему")
                                         }}>Добавить схемы</MenuItem>
@@ -138,12 +154,13 @@ export function UiListButtonClinic({
                                     </Menu>
                                 </MenuTrigger>
                             </div>}
+
                         </div>
                     ))}
                     {adminList && <div
                         className="flex items-center gap-1 text-[16px] text-gray-700 bg-blue-100/35 leading-tight py-1.5 rounded-lg cursor-pointer transition-all duration-150 hover:bg-blue-100 hover:text-blue-800"
                         onClick={() => {
-                            setIsModalOpen(!isModalOpen);
+                            setIsModalOpen(true);
                         }}
                     >
                         {/* Точка-маркер */}
