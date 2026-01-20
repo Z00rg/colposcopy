@@ -11,6 +11,7 @@ import {useDeleteClinicalCase} from "@/features/admin/model/useDeleteClinicalCas
 import {Menu, MenuItem, MenuTrigger} from "@/shared/ui/Menu";
 import {MoreHorizontal} from "lucide-react";
 import {AddLayerForm} from "@/features/admin/ui/addLayerForm";
+import {AddSchemeForm} from "@/features/admin/ui/addSchemeForm";
 
 type PathologyInformation = {
     id: number;
@@ -40,6 +41,7 @@ export function UiListButtonClinic({
     const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isAddLayerModalOpen, setIsAddLayerModalOpen] = useState<number | null>(null);
+    const [isAddSchemeModalOpen, setIsAddSchemeModalOpen] = useState<number | null>(null);
 
     const {handleDeleteClinicalCase} = useDeleteClinicalCase();
 
@@ -89,6 +91,18 @@ export function UiListButtonClinic({
                         <AddLayerForm
                             caseId={isAddLayerModalOpen}
                             closeModal={() => setIsAddLayerModalOpen(null)}
+                        />
+                    )}
+                </Dialog>
+            </Modal>
+
+            {/* Модалка добавления схем */}
+            <Modal isOpen={isAddSchemeModalOpen !== null}>
+                <Dialog>
+                    {isAddSchemeModalOpen !== null && (
+                        <AddSchemeForm
+                            caseId={isAddSchemeModalOpen}
+                            closeModal={() => setIsAddSchemeModalOpen(null)}
                         />
                     )}
                 </Dialog>
@@ -146,7 +160,7 @@ export function UiListButtonClinic({
                                             Добавить слой
                                         </MenuItem>
                                         <MenuItem onAction={() => {
-                                            alert("Добавляем схему")
+                                            setIsAddSchemeModalOpen(caseItem.id)
                                         }}>Добавить схемы</MenuItem>
                                         <MenuItem onAction={() => {
                                             handleDeleteClinicalCase(caseItem.id)
