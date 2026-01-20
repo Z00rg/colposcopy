@@ -1,18 +1,6 @@
-import React, {useRef, useState} from "react";
-import {useMutation} from "@tanstack/react-query";
-import {apiInstance} from "@/shared/api/api-instance";
-import {queryClient} from "@/shared/api/query-client";
+import React from "react";
 import {Button} from "@/shared/ui/Button";
-
-const uploadScheme = (data: FormData) => {
-    return apiInstance
-        .post("/schemes/", data, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        })
-        .then((response) => response.data);
-};
+import {useAddSchemeForm} from "@/features/admin/model/useAddSchemeForm";
 
 export type AddSchemeFormProps = {
     caseId: number,
@@ -20,44 +8,14 @@ export type AddSchemeFormProps = {
 };
 
 export function AddSchemeForm({caseId, closeModal}: AddSchemeFormProps) {
-    const [schemeImage, setSchemeImage] = useState<File | null>(null);
-    const [schemeDescriptionImage, setSchemeDescriptionImage] =
-        useState<File | null>(null);
-    const schemeFileInputRef = useRef<HTMLInputElement>(null);
-    const descriptionFileInputRef = useRef<HTMLInputElement>(null);
-
-    const mutation = useMutation({
-        mutationFn: uploadScheme,
-        onSuccess: () => {
-            setSchemeImage(null);
-            setSchemeDescriptionImage(null);
-            closeModal();
-            queryClient.invalidateQueries();
-            if (schemeFileInputRef.current) schemeFileInputRef.current.value = "";
-            if (descriptionFileInputRef.current)
-                descriptionFileInputRef.current.value = "";
-        },
-        onError: (error) => {
-            console.error("Ошибка при добавлении схемы:", error);
-            alert("Ошибка при добавлении схемы");
-        },
-    });
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (!caseId || !schemeImage || !schemeDescriptionImage) {
-            alert("Пожалуйста, заполните все обязательные поля");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("case", caseId.toString());
-        formData.append("scheme_img", schemeImage);
-        formData.append("scheme_description_img", schemeDescriptionImage);
-
-        mutation.mutate(formData);
-    };
+    const {
+        handleSubmit,
+        setSchemeImage,
+        setSchemeDescriptionImage,
+        schemeFileInputRef,
+        descriptionFileInputRef,
+        mutation
+    } = useAddSchemeForm({caseId, closeModal});
 
     return (
         <div>

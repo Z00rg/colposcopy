@@ -1,4 +1,4 @@
-import { createInstance, RequestOptions} from "./api-instance";
+import {apiInstance, createInstance, RequestOptions} from "./api-instance";
 
 // DTO Патологий
 
@@ -189,6 +189,23 @@ export const uploadLayer = (
         options
     );
 
+// Добавление схем к клиническому случаю
+export const uploadScheme = (
+    data: FormData,
+    options?: RequestOptions
+) =>
+    createInstance<void>(
+        {
+            url: "/schemes/",
+            method: "POST",
+            data: data,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        },
+        options
+    );
+
 export const adminApi = {
     createPathology,
     uploadPathologyImage,
@@ -199,4 +216,5 @@ export const adminApi = {
     createClinicalCase,
     deleteClinicalCase,
     uploadLayer,
+    uploadScheme,
 };
