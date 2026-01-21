@@ -6,6 +6,11 @@ import {Metadata} from "next";
 const montserrat = Montserrat({subsets: ['latin']});
 
 export const metadata: Metadata = {
+    title: {
+        default: "Атлас кольпоскопии",
+        template: "%s — Атлас кольпоскопии",
+    },
+    description: "Интерактивное учебное пособие по кольпоскопии",
     applicationName: "Атлас кольпоскопии",
     appleWebApp: {
         title: "Атлас кольпоскопии",
@@ -14,6 +19,24 @@ export const metadata: Metadata = {
     icons: {
         apple: "/apple-icon.png",
     },
+
+    // OpenGraph preview
+    openGraph: {
+        title: "Атлас кольпоскопии",
+        description: "Интерактивное учебное пособие по кольпоскопии",
+        type: "website",
+        url: "https://atlascolposcopy.ru/",
+        images: [
+            {
+                url: "https://atlascolposcopy.ru/og-atlas.png",
+                width: 1200,
+                height: 630,
+                alt: "Атлас кольпоскопии",
+            },
+        ],
+    },
+
+
     manifest: "/manifest.webmanifest",
 };
 
