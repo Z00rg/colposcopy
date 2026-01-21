@@ -3,7 +3,8 @@ import {Metadata} from "next";
 import {isAdmin} from "@/shared/lib/auth";
 
 export const metadata: Metadata = {
-    title: "Паталогия",
+    title: "Патология",
+    description: "Подробное описание патологии с визуальными примерами",
 };
 
 export default async function PathologyDetailPage() {

@@ -4,6 +4,10 @@ import {Metadata} from "next";
 
 export const metadata: Metadata = {
     title: "Авторизация",
+    robots: {
+        index: false,
+        follow: false,
+    },
 };
 
 export default function SignInPage() {

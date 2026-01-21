@@ -3,9 +3,14 @@ import {Metadata} from "next";
 import {UiFooter} from "@/shared/ui/ui-footer";
 import {isAdmin} from "@/shared/lib/auth";
 
-export const metadata: Metadata = {
-    title: "Клинические случаи",
-};
+export async function generateMetadata(): Promise<Metadata> {
+    const admin = await isAdmin();
+
+    return {
+        title: admin ? "Клинические случаи (режим администратора)" : "Клинические случаи",
+        description: "Подборка доступных клинических случаев по патология для изучения",
+    };
+}
 
 export default async function ClinicalCasesPage() {
     const adminMode = await isAdmin();
