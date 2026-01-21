@@ -3,6 +3,7 @@ import {Metadata} from "next";
 
 export const metadata: Metadata = {
     title: "Клинический кейс",
+    description: "Подробный описание клинического случая с визуальными примерами",
 };
 
 export default function CasePage() {

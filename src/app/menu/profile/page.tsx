@@ -5,6 +5,7 @@ import {UiFooter} from "@/shared/ui/ui-footer";
 
 export const metadata: Metadata = {
     title: "Профиль",
+    description: "Личный кабинет",
 };
 
 export default function HomePage() {

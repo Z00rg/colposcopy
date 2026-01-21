@@ -3,6 +3,7 @@ import {Metadata} from "next";
 
 export const metadata: Metadata = {
     title: "Тестирование",
+    description: "Тестовые задания по выбранной тематике патологии",
 };
 
 export default function PassingTestPage() {

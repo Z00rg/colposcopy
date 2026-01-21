@@ -3,6 +3,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Просмотр попытки",
+    description: "Просмотр попытки по тестированию",
 };
 
 export default function TryDetailPage() {

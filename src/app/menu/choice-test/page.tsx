@@ -4,6 +4,7 @@ import {UiFooter} from "@/shared/ui/ui-footer";
 
 export const metadata: Metadata = {
     title: "Настройки тестирования",
+    description: "Подборка доступных тем для тестирования",
 };
 
 export default function ChoiceTestPage() {

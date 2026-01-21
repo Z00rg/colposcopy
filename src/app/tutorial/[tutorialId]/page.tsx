@@ -3,6 +3,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Обучение",
+    description: "Подробное описание темы урока",
 };
 
 export default function TutorialPage() {
