@@ -1,8 +1,21 @@
 import {Montserrat} from 'next/font/google';
 import './globals.css';
 import {AppProvider} from '@/shared/lib/app-provider';
+import {Metadata} from "next";
 
 const montserrat = Montserrat({subsets: ['latin']});
+
+export const metadata: Metadata = {
+    applicationName: "Атлас кольпоскопии",
+    appleWebApp: {
+        title: "Атлас кольпоскопии",
+        capable: true,
+    },
+    icons: {
+        apple: "/apple-icon.png",
+    },
+    manifest: "/manifest.webmanifest",
+};
 
 export default function RootLayout({
                                        children,
@@ -10,7 +23,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="ru">
         <body className={montserrat.className}>
         <AppProvider>
             <div
