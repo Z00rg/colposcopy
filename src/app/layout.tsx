@@ -10,6 +10,10 @@ export const metadata: Metadata = {
         default: "Атлас кольпоскопии",
         template: "%s — Атлас кольпоскопии",
     },
+    robots: {
+        index: true,
+        follow: true,
+    },
     description: "Интерактивное учебное пособие по кольпоскопии",
     applicationName: "Атлас кольпоскопии",
     appleWebApp: {
