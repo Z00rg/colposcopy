@@ -10,6 +10,7 @@ import {UiError} from "@/shared/ui/ui-error";
 import {UiModal} from "@/shared/ui/UiModal";
 import {Button} from "@/shared/ui/Button";
 import {UpdateTutorialForm} from "@/features/admin";
+import React, {useState} from "react";
 
 export interface TutorialProps {
     className?: string;
@@ -18,6 +19,8 @@ export interface TutorialProps {
 
 export function Tutorial({className, isAdmin}: TutorialProps) {
     const {tutorialDetails, isLoading, isError, handleFileDownload, getFileNameFromUrl, router} = useTutorial();
+
+    const [isEdit, setIsEdit] = useState(false);
 
     return (
         <div
@@ -48,51 +51,20 @@ export function Tutorial({className, isAdmin}: TutorialProps) {
             )}
 
 
-            {isAdmin && tutorialDetails  && (
+            {isAdmin && !isEdit && tutorialDetails && (
                 <div className="flex p-3 justify-center gap-2 mx-auto w-max bg-white rounded-lg shadow-md">
                     <div className="my-auto">{tutorialDetails?.name}</div>
-                    {/* Кнопка редактирования */}
-                    <UiModal
-                        className="my-auto flex h-full"
-                        button={
-                            <Button
-                                variant="secondary"
-                                className="p-2 bg-white rounded-lg shadow-md hover:bg-gray-100 transition-colors"
-                                aria-label="Редактировать изображение"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="w-8 h-8 text-gray-600"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth={2}
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                                    />
-                                </svg>
-                            </Button>
-                        }
-                    >
-                        {({close}) => (
-                            <UpdateTutorialForm
-                                closeModal={close}
-                                tutorialId={tutorialDetails.id}
-                                tutorialDetails={tutorialDetails}
-                            />
-                        )}
-                    </UiModal>
                 </div>
             )}
 
             {/* Отображение туториала */}
             {tutorialDetails && (
                 <>
+                    {/* Формочка апдейта туториала */}
+                    {isEdit && <UpdateTutorialForm closeModal={() => setIsEdit(false)} tutorialId={tutorialDetails.id}
+                                                   tutorialDetails={tutorialDetails}/>}
                     {/* Плеер */}
-                    {tutorialDetails.video && tutorialDetails.poster && (
+                    {tutorialDetails.video && tutorialDetails.poster && !isEdit && (
                         <UiVideoPlayer
                             src={tutorialDetails.video}
                             poster={tutorialDetails.poster}
@@ -102,7 +74,7 @@ export function Tutorial({className, isAdmin}: TutorialProps) {
                     )}
 
                     {/* Кнопка скачивания файла */}
-                    {tutorialDetails.tutorial_file && (
+                    {tutorialDetails.tutorial_file && !isEdit && (
                         <button
                             onClick={() => handleFileDownload(tutorialDetails.tutorial_file!)}
                             className={clsx(
@@ -160,24 +132,34 @@ export function Tutorial({className, isAdmin}: TutorialProps) {
                     )}
 
                     {/* Текст урока */}
-                    <UiTextArea
+                    {!isEdit && <UiTextArea
                         className="mt-5"
                         height={tutorialDetails.video ? "" : "h-[75svh]"}
                     >
                         {tutorialDetails.description}
-                    </UiTextArea>
+                    </UiTextArea>}
 
-                    {/* Ссылка на возврат */}
-                    <UiLink
-                        href="#"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            router.back();
-                        }}
-                        className="mr-auto"
-                    >
-                        Назад
-                    </UiLink>
+                    <div className="flex w-full justify-between h-8">
+                        {/* Ссылка на возврат */}
+                        <UiLink
+                            href="#"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                router.back();
+                            }}
+                            className="mr-auto"
+                        >
+                            Назад
+                        </UiLink>
+
+                        {/* Кнопка редактирования */}
+                        {!isEdit && <Button
+                            variant="secondary" className="h-full"
+                            onClick={() => setIsEdit(true)}
+                        >
+                            Редактировать
+                        </Button>}
+                    </div>
                 </>
             )}
 

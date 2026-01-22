@@ -21,42 +21,17 @@ export function UpdateTutorialForm({closeModal, tutorialId, tutorialDetails}: {
 
     return (
         <div>
-            <h3 className="text-xl font-bold mb-4">Редактировать туториал</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Название */}
-                <div>
-                    <label className="block text-sm font-medium mb-1">
-                        Название туториала
-                    </label>
                     <input
                         {...register("name", {required: false})}
                         defaultValue={tutorialDetails.name}
-                        className="w-full border border-gray-300 rounded px-3 py-2"
+                        className="flex p-3 w-70 items-center justify-center gap-2 mx-auto bg-white rounded-lg shadow-md"
                         placeholder="Введите новое название туториала"
                     />
                     {errors.name && (
                         <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
                     )}
-                </div>
-
-                {/* Описание */}
-                <div>
-                    <label className="block text-sm font-medium mb-1">
-                        Описание туториала
-                    </label>
-                    <textarea
-                        {...register("description", {required: false})}
-                        defaultValue={tutorialDetails.description}
-                        className="w-full border border-gray-300 rounded px-3 py-2"
-                        placeholder="Введите новое описание туториала"
-                        rows={4}
-                    />
-                    {errors.description && (
-                        <p className="text-red-500 text-sm mt-1">
-                            {errors.description.message}
-                        </p>
-                    )}
-                </div>
 
                 {/* Видео */}
                 <div>
@@ -178,9 +153,34 @@ export function UpdateTutorialForm({closeModal, tutorialId, tutorialDetails}: {
                     )}
                 </div>
 
+                {/* Описание */}
+                <div>
+                    <label className="block text-sm font-medium mb-1">
+                        Описание туториала
+                    </label>
+                    <textarea
+                        {...register("description", {required: false})}
+                        defaultValue={tutorialDetails.description}
+                        className="w-full h-[40svh]
+                                   text-[16px] font-normal bg-white border border-gray-200 pt-3 px-4
+                                   shadow-sm rounded-xl
+                                   overflow-y-auto overflow-x-hidden scroll-smooth
+                                   text-justify resize-none
+                                   focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent
+                                   placeholder:text-gray-400"
+                        placeholder="Введите новое описание туториала"
+                        rows={4}
+                    />
+                    {errors.description && (
+                        <p className="text-red-500 text-sm mt-1">
+                            {errors.description.message}
+                        </p>
+                    )}
+                </div>
+
                 <div className="flex w-full justify-end gap-3">
                     <Button
-                        slot="close"
+                        onPress={() => closeModal()}
                         variant="secondary"
                         isDisabled={mutation.isPending}
                     >
