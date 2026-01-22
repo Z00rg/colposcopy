@@ -7,7 +7,6 @@ import clsx from "clsx";
 import {useTutorial} from "../model/use-tutorial";
 import {UiVideoPlayer} from "@/shared/ui/ui-video-player";
 import {UiError} from "@/shared/ui/ui-error";
-import {UiModal} from "@/shared/ui/UiModal";
 import {Button} from "@/shared/ui/Button";
 import {UpdateTutorialForm} from "@/features/admin";
 import React, {useState} from "react";
