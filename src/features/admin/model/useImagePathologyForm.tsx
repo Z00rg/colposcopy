@@ -10,10 +10,10 @@ export type UseImagePathologyFormProps = {
 };
 
 export function useImagePathologyForm({
-                                             pathologyOrImageId,
-                                             closeModal,
-                                             typeOfMethod
-                                         }: UseImagePathologyFormProps) {
+                                          pathologyOrImageId,
+                                          closeModal,
+                                          typeOfMethod
+                                      }: UseImagePathologyFormProps) {
     const [image, setImage] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -46,7 +46,9 @@ export function useImagePathologyForm({
         }
 
         const formData = new FormData();
-        formData.append("pathology", pathologyOrImageId.toString());
+        if (typeOfMethod === "post") {
+            formData.append("pathology", pathologyOrImageId.toString())
+        }
         formData.append("image", image);
 
         mutation.mutate(formData);

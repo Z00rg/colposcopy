@@ -40,7 +40,7 @@ export function PathologyImageForm({ pathologyOrImageId, closeModal, typeOfMetho
                         isPending={mutation.isPending}
                         isDisabled={mutation.isPending}
                     >
-                        {mutation.isPending ? "" : "Добавить изображение"}
+                        {mutation.isPending ? "" : typeOfMethod === "post" ? "Добавить изображение" : "Заменить изображение"}
                     </Button>
                 </div>
             </form>

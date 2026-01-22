@@ -8,7 +8,12 @@ import {useTutorial} from "../model/use-tutorial";
 import {UiVideoPlayer} from "@/shared/ui/ui-video-player";
 import {UiError} from "@/shared/ui/ui-error";
 
-export function Tutorial({className}: { className?: string }) {
+export interface TutorialProps {
+    className?: string;
+    isAdmin?: boolean;
+}
+
+export function Tutorial({className, isAdmin}: TutorialProps) {
     const {tutorialDetails, isLoading, isError, handleFileDownload, getFileNameFromUrl, router} = useTutorial();
 
     return (
@@ -38,6 +43,8 @@ export function Tutorial({className}: { className?: string }) {
                     <UiTextArea className="mt-5" isLoading={true}/>
                 </>
             )}
+
+            {isAdmin && 'Смотрим от админа'}
 
             {/* Отображение туториала */}
             {tutorialDetails && (

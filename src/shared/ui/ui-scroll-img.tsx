@@ -116,7 +116,6 @@ export function UiScrollImg({
                                     variant="secondary"
                                     className="p-2 bg-white rounded-lg shadow-md hover:bg-gray-100 transition-colors"
                                     aria-label="Редактировать изображение"
-                                    isDisabled
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"

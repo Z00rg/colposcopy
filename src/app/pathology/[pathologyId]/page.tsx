@@ -2,10 +2,14 @@ import {Pathology} from "@/features/atlas";
 import {Metadata} from "next";
 import {isAdmin} from "@/shared/lib/auth";
 
-export const metadata: Metadata = {
-    title: "Патология",
-    description: "Подробное описание патологии с визуальными примерами",
-};
+export async function generateMetadata(): Promise<Metadata> {
+    const admin = await isAdmin();
+
+    return {
+        title: admin ? "Патология (режим администратора)" : "Патология",
+        description: "Подробное описание патологии с визуальными примерами",
+    };
+}
 
 export default async function PathologyDetailPage() {
     const adminMode = await isAdmin();
