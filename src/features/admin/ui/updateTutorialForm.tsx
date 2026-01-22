@@ -7,13 +7,17 @@ import {GetTutorialInfoDto} from "@/shared/api/tutorialApi";
 export function UpdateTutorialForm({closeModal, tutorialId, tutorialDetails}: {
     closeModal: () => void;
     tutorialId: number;
-    tutorialDetails:  GetTutorialInfoDto;
+    tutorialDetails: GetTutorialInfoDto;
 }) {
-    const {mutation, register, handleSubmit, errors, tutorialFile, videoFile, posterFile} = useTutorialForm({
+    const {mutation, register, handleSubmit, errors, tutorialFile, videoFile, posterFile, watch} = useTutorialForm({
         closeModal,
         typeOfMethod: "patch",
         tutorialId,
     });
+
+    // Следим за значениями полей для кросс-валидации
+    const watchVideo = watch?.("video");
+    const watchPoster = watch?.("poster");
 
     return (
         <div>
@@ -25,7 +29,8 @@ export function UpdateTutorialForm({closeModal, tutorialId, tutorialDetails}: {
                         Название туториала
                     </label>
                     <input
-                        {...register("name", {required: false,})}
+                        {...register("name", {required: false})}
+                        defaultValue={tutorialDetails.name}
                         className="w-full border border-gray-300 rounded px-3 py-2"
                         placeholder="Введите новое название туториала"
                     />
@@ -40,7 +45,8 @@ export function UpdateTutorialForm({closeModal, tutorialId, tutorialDetails}: {
                         Описание туториала
                     </label>
                     <textarea
-                        {...register("description", {required: false,})}
+                        {...register("description", {required: false})}
+                        defaultValue={tutorialDetails.description}
                         className="w-full border border-gray-300 rounded px-3 py-2"
                         placeholder="Введите новое описание туториала"
                         rows={4}
@@ -72,6 +78,13 @@ export function UpdateTutorialForm({closeModal, tutorialId, tutorialDetails}: {
                                     const maxSize = 100 * 1024 * 1024; // 100MB
                                     return files[0].size <= maxSize ||
                                         "Размер файла не должен превышать 100MB";
+                                },
+                                requiresPoster: (files) => {
+                                    // Если загружено видео, проверяем наличие постера
+                                    if (files?.[0] && (!watchPoster || watchPoster.length === 0)) {
+                                        return "При загрузке видео необходимо также загрузить постер";
+                                    }
+                                    return true;
                                 }
                             }
                         })}
@@ -109,6 +122,13 @@ export function UpdateTutorialForm({closeModal, tutorialId, tutorialDetails}: {
                                     const maxSize = 5 * 1024 * 1024; // 5MB
                                     return files[0].size <= maxSize ||
                                         "Размер файла не должен превышать 5MB";
+                                },
+                                requiresVideo: (files) => {
+                                    // Если загружен постер, проверяем наличие видео
+                                    if (files?.[0] && (!watchVideo || watchVideo.length === 0)) {
+                                        return "При загрузке постера необходимо также загрузить видео";
+                                    }
+                                    return true;
                                 }
                             }
                         })}

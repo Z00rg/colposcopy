@@ -106,5 +106,6 @@ export function useTutorialForm(props: useTutorialFormPostProps | useTutorialFor
         videoFile,
         posterFile,
         tutorialFile,
+        watch,
     }
 }
