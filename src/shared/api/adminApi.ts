@@ -20,6 +20,14 @@ export interface TutorialCreateDto {
     tutorial_file?: File;
 }
 
+export interface TutorialUpdateDto {
+    name?: string;
+    description?: string;
+    video?: File;
+    poster?: File;
+    tutorial_file?: File;
+}
+
 // DTO Клинических кейсов
 interface Answer {
     text: string;
@@ -171,6 +179,47 @@ export const createTutorial = (
     );
 };
 
+// Редактирование видео туториала
+export const updateTutorial = (
+    idTutorial: number,
+    body: TutorialUpdateDto,
+    options?: RequestOptions
+) => {
+    const formData = new FormData();
+
+    if (body.name) {
+        formData.append("name", body.name);
+    }
+
+    if (body.description) {
+        formData.append("description", body.description);
+    }
+
+    if (body.video) {
+        formData.append("video", body.video);
+    }
+
+    if (body.poster) {
+        formData.append("poster", body.poster);
+    }
+
+    if (body.tutorial_file) {
+        formData.append("tutorial_file", body.tutorial_file);
+    }
+
+    return createInstance<void>(
+        {
+            url: `tutorial/update/${idTutorial}`,
+            method: "PATCH",
+            data: formData,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        },
+        options
+    );
+};
+
 // Удаление туториала
 export const deleteTutorial = (
     id: number,
@@ -248,6 +297,7 @@ export const adminApi = {
     updatePathologyText,
     deletePathology,
     createTutorial,
+    updateTutorial,
     deleteTutorial,
     createClinicalCase,
     deleteClinicalCase,

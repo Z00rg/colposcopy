@@ -7,6 +7,9 @@ import clsx from "clsx";
 import {useTutorial} from "../model/use-tutorial";
 import {UiVideoPlayer} from "@/shared/ui/ui-video-player";
 import {UiError} from "@/shared/ui/ui-error";
+import {UiModal} from "@/shared/ui/UiModal";
+import {Button} from "@/shared/ui/Button";
+import {UpdateTutorialForm} from "@/features/admin";
 
 export interface TutorialProps {
     className?: string;
@@ -44,7 +47,42 @@ export function Tutorial({className, isAdmin}: TutorialProps) {
                 </>
             )}
 
-            {isAdmin && 'Смотрим от админа'}
+            {isAdmin && tutorialDetails  && (
+                <div className="absolute top-2 right-2 z-10 flex gap-2">
+                    {/* Кнопка редактирования */}
+                    <UiModal
+                        button={
+                            <Button
+                                variant="secondary"
+                                className="p-2 bg-white rounded-lg shadow-md hover:bg-gray-100 transition-colors"
+                                aria-label="Редактировать изображение"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-5 h-5 text-gray-600"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                    />
+                                </svg>
+                            </Button>
+                        }
+                    >
+                        {({close}) => (
+                            <UpdateTutorialForm
+                                closeModal={close}
+                                tutorialId={tutorialDetails.id}
+                            />
+                        )}
+                    </UiModal>
+                </div>
+            )}
 
             {/* Отображение туториала */}
             {tutorialDetails && (

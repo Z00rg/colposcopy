@@ -1,8 +1,8 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {adminApi, TutorialCreateDto} from "@/shared/api/adminApi";
+import {useForm} from "react-hook-form";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {adminApi, TutorialCreateDto, TutorialUpdateDto} from "@/shared/api/adminApi";
 
 // DTO
 interface TutorialFormData {
@@ -13,12 +13,24 @@ interface TutorialFormData {
     tutorial_file?: FileList;
 }
 
-export function useAddTutorialForm({ closeModal }: { closeModal: () => void }) {
+interface useTutorialFormPostProps {
+    closeModal: () => void;
+    typeOfMethod: "post";
+}
+
+interface useTutorialFormPatchProps {
+    closeModal: () => void;
+    typeOfMethod: "patch";
+    tutorialId: number;
+}
+
+export function useTutorialForm(props: useTutorialFormPostProps | useTutorialFormPatchProps) {
+    const { closeModal, typeOfMethod } = props;
     const queryClient = useQueryClient();
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
         reset,
         watch,
     } = useForm<TutorialFormData>();
@@ -29,7 +41,8 @@ export function useAddTutorialForm({ closeModal }: { closeModal: () => void }) {
     const posterFile = watch("poster");
     const tutorialFile = watch("tutorial_file");
 
-    const mutation = useMutation({
+    // Mutation для создания
+    const createMutation = useMutation({
         mutationFn: (data: TutorialCreateDto) => adminApi.createTutorial(data),
         onSuccess: () => {
             queryClient.invalidateQueries();
@@ -39,6 +52,21 @@ export function useAddTutorialForm({ closeModal }: { closeModal: () => void }) {
         onError: (error) => {
             console.error("Ошибка при добавлении туториала:", error);
             alert("Ошибка при добавлении туториала");
+        },
+    });
+
+    // Mutation для обновления
+    const updateMutation = useMutation({
+        mutationFn: ({id, data}: { id: number, data: TutorialUpdateDto }) =>
+            adminApi.updateTutorial(id, data),
+        onSuccess: () => {
+            queryClient.invalidateQueries();
+            reset();
+            closeModal();
+        },
+        onError: (error) => {
+            console.error("Ошибка при обновлении туториала:", error);
+            alert("Ошибка при обновлении туториала");
         },
     });
 
@@ -60,11 +88,18 @@ export function useAddTutorialForm({ closeModal }: { closeModal: () => void }) {
             payload.tutorial_file = data.tutorial_file[0];
         }
 
-        mutation.mutate(payload);
+        if (typeOfMethod === "post") {
+            createMutation.mutate(payload);
+        } else if (typeOfMethod === "patch") {
+            updateMutation.mutate({
+                data: payload,
+                id: props.tutorialId,//
+            });
+        }
     };
 
     return {
-        mutation,
+        mutation: typeOfMethod === "post" ? createMutation : updateMutation,
         register,
         handleSubmit: handleSubmit(onSubmit),
         errors,
