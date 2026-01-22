@@ -2,10 +2,12 @@
 
 import {Button} from "@/shared/ui/Button";
 import {useTutorialForm} from "@/features/admin/model/useTutorialForm";
+import {GetTutorialInfoDto} from "@/shared/api/tutorialApi";
 
-export function UpdateTutorialForm({closeModal, tutorialId}: {
+export function UpdateTutorialForm({closeModal, tutorialId, tutorialDetails}: {
     closeModal: () => void;
-    tutorialId: number
+    tutorialId: number;
+    tutorialDetails:  GetTutorialInfoDto;
 }) {
     const {mutation, register, handleSubmit, errors, tutorialFile, videoFile, posterFile} = useTutorialForm({
         closeModal,
@@ -25,7 +27,7 @@ export function UpdateTutorialForm({closeModal, tutorialId}: {
                     <input
                         {...register("name", {required: false,})}
                         className="w-full border border-gray-300 rounded px-3 py-2"
-                        placeholder="Введите название туториала"
+                        placeholder="Введите новое название туториала"
                     />
                     {errors.name && (
                         <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
@@ -40,7 +42,7 @@ export function UpdateTutorialForm({closeModal, tutorialId}: {
                     <textarea
                         {...register("description", {required: false,})}
                         className="w-full border border-gray-300 rounded px-3 py-2"
-                        placeholder="Введите описание туториала"
+                        placeholder="Введите новое описание туториала"
                         rows={4}
                     />
                     {errors.description && (
@@ -53,7 +55,7 @@ export function UpdateTutorialForm({closeModal, tutorialId}: {
                 {/* Видео */}
                 <div>
                     <label className="block text-sm font-medium mb-1">
-                        Видео (необязательно)
+                        Видео для замены (необязательно)
                     </label>
                     <input
                         {...register("video", {
@@ -90,7 +92,7 @@ export function UpdateTutorialForm({closeModal, tutorialId}: {
                 {/* Постер */}
                 <div>
                     <label className="block text-sm font-medium mb-1">
-                        Постер для видео (необязательно)
+                        Постер для видео для замены (необязательно)
                     </label>
                     <input
                         {...register("poster", {
@@ -127,7 +129,7 @@ export function UpdateTutorialForm({closeModal, tutorialId}: {
                 {/* Файл туториала */}
                 <div>
                     <label className="block text-sm font-medium mb-1">
-                        Дополнительный файл (PDF, DOC и т.д.)
+                        Дополнительный файл для замены (PDF, DOC и т.д.)
                     </label>
                     <input
                         {...register("tutorial_file", {

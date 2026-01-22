@@ -47,10 +47,13 @@ export function Tutorial({className, isAdmin}: TutorialProps) {
                 </>
             )}
 
+
             {isAdmin && tutorialDetails  && (
-                <div className="absolute top-2 right-2 z-10 flex gap-2">
+                <div className="flex p-3 justify-center gap-2 mx-auto w-max bg-white rounded-lg shadow-md">
+                    <div className="my-auto">{tutorialDetails?.name}</div>
                     {/* Кнопка редактирования */}
                     <UiModal
+                        className="my-auto flex h-full"
                         button={
                             <Button
                                 variant="secondary"
@@ -59,7 +62,7 @@ export function Tutorial({className, isAdmin}: TutorialProps) {
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className="w-5 h-5 text-gray-600"
+                                    className="w-8 h-8 text-gray-600"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -78,6 +81,7 @@ export function Tutorial({className, isAdmin}: TutorialProps) {
                             <UpdateTutorialForm
                                 closeModal={close}
                                 tutorialId={tutorialDetails.id}
+                                tutorialDetails={tutorialDetails}
                             />
                         )}
                     </UiModal>
@@ -93,7 +97,7 @@ export function Tutorial({className, isAdmin}: TutorialProps) {
                             src={tutorialDetails.video}
                             poster={tutorialDetails.poster}
                             title={tutorialDetails.name}
-                            className="h-[35svh]"
+                            className="h-[25svh] items-center justify-center flex my-5"
                         />
                     )}
 

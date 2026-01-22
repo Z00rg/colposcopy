@@ -1,5 +1,3 @@
-import clsx from "clsx";
-
 export function UiVideoPlayer({
   src,
   poster,
@@ -12,7 +10,7 @@ export function UiVideoPlayer({
   className?: string;
 }) {
   return (
-    <div className={clsx("relative", className)}>
+    <div className={className}>
       <video
         controls
         preload="metadata"
