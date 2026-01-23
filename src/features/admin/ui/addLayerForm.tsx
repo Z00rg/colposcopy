@@ -1,5 +1,5 @@
 import {Button} from "@/shared/ui/Button";
-import {useAddLayerForm} from "@/features/admin/model/useAddLayerForm";
+import {useLayerForm} from "@/features/admin/model/useLayerForm";
 
 export type AddLayerFormProps = {
     caseId: number,
@@ -16,7 +16,7 @@ export function AddLayerForm({caseId, closeModal}: AddLayerFormProps) {
         layerDescription,
         setLayerDescription,
         mutation,
-    } = useAddLayerForm({caseId, closeModal});
+    } = useLayerForm({caseId, closeModal, typeOfMethod: "post"});
 
     return (
         <div>

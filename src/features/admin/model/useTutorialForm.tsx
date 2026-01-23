@@ -24,8 +24,15 @@ interface useTutorialFormPatchProps {
     tutorialId: number;
 }
 
-export function useTutorialForm(props: useTutorialFormPostProps | useTutorialFormPatchProps) {
-    const { closeModal, typeOfMethod } = props;
+type UseTutorialFormProps = useTutorialFormPostProps | useTutorialFormPatchProps;
+
+// Type guard
+function isPatchProps(props: UseTutorialFormProps): props is useTutorialFormPatchProps {
+    return props.typeOfMethod === "patch";
+}
+
+export function useTutorialForm(props: UseTutorialFormProps) {
+    const { closeModal } = props;
     const queryClient = useQueryClient();
     const {
         register,
@@ -41,37 +48,34 @@ export function useTutorialForm(props: useTutorialFormPostProps | useTutorialFor
     const posterFile = watch("poster");
     const tutorialFile = watch("tutorial_file");
 
-    // Mutation для создания
-    const createMutation = useMutation({
-        mutationFn: (data: TutorialCreateDto) => adminApi.createTutorial(data),
-        onSuccess: () => {
-            queryClient.invalidateQueries();
-            reset();
-            closeModal();
-        },
-        onError: (error) => {
-            console.error("Ошибка при добавлении туториала:", error);
-            alert("Ошибка при добавлении туториала");
-        },
-    });
+    // Общая функция для успешного завершения
+    const handleSuccess = () => {
+        queryClient.invalidateQueries();
+        reset();
+        closeModal();
+    };
 
-    // Mutation для обновления
-    const updateMutation = useMutation({
-        mutationFn: ({id, data}: { id: number, data: TutorialUpdateDto }) =>
-            adminApi.updateTutorial(id, data),
-        onSuccess: () => {
-            queryClient.invalidateQueries();
-            reset();
-            closeModal();
+    // Единая мутация
+    const mutation = useMutation({
+        mutationFn: (payload: TutorialCreateDto | TutorialUpdateDto) => {
+            if (isPatchProps(props)) {
+                return adminApi.updateTutorial(props.tutorialId, payload);
+            } else {
+                return adminApi.createTutorial(payload as TutorialCreateDto);
+            }
         },
+        onSuccess: handleSuccess,
         onError: (error) => {
-            console.error("Ошибка при обновлении туториала:", error);
-            alert("Ошибка при обновлении туториала");
+            const errorMessage = isPatchProps(props)
+                ? "Ошибка при обновлении туториала"
+                : "Ошибка при добавлении туториала";
+            console.error(errorMessage, error);
+            alert(errorMessage);
         },
     });
 
     const onSubmit = (data: TutorialFormData) => {
-        const payload: TutorialCreateDto = {
+        const payload: TutorialCreateDto | TutorialUpdateDto = {
             name: data.name,
             description: data.description,
         };
@@ -88,18 +92,11 @@ export function useTutorialForm(props: useTutorialFormPostProps | useTutorialFor
             payload.tutorial_file = data.tutorial_file[0];
         }
 
-        if (typeOfMethod === "post") {
-            createMutation.mutate(payload);
-        } else if (typeOfMethod === "patch") {
-            updateMutation.mutate({
-                data: payload,
-                id: props.tutorialId,//
-            });
-        }
+        mutation.mutate(payload);
     };
 
     return {
-        mutation: typeOfMethod === "post" ? createMutation : updateMutation,
+        mutation,
         register,
         handleSubmit: handleSubmit(onSubmit),
         errors,

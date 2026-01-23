@@ -1,6 +1,6 @@
 import React from "react";
 import {Button} from "@/shared/ui/Button";
-import {useAddSchemeForm} from "@/features/admin/model/useAddSchemeForm";
+import {useSchemeForm} from "@/features/admin/model/useSchemeForm";
 
 export type AddSchemeFormProps = {
     caseId: number,
@@ -15,7 +15,7 @@ export function AddSchemeForm({caseId, closeModal}: AddSchemeFormProps) {
         schemeFileInputRef,
         descriptionFileInputRef,
         mutation
-    } = useAddSchemeForm({caseId, closeModal});
+    } = useSchemeForm({caseId, closeModal, typeOfMethod: "post"});
 
     return (
         <div>

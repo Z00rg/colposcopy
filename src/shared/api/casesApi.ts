@@ -19,8 +19,8 @@ export interface  GetCaseImgInfoDto {
 
 export interface GetCaseInfoDto {
     id: number;
-    imgContainer: string[] | GetCaseImgInfoDto[];
-    imgSchema: string | GetCaseImgInfoDto;
+    imgContainer: GetCaseImgInfoDto[];
+    imgSchema: GetCaseImgInfoDto;
     descriptionContainer: string[];
 }
 
