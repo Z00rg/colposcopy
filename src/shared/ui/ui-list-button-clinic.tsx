@@ -8,8 +8,6 @@ import {Modal} from "@/shared/ui/Modal";
 import {AddClinicalCaseForm} from "@/features/admin/ui/addClinicalCaseForm";
 import {Button} from "@/shared/ui/Button";
 import {useDeleteClinicalCase} from "@/features/admin/model/useDeleteClinicalCaseForm";
-import {Menu, MenuItem, MenuTrigger} from "@/shared/ui/Menu";
-import {MoreHorizontal} from "lucide-react";
 
 type PathologyInformation = {
     id: number;
