@@ -74,7 +74,7 @@ export function Pathology({className, isAdmin}: PathologyProps) {
                         />)}
 
                         <div className="flex w-full">
-                            <UiLink
+                            {!isEditText && <UiLink
                                 href="#"
                                 onClick={(e) => {
                                     e.preventDefault();
@@ -83,7 +83,7 @@ export function Pathology({className, isAdmin}: PathologyProps) {
                                 className="mr-auto"
                             >
                                 Назад
-                            </UiLink>
+                            </UiLink>}
                             {isAdmin && !isEditText && <div className="flex gap-2 ml-auto max-w-[65vw]">
 
                                 <UiModal className="mr-3" button={

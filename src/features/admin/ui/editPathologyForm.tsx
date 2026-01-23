@@ -47,7 +47,6 @@ export function EditPathologyForm ({ pathologyId, closeModal, className }: EditP
 
                     <Button
                         type="submit"
-                        variant="secondary"
                         isPending={updateMutation.isPending}
                         isDisabled={updateMutation.isPending || !newDescription.trim()}
                     >

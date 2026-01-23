@@ -138,7 +138,7 @@ export function Tutorial({className, isAdmin}: TutorialProps) {
                         {tutorialDetails.description}
                     </UiTextArea>}
 
-                    <div className="flex w-full justify-between h-8">
+                    {!isEdit && <div className="flex w-full justify-between h-8">
                         {/* Ссылка на возврат */}
                         <UiLink
                             href="#"
@@ -152,13 +152,13 @@ export function Tutorial({className, isAdmin}: TutorialProps) {
                         </UiLink>
 
                         {/* Кнопка редактирования */}
-                        {!isEdit && <Button
+                        <Button
                             variant="secondary" className="h-full"
                             onClick={() => setIsEdit(true)}
                         >
                             Редактировать
-                        </Button>}
-                    </div>
+                        </Button>
+                    </div>}
                 </>
             )}
 

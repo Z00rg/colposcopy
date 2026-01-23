@@ -23,20 +23,20 @@ export function UpdateTutorialForm({closeModal, tutorialId, tutorialDetails}: {
         <div>
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Название */}
-                    <input
-                        {...register("name", {required: false})}
-                        defaultValue={tutorialDetails.name}
-                        className="flex p-3 w-70 items-center justify-center gap-2 mx-auto bg-white rounded-lg shadow-md"
-                        placeholder="Введите новое название туториала"
-                    />
-                    {errors.name && (
-                        <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-                    )}
+                <input
+                    {...register("name", {required: false})}
+                    defaultValue={tutorialDetails.name}
+                    className="flex p-3 w-full items-center justify-center gap-2 mx-auto bg-white rounded-lg shadow-md"
+                    placeholder="Введите новое название туториала"
+                />
+                {errors.name && (
+                    <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+                )}
 
                 {/* Видео */}
                 <div>
                     <label className="block text-sm font-medium mb-1">
-                        Видео для замены (необязательно)
+                        Видео для замены (обязательно добавлять к постеру)
                     </label>
                     <input
                         {...register("video", {
@@ -65,7 +65,7 @@ export function UpdateTutorialForm({closeModal, tutorialId, tutorialDetails}: {
                         })}
                         type="file"
                         accept="video/*"
-                        className="w-full border border-gray-300 rounded px-3 py-2"
+                        className="w-full h-[10svh] bg-blue-50 rounded-lg hover:shadow-md border-2 border-blue-200 hover:bg-blue-100 hover:border-blue-300 px-3 py-2"
                     />
                     {videoFile?.[0] && (
                         <p className="text-sm text-gray-600 mt-1">
@@ -80,7 +80,7 @@ export function UpdateTutorialForm({closeModal, tutorialId, tutorialDetails}: {
                 {/* Постер */}
                 <div>
                     <label className="block text-sm font-medium mb-1">
-                        Постер для видео для замены (необязательно)
+                        Постер видео для замены (обязательно добавлять к видео)
                     </label>
                     <input
                         {...register("poster", {
@@ -109,7 +109,7 @@ export function UpdateTutorialForm({closeModal, tutorialId, tutorialDetails}: {
                         })}
                         type="file"
                         accept="image/*"
-                        className="w-full border border-gray-300 rounded px-3 py-2"
+                        className="w-full h-[10svh] bg-blue-50 rounded-lg hover:shadow-md border-2 border-blue-200 hover:bg-blue-100 hover:border-blue-300 px-3 py-2"
                     />
                     {posterFile?.[0] && (
                         <p className="text-sm text-gray-600 mt-1">
@@ -139,7 +139,7 @@ export function UpdateTutorialForm({closeModal, tutorialId, tutorialDetails}: {
                         })}
                         type="file"
                         accept=".pdf,.doc,.docx,.ppt,.pptx"
-                        className="w-full border border-gray-300 rounded px-3 py-2"
+                        className="w-full bg-blue-50 rounded-lg hover:shadow-md border-2 border-blue-200 hover:bg-blue-100 hover:border-blue-300 px-3 py-2"
                     />
                     {tutorialFile?.[0] && (
                         <p className="text-sm text-gray-600 mt-1">
