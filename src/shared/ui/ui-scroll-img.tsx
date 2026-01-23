@@ -139,6 +139,7 @@ export function UiScrollImg({
                                     pathologyOrImageId={(img[currentScrollIndex] as GetPathologyImgInfoDto).id}
                                     closeModal={close}
                                     typeOfMethod="patch"
+                                    currentImage={typeof img[currentScrollIndex] === "string" ? img[currentScrollIndex] : img[currentScrollIndex].image}
                                 />
                             )}
                         </UiModal>

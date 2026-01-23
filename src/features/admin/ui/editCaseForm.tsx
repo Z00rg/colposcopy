@@ -86,6 +86,21 @@ export function EditCaseForm({ caseId, closeModal, layers = [], scheme }: EditCa
     // Определяем активную мутацию
     const activeMutation = isSchemeStage ? schemeMutation : layerMutation;
 
+    // Проверка заполненности слоёв для блокировки кнопок
+    const isLayer1Filled = layers[0]?.id && layers[0]?.image && layers[0]?.description;
+    const isLayer2Filled = layers[1]?.id && layers[1]?.image && layers[1]?.description;
+    const isLayer3Filled = layers[2]?.id && layers[2]?.image && layers[2]?.description;
+    const areAllLayersFilled = isLayer1Filled && isLayer2Filled && isLayer3Filled;
+
+    // Функция проверки, можно ли перейти на определенную стадию
+    const isStageAccessible = (stageIndex: number) => {
+        if (stageIndex === 0) return true; // Слой 1 всегда доступен
+        if (stageIndex === 1) return isLayer1Filled; // Слой 2 доступен только если заполнен слой 1
+        if (stageIndex === 2) return isLayer1Filled && isLayer2Filled; // Слой 3 доступен если заполнены слои 1 и 2
+        if (stageIndex === 3) return areAllLayersFilled; // Схема доступна только если заполнены все 3 слоя
+        return false;
+    };
+
     // Устанавливаем номер слоя при переключении стадий
     useEffect(() => {
         if (!isSchemeStage) {
@@ -117,21 +132,38 @@ export function EditCaseForm({ caseId, closeModal, layers = [], scheme }: EditCa
 
             {/* Переключатель стадий */}
             <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
-                {[1, 2, 3, "Схема"].map((stage, index) => (
-                    <button
-                        key={index}
-                        type="button"
-                        onClick={() => setCurrentStage(index)}
-                        className={clsx(
-                            "px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap",
-                            currentStage === index
-                                ? "bg-blue-600 text-white"
-                                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                        )}
-                    >
-                        {typeof stage === "number" ? `Слой ${stage}` : stage}
-                    </button>
-                ))}
+                {[1, 2, 3, "Схема"].map((stage, index) => {
+                    const isAccessible = isStageAccessible(index);
+                    const isActive = currentStage === index;
+
+                    return (
+                        <button
+                            key={index}
+                            type="button"
+                            onClick={() => isAccessible && setCurrentStage(index)}
+                            disabled={!isAccessible}
+                            className={clsx(
+                                "px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap",
+                                isActive && "bg-blue-600 text-white",
+                                !isActive && isAccessible && "bg-gray-200 text-gray-700 hover:bg-gray-300",
+                                !isAccessible && "bg-gray-100 text-gray-400 cursor-not-allowed opacity-50"
+                            )}
+                            title={
+                                !isAccessible
+                                    ? index === 1
+                                        ? "Сначала заполните Слой 1"
+                                        : index === 2
+                                            ? "Сначала заполните Слои 1 и 2"
+                                            : index === 3
+                                                ? "Сначала заполните все 3 слоя"
+                                                : ""
+                                    : ""
+                            }
+                        >
+                            {typeof stage === "number" ? `Слой ${stage}` : stage}
+                        </button>
+                    );
+                })}
             </div>
 
             {/* Форма редактирования */}

@@ -1,11 +1,7 @@
 "use client";
 import clsx from "clsx";
 import {Button} from './Button';
-import {EditPathologyForm} from "@/features/admin";
-import React, {useState} from "react";
-import {Modal} from "@/shared/ui/Modal";
-import {Dialog} from "@/shared/ui/Dialog";
-import {PathologyImageForm} from "@/features/admin/";
+import React from "react";
 
 type PathologyInformation = {
     id: number;
@@ -18,8 +14,6 @@ export type UiListButtonAtlasProps = {
     informationOfPathology: PathologyInformation;
     onClick?: () => void;
     onClickAdminDelete?: () => void;
-    pathologyOrTutorialId: number;
-    type: "pathology" | "tutorial";
     isLoading?: boolean;
     adminList?: boolean;
 };
@@ -30,14 +24,10 @@ export function UiListButtonAtlas({
                                       informationOfPathology,
                                       onClick,
                                       onClickAdminDelete,
-                                      pathologyOrTutorialId,
-                                      type,
                                       isLoading,
                                       adminList,
                                   }: UiListButtonAtlasProps) {
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isAddImageModalOpen, setIsAddImageModalOpen] = useState(false);
 
     if (isLoading) {
         return (
@@ -68,27 +58,6 @@ export function UiListButtonAtlas({
             <div className="break-words whitespace-normal flex-1 text-gray-800">
                 {informationOfPathology.name}
             </div>
-
-            {/* Модалка редактирования */}
-            <Modal isOpen={isModalOpen}>
-                <Dialog>
-                    {type === "pathology" && <EditPathologyForm
-                        pathologyId={pathologyOrTutorialId}
-                        closeModal={() => setIsModalOpen(!isModalOpen)}
-                    />}
-                    {type === "tutorial" && <div className="flex flex-col">Тут будет модалка изменения туториала</div>}
-                </Dialog>
-            </Modal>
-
-            <Modal isOpen={isAddImageModalOpen}>
-                <Dialog>
-                    {type === "pathology" && <PathologyImageForm
-                        pathologyOrImageId={pathologyOrTutorialId}
-                        closeModal={() => setIsAddImageModalOpen(!isAddImageModalOpen)}
-                        typeOfMethod="post"
-                    />}
-                </Dialog>
-            </Modal>
 
             {adminList &&
                 <Button

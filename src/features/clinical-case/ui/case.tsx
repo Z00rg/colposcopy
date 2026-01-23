@@ -103,8 +103,7 @@ export function Case({className, isAdmin}: CaseProps) {
                             ) : null}
 
                             {/* Отображения текста описания + на последнем слое схема картинкой */}
-                            {hasImages && currentImageIndex === caseDetails.imgContainer.length - 1 ? (
-                                // Показываем схему на последнем слое
+                            {hasImages && currentImageIndex === 3 ? (
                                 hasSchema ? (
                                     <img
                                         src={caseDetails.imgSchema.image}

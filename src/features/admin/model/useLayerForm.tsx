@@ -21,7 +21,7 @@ function isPostProps(props: UseLayerFormProps): props is UseLayerPostFormProps {
 }
 
 export function useLayerForm(props: UseLayerFormProps) {
-    const { closeModal } = props;
+    const {closeModal} = props;
     const [number, setNumber] = useState("");
     const [layerImage, setLayerImage] = useState<File | null>(null);
     const [layerDescription, setLayerDescription] = useState("");
@@ -38,7 +38,7 @@ export function useLayerForm(props: UseLayerFormProps) {
 
     // Единая мутация, принимает layerId как параметр
     const mutation = useMutation({
-        mutationFn: ({ formData, layerId }: { formData: FormData; layerId?: number }) => {
+        mutationFn: ({formData, layerId}: { formData: FormData; layerId?: number }) => {
             if (isPostProps(props)) {
                 return adminApi.uploadLayer(formData);
             } else {
@@ -61,10 +61,19 @@ export function useLayerForm(props: UseLayerFormProps) {
     const handleSubmit = (e: React.FormEvent, layerId?: number) => {
         e.preventDefault();
 
-        if (!number || !layerImage) {
-            alert("Пожалуйста, заполните все обязательные поля");
+        if (!layerDescription && !layerImage) {
+            alert("Пожалуйста, заполните хотя бы одно поле");
             return;
         }
+
+        if (
+            props.typeOfMethod === "post" &&
+            (!layerDescription || !layerImage)
+        ) {
+            alert("Пожалуйста, заполните оба поля");
+            return;
+        }
+
 
         const formData = new FormData();
 
@@ -73,10 +82,15 @@ export function useLayerForm(props: UseLayerFormProps) {
             formData.append("number", number);
         }
 
-        formData.append("layer_img", layerImage);
-        formData.append("layer_description", layerDescription);
+        if (layerImage) {
+            formData.append("layer_img", layerImage);
+        }
 
-        mutation.mutate({ formData, layerId });
+        if (layerDescription) {
+            formData.append("layer_description", layerDescription);
+        }
+
+        mutation.mutate({formData, layerId});
     };
 
     return {
