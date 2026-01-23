@@ -272,7 +272,44 @@ export const uploadLayer = (
         options
     );
 
+//Обновление слоя к клиническому случаю
+export const updateLayer = (
+    idLayer: number,
+    data: FormData,
+    options?: RequestOptions
+) =>
+    createInstance<void>(
+        {
+            url: `/layers/update/${idLayer}`,
+            method: "PATCH",
+            data: data,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        },
+        options
+    );
+
+
 // Добавление схем к клиническому случаю
+export const updateScheme = (
+    idScheme: number,
+    data: FormData,
+    options?: RequestOptions
+) =>
+    createInstance<void>(
+        {
+            url: `/schemes/update/${idScheme}`,
+            method: "PATCH",
+            data: data,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        },
+        options
+    );
+
+// Обновление схем к клиническому случаю
 export const uploadScheme = (
     data: FormData,
     options?: RequestOptions
@@ -302,5 +339,7 @@ export const adminApi = {
     createClinicalCase,
     deleteClinicalCase,
     uploadLayer,
+    updateLayer,
     uploadScheme,
+    updateScheme,
 };
