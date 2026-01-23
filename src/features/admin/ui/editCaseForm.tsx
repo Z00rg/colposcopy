@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/shared/ui/Button";
 import { useLayerForm } from "@/features/admin/model/useLayerForm";
 import { useSchemeForm } from "@/features/admin/model/useSchemeForm";
 import clsx from "clsx";
+import Image from "next/image";
 
 export type EditCaseFormProps = {
     caseId: number;
@@ -21,18 +22,40 @@ export type EditCaseFormProps = {
     };
 };
 
-export function EditCaseForm({ closeModal, layers = [], scheme }: EditCaseFormProps) {
+export function EditCaseForm({ caseId, closeModal, layers = [], scheme }: EditCaseFormProps) {
     // Стадии: 0-2 для слоев (1-3), 3 для схемы
     const [currentStage, setCurrentStage] = useState(0);
     const isSchemeStage = currentStage === 3;
 
-    // Хуки для работы со слоями
-    const layer1Form = useLayerForm({ closeModal, typeOfMethod: "patch" });
-    const layer2Form = useLayerForm({ closeModal, typeOfMethod: "patch" });
-    const layer3Form = useLayerForm({ closeModal, typeOfMethod: "patch" });
+    // Определяем, какой метод использовать для каждого слоя
+    const layer1Method = layers[0]?.id ? "patch" : "post";
+    const layer2Method = layers[1]?.id ? "patch" : "post";
+    const layer3Method = layers[2]?.id ? "patch" : "post";
+    const schemeMethod = scheme?.id ? "patch" : "post";
 
-    // Хук для работы со схемой
-    const schemeForm = useSchemeForm({ closeModal, typeOfMethod: "patch" });
+    // Хуки для работы со слоями с динамическими методами и caseId для POST
+    const layer1Form = useLayerForm(
+        layer1Method === "post"
+            ? { caseId, closeModal, typeOfMethod: "post" }
+            : { closeModal, typeOfMethod: "patch" }
+    );
+    const layer2Form = useLayerForm(
+        layer2Method === "post"
+            ? { caseId, closeModal, typeOfMethod: "post" }
+            : { closeModal, typeOfMethod: "patch" }
+    );
+    const layer3Form = useLayerForm(
+        layer3Method === "post"
+            ? { caseId, closeModal, typeOfMethod: "post" }
+            : { closeModal, typeOfMethod: "patch" }
+    );
+
+    // Хук для работы со схемой с динамическим методом и caseId для POST
+    const schemeForm = useSchemeForm(
+        schemeMethod === "post"
+            ? { caseId, closeModal, typeOfMethod: "post" }
+            : { closeModal, typeOfMethod: "patch" }
+    );
 
     // Получаем данные текущего слоя
     const currentLayer = layers[currentStage];
@@ -44,7 +67,6 @@ export function EditCaseForm({ closeModal, layers = [], scheme }: EditCaseFormPr
 
     // Извлекаем все refs и значения заранее
     const {
-        number: layerNumber,
         setNumber: setLayerNumber,
         fileInputRef: layerFileInputRef,
         setLayerImage,
@@ -63,6 +85,20 @@ export function EditCaseForm({ closeModal, layers = [], scheme }: EditCaseFormPr
 
     // Определяем активную мутацию
     const activeMutation = isSchemeStage ? schemeMutation : layerMutation;
+
+    // Устанавливаем номер слоя при переключении стадий
+    useEffect(() => {
+        if (!isSchemeStage) {
+            setLayerNumber((currentStage + 1).toString());
+        }
+    }, [currentStage, isSchemeStage, setLayerNumber]);
+
+    // Устанавливаем описание слоя при переключении или загрузке данных
+    useEffect(() => {
+        if (!isSchemeStage && currentLayer?.description) {
+            setLayerDescription(currentLayer.description);
+        }
+    }, [currentStage, isSchemeStage, currentLayer, setLayerDescription]);
 
     // Обработчик отправки формы
     const handleSubmit = (e: React.FormEvent) => {
@@ -103,21 +139,14 @@ export function EditCaseForm({ closeModal, layers = [], scheme }: EditCaseFormPr
                 {!isSchemeStage ? (
                     // Форма для слоя
                     <>
-                        {/* Номер слоя */}
+                        {/* Номер слоя (только для отображения, автоматически берется из стадии) */}
                         <div>
                             <label className="block text-sm font-medium mb-1">
                                 Номер слоя
                             </label>
-                            <select
-                                value={layerNumber}
-                                onChange={(e) => setLayerNumber(e.target.value)}
-                                className="w-full border border-gray-300 rounded px-3 py-2"
-                            >
-                                <option value="">Выберите номер слоя</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
+                            <div className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-50 text-gray-700">
+                                Слой {currentStage + 1}
+                            </div>
                         </div>
 
                         {/* Превью текущего изображения */}
@@ -126,8 +155,10 @@ export function EditCaseForm({ closeModal, layers = [], scheme }: EditCaseFormPr
                                 <label className="block text-sm font-medium mb-1">
                                     Текущее изображение
                                 </label>
-                                <img
+                                <Image
                                     src={currentLayer.image}
+                                    width={500}
+                                    height={500}
                                     alt={`Слой ${currentStage + 1}`}
                                     className="w-full h-48 object-contain bg-gray-100 rounded border"
                                 />
@@ -157,10 +188,7 @@ export function EditCaseForm({ closeModal, layers = [], scheme }: EditCaseFormPr
                                 value={layerDescription}
                                 onChange={(e) => setLayerDescription(e.target.value)}
                                 className="w-full border border-gray-300 rounded px-3 py-2"
-                                placeholder={
-                                    currentLayer?.description ||
-                                    "Введите описание слоя"
-                                }
+                                placeholder="Введите описание слоя"
                                 rows={4}
                             />
                         </div>
@@ -174,8 +202,10 @@ export function EditCaseForm({ closeModal, layers = [], scheme }: EditCaseFormPr
                                 <label className="block text-sm font-medium mb-1">
                                     Текущая схема
                                 </label>
-                                <img
+                                <Image
                                     src={scheme.image}
+                                    width={500}
+                                    height={500}
                                     alt="Схема"
                                     className="w-full h-48 object-contain bg-gray-100 rounded border"
                                 />
@@ -202,8 +232,10 @@ export function EditCaseForm({ closeModal, layers = [], scheme }: EditCaseFormPr
                                 <label className="block text-sm font-medium mb-1">
                                     Текущее описание схемы
                                 </label>
-                                <img
+                                <Image
                                     src={scheme.descriptionImage}
+                                    width={500}
+                                    height={500}
                                     alt="Описание схемы"
                                     className="w-full h-48 object-contain bg-gray-100 rounded border"
                                 />
