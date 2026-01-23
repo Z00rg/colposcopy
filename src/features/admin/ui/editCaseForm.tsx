@@ -171,16 +171,6 @@ export function EditCaseForm({ caseId, closeModal, layers = [], scheme }: EditCa
                 {!isSchemeStage ? (
                     // Форма для слоя
                     <>
-                        {/* Номер слоя (только для отображения, автоматически берется из стадии) */}
-                        <div>
-                            <label className="block text-sm font-medium mb-1">
-                                Номер слоя
-                            </label>
-                            <div className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-50 text-gray-700">
-                                Слой {currentStage + 1}
-                            </div>
-                        </div>
-
                         {/* Превью текущего изображения */}
                         {currentLayer?.image && (
                             <div>

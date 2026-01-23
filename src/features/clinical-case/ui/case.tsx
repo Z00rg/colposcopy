@@ -14,6 +14,7 @@ import {UiModal} from "@/shared/ui/UiModal";
 import {Button} from "@/shared/ui/Button";
 import {EditCaseForm} from "@/features/admin";
 import {transformCaseDataForEdit} from "@/shared/lib/transformCaseDataForEdit";
+import {useState} from "react";
 
 export type CaseProps = {
     className?: string;
@@ -32,6 +33,8 @@ export function Case({className, isAdmin}: CaseProps) {
 
     const {isOpen, open, close} = useModal();
 
+    const [isEdit, setIsEdit] = useState(false);
+
     // Проверка на пустые данные
     const hasImages = caseDetails?.imgContainer && caseDetails.imgContainer.length > 0;
     const hasDescriptions = caseDetails?.descriptionContainer && caseDetails.descriptionContainer.length > 0;
@@ -46,28 +49,24 @@ export function Case({className, isAdmin}: CaseProps) {
                 )}
             >
                 {/* Кнопка редактирования для админа */}
-                {isAdmin && caseDetails && (
-                    <UiModal
-                        button={
-                            <Button className="mb-3">
-                                Редактировать случай
-                            </Button>
-                        }
-                    >
-                        {({ close: closeEditModal }) => {
-                            const { caseId, layers, scheme } = transformCaseDataForEdit(caseDetails);
+                {isAdmin && <Button className="mb-3" onPress={() => setIsEdit(true)}>
+                    Редактировать случай
+                </Button>}
 
-                            return (
-                                <EditCaseForm
-                                    caseId={caseId}
-                                    closeModal={closeEditModal}
-                                    layers={layers}
-                                    scheme={scheme}
-                                />
-                            );
-                        }}
-                    </UiModal>
-                )}
+                {isEdit && caseDetails && isAdmin && (() => {
+                    const { caseId, layers, scheme } = transformCaseDataForEdit(caseDetails);
+
+                    return (
+                        <EditCaseForm
+                            caseId={caseId}
+                            closeModal={() => setIsEdit(false)}
+                            layers={layers}
+                            scheme={scheme}
+                        />
+                    );
+                })()}
+
+
                 {/* Ошибка отображения клинического случая */}
                 {isError && (
                     <UiError>
@@ -76,7 +75,7 @@ export function Case({className, isAdmin}: CaseProps) {
                 )}
 
                 {/* Скелетон лоадер клинического случая + его отображение */}
-                {isLoading ? (
+                {isLoading &&
                     <>
                         <UiScrollImg
                             img={[]}
@@ -85,9 +84,10 @@ export function Case({className, isAdmin}: CaseProps) {
                         />
                         <UiTextArea className="mt-5" isLoading={true}/>
                         <UiFooter activeStatus="clinic"/>
-                    </>
-                ) : (
-                    caseDetails && (
+                    </>}
+
+
+                {caseDetails && !isEdit && (
                         <>
                             {/* Скролл картинок */}
                             {hasImages ? (
@@ -147,8 +147,7 @@ export function Case({className, isAdmin}: CaseProps) {
                                 Назад
                             </UiLink>
                         </>
-                    )
-                )}
+                    )}
                 <UiFooter activeStatus="clinic"/>
             </div>
 
