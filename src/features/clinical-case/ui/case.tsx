@@ -10,11 +10,10 @@ import {useCase} from "../model/use-case";
 import {useModal} from "@/shared/lib/use-modal";
 import {UiImageModal} from "@/shared/ui/ui-image-modal";
 import {UiError} from "@/shared/ui/ui-error";
-import {UiModal} from "@/shared/ui/UiModal";
 import {Button} from "@/shared/ui/Button";
 import {EditCaseForm} from "@/features/admin";
 import {transformCaseDataForEdit} from "@/shared/lib/transformCaseDataForEdit";
-import {useState} from "react";
+import React, {useState} from "react";
 
 export type CaseProps = {
     className?: string;
@@ -48,10 +47,6 @@ export function Case({className, isAdmin}: CaseProps) {
                     "flex flex-col w-full gap-3 flex-1 mb-4 px-5 mt-5"
                 )}
             >
-                {/* Кнопка редактирования для админа */}
-                {isAdmin && <Button className="mb-3" onPress={() => setIsEdit(true)}>
-                    Редактировать случай
-                </Button>}
 
                 {isEdit && caseDetails && isAdmin && (() => {
                     const { caseId, layers, scheme } = transformCaseDataForEdit(caseDetails);
@@ -135,17 +130,30 @@ export function Case({className, isAdmin}: CaseProps) {
                                 ) : null
                             )}
 
-                            {/* Ссылка на выход назад */}
-                            <UiLink
-                                href="#"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    router.back();
-                                }}
-                                className="mr-auto"
-                            >
-                                Назад
-                            </UiLink>
+
+
+                            {!isEdit && <div className="flex w-full justify-between h-8">
+
+                                {/* Ссылка на выход назад */}
+                                <UiLink
+                                    href="#"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        router.back();
+                                    }}
+                                    className="mr-auto"
+                                >
+                                    Назад
+                                </UiLink>
+
+                                {/* Кнопка редактирования */}
+                                {isAdmin && <Button
+                                    variant="secondary" className="h-full"
+                                    onClick={() => setIsEdit(true)}
+                                >
+                                    Редактировать
+                                </Button>}
+                            </div>}
                         </>
                     )}
                 <UiFooter activeStatus="clinic"/>

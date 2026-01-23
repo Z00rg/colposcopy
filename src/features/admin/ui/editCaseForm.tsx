@@ -128,10 +128,8 @@ export function EditCaseForm({ caseId, closeModal, layers = [], scheme }: EditCa
 
     return (
         <div className="w-full max-w-2xl">
-            <h3 className="text-xl font-bold mb-4">Редактировать клинический случай</h3>
-
             {/* Переключатель стадий */}
-            <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+            <div className="flex gap-2 mb-6 overflow-x-auto lg:justify-center pb-2">
                 {[1, 2, 3, "Схема"].map((stage, index) => {
                     const isAccessible = isStageAccessible(index);
                     const isActive = currentStage === index;
@@ -182,7 +180,7 @@ export function EditCaseForm({ caseId, closeModal, layers = [], scheme }: EditCa
                                     width={500}
                                     height={500}
                                     alt={`Слой ${currentStage + 1}`}
-                                    className="w-full h-48 object-contain bg-gray-100 rounded border"
+                                    className="w-full h-full object-contain bg-gray-100 rounded border"
                                 />
                             </div>
                         )}
@@ -197,7 +195,7 @@ export function EditCaseForm({ caseId, closeModal, layers = [], scheme }: EditCa
                                 ref={layerFileInputRef}
                                 onChange={(e) => setLayerImage(e.target.files?.[0] || null)}
                                 accept="image/*"
-                                className="w-full border border-gray-300 rounded px-3 py-2"
+                                className="w-full bg-blue-50 rounded-lg hover:shadow-md border-2 border-blue-200 hover:bg-blue-100 hover:border-blue-300 px-3 py-2"
                             />
                         </div>
 
@@ -209,7 +207,13 @@ export function EditCaseForm({ caseId, closeModal, layers = [], scheme }: EditCa
                             <textarea
                                 value={layerDescription}
                                 onChange={(e) => setLayerDescription(e.target.value)}
-                                className="w-full border border-gray-300 rounded px-3 py-2"
+                                className="w-full h-[27svh]
+                                   text-[16px] font-normal bg-white border border-gray-200 pt-3 px-4
+                                   shadow-sm rounded-xl
+                                   overflow-y-auto overflow-x-hidden scroll-smooth
+                                   text-justify resize-none
+                                   focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent
+                                   placeholder:text-gray-400"
                                 placeholder="Введите описание слоя"
                                 rows={4}
                             />
@@ -285,7 +289,7 @@ export function EditCaseForm({ caseId, closeModal, layers = [], scheme }: EditCa
                 )}
 
                 {/* Кнопки управления */}
-                <div className="flex w-full justify-end gap-3 pt-4">
+                <div className="flex w-full justify-end gap-3">
                     <Button
                         onClick={closeModal}
                         variant="secondary"

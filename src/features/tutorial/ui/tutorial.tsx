@@ -152,12 +152,12 @@ export function Tutorial({className, isAdmin}: TutorialProps) {
                         </UiLink>
 
                         {/* Кнопка редактирования */}
-                        <Button
+                        {isAdmin && <Button
                             variant="secondary" className="h-full"
                             onClick={() => setIsEdit(true)}
                         >
                             Редактировать
-                        </Button>
+                        </Button>}
                     </div>}
                 </>
             )}
