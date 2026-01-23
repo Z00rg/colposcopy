@@ -10,8 +10,6 @@ import {Button} from "@/shared/ui/Button";
 import {useDeleteClinicalCase} from "@/features/admin/model/useDeleteClinicalCaseForm";
 import {Menu, MenuItem, MenuTrigger} from "@/shared/ui/Menu";
 import {MoreHorizontal} from "lucide-react";
-import {AddLayerForm} from "@/features/admin/ui/addLayerForm";
-import {AddSchemeForm} from "@/features/admin/ui/addSchemeForm";
 
 type PathologyInformation = {
     id: number;
@@ -40,8 +38,6 @@ export function UiListButtonClinic({
     const [active, setActive] = useState(false);
     const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isAddLayerModalOpen, setIsAddLayerModalOpen] = useState<number | null>(null);
-    const [isAddSchemeModalOpen, setIsAddSchemeModalOpen] = useState<number | null>(null);
 
     const {handleDeleteClinicalCase} = useDeleteClinicalCase();
 
@@ -81,30 +77,6 @@ export function UiListButtonClinic({
                         pathology={pathologyId}
                         closeModal={() => setIsModalOpen(!isModalOpen)}
                     />
-                </Dialog>
-            </Modal>
-
-            {/* Модалка добавления слоя - ВЫНЕСЕНА ЗА ПРЕДЕЛЫ MAP */}
-            <Modal isOpen={isAddLayerModalOpen !== null}>
-                <Dialog>
-                    {isAddLayerModalOpen !== null && (
-                        <AddLayerForm
-                            caseId={isAddLayerModalOpen}
-                            closeModal={() => setIsAddLayerModalOpen(null)}
-                        />
-                    )}
-                </Dialog>
-            </Modal>
-
-            {/* Модалка добавления схем */}
-            <Modal isOpen={isAddSchemeModalOpen !== null}>
-                <Dialog>
-                    {isAddSchemeModalOpen !== null && (
-                        <AddSchemeForm
-                            caseId={isAddSchemeModalOpen}
-                            closeModal={() => setIsAddSchemeModalOpen(null)}
-                        />
-                    )}
                 </Dialog>
             </Modal>
 
@@ -149,24 +121,27 @@ export function UiListButtonClinic({
                             {adminList ? <div>{caseItem.name}</div> : <span>Случай {idx + 1}</span>}
 
                             {adminList && <div className="ml-auto">
-                                <MenuTrigger>
-                                    <Button aria-label="Actions" variant="secondary">
-                                        <MoreHorizontal className="w-5 h-5"/>
-                                    </Button>
-                                    <Menu>
-                                        <MenuItem onAction={() => {
-                                            setIsAddLayerModalOpen(caseItem.id);
-                                        }}>
-                                            Добавить слой
-                                        </MenuItem>
-                                        <MenuItem onAction={() => {
-                                            setIsAddSchemeModalOpen(caseItem.id)
-                                        }}>Добавить схемы</MenuItem>
-                                        <MenuItem onAction={() => {
-                                            handleDeleteClinicalCase(caseItem.id)
-                                        }}>Удалить</MenuItem>
-                                    </Menu>
-                                </MenuTrigger>
+                                <Button
+                                    variant="secondary"
+                                    className="p-2 bg-white rounded-lg shadow-md hover:bg-red-50 transition-colors"
+                                    aria-label="Удалить патологию"
+                                    onPress={() => handleDeleteClinicalCase(caseItem.id)}
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="w-5 h-5 text-red-600"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth={2}
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                        />
+                                    </svg>
+                                </Button>
                             </div>}
 
                         </div>

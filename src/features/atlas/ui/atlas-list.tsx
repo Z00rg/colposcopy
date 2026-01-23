@@ -54,12 +54,10 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
                             key={`skeleton-tutorial-${index}`}
                             className="w-full"
                             index={index + 1}
-                            type="tutorial"
                             informationOfPathology={{
                                 id: 0,
                                 name: "",
                             }}
-                            pathologyOrTutorialId ={index}
                             onClick={() => {
                             }}
                             isLoading={true}
@@ -78,10 +76,8 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
                             key={item.id}
                             index={index + 1} // Продолжаем нумерацию после файлов
                             informationOfPathology={item}
-                            type="tutorial"
                             onClick={() => handleTutorialClick(item.id)}
                             onClickAdminDelete={() => handleDeleteTutorial(item.id)}
-                            pathologyOrTutorialId={item.id}
                             adminList={adminList}
                         />
                     ))}
@@ -124,8 +120,6 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
                                 id: 0,
                                 name: "",
                             }}
-                            type="pathology"
-                            pathologyOrTutorialId ={index}
                             onClick={() => {
                             }}
                             isLoading={true}
@@ -141,11 +135,9 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
                         className="w-full"
                         key={item.id}
                         index={index + 1}
-                        type="pathology"
                         informationOfPathology={item}
                         onClick={() => handleClick(item.id)}
                         onClickAdminDelete={() => handleDeletePathology(item.id)}
-                        pathologyOrTutorialId={item.id}
                         adminList={adminList}
                     />
                 ))}
