@@ -30,11 +30,13 @@ export interface TutorialUpdateDto {
 
 // DTO Клинических кейсов
 interface Answer {
+    id?: number;
     text: string;
     is_correct: boolean;
 }
 
 interface Question {
+    id?: number;
     name: string;
     instruction: string;
     qtype: "single" | "multiple";
@@ -46,6 +48,7 @@ interface ClinicalCase {
     pathology: number;
     questions: Question[];
 }
+
 
 
 // API Патологий
@@ -322,6 +325,36 @@ export const uploadScheme = (
             headers: {
                 "Content-Type": "multipart/form-data",
             },
+        },
+        options
+    );
+
+// Обновление тестов к патологии
+export const updateQuestions = (
+    idQuestion: number,
+    data: Question,
+    options?: RequestOptions
+) =>
+    createInstance<void>(
+        {
+            url: `/questions/update/${idQuestion}`,
+            method: "PATCH",
+            data: data,
+        },
+        options
+    );
+
+// Получение тестов для последующего редактирования
+export const getQuestions = (
+    idQuestion: number,
+    data: Question,
+    options?: RequestOptions
+) =>
+    createInstance<void>(
+        {
+            url: `/questions/update/${idQuestion}`,
+            method: "GET",
+            data: data,
         },
         options
     );

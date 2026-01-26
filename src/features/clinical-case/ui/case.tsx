@@ -14,6 +14,9 @@ import {Button} from "@/shared/ui/Button";
 import {EditCaseForm} from "@/features/admin";
 import {transformCaseDataForEdit} from "@/shared/lib/transformCaseDataForEdit";
 import React, {useState} from "react";
+import {Dialog} from "@/shared/ui/Dialog";
+import {Modal} from "@/shared/ui/Modal";
+import {UpdateQuestionsForm} from "@/features/admin/ui/updateQuestionsForm";
 
 export type CaseProps = {
     className?: string;
@@ -34,6 +37,8 @@ export function Case({className, isAdmin}: CaseProps) {
 
     const [isEdit, setIsEdit] = useState(false);
 
+    const [isEditTestModalOpen, setIsEditTestModalOpen] = useState(false);
+
     // Проверка на пустые данные
     const hasImages = caseDetails?.imgContainer && caseDetails.imgContainer.length > 0;
     const hasDescriptions = caseDetails?.descriptionContainer && caseDetails.descriptionContainer.length > 0;
@@ -48,6 +53,7 @@ export function Case({className, isAdmin}: CaseProps) {
                 )}
             >
 
+                {/* Форма редактирования слоев и схемы */}
                 {isEdit && caseDetails && isAdmin && (() => {
                     const { caseId, layers, scheme } = transformCaseDataForEdit(caseDetails);
 
@@ -61,6 +67,15 @@ export function Case({className, isAdmin}: CaseProps) {
                     );
                 })()}
 
+                {/* Модалка редактирования теста */}
+                <Modal isOpen={isEditTestModalOpen}>
+                    <Dialog>
+                        <UpdateQuestionsForm
+                            pathology={2}
+                            closeModal={() => setIsEditTestModalOpen(false)}
+                        />
+                    </Dialog>
+                </Modal>
 
                 {/* Ошибка отображения клинического случая */}
                 {isError && (
@@ -148,10 +163,20 @@ export function Case({className, isAdmin}: CaseProps) {
 
                                 {/* Кнопка редактирования */}
                                 {isAdmin && <Button
-                                    variant="secondary" className="h-full"
+                                    variant="secondary"
+                                    className="p-2 bg-white rounded-lg shadow-md hover:bg-gray-100 transition-colors"
+                                    aria-label="Редактировать тест"
+                                    onPress={() => setIsEditTestModalOpen(true)}
+                                >
+                                    Редактировать тест
+                                </Button>}
+
+                                {/* Кнопка редактирования картинок и текста */}
+                                {isAdmin && <Button
+                                    variant="secondary" className="p-2 bg-white rounded-lg shadow-md hover:bg-gray-100 transition-colors ml-3"
                                     onClick={() => setIsEdit(true)}
                                 >
-                                    Редактировать
+                                    Редактировать слои
                                 </Button>}
                             </div>}
                         </>

@@ -177,10 +177,10 @@ export function EditCaseForm({ caseId, closeModal, layers = [], scheme }: EditCa
                                 </label>
                                 <Image
                                     src={currentLayer.image}
-                                    width={500}
-                                    height={500}
+                                    width={200}
+                                    height={200}
                                     alt={`Слой ${currentStage + 1}`}
-                                    className="w-full h-full object-contain bg-gray-100 rounded border"
+                                    className="w-full h-full max-h-[35svh] object-contain bg-gray-100 rounded border"
                                 />
                             </div>
                         )}

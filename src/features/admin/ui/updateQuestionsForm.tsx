@@ -2,16 +2,15 @@ import {tests} from "@/shared/constants/layoutsJSON";
 import {Button} from "@/shared/ui/Button";
 import {useAddClinicalCaseForm} from "@/features/admin/model/useAddClinicalCaseForm";
 
-export type AddClinicalCaseFormProps = {
+export type UpdateQuestionsFormProps = {
     pathology: number,
     closeModal: () => void,
 };
 
-export function AddClinicalCaseForm({pathology, closeModal}: AddClinicalCaseFormProps) {
+export function UpdateQuestionsForm({pathology, closeModal}: UpdateQuestionsFormProps) {
     const {
         handleSubmit,
         register,
-        errors,
         addQuestion,
         addAnswer,
         selectedLayout,
@@ -27,21 +26,8 @@ export function AddClinicalCaseForm({pathology, closeModal}: AddClinicalCaseForm
 
     return (
         <div>
-            <h3 className="text-xl font-bold mb-4">Добавить клинический случай</h3>
+            <h3 className="text-xl font-bold mb-4">Редактировать тест</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                    <label className="block text-sm font-medium mb-1">
-                        Название клинического случая
-                    </label>
-                    <input
-                        {...register("name", {required: "Название обязательно"})}
-                        className="w-full border border-gray-300 rounded px-3 py-2"
-                        placeholder="Введите название клинического случая"
-                    />
-                    {errors.name && (
-                        <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-                    )}
-                </div>
 
                 <div className="border-t pt-4">
                     <div className="flex flex-col items-start gap-4 mb-2">
@@ -203,7 +189,7 @@ export function AddClinicalCaseForm({pathology, closeModal}: AddClinicalCaseForm
                         isPending={mutation.isPending}
                         isDisabled={mutation.isPending}
                     >
-                        {mutation.isPending ? "" : "Добавить клинический случай"}
+                        {mutation.isPending ? "" : "Сохранить"}
                     </Button>
                 </div>
             </form>
