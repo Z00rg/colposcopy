@@ -26,16 +26,39 @@ export function AddClinicalCaseForm({pathology, closeModal}: AddClinicalCaseForm
     } = useClinicalCaseTestForm({pathologyId: pathology, closeModal, typeOfMethod: "post"});
 
     return (
-        <div>
-            <h3 className="text-xl font-bold mb-4">Добавить клинический случай</h3>
+        <div className="w-full max-w-4xl relative">
+            {/* Крестик для закрытия */}
+            <button
+                type="button"
+                onClick={closeModal}
+                className="absolute top-0 right-0 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                aria-label="Закрыть"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                    />
+                </svg>
+            </button>
+
+            <h3 className="text-xl font-bold mb-4 pr-8">Добавить клинический случай</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label className="block text-sm font-medium mb-1">
+                    <label className="block text-sm font-medium mb-2">
                         Название клинического случая
                     </label>
                     <input
                         {...register("name", {required: "Название обязательно"})}
-                        className="w-full border border-gray-300 rounded px-3 py-2"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Введите название клинического случая"
                     />
                     {errors.name && (
@@ -44,21 +67,21 @@ export function AddClinicalCaseForm({pathology, closeModal}: AddClinicalCaseForm
                 </div>
 
                 <div className="border-t pt-4">
-                    <div className="flex flex-col items-start gap-4 mb-2">
-                        <div className="flex gap-2">
-                            <h4 className="font-medium">Вопросы</h4>
-                            <button
+                    <div className="flex flex-col items-start gap-4 mb-4">
+                        <div className="flex gap-3 items-center w-full justify-between">
+                            <h4 className="font-medium text-lg">Вопросы</h4>
+                            <Button
                                 type="button"
                                 onClick={addQuestion}
-                                className="p-2 bg-white rounded-lg shadow-md hover:bg-gray-100 transition-colors"
+                                variant="secondary"
                             >
                                 Добавить вопрос
-                            </button>
+                            </Button>
                         </div>
 
-                        <div className="flex gap-2">
+                        <div className="flex gap-3 items-center w-full justify-between">
                             <select
-                                className="border border-gray-300 rounded px-2 py-1 text-sm"
+                                className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 value={selectedLayout}
                                 onChange={(e) => setSelectedLayout(e.target.value)}
                             >
@@ -70,7 +93,7 @@ export function AddClinicalCaseForm({pathology, closeModal}: AddClinicalCaseForm
                                     ))
                                 }
                             </select>
-                            <button
+                            <Button
                                 type="button"
                                 onClick={() => {
                                     if (selectedLayout && selectedLayout in tests) {
@@ -80,116 +103,133 @@ export function AddClinicalCaseForm({pathology, closeModal}: AddClinicalCaseForm
                                         })));
                                     }
                                 }}
-                                className="p-2 bg-white rounded-lg shadow-md hover:bg-gray-100 transition-colors"
+                                variant="secondary"
                             >
                                 Добавить макет
-                            </button>
+                            </Button>
                         </div>
                     </div>
 
+                    {questions.length === 0 && (
+                        <div className="text-center py-12 text-gray-500 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+                            Вопросов пока нет. Добавьте вопрос или выберите макет.
+                        </div>
+                    )}
+
                     {questions.map((question, qIndex) => (
-                        <div key={qIndex} className="border rounded p-4 mb-4 bg-gray-50">
-                            <div className="flex justify-between items-center mb-2">
-                                <h5 className="font-medium">Вопрос {qIndex + 1}</h5>
-                                <button
+                        <div key={qIndex} className="border border-gray-200 rounded-lg p-5 mb-4 bg-white shadow-sm">
+                            <div className="flex justify-between items-center mb-4">
+                                <h5 className="font-semibold text-base">
+                                    Вопрос {qIndex + 1}
+                                </h5>
+                                <Button
                                     type="button"
                                     onClick={() => removeQuestion(qIndex)}
-                                    className="bg-red-500 text-white px-2 py-1 rounded text-xs"
+                                    variant="secondary"
+                                    className="bg-red-50 text-red-600 hover:bg-red-100 border-red-200"
                                 >
                                     Удалить
-                                </button>
+                                </Button>
                             </div>
 
-                            <div className="mb-2">
-                                <label className="block text-sm font-medium mb-1">
+                            <div className="mb-3">
+                                <label className="block text-sm font-medium mb-2">
                                     Название вопроса
                                 </label>
                                 <input
                                     {...register(`questions.${qIndex}.name` as const, {
                                         required: true,
                                     })}
-                                    className="w-full border border-gray-300 rounded px-3 py-1 text-sm"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     placeholder="Введите название вопроса"
                                 />
                             </div>
 
-                            <div className="mb-2">
-                                <label className="block text-sm font-medium mb-1">
+                            <div className="mb-3">
+                                <label className="block text-sm font-medium mb-2">
                                     Инструкция
                                 </label>
                                 <input
                                     {...register(`questions.${qIndex}.instruction` as const, {
                                         required: true,
                                     })}
-                                    className="w-full border border-gray-300 rounded px-3 py-1 text-sm"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     placeholder="Введите инструкцию"
                                 />
                             </div>
 
-                            <div className="mb-3">
-                                <label className="block text-sm font-medium mb-1">
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium mb-2">
                                     Тип вопроса
                                 </label>
                                 <select
                                     {...register(`questions.${qIndex}.qtype` as const, {
                                         required: true,
                                     })}
-                                    className="w-full border border-gray-300 rounded px-3 py-1 text-sm"
+                                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 >
                                     <option value="single">Один ответ</option>
                                     <option value="multiple">Несколько ответов</option>
                                 </select>
                             </div>
 
-                            <div>
-                                <div className="flex justify-between items-center mb-2">
+                            <div className="border-t pt-4">
+                                <div className="flex justify-between items-center mb-3">
                                     <h6 className="font-medium text-sm">Ответы</h6>
-                                    <button
+                                    <Button
                                         type="button"
                                         onClick={() => addAnswer(qIndex)}
-                                        className="bg-green-500 text-white px-2 py-1 rounded text-xs"
+                                        variant="secondary"
+                                        className="bg-green-50 text-green-600 hover:bg-green-100 border-green-200"
                                     >
                                         Добавить ответ
-                                    </button>
+                                    </Button>
                                 </div>
 
                                 {question.answers?.map((answer, aIndex) => (
-                                    <div key={aIndex} className="flex items-center mb-2 gap-2">
+                                    <div key={aIndex} className="flex items-start gap-3 mb-3 p-3 bg-gray-50 rounded-lg">
                                         <input
                                             type="text"
                                             value={answer.text}
                                             onChange={(e) =>
                                                 updateAnswerText(qIndex, aIndex, e.target.value)
                                             }
-                                            className="flex-1 border border-gray-300 rounded px-2 py-1 text-sm"
+                                            className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                             placeholder="Текст ответа"
                                         />
                                         <div className="flex flex-col gap-2">
-                                            <label className="flex items-center text-sm">
+                                            <label className="flex items-center text-sm whitespace-nowrap">
                                                 <input
                                                     type="checkbox"
                                                     checked={answer.is_correct}
                                                     onChange={() => toggleAnswerCorrect(qIndex, aIndex)}
-                                                    className="mr-1"
+                                                    className="mr-2 w-4 h-4"
                                                 />
                                                 Правильный
                                             </label>
-                                            <button
+                                            <Button
                                                 type="button"
                                                 onClick={() => removeAnswer(qIndex, aIndex)}
-                                                className="bg-red-500 text-white px-2 py-1 rounded text-xs"
+                                                variant="secondary"
+                                                className="bg-red-50 text-red-600 hover:bg-red-100 border-red-200 text-xs"
                                             >
                                                 Удалить
-                                            </button>
+                                            </Button>
                                         </div>
                                     </div>
                                 ))}
+
+                                {question.answers?.length === 0 && (
+                                    <div className="text-sm text-gray-500 italic text-center py-4 bg-gray-50 rounded-lg">
+                                        Ответов пока нет. Добавьте ответ.
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}
                 </div>
 
-                <div className="flex w-full justify-end gap-3">
+                <div className="flex w-full justify-end gap-3 pt-4 border-t">
                     <Button
                         onClick={closeModal}
                         variant="secondary"

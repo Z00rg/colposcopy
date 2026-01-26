@@ -78,7 +78,7 @@ export function UpdateQuestionsForm({caseId, closeModal}: UpdateQuestionsFormPro
 
                 <div className="border-t pt-4">
                     <div className="flex flex-col items-start gap-4 mb-4">
-                        <div className="flex gap-3 items-center">
+                        <div className="flex gap-3 items-center w-full justify-between">
                             <h4 className="font-medium text-lg">Вопросы</h4>
                             <Button
                                 type="button"
@@ -89,7 +89,7 @@ export function UpdateQuestionsForm({caseId, closeModal}: UpdateQuestionsFormPro
                             </Button>
                         </div>
 
-                        <div className="flex gap-3 items-center">
+                        <div className="flex w-full gap-3 items-center justify-between">
                             <select
                                 className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 value={selectedLayout}
