@@ -43,6 +43,10 @@ export interface AdminQuestion {
     answers: Answer[];
 }
 
+interface updateQuestions {
+    questions: AdminQuestion[];
+}
+
 interface AdminGetQuestions {
     id: number;
     name: string;
@@ -338,7 +342,7 @@ export const uploadScheme = (
 // Обновление тестов к патологии
 export const updateQuestions = (
     idCase: number,
-    data: AdminQuestion[],
+    data: updateQuestions,
     options?: RequestOptions
 ) =>
     createInstance<void>(

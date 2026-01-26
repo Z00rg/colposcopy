@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { queryClient } from "@/shared/api/query-client";
-import { adminApi, AdminQuestion } from "@/shared/api/adminApi";
+import { adminApi } from "@/shared/api/adminApi";
 
 // Типы для POST (создание)
 interface Answer {
@@ -85,7 +85,7 @@ export function useClinicalCaseTestForm(props: UseClinicalCaseTestFormProps) {
             if (!isPostProps(props)) {
                 return await adminApi.getQuestions(props.caseId);
             }
-            throw new Error("Query should not run in POST mode");
+            throw new Error("Не может быть назначе в create модельке");
         },
         enabled: typeOfMethod === "patch",
         staleTime: 5 * 60 * 1000,
@@ -101,11 +101,11 @@ export function useClinicalCaseTestForm(props: UseClinicalCaseTestFormProps) {
 
     // Единая мутация
     const mutation = useMutation({
-        mutationFn: async (data: ClinicalCaseCreate | QuestionUpdate[]) => {
+        mutationFn: async (data: ClinicalCaseCreate | { questions: QuestionUpdate[] }) => {
             if (isPostProps(props)) {
                 return await adminApi.createClinicalCase(data as ClinicalCaseCreate);
             } else {
-                return await adminApi.updateQuestions(props.caseId, data as AdminQuestion[]);
+                return await adminApi.updateQuestions(props.caseId, data);
             }
         },
         onSuccess: () => {
@@ -131,6 +131,7 @@ export function useClinicalCaseTestForm(props: UseClinicalCaseTestFormProps) {
             answers: [{ text: "", is_correct: false }],
         };
 
+        // eslint-disable-next-line react-hooks/incompatible-library
         const currentQuestions = watch("questions") || [];
         setValue("questions", [...currentQuestions, newQuestion]);
     };
@@ -206,7 +207,11 @@ export function useClinicalCaseTestForm(props: UseClinicalCaseTestFormProps) {
             };
             mutation.mutate(payload);
         } else {
-            mutation.mutate(data.questions);
+            // Для PATCH отправляем объект с полем questions
+            const payload: { questions: QuestionUpdate[] } = {
+                questions: data.questions,
+            };
+            mutation.mutate(payload);
         }
     };
 
