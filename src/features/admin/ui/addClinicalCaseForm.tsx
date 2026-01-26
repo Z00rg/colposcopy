@@ -1,6 +1,6 @@
 import {tests} from "@/shared/constants/layoutsJSON";
 import {Button} from "@/shared/ui/Button";
-import {useAddClinicalCaseForm} from "@/features/admin/model/useAddClinicalCaseForm";
+import {useClinicalCaseTestForm} from "@/features/admin/model/useClinicalCaseTestForm";
 
 export type AddClinicalCaseFormProps = {
     pathology: number,
@@ -23,7 +23,7 @@ export function AddClinicalCaseForm({pathology, closeModal}: AddClinicalCaseForm
         updateAnswerText,
         toggleAnswerCorrect,
         mutation
-    } = useAddClinicalCaseForm({pathology, closeModal});
+    } = useClinicalCaseTestForm({pathologyId: pathology, closeModal, typeOfMethod: "post"});
 
     return (
         <div>

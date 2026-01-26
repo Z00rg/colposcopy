@@ -1,13 +1,13 @@
 import {tests} from "@/shared/constants/layoutsJSON";
 import {Button} from "@/shared/ui/Button";
-import {useAddClinicalCaseForm} from "@/features/admin/model/useAddClinicalCaseForm";
+import {useClinicalCaseTestForm} from "@/features/admin/model/useClinicalCaseTestForm";
 
 export type UpdateQuestionsFormProps = {
-    pathology: number,
-    closeModal: () => void,
+    caseId: number;
+    closeModal: () => void;
 };
 
-export function UpdateQuestionsForm({pathology, closeModal}: UpdateQuestionsFormProps) {
+export function UpdateQuestionsForm({caseId, closeModal}: UpdateQuestionsFormProps) {
     const {
         handleSubmit,
         register,
@@ -21,8 +21,32 @@ export function UpdateQuestionsForm({pathology, closeModal}: UpdateQuestionsForm
         removeQuestion,
         updateAnswerText,
         toggleAnswerCorrect,
-        mutation
-    } = useAddClinicalCaseForm({pathology, closeModal});
+        mutation,
+        isLoadingQuestions,
+        isErrorLoadingQuestions,
+    } = useClinicalCaseTestForm({caseId, closeModal, typeOfMethod: "patch"});
+
+    // Показываем загрузку
+    if (isLoadingQuestions) {
+        return (
+            <div className="flex items-center justify-center p-8">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                <p className="ml-4 text-gray-600">Загрузка вопросов...</p>
+            </div>
+        );
+    }
+
+    // Показываем ошибку
+    if (isErrorLoadingQuestions) {
+        return (
+            <div className="p-4 bg-red-50 border border-red-200 rounded">
+                <p className="text-red-600">Ошибка при загрузке вопросов</p>
+                <Button onClick={closeModal} variant="secondary" className="mt-4">
+                    Закрыть
+                </Button>
+            </div>
+        );
+    }
 
     return (
         <div>
@@ -60,10 +84,11 @@ export function UpdateQuestionsForm({pathology, closeModal}: UpdateQuestionsForm
                                 type="button"
                                 onClick={() => {
                                     if (selectedLayout && selectedLayout in tests) {
-                                        setValue("questions", tests[selectedLayout as keyof typeof tests].questions.map(q => ({
+                                        const layoutQuestions = tests[selectedLayout as keyof typeof tests].questions.map(q => ({
                                             ...q,
                                             qtype: q.qtype as "single" | "multiple"
-                                        })));
+                                        }));
+                                        setValue("questions", [...questions, ...layoutQuestions]);
                                     }
                                 }}
                                 className="p-2 bg-white rounded-lg shadow-md hover:bg-gray-100 transition-colors"
@@ -73,14 +98,22 @@ export function UpdateQuestionsForm({pathology, closeModal}: UpdateQuestionsForm
                         </div>
                     </div>
 
+                    {questions.length === 0 && (
+                        <div className="text-center py-8 text-gray-500">
+                            Вопросов пока нет. Добавьте вопрос или выберите макет.
+                        </div>
+                    )}
+
                     {questions.map((question, qIndex) => (
                         <div key={qIndex} className="border rounded p-4 mb-4 bg-gray-50">
                             <div className="flex justify-between items-center mb-2">
-                                <h5 className="font-medium">Вопрос {qIndex + 1}</h5>
+                                <h5 className="font-medium">
+                                    Вопрос {qIndex + 1}
+                                </h5>
                                 <button
                                     type="button"
                                     onClick={() => removeQuestion(qIndex)}
-                                    className="bg-red-500 text-white px-2 py-1 rounded text-xs"
+                                    className="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600 transition-colors"
                                 >
                                     Удалить
                                 </button>
@@ -133,7 +166,7 @@ export function UpdateQuestionsForm({pathology, closeModal}: UpdateQuestionsForm
                                     <button
                                         type="button"
                                         onClick={() => addAnswer(qIndex)}
-                                        className="bg-green-500 text-white px-2 py-1 rounded text-xs"
+                                        className="bg-green-500 text-white px-2 py-1 rounded text-xs hover:bg-green-600 transition-colors"
                                     >
                                         Добавить ответ
                                     </button>
@@ -163,13 +196,19 @@ export function UpdateQuestionsForm({pathology, closeModal}: UpdateQuestionsForm
                                             <button
                                                 type="button"
                                                 onClick={() => removeAnswer(qIndex, aIndex)}
-                                                className="bg-red-500 text-white px-2 py-1 rounded text-xs"
+                                                className="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600 transition-colors"
                                             >
                                                 Удалить
                                             </button>
                                         </div>
                                     </div>
                                 ))}
+
+                                {question.answers?.length === 0 && (
+                                    <div className="text-sm text-gray-500 italic">
+                                        Ответов пока нет. Добавьте ответ.
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}
@@ -189,7 +228,7 @@ export function UpdateQuestionsForm({pathology, closeModal}: UpdateQuestionsForm
                         isPending={mutation.isPending}
                         isDisabled={mutation.isPending}
                     >
-                        {mutation.isPending ? "" : "Сохранить"}
+                        {mutation.isPending ? "" : "Сохранить изменения"}
                     </Button>
                 </div>
             </form>

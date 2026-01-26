@@ -35,7 +35,7 @@ interface Answer {
     is_correct: boolean;
 }
 
-interface Question {
+export interface AdminQuestion {
     id?: number;
     name: string;
     instruction: string;
@@ -43,10 +43,16 @@ interface Question {
     answers: Answer[];
 }
 
+interface AdminGetQuestions {
+    id: number;
+    name: string;
+    questions: AdminQuestion[];
+}
+
 interface ClinicalCase {
     name: string;
     pathology: number;
-    questions: Question[];
+    questions: AdminQuestion[];
 }
 
 
@@ -331,13 +337,13 @@ export const uploadScheme = (
 
 // Обновление тестов к патологии
 export const updateQuestions = (
-    idQuestion: number,
-    data: Question,
+    idCase: number,
+    data: AdminQuestion[],
     options?: RequestOptions
 ) =>
     createInstance<void>(
         {
-            url: `/questions/update/${idQuestion}`,
+            url: `/questions/update/${idCase}`,
             method: "PATCH",
             data: data,
         },
@@ -346,15 +352,13 @@ export const updateQuestions = (
 
 // Получение тестов для последующего редактирования
 export const getQuestions = (
-    idQuestion: number,
-    data: Question,
+    idCase: number,
     options?: RequestOptions
 ) =>
-    createInstance<void>(
+    createInstance<AdminGetQuestions>(
         {
-            url: `/questions/update/${idQuestion}`,
+            url: `/questions/update/${idCase}`,
             method: "GET",
-            data: data,
         },
         options
     );
@@ -375,4 +379,6 @@ export const adminApi = {
     updateLayer,
     uploadScheme,
     updateScheme,
+    updateQuestions,
+    getQuestions,
 };

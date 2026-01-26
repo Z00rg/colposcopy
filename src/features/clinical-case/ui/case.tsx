@@ -68,14 +68,14 @@ export function Case({className, isAdmin}: CaseProps) {
                 })()}
 
                 {/* Модалка редактирования теста */}
-                <Modal isOpen={isEditTestModalOpen}>
+                {caseDetails && <Modal isOpen={isEditTestModalOpen}>
                     <Dialog>
                         <UpdateQuestionsForm
-                            pathology={2}
+                            caseId={transformCaseDataForEdit(caseDetails).caseId}
                             closeModal={() => setIsEditTestModalOpen(false)}
                         />
                     </Dialog>
-                </Modal>
+                </Modal>}
 
                 {/* Ошибка отображения клинического случая */}
                 {isError && (
