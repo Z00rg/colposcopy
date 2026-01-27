@@ -22,6 +22,7 @@ export function AddClinicalCaseForm({pathology, closeModal}: AddClinicalCaseForm
         removeQuestion,
         updateAnswerText,
         toggleAnswerCorrect,
+        changeQuestionType,
         mutation
     } = useClinicalCaseTestForm({pathologyId: pathology, closeModal, typeOfMethod: "post"});
 
@@ -163,9 +164,8 @@ export function AddClinicalCaseForm({pathology, closeModal}: AddClinicalCaseForm
                                     Тип вопроса
                                 </label>
                                 <select
-                                    {...register(`questions.${qIndex}.qtype` as const, {
-                                        required: true,
-                                    })}
+                                    value={question.qtype}
+                                    onChange={(e) => changeQuestionType(qIndex, e.target.value as "single" | "multiple")}
                                     className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 >
                                     <option value="single">Один ответ</option>
@@ -200,10 +200,11 @@ export function AddClinicalCaseForm({pathology, closeModal}: AddClinicalCaseForm
                                         <div className="flex flex-col gap-2">
                                             <label className="flex items-center text-sm whitespace-nowrap">
                                                 <input
-                                                    type="checkbox"
+                                                    type={question.qtype === "single" ? "radio" : "checkbox"}
                                                     checked={answer.is_correct}
                                                     onChange={() => toggleAnswerCorrect(qIndex, aIndex)}
                                                     className="mr-2 w-4 h-4"
+                                                    name={question.qtype === "single" ? `correct-answer-${qIndex}` : undefined}
                                                 />
                                                 Правильный
                                             </label>

@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { queryClient } from "@/shared/api/query-client";
-import { adminApi } from "@/shared/api/adminApi";
+import { adminApi, AdminQuestion } from "@/shared/api/adminApi";
 
 // Типы для POST (создание)
 interface Answer {
@@ -85,7 +85,7 @@ export function useClinicalCaseTestForm(props: UseClinicalCaseTestFormProps) {
             if (!isPostProps(props)) {
                 return await adminApi.getQuestions(props.caseId);
             }
-            throw new Error("Не может быть назначе в create модельке");
+            throw new Error("Query should not run in POST mode");
         },
         enabled: typeOfMethod === "patch",
         staleTime: 5 * 60 * 1000,
@@ -105,7 +105,7 @@ export function useClinicalCaseTestForm(props: UseClinicalCaseTestFormProps) {
             if (isPostProps(props)) {
                 return await adminApi.createClinicalCase(data as ClinicalCaseCreate);
             } else {
-                return await adminApi.updateQuestions(props.caseId, data);
+                return await adminApi.updateQuestions(props.caseId, data as { questions: AdminQuestion[] });
             }
         },
         onSuccess: () => {
@@ -191,8 +191,39 @@ export function useClinicalCaseTestForm(props: UseClinicalCaseTestFormProps) {
         const updatedQuestions = [...currentQuestions];
 
         if (updatedQuestions[questionIndex]?.answers[answerIndex]) {
-            updatedQuestions[questionIndex].answers[answerIndex].is_correct =
-                !updatedQuestions[questionIndex].answers[answerIndex].is_correct;
+            const question = updatedQuestions[questionIndex];
+            const currentAnswer = question.answers[answerIndex];
+
+            // Если тип вопроса "single" и мы отмечаем ответ как правильный
+            if (question.qtype === "single" && !currentAnswer.is_correct) {
+                // Снимаем галочки со всех остальных ответов
+                question.answers.forEach((answer, idx) => {
+                    if (idx !== answerIndex) {
+                        answer.is_correct = false;
+                    }
+                });
+            }
+
+            // Переключаем текущий ответ
+            currentAnswer.is_correct = !currentAnswer.is_correct;
+            setValue("questions", updatedQuestions);
+        }
+    };
+
+    // Изменение типа вопроса с очисткой выбранных ответов
+    const changeQuestionType = (questionIndex: number, newType: "single" | "multiple") => {
+        const currentQuestions = watch("questions") || [];
+        const updatedQuestions = [...currentQuestions];
+
+        if (updatedQuestions[questionIndex]) {
+            // Меняем тип вопроса
+            updatedQuestions[questionIndex].qtype = newType;
+
+            // Сбрасываем все галочки с правильных ответов
+            updatedQuestions[questionIndex].answers.forEach(answer => {
+                answer.is_correct = false;
+            });
+
             setValue("questions", updatedQuestions);
         }
     };
@@ -229,6 +260,7 @@ export function useClinicalCaseTestForm(props: UseClinicalCaseTestFormProps) {
         removeAnswer,
         updateAnswerText,
         toggleAnswerCorrect,
+        changeQuestionType,
         mutation,
         isLoadingQuestions: getQuestionsQuery.isLoading,
         isErrorLoadingQuestions: getQuestionsQuery.isError,
