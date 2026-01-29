@@ -248,7 +248,7 @@ export function EditCaseForm({ caseId, closeModal, layers = [], scheme }: EditCa
                                 ref={schemeFileInputRef}
                                 onChange={(e) => setSchemeImage(e.target.files?.[0] || null)}
                                 accept="image/*"
-                                className="w-full border border-gray-300 rounded px-3 py-2"
+                                className="w-full bg-blue-50 rounded-lg hover:shadow-md border-2 border-blue-200 hover:bg-blue-100 hover:border-blue-300 px-3 py-2"
                             />
                         </div>
 
@@ -282,7 +282,7 @@ export function EditCaseForm({ caseId, closeModal, layers = [], scheme }: EditCa
                                     setSchemeDescriptionImage(e.target.files?.[0] || null)
                                 }
                                 accept="image/*"
-                                className="w-full border border-gray-300 rounded px-3 py-2"
+                                className="w-full bg-blue-50 rounded-lg hover:shadow-md border-2 border-blue-200 hover:bg-blue-100 hover:border-blue-300 px-3 py-2"
                             />
                         </div>
                     </>
