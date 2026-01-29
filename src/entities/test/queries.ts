@@ -1,6 +1,7 @@
 import {queryClient} from "@/shared/api/query-client";
 import {testApi, SubmitTestAnswersBodyDto} from "@/shared/api/testApi";
 import {useMutation, useQuery} from "@tanstack/react-query";
+import {queue} from "@/shared/ui/Toast";
 
 const testListKey = ["test-list"];
 
@@ -36,6 +37,26 @@ export function useSubmitAnswersMutation() {
             testApi.submitTestAnswers(body),
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ["try-list"]});
+
+            queue.add({
+                title: 'Ответы отправлены',
+                description: 'Ответы на тесты успешно отправлены на проверку',
+                type: 'success'
+            }, {
+                timeout: 3000
+            });
+        },
+
+        onError: (error) => {
+            console.error("Ошибка при отправке ответов:", error);
+
+            queue.add({
+                title: 'Ошибка: ответы не были отправлены',
+                description: `Ошибка при отправке ответов: ${error}`,
+                type: 'error'
+            }, {
+                timeout: 3000
+            });
         },
     });
 }

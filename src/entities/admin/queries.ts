@@ -1,6 +1,7 @@
 import {useMutation} from "@tanstack/react-query";
 import {queryClient} from "@/shared/api/query-client";
 import {adminApi} from "@/shared/api/adminApi";
+import {queue} from "@/shared/ui/Toast";
 
 // Удаление патологии
 export function useDeletePathologyMutationQuery() {
@@ -8,11 +9,23 @@ export function useDeletePathologyMutationQuery() {
         mutationFn: (id: number) => adminApi.deletePathology(id),
         onSuccess: () => {
             queryClient.invalidateQueries();
-            alert("Патология успешно удалена");
+
+            queue.add({
+                title: 'Патология успешно удалена',
+                type: 'success'
+            }, {
+                timeout: 3000
+            });
         },
         onError: (error) => {
             console.error("Ошибка при удалении патологии:", error);
-            alert("Ошибка при удалении патологии");
+
+            queue.add({
+                title: 'Ошибка при удалении патологии',
+                type: 'error'
+            }, {
+                timeout: 3000
+            });
         },
     });
 }
@@ -23,11 +36,23 @@ export function useDeleteTutorialMutationQuery() {
         mutationFn: (id: number) => adminApi.deleteTutorial(id),
         onSuccess: () => {
             queryClient.invalidateQueries();
-            alert("Туториал успешно удален");
+
+            queue.add({
+                title: 'Туториал успешно удален',
+                type: 'success'
+            }, {
+                timeout: 3000
+            });
         },
         onError: (error) => {
             console.error("Ошибка при удалении туториала:", error);
-            alert("Ошибка при удалении туториала");
+
+            queue.add({
+                title: 'Ошибка при удалении туториала',
+                type: 'error'
+            }, {
+                timeout: 3000
+            });
         },
     });
 }
@@ -38,11 +63,24 @@ export function useDeletePathologyImageMutationQuery() {
         mutationFn: (id: number) => adminApi.deletePathologyImage(id),
         onSuccess: () => {
             queryClient.invalidateQueries();
-            alert("Картинка успешно удалена");
+
+            queue.add({
+                title: 'Изображение успешно удалено',
+                type: 'success'
+            }, {
+                timeout: 3000
+            });
+
         },
         onError: (error) => {
             console.error("Ошибка при удалении:", error);
-            alert("Ошибка при удалении");
+
+            queue.add({
+                title: 'Ошибка при удалении туториала',
+                type: 'success'
+            }, {
+                timeout: 3000
+            });
         },
     });
 }

@@ -2,6 +2,7 @@ import {useRef, useState} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {queryClient} from "@/shared/api/query-client";
 import {adminApi} from "@/shared/api/adminApi";
+import {queue} from "@/shared/ui/Toast";
 
 export type UseImagePathologyFormProps = {
     pathologyOrImageId: number,
@@ -30,10 +31,23 @@ export function useImagePathologyForm({
             closeModal();
             setImage(null);
             if (fileInputRef.current) fileInputRef.current.value = "";
+
+            queue.add({
+                title: 'Изображение патологии успешно обновлена',
+                type: 'success'
+            }, {
+                timeout: 3000
+            });
         },
         onError: (error) => {
-            console.error("Ошибка при добавлении изображения патологии:", error);
-            alert("Ошибка при добавлении изображения патологии");
+            console.error("Ошибка при работе с изображениями патологии:", error);
+
+            queue.add({
+                title: 'Ошибка при работе с изображениями патологии',
+                type: 'error'
+            }, {
+                timeout: 3000
+            });
         },
     });
 

@@ -3,6 +3,7 @@
 import {useForm} from "react-hook-form";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {adminApi, TutorialCreateDto, TutorialUpdateDto} from "@/shared/api/adminApi";
+import {queue} from "@/shared/ui/Toast";
 
 // DTO
 interface TutorialFormData {
@@ -64,13 +65,30 @@ export function useTutorialForm(props: UseTutorialFormProps) {
                 return adminApi.createTutorial(payload as TutorialCreateDto);
             }
         },
-        onSuccess: handleSuccess,
+        onSuccess: () => {
+            handleSuccess();
+
+            queue.add({
+                title: 'Туториал успешно добавлен/обновлен',
+                type: 'success'
+            }, {
+                timeout: 3000
+            });
+        },
         onError: (error) => {
             const errorMessage = isPatchProps(props)
                 ? "Ошибка при обновлении туториала"
                 : "Ошибка при добавлении туториала";
+
             console.error(errorMessage, error);
-            alert(errorMessage);
+
+            queue.add({
+                title: `${errorMessage}`,
+                type: 'error'
+            }, {
+                timeout: 3000
+            });
+
         },
     });
 

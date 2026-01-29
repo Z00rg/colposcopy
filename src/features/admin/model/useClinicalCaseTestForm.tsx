@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { queryClient } from "@/shared/api/query-client";
 import { adminApi, AdminQuestion } from "@/shared/api/adminApi";
+import {queue} from "@/shared/ui/Toast";
 
 // Типы для POST (создание)
 interface Answer {
@@ -112,13 +113,27 @@ export function useClinicalCaseTestForm(props: UseClinicalCaseTestFormProps) {
             queryClient.invalidateQueries();
             closeModal();
             reset();
+
+            queue.add({
+                title: 'Клинический случай добавлен/обновлен',
+                type: 'success'
+            }, {
+                timeout: 3000
+            });
         },
         onError: (error) => {
             const errorMessage = isPostProps(props)
                 ? "Ошибка при добавлении клинического случая"
                 : "Ошибка при обновлении теста";
+
             console.error(errorMessage, error);
-            alert(errorMessage);
+
+            queue.add({
+                title: `${errorMessage}`,
+                type: 'error'
+            }, {
+                timeout: 3000
+            });
         },
     });
 

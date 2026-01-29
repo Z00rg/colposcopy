@@ -1,6 +1,7 @@
 import {useMutation} from "@tanstack/react-query";
 import {adminApi} from "@/shared/api/adminApi";
 import {queryClient} from "@/shared/api/query-client";
+import {queue} from "@/shared/ui/Toast";
 
 export function useDeleteClinicalCase() {
 
@@ -8,10 +9,23 @@ export function useDeleteClinicalCase() {
         mutationFn: (id: number) => adminApi.deleteClinicalCase(id),
         onSuccess: () => {
             queryClient.invalidateQueries();
+
+            queue.add({
+                title: 'Клинический случай успешно удален',
+                type: 'success'
+            }, {
+                timeout: 3000
+            });
         },
         onError: (error) => {
             console.error("Ошибка при удалении клинического случая:", error);
-            alert("Ошибка при удалении клинического случая");
+
+            queue.add({
+                title: 'Ошибка при удалении клинического случая',
+                type: 'error'
+            }, {
+                timeout: 3000
+            });
         },
     });
 

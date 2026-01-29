@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {queryClient} from "@/shared/api/query-client";
 import {adminApi} from "@/shared/api/adminApi";
+import {queue} from "@/shared/ui/Toast";
 
 export type UseEditPathologyFormProps = {
     pathologyId: number,
@@ -28,10 +29,23 @@ export function useEditPathologyForm ({ pathologyId, closeModal }: UseEditPathol
             setNewDescription("");
             queryClient.invalidateQueries();
             closeModal();
+
+            queue.add({
+                title: 'Патология успешно обновлена',
+                type: 'success'
+            }, {
+                timeout: 3000
+            });
         },
         onError: (error) => {
             console.error("Ошибка при обновлении патологии:", error);
-            alert("Ошибка при обновлении патологии");
+
+            queue.add({
+                title: 'Ошибка при обновлении патологии',
+                type: 'error'
+            }, {
+                timeout: 3000
+            });
         },
     });
 

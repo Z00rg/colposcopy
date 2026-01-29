@@ -2,6 +2,7 @@ import {useRef, useState} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {adminApi} from "@/shared/api/adminApi";
 import {queryClient} from "@/shared/api/query-client";
+import {queue} from "@/shared/ui/Toast";
 
 export type UseLayerPostFormProps = {
     caseId: number,
@@ -48,13 +49,30 @@ export function useLayerForm(props: UseLayerFormProps) {
                 return adminApi.updateLayer(layerId, formData);
             }
         },
-        onSuccess: resetForm,
+        onSuccess: () => {
+            resetForm()
+
+            queue.add({
+                title: 'Слой клинического случая успешно добавлен/обновлен',
+                type: 'success'
+            }, {
+                timeout: 3000
+            });
+        },
         onError: (error) => {
             const errorMessage = isPostProps(props)
                 ? "Ошибка при добавлении слоя"
                 : "Ошибка при обновлении слоя";
+
             console.error(errorMessage, error);
-            alert(errorMessage);
+
+            queue.add({
+                title: `${errorMessage}`,
+                type: 'error'
+            }, {
+                timeout: 3000
+            });
+
         },
     });
 

@@ -2,6 +2,7 @@ import React, {useRef, useState} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {queryClient} from "@/shared/api/query-client";
 import {adminApi} from "@/shared/api/adminApi";
+import {queue} from "@/shared/ui/Toast";
 
 export type SchemePostFormProps = {
     caseId: number,
@@ -21,7 +22,7 @@ function isPostProps(props: SchemeFormProps): props is SchemePostFormProps {
 }
 
 export function useSchemeForm(props: SchemeFormProps) {
-    const { closeModal } = props;
+    const {closeModal} = props;
     const [schemeImage, setSchemeImage] = useState<File | null>(null);
     const [schemeDescriptionImage, setSchemeDescriptionImage] =
         useState<File | null>(null);
@@ -39,7 +40,7 @@ export function useSchemeForm(props: SchemeFormProps) {
     };
 
     const mutation = useMutation({
-        mutationFn: ({ formData, schemeId }: { formData: FormData; schemeId?: number }) => {
+        mutationFn: ({formData, schemeId}: { formData: FormData; schemeId?: number }) => {
             if (isPostProps(props)) {
                 return adminApi.uploadScheme(formData);
             } else {
@@ -49,13 +50,30 @@ export function useSchemeForm(props: SchemeFormProps) {
                 return adminApi.updateScheme(schemeId, formData);
             }
         },
-        onSuccess: resetForm,
+        onSuccess: () => {
+            resetForm();
+
+            queue.add({
+                title: 'Схемы клинического случая успешно добавлены/обновлены',
+                type: 'success'
+            }, {
+                timeout: 3000
+            });
+        },
         onError: (error) => {
             const errorMessage = isPostProps(props)
-                ? "Ошибка при добавлении схемы"
-                : "Ошибка при обновлении схемы";
+                ? "Ошибка при добавлении схем"
+                : "Ошибка при обновлении схем";
+
             console.error(errorMessage, error);
-            alert(errorMessage);
+
+            queue.add({
+                title: `${errorMessage}`,
+                type: 'error'
+            }, {
+                timeout: 3000
+            });
+
         },
     });
 
@@ -76,7 +94,7 @@ export function useSchemeForm(props: SchemeFormProps) {
         formData.append("scheme_img", schemeImage);
         formData.append("scheme_description_img", schemeDescriptionImage);
 
-        mutation.mutate({ formData, schemeId });
+        mutation.mutate({formData, schemeId});
     };
 
     return {
