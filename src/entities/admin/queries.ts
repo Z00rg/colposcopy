@@ -76,7 +76,7 @@ export function useDeletePathologyImageMutationQuery() {
             console.error("Ошибка при удалении:", error);
 
             queue.add({
-                title: 'Ошибка при удалении туториала',
+                title: 'Ошибка при удалении изображения',
                 type: 'success'
             }, {
                 timeout: 3000
