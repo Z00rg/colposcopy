@@ -35,8 +35,8 @@ export function useSignInForm() {
 
   // ========== Обработка ошибок ==========
   // Преобразуем ошибку API в понятное сообщение для пользователя
-  const errorMessage = signInMutation.error?.message
-    ? signInMutation.error.message
+  const errorMessage = signInMutation.error
+    ? signInMutation.error
     : undefined;
 
   // ========== Возвращаемые значения ==========

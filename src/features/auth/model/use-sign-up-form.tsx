@@ -150,8 +150,8 @@ export function useSignUpForm() {
   };
 
   // ========== Обработка ошибок ==========
-  const errorMessage = signUpMutation.error?.message
-      ? signUpMutation.error.message
+  const errorMessage = signUpMutation.error
+      ? signUpMutation.error
       : undefined;
 
   // ========== Возвращаемые значения ==========
