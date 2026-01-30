@@ -5,6 +5,11 @@ import { ROUTES } from "@/shared/constants/routes";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import {AxiosError} from "axios";
+
+interface ApiErrorResponse {
+  error: string;
+}
 
 /**
  * Хук для формы авторизации
@@ -36,8 +41,8 @@ export function useSignInForm() {
   // ========== Обработка ошибок ==========
   // Преобразуем ошибку API в понятное сообщение для пользователя
   const errorMessage = signInMutation.error
-    ? signInMutation.error
-    : undefined;
+      ? (signInMutation.error as AxiosError<ApiErrorResponse>).response?.data?.error
+      : undefined;
 
   // ========== Возвращаемые значения ==========
   return {

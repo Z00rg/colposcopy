@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {useForm, useWatch} from "react-hook-form";
+import {AxiosError} from "axios";
 
 // Ключ для localStorage
 const SIGNUP_STORAGE_KEY = "signup_form_data";
@@ -22,6 +23,10 @@ type SignUpFormData = {
   password: string;
   password2: string;
 };
+
+interface ApiErrorResponse {
+  error: string;
+}
 
 /**
  * Хук для формы регистрации
@@ -151,7 +156,7 @@ export function useSignUpForm() {
 
   // ========== Обработка ошибок ==========
   const errorMessage = signUpMutation.error
-      ? signUpMutation.error
+      ? (signUpMutation.error as AxiosError<ApiErrorResponse>).response?.data?.error
       : undefined;
 
   // ========== Возвращаемые значения ==========
