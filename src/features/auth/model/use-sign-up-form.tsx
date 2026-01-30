@@ -150,8 +150,8 @@ export function useSignUpForm() {
   };
 
   // ========== Обработка ошибок ==========
-  const errorMessage = signUpMutation.error
-      ? "Проверьте введенные данные"
+  const errorMessage = signUpMutation.error?.message
+      ? signUpMutation.error.message
       : undefined;
 
   // ========== Возвращаемые значения ==========

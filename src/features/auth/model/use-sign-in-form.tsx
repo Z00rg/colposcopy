@@ -35,8 +35,8 @@ export function useSignInForm() {
 
   // ========== Обработка ошибок ==========
   // Преобразуем ошибку API в понятное сообщение для пользователя
-  const errorMessage = signInMutation.error
-    ? "Неверный логин или пароль"
+  const errorMessage = signInMutation.error?.message
+    ? signInMutation.error.message
     : undefined;
 
   // ========== Возвращаемые значения ==========
