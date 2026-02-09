@@ -10,6 +10,8 @@ export type UseEditPathologyFormProps = {
     closeModal: () => void,
 };
 
+// Кастомный хук для редактирования патологии
+
 export function useEditPathologyForm ({ pathologyId, closeModal }: UseEditPathologyFormProps) {
     const pathologyQuery = usePathologyQuery(pathologyId);
 

@@ -21,6 +21,9 @@ function isPostProps(props: SchemeFormProps): props is SchemePostFormProps {
     return props.typeOfMethod === "post";
 }
 
+// Универсальный хук для работы со схемами клинического случая (добавление/обновление)
+// Тип формочки меняется с помощью параметра typeOfMethod
+
 export function useSchemeForm(props: SchemeFormProps) {
     const {closeModal} = props;
     const [schemeImage, setSchemeImage] = useState<File | null>(null);

@@ -10,6 +10,9 @@ export type UseImagePathologyFormProps = {
     typeOfMethod: "post" | "patch",
 };
 
+// Кастомный хук для работы с изображениями патологии (добавление/обновление)
+// Тип формочки меняется с помощью параметра typeOfMethod
+
 export function useImagePathologyForm({
                                           pathologyOrImageId,
                                           closeModal,

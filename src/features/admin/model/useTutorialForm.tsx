@@ -32,6 +32,9 @@ function isPatchProps(props: UseTutorialFormProps): props is useTutorialFormPatc
     return props.typeOfMethod === "patch";
 }
 
+// Универсальный хук для работы с туториалами (добавление/обновление)
+// Тип формочки меняется с помощью параметра typeOfMethod
+
 export function useTutorialForm(props: UseTutorialFormProps) {
     const { closeModal } = props;
     const queryClient = useQueryClient();

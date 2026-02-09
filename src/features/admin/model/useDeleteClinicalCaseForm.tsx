@@ -3,6 +3,8 @@ import {adminApi} from "@/shared/api/adminApi";
 import {queryClient} from "@/shared/api/query-client";
 import {queue} from "@/shared/ui/Toast";
 
+// Кастомный хук для удаления клинического случая
+
 export function useDeleteClinicalCase() {
 
     const deleteMutation = useMutation({
@@ -29,11 +31,6 @@ export function useDeleteClinicalCase() {
         },
     });
 
-    // ========== Обработчики ==========
-    /**
-     * Мутация удаления кейса
-     * @param id - ID кейса
-     */
     const handleDeleteClinicalCase = (id: number) => {
         if (window.confirm("Вы уверены, что хотите удалить этот клинический случай?")) {
             deleteMutation.mutate(id);

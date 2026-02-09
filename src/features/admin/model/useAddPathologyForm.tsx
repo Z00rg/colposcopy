@@ -10,6 +10,8 @@ interface Pathology {
     description: string
 }
 
+// Хук для формы добавления патологии
+
 export function useAddPathologyForm({ closeModal }: { closeModal: () => void }) {
     const {
         register,

@@ -64,6 +64,15 @@ function isPostProps(props: UseClinicalCaseTestFormProps): props is UseClinicalC
     return props.typeOfMethod === "post";
 }
 
+/**
+ * Универсальный хук для добавления/обновления клинических случаев
+ *
+ * Функциональность:
+ * - Отображение данных теста прикрпеленного к клиническому случаю
+ * - Редактирование теста: добавление, удаление, обновление вопросов, ответов, их типов (один ответ/множество)
+ * - Логика создания нового клинического случая вмесие с тестом
+ */
+
 export function useClinicalCaseTestForm(props: UseClinicalCaseTestFormProps) {
     const { closeModal, typeOfMethod } = props;
 
@@ -79,7 +88,7 @@ export function useClinicalCaseTestForm(props: UseClinicalCaseTestFormProps) {
     const [selectedLayout, setSelectedLayout] = useState("");
     const questions = watch("questions") || [];
 
-    // Запрос существующих вопросов (только для PATCH)
+    // Запрос существующих вопросов для PATCH
     const getQuestionsQuery = useQuery({
         queryKey: ["admin-questions", !isPostProps(props) ? props.caseId : null],
         queryFn: async () => {
@@ -100,7 +109,7 @@ export function useClinicalCaseTestForm(props: UseClinicalCaseTestFormProps) {
         }
     }, [getQuestionsQuery.data, typeOfMethod, setValue]);
 
-    // Единая мутация
+    // Единая мутация, управляется пропсом typeOfMethod
     const mutation = useMutation({
         mutationFn: async (data: ClinicalCaseCreate | { questions: QuestionUpdate[] }) => {
             if (isPostProps(props)) {
@@ -231,10 +240,10 @@ export function useClinicalCaseTestForm(props: UseClinicalCaseTestFormProps) {
         const updatedQuestions = [...currentQuestions];
 
         if (updatedQuestions[questionIndex]) {
-            // Меняем тип вопроса
+            // Смена тип вопроса
             updatedQuestions[questionIndex].qtype = newType;
 
-            // Сбрасываем все галочки с правильных ответов
+            // Сброс выделенных ранее ответов
             updatedQuestions[questionIndex].answers.forEach(answer => {
                 answer.is_correct = false;
             });
@@ -253,7 +262,7 @@ export function useClinicalCaseTestForm(props: UseClinicalCaseTestFormProps) {
             };
             mutation.mutate(payload);
         } else {
-            // Для PATCH отправляем объект с полем questions
+            // Для PATCH – с полем questions
             const payload: { questions: QuestionUpdate[] } = {
                 questions: data.questions,
             };

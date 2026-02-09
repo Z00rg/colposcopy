@@ -21,6 +21,9 @@ function isPostProps(props: UseLayerFormProps): props is UseLayerPostFormProps {
     return props.typeOfMethod === "post";
 }
 
+// Универсакльный хук для работы со слоями клинического случая (добавление/обновление)
+// Тип формочки меняется с помощью параметра typeOfMethod
+
 export function useLayerForm(props: UseLayerFormProps) {
     const {closeModal} = props;
     const [number, setNumber] = useState("");
