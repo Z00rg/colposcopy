@@ -19,7 +19,7 @@ export function SubscribeForm({ price, planName }: SubscribeFormProps) {
     const createPayment = async () => {
         setIsLoading(true);
         try {
-            // Тут твой реальный запрос к API
+            // Тут реальный запрос к API
             // const res = await fetch('/api/subscription/create');
             // const { qrLink, orderId } = await res.json();
 
