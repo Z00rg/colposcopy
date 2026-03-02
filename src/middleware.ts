@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // 1. Конфигурация путей
-const AUTH_ROUTES = ['/sign-in', '/sign-up'];
+const AUTH_ROUTES = ['/sign-in', '/sign-up', '/agreement'];
 const ADMIN_ROUTE = '/admin-home';
 const SUBSCRIBE_ROUTE = '/subscribe';
 

@@ -1,6 +1,7 @@
 "use client";
 
 import clsx from "clsx";
+import { useState } from "react";
 import {useSignUpForm} from "../model/use-sign-up-form";
 import {UiWhiteTextField} from "@/shared/ui/ui-white-text-field";
 import {UiButton} from "@/shared/ui/ui-button";
@@ -19,6 +20,8 @@ export function SignUpForm() {
         handleStageChange,
         isAllFieldsFilled,
     } = useSignUpForm();
+
+    const [isAgreementChecked, setIsAgreementChecked] = useState(false);
 
     return (
         <form
@@ -172,13 +175,55 @@ export function SignUpForm() {
                 </div>
             )}
 
+            {/* Чекбокс согласия с лицензионным договором */}
+            <label className="flex  gap-3 cursor-pointer group">
+                <div className="relative shrink-0">
+                    <input
+                        type="checkbox"
+                        className="sr-only"
+                        checked={isAgreementChecked}
+                        onChange={(e) => setIsAgreementChecked(e.target.checked)}
+                    />
+                    <div className={clsx(
+                        "w-5 h-5 rounded border-2 transition-colors duration-150 flex items-center justify-center",
+                        isAgreementChecked
+                            ? "bg-[#2E76AA] border-[#2E76AA]"
+                            : "border-gray-300 bg-white group-hover:border-[#2E76AA]"
+                    )}>
+                        {isAgreementChecked && (
+                            <svg className="w-3 h-3 text-white" viewBox="0 0 12 10" fill="none">
+                                <path
+                                    d="M1 5L4.5 8.5L11 1.5"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
+                        )}
+                    </div>
+                </div>
+                <span className="text-sm text-gray-600 leading-snug">
+                    Я принимаю условия{" "}
+                    <a
+                        href="/agreement.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#2E76AA] hover:text-[#26628A] underline underline-offset-2 transition-colors"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        лицензионного договора
+                    </a>
+                </span>
+            </label>
+
             {/* Кнопка регистрации */}
             <UiButton
                 className={clsx(
                     "w-full",
-                    !isAllFieldsFilled && "opacity-50 cursor-not-allowed"
+                    (!isAllFieldsFilled || !isAgreementChecked) && "opacity-50 cursor-not-allowed"
                 )}
-                disabled={!isAllFieldsFilled || isPending}
+                disabled={!isAllFieldsFilled || !isAgreementChecked || isPending}
             >
                 {isPending ? <UiSpinner/> : "Регистрация"}
             </UiButton>
