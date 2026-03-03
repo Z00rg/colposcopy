@@ -11,7 +11,7 @@ export function ClinicalCasesList({className, adminList}: { className?: string, 
     const isEmptyText = !isLoading && !isError && items.length === 0;
 
     return (
-        <UiList className={clsx(className, "mt-4 items-start")}>
+        <UiList className={clsx(className, "mt-4 items-start")} scrollKey="clinical-list">
             {/* Ошибка загрузки списка клинических случаев */}
             {isError && (
                 <UiError>

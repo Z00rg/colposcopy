@@ -23,7 +23,7 @@ export function AtlasList({className, adminList}: { className?: string, adminLis
         !isErrorTutorials && tutorials.length === 0;
 
     return (
-        <UiList className={clsx(className, "mt-4 items-start")}>
+        <UiList className={clsx(className, "mt-4 items-start")} scrollKey="atlas-list">
             <div className="w-full flex flex-row justify-between">
                 <div className="font-bold text-[18px]">Обучение</div>
                 {adminList && <UiModal className="mr-3" button={<Button variant="secondary">+</Button>}>{({close}) => (
