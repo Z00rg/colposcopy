@@ -204,6 +204,40 @@ export function UiScrollImg({
                         </div>
                     ))}
                 </div>
+
+                {/* Pill-dot индикатор */}
+                {img.length > 1 && (
+                    <div
+                        className={clsx(
+                            "absolute bottom-2 left-1/2 -translate-x-1/2",
+                            "flex gap-1.5 items-center",
+                            "md:hidden"
+                        )}
+                        role="tablist"
+                        aria-label="Изображения"
+                    >
+                        {img.map((_, index) => (
+                            <button
+                                key={index}
+                                role="tab"
+                                aria-selected={currentScrollIndex === index}
+                                aria-label={`Перейти к изображению ${index + 1}`}
+                                onClick={() => {
+                                    const container = scrollContainerRef.current;
+                                    if (!container) return;
+                                    const items = container.querySelectorAll('[data-scroll-item]');
+                                    items[index]?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                                }}
+                                className={clsx(
+                                    "rounded-full transition-all duration-300",
+                                    currentScrollIndex === index
+                                        ? "w-4 h-2 bg-white shadow-md"
+                                        : "w-2 h-2 bg-white/50 hover:bg-white/75"
+                                )}
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
 
             {/* Модалка */}
