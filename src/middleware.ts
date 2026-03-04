@@ -4,13 +4,13 @@ import type { NextRequest } from 'next/server';
 // 1. Конфигурация путей
 const AUTH_ROUTES = ['/sign-in', '/sign-up', '/agreement'];
 const ADMIN_ROUTE = '/admin-home';
-// const SUBSCRIBE_ROUTE = '/subscribe';
+const SUBSCRIBE_ROUTE = '/subscribe';
 
 // Куки
 const ACCESS_COOKIE_NAME = 'access';
 const REFRESH_COOKIE_NAME = 'refresh';
 const PERMISSION_COOKIE_NAME = 'user_role';
-// const SUBSCRIPTION_COOKIE_NAME = 'subscription_status';
+const SUBSCRIPTION_COOKIE_NAME = 'is_subscribed';
 
 // 2. Заголовки безопасности
 const securityHeaders = {
@@ -26,17 +26,17 @@ export default function middleware(request: NextRequest) {
     // Куки
     const refreshCookie = request.cookies.get(REFRESH_COOKIE_NAME);
     const userRoleCookie = request.cookies.get(PERMISSION_COOKIE_NAME);
-    // const subStatusCookie = request.cookies.get(SUBSCRIPTION_COOKIE_NAME);
+    const subStatusCookie = request.cookies.get(SUBSCRIPTION_COOKIE_NAME);
 
     // Определение путей
     const isAuthPath = AUTH_ROUTES.some(route => pathname.startsWith(route));
     const isAdminPath = pathname.startsWith(ADMIN_ROUTE);
-    // const isSubscribePage = pathname.startsWith(SUBSCRIBE_ROUTE);
+    const isSubscribePage = pathname.startsWith(SUBSCRIBE_ROUTE);
 
     // Определение статусов
     const isAdmin = userRoleCookie?.value === "admin";
     const isWorker = userRoleCookie?.value === "worker";
-    // const isSubscribed = subStatusCookie?.value === 'active';
+    const isSubscribed = subStatusCookie?.value === 'true';
 
     let response: NextResponse;
 
@@ -76,28 +76,28 @@ export default function middleware(request: NextRequest) {
             if (isAdminPath) {
                 response = NextResponse.redirect(new URL('/', request.url));
             }
-            else {
-                response = NextResponse.next();
-            }
+            // else {
+            //     response = NextResponse.next();
+            // }
 
             // ПРОВЕРКА ПОДПИСКИ (откоммитить в будущем)
-            // else {
-            //     // Если подписки НЕТ и он пытается зайти НЕ на страницу оплаты
-            //     if (!isSubscribed && !isSubscribePage) {
-            //         const paywallUrl = new URL(SUBSCRIBE_ROUTE, request.url);
-            //         // 'from', чтобы вернуть юзера обратно после оплаты
-            //         paywallUrl.searchParams.set('from', pathname);
-            //         response = NextResponse.redirect(paywallUrl);
-            //     }
-            //     // Если подписка ЕСТЬ, а пользователь заходит на страничку оплаты
-            //     else if (isSubscribed && isSubscribePage) {
-            //         response = NextResponse.redirect(new URL('/', request.url));
-            //     }
-            //     // Все ок
-            //     else {
-            //         response = NextResponse.next();
-            //     }
-            // }
+            else {
+                // Если подписки НЕТ и он пытается зайти НЕ на страницу оплаты
+                if (!isSubscribed && !isSubscribePage) {
+                    const paywallUrl = new URL(SUBSCRIBE_ROUTE, request.url);
+                    // 'from', чтобы вернуть юзера обратно после оплаты
+                    paywallUrl.searchParams.set('from', pathname);
+                    response = NextResponse.redirect(paywallUrl);
+                }
+                // Если подписка ЕСТЬ, а пользователь заходит на страничку оплаты
+                else if (isSubscribed && isSubscribePage) {
+                    response = NextResponse.redirect(new URL('/', request.url));
+                }
+                // Все ок
+                else {
+                    response = NextResponse.next();
+                }
+            }
         }
 
         // Если роль не определена
