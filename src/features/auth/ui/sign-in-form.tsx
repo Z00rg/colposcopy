@@ -1,11 +1,11 @@
 "use client";
 
-import {UiLink} from "@/shared/ui/ui-link";
+// import {UiLink} from "@/shared/ui/ui-link";
 import {useSignInForm} from "../model/use-sign-in-form";
 import {UiButton} from "@/shared/ui/ui-button";
 import {UiTextField} from "@/shared/ui/ui-text-field";
 import {UiSpinner} from "@/shared/ui/ui-spinner";
-import {ROUTES} from "@/shared/constants/routes";
+// import {ROUTES} from "@/shared/constants/routes";
 
 export function SignInForm() {
     const {register, handleSubmit, errorMessage, isPending} = useSignInForm();
@@ -77,13 +77,13 @@ export function SignInForm() {
                 {isPending ? <UiSpinner/> : "Войти"}
             </UiButton>
 
-            {/* Ссылка на регистрацию */}
-            <div className="text-center text-base text-gray-600">
-                Нет аккаунта?{" "}
-                <UiLink href={ROUTES.SIGN_UP} className="text-[#2E76AA] hover:text-[#26628A] font-medium">
-                    Зарегистрироваться
-                </UiLink>
-            </div>
+            {/* Ссылка на регистрацию (откомментить как будет оплата) */}
+            {/*<div className="text-center text-base text-gray-600">*/}
+            {/*    Нет аккаунта?{" "}*/}
+            {/*    <UiLink href={ROUTES.SIGN_UP} className="text-[#2E76AA] hover:text-[#26628A] font-medium">*/}
+            {/*        Зарегистрироваться*/}
+            {/*    </UiLink>*/}
+            {/*</div>*/}
         </form>
     );
 }

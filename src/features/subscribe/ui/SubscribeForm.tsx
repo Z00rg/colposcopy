@@ -23,7 +23,7 @@ export function SubscribeForm({ price, planName }: SubscribeFormProps) {
             // const res = await fetch('/api/subscription/create');
             // const { qrLink, orderId } = await res.json();
 
-            setQrCode("https://www.sberbank.com/sms/pbpn?requisiteNumber=79171305378"); // Заглушка
+            setQrCode("https://atlascolposcopy.samsmu.ru"); // Заглушка
             setStatus("pending");
         } catch (e) {
             setStatus("error");
