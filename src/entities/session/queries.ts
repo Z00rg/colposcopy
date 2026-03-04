@@ -6,5 +6,6 @@ export function useResetSession() {
 
     return () => {
         queryClient.removeQueries();
+        localStorage.clear();
     };
 }

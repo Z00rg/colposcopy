@@ -24,7 +24,6 @@ type TestFormData = Record<string, number[]>;
 
 // Ключи для localStorage
 const TEST_ANSWERS_STORAGE_KEY = "test_answers_progress";
-const TEST_START_TIME_KEY = "test_start_time";
 const TEST_IDS_KEY = "test_ids";
 
 // ========== Утилиты ==========
@@ -90,18 +89,7 @@ export function useTestTasks() {
 
   // ========== Состояние ==========
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
-  const [startTime] = useState<number>(() => {
-    // Инициализируем время начала теста
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem(TEST_START_TIME_KEY);
-      if (saved) return parseInt(saved, 10);
-    }
-    const now = Date.now();
-    if (typeof window !== "undefined") {
-      localStorage.setItem(TEST_START_TIME_KEY, now.toString());
-    }
-    return now;
-  });
+  const [startTime] = useState<number>(() => Date.now());
 
   // ========== Преобразование ID патологий ==========
   // Формат URL: "1,2,3" → Формат API: "1-2-3"
@@ -285,7 +273,6 @@ export function useTestTasks() {
         // Очищаем сохраненный прогресс после успешной отправки
         if (typeof window !== "undefined") {
           localStorage.removeItem(TEST_ANSWERS_STORAGE_KEY);
-          localStorage.removeItem(TEST_START_TIME_KEY);
           localStorage.removeItem(TEST_IDS_KEY);
         }
 
