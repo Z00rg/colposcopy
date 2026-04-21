@@ -34,7 +34,7 @@ COPY --from=builder /app/public ./public
 # 2. Копируем standalone файлы (они копируются в корень /app)
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 
-# 3. ВАЖНО: Принудительно создаем структуру для статики .next
+# 3.Создаем структуру для статики .next
 # Мы берем статику из билдера и кладем её ВНУТРЬ .next/static
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 

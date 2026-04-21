@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// 1. Конфигурация путей
+// Конфигурация путей
 const AUTH_ROUTES = ['/sign-in', '/sign-up', '/agreement'];
 const ADMIN_ROUTE = '/admin-home';
 const SUBSCRIBE_ROUTE = '/subscribe';
@@ -12,7 +12,7 @@ const REFRESH_COOKIE_NAME = 'refresh';
 const PERMISSION_COOKIE_NAME = 'user_role';
 const SUBSCRIPTION_COOKIE_NAME = 'is_subscribed';
 
-// 2. Заголовки безопасности
+// Заголовки безопасности
 const securityHeaders = {
     'X-Frame-Options': 'DENY',
     'X-Content-Type-Options': 'nosniff',
@@ -40,7 +40,7 @@ export default function middleware(request: NextRequest) {
 
     let response: NextResponse;
 
-    // --- ЛОГИКА АВТОРИЗАЦИИ ---
+    // Логика авторизации
     if (!refreshCookie) {
         // Пользователь НЕ залогинен
         if (isAuthPath) {
@@ -80,7 +80,7 @@ export default function middleware(request: NextRequest) {
             //     response = NextResponse.next();
             // }
 
-            // ПРОВЕРКА ПОДПИСКИ (откоммитить в будущем)
+            // ПРОВЕРКА ПОДПИСКИ
             else {
                 // Если подписки НЕТ и он пытается зайти НЕ на страницу оплаты
                 if (!isSubscribed && !isSubscribePage) {
@@ -111,7 +111,7 @@ export default function middleware(request: NextRequest) {
         }
     }
 
-    // --- ДОБАВЛЕНИЕ SECURITY HEADERS ---
+    // Добавление заголовков
     Object.entries(securityHeaders).forEach(([key, value]) => {
         response.headers.set(key, value);
     });

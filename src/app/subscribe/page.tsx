@@ -5,6 +5,7 @@ import { UiHeader } from "@/shared/ui/ui-header";
 // import { SubscribeForm } from "@/features/subscribe";
 import {SignOutButton} from "@/features/auth";
 
+// Тестовый мокап планов
 // const PLANS = [
 //     {
 //         months: 1,
